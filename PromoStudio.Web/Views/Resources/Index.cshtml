@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Your Resources";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        require(["viewModels/resourcesViewModel", "jquery", "knockout", "bootstrap"],
+            function (resourcesVm, $, ko) {
+                $(function() {                    
+                    var data = {}, vm;
+                    data.Customer = @Html.Raw(ViewBag.CustomerJson);
+                    data.CustomerResources = @Html.Raw(ViewBag.CustomerResourcesJson);
+                    vm = new resourcesVm(data);
+                    ko.applyBindings(vm);
+                });
+            });
+    </script>
+}
+
+<!-- Jumbotron -->
+<div class="jumbotron">
+    <p class="lead">Your Resources</p>
+</div>
+
+<hr />
+
+<!-- ko if: CustomerResources().length > 0 -->
+<div data-bind="foreach: CustomerResources()">
+    <div class="row-fluid">
+        <div class="span6">
+            <h3 data-bind="text: TemplateScriptItemType"></h3>
+        </div>
+        <div class="span3">
+            <h5 data-bind="text: TemplateScriptItemCategory"></h5>
+        </div>
+        <div class="span3">
+            <!-- ko if: TemplateScriptItemType() !== "Text" -->
+            <a href="javascript:void(0);" target="_blank" data-bind="attr: { href: LinkUrl  }, text: LinkFileName"></a>
+            <!-- /ko -->
+            <!-- ko if: TemplateScriptItemType() === "Text" -->
+            <input type="text" data-bind="value: Value" />
+            <!-- /ko -->
+        </div>
+    </div>
+</div>
+<!-- /ko -->
+<!-- ko if: CustomerResources().length === 0 -->
+<h2>You have no resources</h2>
+<!-- /ko -->
+<div>
+    <h3>Resource Upload</h3>
+    <select data-bind="options: CategoryList, optionsText: 'Text', value: SelectedCategory, optionsCaption: 'Choose a Category'"></select>
+    <form data-bind="attr: { action: FormAction }" method="post" enctype="multipart/form-data">  
+      <label for="file">Filename:</label>
+      <input type="file" name="file" id="file" />
+      <input type="submit" />
+    </form>
+</div>

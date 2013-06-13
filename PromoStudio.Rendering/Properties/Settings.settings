@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PromoStudio.Rendering.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AfterEffectsExePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Program Files\Adobe\Adobe After Effects CS6\Support Files\afterfx.exe</Value>
+    </Setting>
+    <Setting Name="ScriptPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\PromoStudio\AE Template</Value>
+    </Setting>
+    <Setting Name="OutputPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\PromoStudio\Output</Value>
+    </Setting>
+    <Setting Name="RenderProjectPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\PromoStudio\AE Template\SpliceVideo.aep</Value>
+    </Setting>
+    <Setting Name="RenderProjectComp" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">HDTV 24FPS</Value>
+    </Setting>
+    <Setting Name="RenderProjectPreviewComp" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">NTSC 24FPS</Value>
+    </Setting>
+    <Setting Name="RenderProjectOutputTemplate" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">FullHD-H264</Value>
+    </Setting>
+    <Setting Name="RenderProjectPreviewOutputTemplate" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">NTSC-H264</Value>
+    </Setting>
+    <Setting Name="UploadPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\PromoStudio\Uploads</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

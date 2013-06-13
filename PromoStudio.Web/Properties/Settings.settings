@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PromoStudio.Web.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="GoogleClientId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">342429318341.apps.googleusercontent.com</Value>
+    </Setting>
+    <Setting Name="GoogleClientSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Tzw-YJw8zyQPuOmoZIb1B4ES</Value>
+    </Setting>
+    <Setting Name="FacebookClientId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">281969971948645</Value>
+    </Setting>
+    <Setting Name="FacebookClientSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">4d3d53b80ca7cbe321d408435fc59ea1</Value>
+    </Setting>
+    <Setting Name="TwitterConsumerKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">erbqRzf0c2exLeO5W9ONkg</Value>
+    </Setting>
+    <Setting Name="TwitterConsumerSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">7NSBkcYrP6MuTV9DT1YKQRrGZUAXIFp3wqvKxS3bZPE</Value>
+    </Setting>
+    <Setting Name="TwitterAccessToken" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">25008877-cCXen3VyHdtKlKQCTjlhAeUCfN8JafjRsk2XTfpUY</Value>
+    </Setting>
+    <Setting Name="TwitterAccessSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">tr6I1PgrV4MCOO2TnxXkM4bDfLi9AdklNZwRkodMyPA</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

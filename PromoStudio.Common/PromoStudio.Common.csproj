@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6E9AAFA0-E570-46A1-A5A1-6E4484E3555B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PromoStudio.Common</RootNamespace>
+    <AssemblyName>PromoStudio.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Enumerations\CustomerLoginPlatform.cs" />
+    <Compile Include="Enumerations\CustomerResourceStatus.cs" />
+    <Compile Include="Enumerations\VoiceActorStatus.cs" />
+    <Compile Include="Enumerations\CustomerVideoItemType.cs" />
+    <Compile Include="Enumerations\CustomerVideoRenderStatus.cs" />
+    <Compile Include="Enumerations\CustomerStatus.cs" />
+    <Compile Include="Enumerations\CustomerTemplateScriptStatus.cs" />
+    <Compile Include="Enumerations\RenderTemplate.cs" />
+    <Compile Include="Enumerations\TemplateScriptItemCategory.cs" />
+    <Compile Include="Enumerations\TemplateScriptStatus.cs" />
+    <Compile Include="Enumerations\TemplateScriptItemType.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Models\CustomerLoginCredential.cs" />
+    <Compile Include="Models\CustomerVideoVoiceOver.cs" />
+    <Compile Include="Models\StockAudio.cs" />
+    <Compile Include="Models\StockVideo.cs" />
+    <Compile Include="Models\CustomerVideoItem.cs" />
+    <Compile Include="Models\CustomerVideo.cs" />
+    <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\CustomerTemplateScript.cs" />
+    <Compile Include="Models\CustomerTemplateScriptItem.cs" />
+    <Compile Include="Models\CustomerResource.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\TemplateScriptItem.cs" />
+    <Compile Include="Models\TemplateScript.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

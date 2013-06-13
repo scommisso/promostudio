@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Your Videos";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        require(["viewModels/videosViewModel", "jquery", "knockout", "bootstrap"],
+            function (videosVm, $, ko) {
+                $(function() {                    
+                    var data = {}, vm;
+                    data.Customer = @Html.Raw(ViewBag.CustomerJson);
+                    data.CustomerVideos = @Html.Raw(ViewBag.CustomerVideosJson);
+                    vm = new videosVm(data);
+                    ko.applyBindings(vm);
+                    window.setInterval(function () {
+                        vm.UpdateStatus();
+                    }, 5000);
+                });
+            });
+    </script>
+}
+
+<!-- Jumbotron -->
+<div class="jumbotron">
+    <p class="lead">Your Videos</p>
+</div>
+
+<hr />
+
+<!-- ko if: CustomerVideos().length > 0 -->
+<div data-bind="foreach: CustomerVideos()">
+    <div class="row-fluid">
+        <div class="span6">
+            <h3 data-bind="text: Name"></h3>
+            <p data-bind="text: Description"></p>
+        </div>
+        <div class="span3">
+            <h5 data-bind="text: CustomerVideoRenderStatus"></h5>
+        </div>
+        <div class="span3">
+            <a href="javascript:void(0);" target="_blank" data-bind="attr: { href: LinkUrl  }, text: LinkFileName"></a>
+        </div>
+    </div>
+</div>
+<!-- /ko -->
+<!-- ko if: CustomerVideos().length === 0 -->
+<h2>You have no videos</h2>
+<h3><a href="@Url.Action("Index", "Build")">Build a Video</a></h3>
+<!-- /ko -->

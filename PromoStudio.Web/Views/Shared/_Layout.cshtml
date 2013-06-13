@@ -1,0 +1,55 @@
+﻿@{
+    string copyrightDate = DateTime.Today.Year.ToString();
+    if (DateTime.Today.Year > 2013) {
+        copyrightDate = "2013-" + copyrightDate;
+    }
+
+    bool isHomeController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Home", StringComparison.OrdinalIgnoreCase) == 0;
+    bool isVideosController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Videos", StringComparison.OrdinalIgnoreCase) == 0;
+    bool isResourcesController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Resources", StringComparison.OrdinalIgnoreCase) == 0;
+    bool isBuildController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Build", StringComparison.OrdinalIgnoreCase) == 0;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PromoStudio - @ViewBag.Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="container header-container clearfix">
+        <div class="logo">
+            <img src="@Url.Content("~/Content/img/ps_logo.png")" />
+        </div>
+        <div class="header-nav">
+            @RenderSection("headerNav", false)
+        </div>
+    </div>
+    <div class="container main-container">
+        <h1>@ViewBag.Title</h1>
+        <hr />
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav">
+                <li @Html.Raw(isHomeController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li @Html.Raw(isVideosController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Videos")">My Videos</a></li>
+                <li @Html.Raw(isResourcesController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Resources")">My Resources</a></li>
+                <li @Html.Raw(isBuildController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Build")">Build</a></li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /.navbar -->
+        @RenderBody()
+        <hr />
+        <div class="footer">
+            <p>&copy; PromoStudio @copyrightDate</p>
+        </div>
+    </div>
+    <script src="~/Scripts/require.min.js"></script>
+    <script src="~/Scripts/requireConfig.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

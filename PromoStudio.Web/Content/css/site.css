@@ -1,0 +1,286 @@
+﻿
+body
+{
+    padding: 40px 0;
+    background: url('../img/top_bg.png') repeat-x #555555;
+}
+
+/*Header*/
+.container.header-container
+{
+    color: #ffffff;
+    padding-bottom: 25px;
+    height:105px;
+}
+
+.header-container .logo
+{
+    float: left;
+    margin-top:9px;
+}
+
+.header-container .header-nav
+{
+    float: right;
+}
+
+/*Login*/
+a.signinBtn {
+    margin-top:12px;
+    border:0;
+    display:block;
+    margin:12px auto;
+    width:472px;
+    height:88px;
+}
+a.facebookSignin {
+    background:url(../img/signin-facebook-sprite.png) 0 0 no-repeat transparent;
+    cursor:pointer;
+}
+a.facebookSignin:hover,
+a.facebookSignin:active {
+    background-position-y: -176px;
+}
+a.facebookSignin.wait,
+a.facebookSignin.wait:link,
+a.facebookSignin.wait:visited,
+a.facebookSignin.wait:hover,
+a.facebookSignin.wait:active {
+    background-position-y: -88px;
+    cursor:wait;
+}
+a.googleSignin {
+    background:url(../img/signin-google-sprite.png) 0 0 no-repeat transparent;
+    cursor:pointer;
+}
+a.googleSignin:hover,
+a.googleSignin:active {
+    background-position-y: -176px;
+}
+a.googleSignin.wait {
+    background-position-y: -88px;
+    cursor:wait;
+}
+a.twitterSignin {
+    background:url(../img/signin-twitter-sprite.png) 0 0 no-repeat transparent;
+    cursor:pointer;
+}
+a.twitterSignin:hover,
+a.twitterSignin:active {
+    background-position-y: -176px;
+}
+a.twitterSignin.wait,
+a.twitterSignin.wait:link,
+a.twitterSignin.wait:visited,
+a.twitterSignin.wait:hover,
+a.twitterSignin.wait:active {
+    background-position-y: -88px;
+    cursor:wait;
+}
+
+/*Build*/
+
+div.build-step
+{
+    float: left;
+    margin:0 0 0 150px;
+}
+div.build-step:first-child
+{
+    margin:0;
+}
+
+    div.build-step div
+    {
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+
+    div.build-step span
+    {
+        display:block;
+        text-align:center;
+        width:100%;
+        margin:0 auto;
+        color:#6e361e;
+        font-size:11pt;
+        font-weight: bold;
+    }
+
+    div.build-step span.step-title {
+        font-size:18pt;
+    }
+
+    div.build-step.selected span
+    {
+        color:#ffffff;
+    }
+
+    div.build-step > div
+    {
+        width: 40px !important;
+        height: 40px !important;
+        margin:12px auto;
+        background: transparent;
+        padding: 3px;
+    }
+
+        div.build-step > div > div
+        {
+            background: transparent;
+            padding: 7px;
+        }
+
+            div.build-step > div > div > div
+            {
+                background: #6e361e;
+            }
+
+    div.build-step.selected > div
+    {
+        background: #ffffff;
+    }
+
+        div.build-step.selected > div > div
+        {
+            background: #6e361e;
+        }
+
+            div.build-step.selected > div > div > div
+            {
+                background: #ffffff;
+            }
+
+            div.build-step-line {
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                border-top: solid 2px #6e361e;
+                height:2px;
+                margin:51px 43px 0 55px;
+            }
+
+/* Custom container */
+.container.main-container
+{
+    background-color: #ffffff;
+    color: #555555;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+/* Wizard */
+.build-nav-pills
+{
+    font-size: 31.5px;
+    font-weight: bold;
+}
+
+    .build-nav-pills > li > a
+    {
+        padding: 18px 14px;
+        margin: 2px 4px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 18px;
+    }
+
+    .build-nav-pills > li:last-child > a:hover,
+    .build-nav-pills > li.active:last-child > a
+    {
+        background-color: green;
+    }
+
+/* Main marketing message and sign up button */
+.jumbotron
+{
+    margin: 80px 0;
+    text-align: center;
+}
+
+    .jumbotron .logo
+    {
+        width: 900px;
+        height: 264px;
+        text-align: center;
+    }
+
+    .jumbotron h1
+    {
+        font-size: 100px;
+        line-height: 1;
+    }
+
+    .jumbotron .lead
+    {
+        font-size: 24px;
+        line-height: 1.25;
+    }
+
+    .jumbotron .btn
+    {
+        font-size: 21px;
+        padding: 14px 24px;
+    }
+
+/* Supporting marketing content */
+.marketing
+{
+    margin: 60px 0;
+}
+
+    .marketing p + h4
+    {
+        margin-top: 28px;
+    }
+
+
+/* Customize the navbar links to be fill the entire space of the .navbar
+.navbar .navbar-inner
+{
+    padding: 0;
+}
+
+.navbar .nav
+{
+    margin: 0;
+    display: table;
+    width: 100%;
+}
+
+    .navbar .nav li
+    {
+        display: table-cell;
+        width: 1%;
+        float: none;
+    }
+
+        .navbar .nav li a
+        {
+            font-weight: bold;
+            text-align: center;
+            border-left: 1px solid rgba(255,255,255,.75);
+            border-right: 1px solid rgba(0,0,0,.1);
+        }
+
+        .navbar .nav li:first-child a
+        {
+            border-left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .navbar .nav li:last-child a
+        {
+            border-right: 0;
+            border-radius: 0 3px 3px 0;
+        }
+     */

@@ -1,0 +1,116 @@
+﻿@using PromoStudio.Web
+@using PromoStudio.Web.Properties
+@{
+    var random = new System.Random();
+}
+<script>
+define(["jquery"], function ($) {
+    return function (buttonSelector, loginCallback) {
+        var self = this,
+            clientId = '@(Settings.Default.GoogleClientId)',
+            scopeBase = 'https://www.googleapis.com/auth/',
+            oauthScope = scopeBase + 'userinfo.profile ' + scopeBase + 'userinfo.email',
+            oauthState = '@(random.Next())',
+            oauthType = 'token',
+            oauthUrl = 'https://accounts.google.com/o/oauth2/auth?',
+            oauthRedirect = '@(Url.Absolute(Url.Action("goa2cb", "Home")))',
+            oauthApiBase = 'https://www.googleapis.com/oauth2/v1/',
+            oauthValidateUrl = oauthApiBase + 'tokeninfo?access_token=',
+            oauthProfileUrl = oauthApiBase + 'userinfo?access_token=',
+            oauthLoginUrl = oauthUrl +
+                'scope=' + encodeURIComponent(oauthScope) +
+                '&state=' + encodeURIComponent(oauthState) +
+                '&client_id=' + encodeURIComponent(clientId) +
+                '&redirect_uri=' + encodeURIComponent(oauthRedirect) +
+                '&response_type=' + encodeURIComponent(oauthType);
+
+        function validateToken(token, state) {
+            var btn = $(buttonSelector);
+            if (state !== oauthState) {
+                btn.removeClass("wait");
+                alert('error');
+            }
+            else {
+                $.ajax({
+                    url: oauthValidateUrl + encodeURIComponent(token),
+                    data: null,
+                    success: function (response) {
+                        if (response.error !== undefined) {
+                            btn.removeClass("wait");
+                            alert(response.error);
+                        }
+                        else {
+                            getUserInfo(token);
+                        }
+                    },
+                    dataType: "jsonp"
+                });
+            }
+        }
+
+        function getUserInfo(token) {
+            var btn = $(buttonSelector);
+            $.ajax({
+                url: oauthProfileUrl + encodeURIComponent(token),
+                data: null,
+                success: function (user) {
+                    if (user.error !== undefined) {
+                        btn.removeClass("wait");
+                        alert(user.error);
+                    }
+                    else {
+                        console.log(user);
+                        if (typeof (loginCallback) === "function") {
+                            btn.removeClass("wait");
+                            loginCallback(user);
+                        }
+                    }
+                },
+                dataType: "jsonp"
+            });
+        }
+
+        //credits: http://www.netlobo.com/url_query_string_javascript.html
+        function gup(url, name) {
+            name = name.replace(/[[]/, "\[").replace(/[]]/, "\]");
+            var regexS = "[\?&#]" + name + "=([^&#]*)";
+            var regex = new RegExp(regexS);
+            var results = regex.exec(url);
+            if (results === null) {
+                return "";
+            }
+            else {
+                return results[1];
+            }
+        }
+
+        self.login = function () {
+            var btn = $(buttonSelector),
+                win, pollTimer;
+
+            if (btn.hasClass("wait")) { return; }
+            btn.addClass("wait");
+
+            win = window.open(oauthLoginUrl, "goauth2", 'width=800,height=600,toolbar=0,scrollbars=0,status=0,resizable=0,location=0,menuBar=0');
+            pollTimer = window.setInterval(function () {
+                try {
+                    console.log(win.document.URL);
+                    if (win.document.URL.indexOf(oauthRedirect) != -1) {
+                        window.clearInterval(pollTimer);
+                        var url = win.document.URL,
+                            token = gup(url, 'access_token'),
+                            state = gup(url, 'state'),
+                            tokenType = gup(url, 'token_type'),
+                            expiresIn = gup(url, 'expires_in');
+
+                        window.setTimeout(function () { win.close(); }, 10);
+                        validateToken(token, state);
+                    }
+                } catch (e) {
+                    btn.removeClass("wait");
+                }
+            }, 100);
+        };
+    };
+});
+</script>
