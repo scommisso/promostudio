@@ -41,15 +41,6 @@ namespace PromoStudio.Data
             return customer;
         }
 
-        public async Task<Customer> Customer_SelectAsyncByLoginCredential(sbyte customerLoginPlatformId, string loginKey)
-        {
-            var customer = ((IEnumerable<Customer>)await DataWrapper.QueryStoredProcAsync<Customer>(Constants.StoredProcedures.CustomerSelectByLoginCredential_sp,
-                dbParams: new { CustomerLoginPlatformId = customerLoginPlatformId, LoginKey = loginKey }))
-                .FirstOrDefault();
-
-            return customer;
-        }
-
         public async Task<Customer> Customer_InsertAsync(Customer customer)
         {
             var result =
@@ -75,6 +66,15 @@ namespace PromoStudio.Data
         #endregion
 
         #region CustomerLoginCredential
+
+        public async Task<IEnumerable<CustomerWithLoginCredential>> CustomerWithLoginCredential_SelectAsyncByLoginCredential(sbyte customerLoginPlatformId, string loginKey, string emailAddress)
+        {
+            var customerLogins = ((IEnumerable<CustomerWithLoginCredential>)await DataWrapper.QueryStoredProcAsync<CustomerWithLoginCredential>(Constants.StoredProcedures.CustomerSelectByLoginCredential_sp,
+                dbParams: new { CustomerLoginPlatformId = customerLoginPlatformId, LoginKey = loginKey, EmailAddress = emailAddress }))
+                .ToList();
+
+            return customerLogins;
+        }
 
         public void CustomerLoginCredential_InsertUpdate(CustomerLoginCredential customerLoginCredential)
         {

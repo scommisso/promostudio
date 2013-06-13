@@ -7,7 +7,7 @@ namespace PromoStudio.Data
         void Customer_Delete(long customerId);
         System.Threading.Tasks.Task<PromoStudio.Common.Models.Customer> Customer_InsertAsync(PromoStudio.Common.Models.Customer customer);
         System.Threading.Tasks.Task<PromoStudio.Common.Models.Customer> Customer_SelectAsync(long customerId);
-        System.Threading.Tasks.Task<PromoStudio.Common.Models.Customer> Customer_SelectAsyncByLoginCredential(sbyte customerLoginPlatformId, string loginKey);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.CustomerWithLoginCredential>> CustomerWithLoginCredential_SelectAsyncByLoginCredential(sbyte customerLoginPlatformId, string loginKey, string emailAddress);
         void Customer_Update(PromoStudio.Common.Models.Customer customer);
         void CustomerLoginCredential_InsertUpdate(PromoStudio.Common.Models.CustomerLoginCredential customerLoginCredential);
         void CustomerResource_Delete(long customerResourceId);

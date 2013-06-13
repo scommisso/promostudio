@@ -65,6 +65,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Models\CustomerLoginCredential.cs" />
     <Compile Include="Models\CustomerVideoVoiceOver.cs" />
+    <Compile Include="Models\CustomerWithLoginCredential.cs" />
     <Compile Include="Models\StockAudio.cs" />
     <Compile Include="Models\StockVideo.cs" />
     <Compile Include="Models\CustomerVideoItem.cs" />

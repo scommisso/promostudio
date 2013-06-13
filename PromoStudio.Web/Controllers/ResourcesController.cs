@@ -13,6 +13,7 @@ using PromoStudio.Rendering.Properties;
 
 namespace PromoStudio.Web.Controllers
 {
+    [Authorize]
     public class ResourcesController : AsyncController
     {
         private IDataService _dataService;

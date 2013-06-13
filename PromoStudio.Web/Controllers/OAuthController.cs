@@ -5,6 +5,8 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Newtonsoft.Json;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
 using PromoStudio.Data;
@@ -26,14 +28,19 @@ namespace PromoStudio.Web.Controllers
         {
             try
             {
-                var customer = await _dataService.Customer_SelectAsyncByLoginCredential(pId, key);
+                var clcs = await _dataService.CustomerWithLoginCredential_SelectAsyncByLoginCredential(pId, key, email);
+                var clc = clcs.FirstOrDefault(c => c.fk_CustomerLoginPlatformId == pId);
+                if (clc == null) { clc = clcs.FirstOrDefault(); }
+
+                Customer customer = null;
+                Organization organization = null;
                 bool forcePrimary = false;
-                if (customer == null)
+                if (clc == null)
                 {
                     customer = new Customer()
                     {
                         FullName = name,
-                        fk_OrganizationId = 1,
+                        fk_OrganizationId = null,
                         fk_CustomerStatusId = (sbyte)CustomerStatus.Active,
                         DateCreated = DateTime.Now
                     };
@@ -42,7 +49,9 @@ namespace PromoStudio.Web.Controllers
                 }
                 else
                 {
-                    // TODO: determine if login should be primary (maybe add login stuff to customerselectbylogin?)
+                    customer = clc.ToCustomer();
+                    organization = clc.ToOrganization();
+                    forcePrimary = (clc.PrimaryLogin == 1);
                 }
                 var loginInfo = new CustomerLoginCredential()
                 {
@@ -55,7 +64,7 @@ namespace PromoStudio.Web.Controllers
                 };
                 _dataService.CustomerLoginCredential_InsertUpdate(loginInfo);
 
-                // TODO: Add login cookie
+                CreateCookie(Response, customer, organization, loginInfo);
 
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
@@ -91,6 +100,31 @@ namespace PromoStudio.Web.Controllers
             {
                 return Json(new { error = "Error retrieving access key" }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        private void CreateCookie(HttpResponseBase response, Customer customer, Organization organization, CustomerLoginCredential loginInfo)
+        {
+            var authData = new AuthData()
+            {
+                AuthenticationType = loginInfo.Platform.ToString() + " OAuth",
+                CustomerId = customer.pk_CustomerId,
+                EmailAddress = loginInfo.EmailAddress,
+                FullName = customer.FullName,
+                OrganizationId = organization == null ? (long?) null : organization.pk_OrganizationId,
+                OrganizationName = organization == null ? (string) null : organization.DisplayName
+            };
+
+            var ticket = new FormsAuthenticationTicket(
+                1,
+                authData.EmailAddress,
+                DateTime.Now,
+                DateTime.Now.AddMinutes(FormsAuthentication.Timeout.TotalMinutes),
+                true,
+                JsonConvert.SerializeObject(authData));
+            var encrypted = FormsAuthentication.Encrypt(ticket);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
+
+            response.Cookies.Add(cookie);
         }
     }
 }

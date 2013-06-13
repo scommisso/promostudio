@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
+using Newtonsoft.Json;
 
 namespace PromoStudio.Web
 {
@@ -24,6 +26,21 @@ namespace PromoStudio.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
+        {
+            var cName = FormsAuthentication.FormsCookieName;
+            var cookie = Context.Request.Cookies[cName];
+            if (cookie == null) { return; }
+
+            var decrypted = FormsAuthentication.Decrypt(cookie.Value);
+            if (decrypted == null) { return; }
+
+            var userData = JsonConvert.DeserializeObject<AuthData>(decrypted.UserData);
+            var principal = new PromoStudioPrincipal(userData);
+
+            HttpContext.Current.User = principal;
         }
     }
 }

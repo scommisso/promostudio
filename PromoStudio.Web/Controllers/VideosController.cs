@@ -11,6 +11,7 @@ using PromoStudio.Data;
 
 namespace PromoStudio.Web.Controllers
 {
+    [Authorize]
     public class VideosController : AsyncController
     {
         private IDataService _dataService;
