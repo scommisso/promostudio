@@ -15,7 +15,10 @@
                     var vm = new loginViewModel(1, user.id, user.name, user.email);
                     vm.PerformLogin();
                 });
-                $("#gLogin").click(function () { goa.login(); });
+                $("#gLogin").click(function () {
+                    $("#fbLogin").hide();
+                    goa.login();
+                });
 
                 var foa = new facebookOAuth("#fbLogin", function (user) {
                     $("#loginButtons").hide();
@@ -25,7 +28,10 @@
                     var vm = new loginViewModel(2, user.id, user.name, user.email);
                     vm.PerformLogin();
                 });
-                $("#fbLogin").click(function () { foa.login(); });
+                $("#fbLogin").click(function () {
+                    $("#gLogin").hide();
+                    foa.login();
+                });
             });
     </script>
 }
