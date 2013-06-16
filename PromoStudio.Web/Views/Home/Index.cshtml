@@ -1,6 +1,14 @@
 ﻿@model PromoStudio.Web.PromoStudioPrincipal
 @{
     ViewBag.Title = "Welcome to PromoStudio";
+    string firstName = null;
+    if (Model != null) {
+        firstName = ((PromoStudio.Web.PromoStudioIdentity)Model.Identity).FullName;
+        int ix = firstName.IndexOf(" ");
+        if (ix > 0) {
+            firstName = firstName.Substring(0, ix);
+        }
+    }
 }
 
 @section scripts
@@ -51,6 +59,11 @@
     <div id="loginResult" style="display: none">
         <div id="userName"></div>
     </div>
+    }
+    else {
+        <div>
+            Welcome back, @(firstName)!
+        </div>
     }
 </div>
 

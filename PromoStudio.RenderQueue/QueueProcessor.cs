@@ -28,6 +28,7 @@ namespace PromoStudio.RenderQueue
         public async Task Execute() {
             var video = await RetrieveVideoForProcessing();
             if (video == null) { return; }
+            video.RenderFailureMessage = null;
 
             ProcessVideo(video);
             UploadVideo(video);
@@ -77,10 +78,7 @@ namespace PromoStudio.RenderQueue
                     fileName = string.Format("{0}-preview.m4v", video.pk_CustomerVideoId);
                     outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.PreviewFilePath);
 
-                    if (File.Exists(video.PreviewFilePath))
-                    {
-                        File.Delete(video.PreviewFilePath);
-                    }
+                    CleanupTempFolder(Path.GetDirectoryName(video.PreviewFilePath));
 
                     video.PreviewFilePath = outputUrl;
                     video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.PendingVoiceTalent;
@@ -93,10 +91,7 @@ namespace PromoStudio.RenderQueue
                     fileName = string.Format("{0}.m4v", video.pk_CustomerVideoId);
                     outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.CompletedFilePath);
 
-                    if (File.Exists(video.CompletedFilePath))
-                    {
-                        File.Delete(video.CompletedFilePath);
-                    }
+                    CleanupTempFolder(Path.GetDirectoryName(video.CompletedFilePath));
 
                     video.CompletedFilePath = outputUrl;
                     video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Completed;
@@ -182,7 +177,7 @@ namespace PromoStudio.RenderQueue
                 : (sbyte)CustomerVideoRenderStatus.InProgressFinalRender;
             _dataService.CustomerVideo_Update(video);
 
-            string folder = Path.Combine(PromoStudio.Rendering.Properties.Settings.Default.OutputPath, video.fk_CustomerId.ToString());
+            string folder = CreateTempFolder(video.fk_CustomerId, video.pk_CustomerVideoId);
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
@@ -217,14 +212,36 @@ namespace PromoStudio.RenderQueue
             _dataService.CustomerVideo_Update(video);
         }
 
-        private void RenderTemplateScript(CustomerVideo video, CustomerTemplateScript customerTemplateScript, bool preview)
+        private string CreateTempFolder(long customerId, long customerVideoId)
         {
-
-            string folder = Path.Combine(PromoStudio.Rendering.Properties.Settings.Default.OutputPath, video.fk_CustomerId.ToString());
+            string folder = Path.Combine(
+                PromoStudio.Rendering.Properties.Settings.Default.OutputPath,
+                string.Format("{0}/{1}", customerId, customerVideoId));
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
             }
+            return folder;
+        }
+
+        private void CleanupTempFolder(string directoryPath)
+        {
+            try
+            {
+                if (Directory.Exists(directoryPath))
+                {
+                    Directory.Delete(directoryPath, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                // TODO: Log
+            }
+        }
+
+        private void RenderTemplateScript(CustomerVideo video, CustomerTemplateScript customerTemplateScript, bool preview)
+        {
+            string folder = CreateTempFolder(video.fk_CustomerId, video.pk_CustomerVideoId);
 
             string outPath = Path.Combine(folder, string.Format("{0}_{1}_{2}_{3}.mp4",
                 customerTemplateScript.pk_CustomerTemplateScriptId, video.Name,

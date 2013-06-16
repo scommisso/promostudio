@@ -25,12 +25,11 @@ define(["models/customerVideoItem", "models/enums", "knockout"], function (custo
             return enums.customerVideoRenderStatus(id);
         });
         self.LinkUrl = ko.computed(function () {
-            // TODO: This should point to our content host (VidYard) instead of local
             var previewPath = self.PreviewFilePath(),
                 completedPath = self.CompletedFilePath(),
                 displayPath = completedPath || previewPath;
             if (displayPath === null) { return "javascript:void(0);"; }
-            return "/Videos/Play?cvid=" + self.pk_CustomerVideoId();
+            return displayPath;
         });
         self.LinkFileName = ko.computed(function () {
             var previewPath = self.PreviewFilePath(),
@@ -42,6 +41,8 @@ define(["models/customerVideoItem", "models/enums", "knockout"], function (custo
             if (ix === -1) { ix = displayPath.lastIndexOf("/"); }
             if (ix === -1) { return displayPath; }
             displayPath = displayPath.substring(ix + 1);
+            ix = displayPath.indexOf("?");
+            if (ix !== -1) { displayPath = displayPath.substring(0, ix); }
             return displayPath;
         });
 

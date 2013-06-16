@@ -123,6 +123,8 @@ namespace PromoStudio.Web.Controllers
                 JsonConvert.SerializeObject(authData));
             var encrypted = FormsAuthentication.Encrypt(ticket);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
+            cookie.Expires = ticket.Expiration;
+            cookie.HttpOnly = true;
 
             response.Cookies.Add(cookie);
         }
