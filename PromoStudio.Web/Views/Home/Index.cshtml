@@ -21,6 +21,7 @@
                     $("#loginButtons").hide();
                     $('#userName').text("Welcome, " + user.name + " (" + user.email + ")");
                     $('#loginResult').show();
+                    $('.navbar').show();
                     var vm = new loginViewModel(1, user.id, user.name, user.email);
                     vm.PerformLogin();
                 });
@@ -33,6 +34,7 @@
                     $("#loginButtons").hide();
                     $('#userName').text("Welcome, " + user.name + " (" + user.email + ")");
                     $('#loginResult').show();
+                    $('.navbar').show();
                     var vm = new loginViewModel(2, user.id, user.name, user.email);
                     vm.PerformLogin();
                 });

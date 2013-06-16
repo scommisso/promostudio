@@ -44,7 +44,7 @@ define(["jquery"], function ($) {
                     data: null,
                     success: function (response) {
                         if (response.error !== undefined) {
-                            alert(response.error);
+                            alert(response.error.message);
                         }
                         else {
                             oauthAppToken = response.access_token;
@@ -71,7 +71,7 @@ define(["jquery"], function ($) {
                     success: function (response) {
                         if (response.error !== undefined) {
                             btn.removeClass("wait");
-                            alert(response.error);
+                            alert(response.error.message);
                         }
                         else {
                             getUserInfo(token);
