@@ -69,7 +69,7 @@ namespace PromoStudio.Web.Controllers
             try
             {
                 video.DateCreated = DateTime.Now;
-                video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Pending;
+                video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Canceled; // store as canceled state until all children have populated
                 var newVideo = await _dataService.CustomerVideo_InsertAsync(video);
                 foreach (var item in video.Items)
                 {
@@ -96,6 +96,9 @@ namespace PromoStudio.Web.Controllers
                 }
 
                 newVideo = await _dataService.CustomerVideo_SelectAsyncWithItems(newVideo.pk_CustomerVideoId);
+                newVideo.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Pending;
+                _dataService.CustomerVideo_Update(newVideo);
+
                 return Json(new { Success = true, Model = newVideo });
             }
             catch (Exception ex)
