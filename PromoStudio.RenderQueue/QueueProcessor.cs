@@ -230,6 +230,17 @@ namespace PromoStudio.RenderQueue
             {
                 throw new ApplicationException("Splice output not found: " + outPath);
             }
+            using (var sr = File.OpenRead(outPath))
+            {
+                if (!sr.CanRead)
+                {
+                    throw new ArgumentException(string.Format("Splice output \"{0}\" cannot be opened for reading.", outPath));
+                }
+                if (sr.Length <= 0)
+                {
+                    throw new ArgumentException(string.Format("Splice output \"{0}\" contains 0 bytes.", outPath));
+                }
+            }
 
             if (preview)
             {
@@ -293,6 +304,17 @@ namespace PromoStudio.RenderQueue
             if (!File.Exists(outPath))
             {
                 throw new ApplicationException("Template output not found: " + outPath);
+            }
+            using (var sr = File.OpenRead(outPath))
+            {
+                if (!sr.CanRead)
+                {
+                    throw new ArgumentException(string.Format("Template output \"{0}\" cannot be opened for reading.", outPath));
+                }
+                if (sr.Length <= 0)
+                {
+                    throw new ArgumentException(string.Format("Template output \"{0}\" contains 0 bytes.", outPath));
+                }
             }
             
             if (preview)
