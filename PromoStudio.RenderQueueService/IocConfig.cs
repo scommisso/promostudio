@@ -15,6 +15,10 @@ namespace PromoStudio.RenderQueueService
             builder.RegisterAssemblyTypes(typeof(IDataService).Assembly).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(IQueueProcessor).Assembly).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(IStorageProvider).Assembly).AsImplementedInterfaces();
+
+            var logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+            builder.RegisterInstance<ILog>(logger);
+
             Container = builder.Build();
         }
     }

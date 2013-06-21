@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using log4net;
 using Newtonsoft.Json;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
@@ -17,10 +18,12 @@ namespace PromoStudio.Web.Controllers
     public class OAuthController : AsyncController
     {
         private IDataService _dataService;
+        private ILog _log;
 
-        public OAuthController(IDataService dataService)
+        public OAuthController(IDataService dataService, ILog log)
         {
             _dataService = dataService;
+            _log = log;
         }
 
         [HttpPost]
@@ -70,7 +73,7 @@ namespace PromoStudio.Web.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Log
+                _log.Error(string.Format("Error performing OAuth - pid:{0},key:{1},name:{2},email:{3}", pId, key, name, email), ex);
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }

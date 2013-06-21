@@ -18,6 +18,7 @@ namespace PromoStudio.Web
     {
         protected void Application_Start()
         {
+            log4net.Config.XmlConfigurator.Configure();
             IocConfig.RegisterIoc();
 
             AreaRegistration.RegisterAllAreas();
