@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Extensions;
 using PromoStudio.Common.Models;
@@ -18,11 +19,13 @@ namespace PromoStudio.RenderQueue
     {
         private IDataService _dataService;
         private IStorageProvider _storageProvider;
+        private ILog _log;
 
-        public QueueProcessor(IDataService dataService, IStorageProvider storageProvider)
+        public QueueProcessor(IDataService dataService, IStorageProvider storageProvider, ILog log)
         {
             _dataService = dataService;
             _storageProvider = storageProvider;
+            _log = log;
         }
 
         public async Task Execute() {
@@ -39,14 +42,19 @@ namespace PromoStudio.RenderQueue
             try
             {
                 var videosToProcess = await _dataService.CustomerVideo_SelectForProcessingAsync(Settings.Default.ErrorProcessingDelayInSeconds);
-                if (videosToProcess.Count() == 0) { return null; }
+                if (videosToProcess.Count() == 0) {
+                    _log.Debug("No CustomerVideo objects ready for processing. Sleeping...");
+                    return null;
+                }
                 var video = videosToProcess.Take(1).FirstOrDefault();
                 video = await _dataService.CustomerVideo_SelectAsyncWithItems(video.pk_CustomerVideoId);
+                _log.InfoFormat("Retrieved CustomerVideo:{0} for processing. Status: {1}",
+                    video.pk_CustomerVideoId, (CustomerVideoRenderStatus)video.fk_CustomerVideoRenderStatusId);
                 return video;
             }
             catch (Exception ex)
             {
-                // TODO: Log
+                _log.Error("Error retrieving CustomerVideo from queue for processing.", ex);
                 throw;
             }
         }
@@ -62,6 +70,8 @@ namespace PromoStudio.RenderQueue
             }.Contains((CustomerVideoRenderStatus)video.fk_CustomerVideoRenderStatusId))
             {
                 // Not in state to upload
+                _log.InfoFormat("CustomerVideo:{0} status {1} is not ready for upload.",
+                    video.pk_CustomerVideoId, (CustomerVideoRenderStatus)video.fk_CustomerVideoRenderStatusId);
                 return;
             }
 
@@ -76,6 +86,8 @@ namespace PromoStudio.RenderQueue
                     _dataService.CustomerVideo_Update(video);
 
                     fileName = string.Format("{0}-preview.m4v", video.pk_CustomerVideoId);
+                    _log.InfoFormat("CustomerVideo:{0} uploading file \"{1}\" to bucket \"{2}\", file \"{3}\".",
+                        video.pk_CustomerVideoId, video.PreviewFilePath, bucketName, fileName);
                     outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.PreviewFilePath);
 
                     CleanupTempFolder(Path.GetDirectoryName(video.PreviewFilePath));
@@ -89,6 +101,8 @@ namespace PromoStudio.RenderQueue
                     _dataService.CustomerVideo_Update(video);
 
                     fileName = string.Format("{0}.m4v", video.pk_CustomerVideoId);
+                    _log.InfoFormat("CustomerVideo:{0} uploading file \"{1}\" to bucket \"{2}\", file \"{3}\".",
+                        video.pk_CustomerVideoId, video.PreviewFilePath, fileName, bucketName);
                     outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.CompletedFilePath);
 
                     CleanupTempFolder(Path.GetDirectoryName(video.CompletedFilePath));
@@ -101,20 +115,29 @@ namespace PromoStudio.RenderQueue
             }
             catch (Exception ex)
             {
+                _log.Error(string.Format("CustomerVideo:{0} failure uploading {1} file \"{2}\".",
+                    video.pk_CustomerVideoId, isPreview ? "preview" : "final", isPreview ? video.PreviewFilePath : video.CompletedFilePath), ex);
                 video.RenderFailureMessage = string.Format("Failure uploading file \"{0}\", error: {1}",
                     isPreview ? video.PreviewFilePath : video.CompletedFilePath, ex.ToString());
                 video.fk_CustomerVideoRenderStatusId = (sbyte) (isPreview
                     ? CustomerVideoRenderStatus.CompletedVideoPreview
                     : CustomerVideoRenderStatus.CompletedFinalRender);
-                _dataService.CustomerVideo_Update(video);
+                try
+                {
+                    _dataService.CustomerVideo_Update(video);
+                }
+                catch (Exception ex2)
+                {
+                    _log.Error(string.Format("CustomerVideo:{0} error setting failure status", video.pk_CustomerVideoId), ex2);
+                }
             }
         }
 
         private void ProcessVideo(CustomerVideo video)
         {
+            bool isPreview = (video.fk_CustomerVideoRenderStatusId < (sbyte)CustomerVideoRenderStatus.UploadingPreview);
             try
             {
-                bool isPreview = (video.fk_CustomerVideoRenderStatusId < (sbyte)CustomerVideoRenderStatus.UploadingPreview);
                 if (video.fk_CustomerVideoRenderStatusId > (sbyte)CustomerVideoRenderStatus.CompletedFinalRender
                     || (video.fk_CustomerVideoRenderStatusId >= (sbyte)CustomerVideoRenderStatus.UploadingPreview
                     && video.fk_CustomerVideoRenderStatusId < (sbyte)CustomerVideoRenderStatus.CompletedVoiceTalent))
@@ -141,9 +164,18 @@ namespace PromoStudio.RenderQueue
             }
             catch (Exception ex)
             {
-                // TODO: Log
-                video.RenderFailureMessage = ex.ToString();
-                _dataService.CustomerVideo_Update(video);
+                _log.Error(string.Format("CustomerVideo:{0} failure processing {1} file.",
+                    video.pk_CustomerVideoId, isPreview ? "preview" : "final"), ex);
+                video.RenderFailureMessage = string.Format("Failure processing {0} file, error: {1}",
+                    isPreview ? "preview" : "final", ex.ToString());
+                try
+                {
+                    _dataService.CustomerVideo_Update(video);
+                }
+                catch (Exception ex2)
+                {
+                    _log.Error(string.Format("CustomerVideo:{0} error setting failure status", video.pk_CustomerVideoId), ex2);
+                }
             }
         }
 
@@ -190,6 +222,8 @@ namespace PromoStudio.RenderQueue
                 File.Delete(outPath);
             }
 
+            _log.InfoFormat("CustomerVideo:{0} performing splice for {1:N0} items, outputting file \"{2}\".",
+                video.pk_CustomerVideoId, video.Items.Count, outPath);
             var renderer = new SpliceTemplateScript(video, outPath, true);
             renderer.Render();
             if (!File.Exists(outPath))
@@ -216,7 +250,7 @@ namespace PromoStudio.RenderQueue
         {
             string folder = Path.Combine(
                 PromoStudio.Rendering.Properties.Settings.Default.OutputPath,
-                string.Format("{0}/{1}", customerId, customerVideoId));
+                string.Format("{0}\\{1}", customerId, customerVideoId));
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
@@ -235,7 +269,7 @@ namespace PromoStudio.RenderQueue
             }
             catch (Exception ex)
             {
-                // TODO: Log
+                _log.Warn(string.Format("Error cleaning up temporary folder \"{0}\".", directoryPath), ex);
             }
         }
 
@@ -252,6 +286,8 @@ namespace PromoStudio.RenderQueue
                 File.Delete(outPath);
             }
 
+            _log.InfoFormat("CustomerTemplateScript:{0} performing {1} render to \"{2}\"",
+                customerTemplateScript.pk_CustomerTemplateScriptId, preview ? "preview" : "final", outPath);
             var renderer = new RenderTemplateScript(customerTemplateScript, outPath, preview);
             renderer.Render();
             if (!File.Exists(outPath))
