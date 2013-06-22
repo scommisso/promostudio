@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using log4net;
 using Newtonsoft.Json;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
@@ -15,10 +17,12 @@ namespace PromoStudio.Web.Controllers
     public class BuildController : AsyncController
     {
         private IDataService _dataService;
+        private ILog _log;
 
-        public BuildController(IDataService dataService)
+        public BuildController(IDataService dataService, ILog log)
         {
             _dataService = dataService;
+            _log = log;
         }
 
         //
@@ -54,8 +58,8 @@ namespace PromoStudio.Web.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Log
-                return new HttpStatusCodeResult(500);
+                _log.Error("Error retrieving status for customer video id: " + cvid, ex);
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 
@@ -64,8 +68,19 @@ namespace PromoStudio.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Submit(CustomerVideo video)
         {
-            long customerId = 1;
+            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            var customer = HttpContext.User.Identity as PromoStudioIdentity;
+            if (customer == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
 
+            string json = JsonConvert.SerializeObject(video);
+            long customerId = customer.CustomerId;
+            _log.InfoFormat("Customer {0} submitted video: {1}", customerId, json);
             try
             {
                 video.DateCreated = DateTime.Now;
@@ -103,8 +118,8 @@ namespace PromoStudio.Web.Controllers
             }
             catch (Exception ex)
             {
-                // TODO: Log
-                return new HttpStatusCodeResult(500);
+                _log.Error(string.Format("Error submitting video for customer id: {0}, JSON: {1}", customerId, json), ex);
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 

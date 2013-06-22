@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -15,7 +16,6 @@ namespace PromoStudio.Web.Controllers
     public class VideosController : AsyncController
     {
         private IDataService _dataService;
-        private long customerId = 1;
 
         public VideosController(IDataService dataService)
         {
@@ -26,19 +26,28 @@ namespace PromoStudio.Web.Controllers
         // GET: /Videos/
         public async Task<ActionResult> Index()
         {
-            // TODO: Use login cookie
-
-            var customer = (await _dataService.Customer_SelectAsync(customerId));
+            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            var customer = HttpContext.User.Identity as PromoStudioIdentity;
             if (customer == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            long customerId = customer.CustomerId;
+
+            var customerInfo = (await _dataService.Customer_SelectAsync(customerId));
+            if (customerInfo == null)
             {
                 return new HttpNotFoundResult();
             }
 
             var videos = (await _dataService.CustomerVideo_SelectByCustomerIdAsync(customerId));
 
-            ViewBag.Customer = customer;
+            ViewBag.Customer = customerInfo;
             ViewBag.CustomerVideos = videos;
-            ViewBag.CustomerJson = JsonConvert.SerializeObject(customer);
+            ViewBag.CustomerJson = JsonConvert.SerializeObject(customerInfo);
             ViewBag.CustomerVideosJson = JsonConvert.SerializeObject(videos);
 
             return View();
@@ -48,13 +57,16 @@ namespace PromoStudio.Web.Controllers
         // GET: /Videos/Status
         public async Task<ActionResult> Status()
         {
-            // TODO: Use login cookie
-
-            var customer = (await _dataService.Customer_SelectAsync(customerId));
+            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            var customer = HttpContext.User.Identity as PromoStudioIdentity;
             if (customer == null)
             {
-                return new HttpNotFoundResult();
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
+            long customerId = customer.CustomerId;
 
             var videos = (await _dataService.CustomerVideo_SelectByCustomerIdAsync(customerId));
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -27,11 +28,19 @@ namespace PromoStudio.Web.Controllers
         // GET: /Resources/
         public async Task<ActionResult> Index()
         {
-            // TODO: Use login cookie
-            long customerId = 1;
-
-            var customer = (await _dataService.Customer_SelectAsync(customerId));
+            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            var customer = HttpContext.User.Identity as PromoStudioIdentity;
             if (customer == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            long customerId = customer.CustomerId;
+
+            var customerInfo = (await _dataService.Customer_SelectAsync(customerId));
+            if (customerInfo == null)
             {
                 return new HttpNotFoundResult();
             }
@@ -40,9 +49,9 @@ namespace PromoStudio.Web.Controllers
                 .Where(r => r.Type != TemplateScriptItemType.Text)
                 .ToList();
 
-            ViewBag.Customer = customer;
+            ViewBag.Customer = customerInfo;
             ViewBag.CustomerResources = resources;
-            ViewBag.CustomerJson = JsonConvert.SerializeObject(customer);
+            ViewBag.CustomerJson = JsonConvert.SerializeObject(customerInfo);
             ViewBag.CustomerResourcesJson = JsonConvert.SerializeObject(resources);
 
             return View();
@@ -53,8 +62,16 @@ namespace PromoStudio.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Upload(HttpPostedFileBase file, int category)
         {
-            // TODO: Use login cookie
-            long customerId = 1;
+            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            var customer = HttpContext.User.Identity as PromoStudioIdentity;
+            if (customer == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            long customerId = customer.CustomerId;
 
             if (file.ContentLength > 0)
             {
