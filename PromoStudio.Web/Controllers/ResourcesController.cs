@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using log4net;
 using Newtonsoft.Json;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
@@ -15,13 +16,11 @@ using PromoStudio.Rendering.Properties;
 namespace PromoStudio.Web.Controllers
 {
     [Authorize]
-    public class ResourcesController : AsyncController
+    public class ResourcesController : ControllerBase
     {
-        private IDataService _dataService;
-
-        public ResourcesController(IDataService dataService)
+        public ResourcesController(IDataService dataService, ILog log)
+            : base(dataService, log)
         {
-            _dataService = dataService;
         }
 
         //

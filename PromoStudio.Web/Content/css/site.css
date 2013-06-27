@@ -1,9 +1,37 @@
 ﻿
 body
 {
-    padding: 40px 0;
-    background: url('../img/top_bg.png') repeat-x #555555;
+    padding:0;
+    background: #555555;
 }
+
+div.color-band
+{
+    padding:0;
+    margin:0;
+    background:#d76c3f;
+    position:fixed;
+    width:100%;
+    height:252px;
+    z-index:-1;
+    top:0;
+    left:0;
+}
+
+div.loading-message-large
+{
+    margin:0;
+    text-align:center;
+}
+
+div.loader-large {
+    margin:20px auto;
+    padding:0;
+    width:120px;
+    height:120px;
+    background: url(../img/loader-large.gif);
+}
+
 
 /*Header*/
 .container.header-container
@@ -15,13 +43,8 @@ body
 
 .header-container .logo
 {
-    float: left;
-    margin-top:9px;
-}
-
-.header-container .header-nav
-{
-    float: right;
+    width:100%;
+    text-align:center;
 }
 
 /*Login*/
@@ -80,11 +103,66 @@ a.twitterSignin.wait:active {
 
 /*Build*/
 
-div.build-step
-{
-    float: left;
-    margin:0 0 0 150px;
+div.build-header {
+    float:left;
 }
+
+div.build-header h1 {
+    margin:0;
+}
+
+div.build-subnav {
+    float:right;
+}
+
+a.build-subnav-left,
+a.build-subnav-right {
+    display:block;
+    text-decoration:none;
+    float:left;
+    margin:0;
+    color:#fff;
+    padding:5px 12px;
+    cursor:pointer;
+}
+a.build-subnav-left {
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+}
+a.build-subnav-right {
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+}
+div.build-subnav > a.active
+{
+    background: #e56331;
+}
+div.build-subnav > a.inactive
+{
+    background: #f3b099;
+}
+
+div.build-subnav-divider {
+    float:left;
+    background: url(../img/subnav.png) 0 0 no-repeat #ebb39d;
+    width:34px;
+    height:30px;
+    padding:0;
+    margin:0;
+}
+
+div.build-subnav-divider.active-left {
+    background-position-y: 0;
+}
+
+div.build-subnav-divider.active-right {
+    background-position-y: -30px;
+}
+
+div.build-subnav-divider.inactive {
+    background-position-y: -60px;
+}
+
 div.build-step:first-child
 {
     margin:0;
@@ -125,8 +203,8 @@ div.build-step:first-child
 
     div.build-step > div
     {
-        width: 40px !important;
-        height: 40px !important;
+        width: 40px;
+        height: 40px;
         margin:12px auto;
         background: transparent;
         padding: 3px;
@@ -164,7 +242,6 @@ div.build-step:first-child
                 box-sizing: border-box;
                 border-top: solid 2px #6e361e;
                 height:2px;
-                margin:51px 43px 0 55px;
             }
 
 /* Custom container */
@@ -175,7 +252,7 @@ div.build-step:first-child
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
-    padding: 20px;
+    padding: 30px;
 }
 
 /* Wizard */
@@ -284,3 +361,194 @@ div.build-step:first-child
             border-radius: 0 3px 3px 0;
         }
      */
+
+
+
+/* Responsive */
+
+@media (max-width: 1199px)
+{
+    div.color-band
+    {
+        height:332px;
+    }
+    .header-container .header-nav
+    {
+        float: none;
+        margin-top:8px;
+    }
+
+    div.build-steps
+    {
+        padding-left: 140px;
+    }
+
+    div.build-step
+    {
+        float: left;
+        margin: 0 0 0 100px;
+    }
+
+    .container.main-container
+    {
+        margin-top: 80px;
+    }
+
+    div.build-step-line
+    {
+        margin: 51px 183px 0 55px;
+    }
+
+    .header-container .logo
+    {
+        margin-top:4px;
+    }
+}
+
+
+@media (max-width: 979px) {
+    div.color-band
+    {
+        height:312px;
+    }
+    div.build-steps {
+        padding-left:87px;
+    }
+    div.build-step span
+    {
+        font-size:10pt;
+    }
+
+    div.build-step span.step-title {
+        font-size:12pt;
+    }
+
+    div.build-step > div
+    {
+        width: 30px;
+        height: 30px;
+        margin:9px auto;
+        padding: 2px;
+    }
+    div.build-step-line
+    {
+        margin:43px 113px 0 32px;
+    }
+
+    .container.main-container
+    {
+        margin-top: 60px;
+    }
+}
+
+
+@media (max-width: 767px) {
+    div.build-steps {
+        width: 538px;
+        padding:0;
+        margin:0 auto;
+    }
+    div.build-step-line
+    {
+        margin:43px 30px 0 40px;
+    }
+}
+
+
+@media (max-width: 567px) {
+    div.build-steps {
+        width:100%;
+        margin:0 15px;
+        position:relative;
+    }
+    div.build-step {
+        position:absolute;
+        z-index:2;
+    }
+    div.build-step.step1 {
+        float:left;
+        margin: 0;
+    }
+    div.build-step.step2 {
+        float:left;
+        margin: 0 0 0 30%;
+    }
+    div.build-step.step3 {
+        float:right;
+        margin: 0 30% 0 0;
+    }
+    div.build-step.step4 {
+        float:right;
+        margin: 0;
+    }
+    div.build-step-line
+    {
+        position:absolute;
+        width:87%;
+        margin:43px 7% 0 7%;
+        z-index:1;
+    }
+}
+
+@media (min-width: 980px) {
+    div.build-steps {
+        padding-left:140px;
+    }
+    div.build-step
+    {
+        float: left;
+        margin:0 0 0 100px;
+    }
+    div.build-step-line
+    {
+        margin:51px 174px 0 63px;
+    }
+    
+    div.build-step span
+    {
+        font-size:11pt;
+    }
+
+    div.build-step span.step-title {
+        font-size:18pt;
+    }
+
+    div.build-step > div
+    {
+        width: 40px;
+        height: 40px;
+        margin:12px auto;
+        padding: 3px;
+    }
+}
+
+@media (min-width: 1200px)
+{
+    .header-container .logo
+    {
+        float: left;
+        width:auto;
+        text-align:left;
+        margin-top:10px;
+    }
+    .header-container .header-nav
+    {
+        float: right;
+    }
+    .container.main-container
+    {
+        margin-top:0;
+    }
+    div.build-steps {
+        padding-left:0;
+    }
+    div.build-step
+    {
+        float: left;
+        margin:0 0 0 150px;
+    }
+    div.build-step-line
+    {
+        margin:51px 43px 0 55px;
+    }
+}

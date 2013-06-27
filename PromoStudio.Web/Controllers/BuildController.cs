@@ -14,15 +14,11 @@ using PromoStudio.Data;
 namespace PromoStudio.Web.Controllers
 {
     [Authorize]
-    public class BuildController : AsyncController
+    public class BuildController : ControllerBase
     {
-        private IDataService _dataService;
-        private ILog _log;
-
         public BuildController(IDataService dataService, ILog log)
+            : base(dataService, log)
         {
-            _dataService = dataService;
-            _log = log;
         }
 
         //
@@ -40,6 +36,28 @@ namespace PromoStudio.Web.Controllers
             ViewBag.StockAudioJson = JsonConvert.SerializeObject(audio);
 
             return View();
+        }
+
+        //
+        // GET: /Build/Media-Logo
+        [ActionName("Media-Logo")]
+        public ActionResult MediaLogo()
+        {
+            return PAjax("_Media-Logo");
+        }
+
+        //
+        // GET: /Build/Script
+        public ActionResult Script()
+        {
+            return PAjax("_Script");
+        }
+
+        //
+        // GET: /Build/Footage
+        public ActionResult Footage()
+        {
+            return PAjax("_Footage");
         }
 
         //

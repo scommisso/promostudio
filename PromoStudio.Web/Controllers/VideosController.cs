@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using log4net;
 using Newtonsoft.Json;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
@@ -13,13 +14,11 @@ using PromoStudio.Data;
 namespace PromoStudio.Web.Controllers
 {
     [Authorize]
-    public class VideosController : AsyncController
+    public class VideosController : ControllerBase
     {
-        private IDataService _dataService;
-
-        public VideosController(IDataService dataService)
+        public VideosController(IDataService dataService, ILog log)
+            : base(dataService, log)
         {
-            _dataService = dataService;
         }
 
         //

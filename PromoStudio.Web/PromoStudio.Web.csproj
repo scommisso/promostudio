@@ -147,6 +147,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BuildController.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\OAuthController.cs" />
     <Compile Include="Controllers\ScriptsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
@@ -174,14 +175,17 @@
     <Content Include="Content\css\site.css" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\glyphicons-halflings.png" />
+    <Content Include="Content\img\loader-large.gif" />
     <Content Include="Content\img\promoStudio.jpg" />
     <Content Include="Content\img\ps_logo.png" />
     <Content Include="Content\img\signin-facebook-sprite.png" />
     <Content Include="Content\img\signin-google-sprite.png" />
     <Content Include="Content\img\signin-twitter-sprite.png" />
-    <Content Include="Content\img\top_bg.png" />
+    <Content Include="Content\img\subnav.png" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\lib\jquery.bootstrap.wizard.js" />
+    <Content Include="Scripts\lib\jquery.pjax.js" />
+    <Content Include="Scripts\lib\modernizr.js" />
     <Content Include="Scripts\models\customer.js" />
     <Content Include="Scripts\models\customerTemplateScriptItem.js" />
     <Content Include="Scripts\models\customerTemplateScript.js" />
@@ -274,6 +278,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\Local.pubxml" />
+    <Content Include="Views\Build\_Media-Logo.cshtml" />
+    <Content Include="Views\Build\_Script.cshtml" />
+    <Content Include="Views\Build\_Footage.cshtml" />
+    <Content Include="Views\Shared\_PjaxLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

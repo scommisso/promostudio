@@ -15,15 +15,11 @@ using PromoStudio.Web.Properties;
 
 namespace PromoStudio.Web.Controllers
 {
-    public class OAuthController : AsyncController
+    public class OAuthController : ControllerBase
     {
-        private IDataService _dataService;
-        private ILog _log;
-
         public OAuthController(IDataService dataService, ILog log)
+            : base(dataService, log)
         {
-            _dataService = dataService;
-            _log = log;
         }
 
         [HttpPost]

@@ -12,7 +12,8 @@ define(["models/customerVideo",
         "models/customerTemplateScriptItem",
         "models/enums",
         "jquery",
-        "knockout"], function (
+        "knockout",
+        "pjax"], function (
             customerVideo,
             customerVideoItem,
             templateScript,

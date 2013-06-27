@@ -1,4 +1,5 @@
-﻿@{
+﻿@using PromoStudio.Web
+@{
     string copyrightDate = DateTime.Today.Year.ToString();
     if (DateTime.Today.Year > 2013) {
         copyrightDate = "2013-" + copyrightDate;
@@ -19,31 +20,31 @@
     <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/css/bootstrap-responsive.css" rel="stylesheet" />
     <link href="~/Content/css/site.css" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/lib/modernizr.js")"></script>
 </head>
 <body>
+    <div class="color-band"></div>
+    <div class="navbar" @Html.Raw(Context.User.Identity.IsAuthenticated ? "" : "style='display:none'")>
+        <div class="navbar-inner">
+        <div class="container">
+            <ul class="nav">
+            <li @Html.Raw(isHomeController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Home")">Home</a></li>
+            <li @Html.Raw(isVideosController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Videos")">My Videos</a></li>
+            <li @Html.Raw(isResourcesController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Resources")">My Resources</a></li>
+            <li @Html.Raw(isBuildController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Build")">Build</a></li>
+            </ul>
+        </div>
+        </div>
+    </div>
     <div class="container header-container clearfix">
         <div class="logo">
-            <img src="@Url.Content("~/Content/img/ps_logo.png")" />
+            <a href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/Content/img/ps_logo.png")" alt="PromoStudio" /></a>
         </div>
         <div class="header-nav">
             @RenderSection("headerNav", false)
         </div>
     </div>
     <div class="container main-container">
-        <h1>@ViewBag.Title</h1>
-        <hr />
-        <div class="navbar" @Html.Raw(Context.User.Identity.IsAuthenticated ? "" : "style='display:none'")>
-          <div class="navbar-inner">
-            <div class="container">
-              <ul class="nav">
-                <li @Html.Raw(isHomeController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Home")">Home</a></li>
-                <li @Html.Raw(isVideosController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Videos")">My Videos</a></li>
-                <li @Html.Raw(isResourcesController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Resources")">My Resources</a></li>
-                <li @Html.Raw(isBuildController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Build")">Build</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
         @RenderBody()
         <hr />
         <div class="footer">

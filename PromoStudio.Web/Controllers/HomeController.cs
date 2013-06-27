@@ -4,17 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using log4net;
 using PromoStudio.Data;
 
 namespace PromoStudio.Web.Controllers
 {
-    public class HomeController : AsyncController
+    public class HomeController : ControllerBase
     {
-        private IDataService _dataService;
-
-        public HomeController(IDataService dataService)
+        public HomeController(IDataService dataService, ILog log)
+            : base(dataService, log)
         {
-            _dataService = dataService;
         }
 
         //

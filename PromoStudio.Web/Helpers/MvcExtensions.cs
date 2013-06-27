@@ -5,11 +5,49 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
+
 namespace PromoStudio.Web
 {
     // Mvc extensions for dynamic CSS and JS
     public static class MvcExtensions
     {
+        private static readonly object _o = new object();
+
+        /// <summary>
+        /// Renders a section with defaultcontent
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="sectionName"></param>
+        /// <param name="defaultContent"></param>
+        /// <returns></returns>
+        public static HelperResult RenderSection(this WebPageBase page, string sectionName, Func<object, HelperResult> defaultContent)
+        {
+            if (page.IsSectionDefined(sectionName))
+            {
+                return page.RenderSection(sectionName);
+            }
+            else
+            {
+                return defaultContent(_o);
+            }
+        }
+
+        /// <summary>
+        /// Determines whether or not a given HTTP Request is a PJAX request (by looking at headers)
+        /// </summary>
+        /// <param name="intance"></param>
+        /// <returns></returns>
+        public static bool IsPAjaxRequest(this HttpRequestBase intance)
+        {
+            var header = intance.Headers["X-PJAX"] ?? string.Empty;
+
+            var result = header.Equals(
+                bool.TrueString, StringComparison.OrdinalIgnoreCase);
+
+            return result;
+        }
+
         /// CSS content result rendered by partial view specified
         /// "controller">current controller
         /// "cssViewName">view name, which contains partial view with one STYLE block only
