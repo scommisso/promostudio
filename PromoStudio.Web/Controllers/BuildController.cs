@@ -35,7 +35,7 @@ namespace PromoStudio.Web.Controllers
             ViewBag.StockVideosJson = JsonConvert.SerializeObject(videos);
             ViewBag.StockAudioJson = JsonConvert.SerializeObject(audio);
 
-            return View();
+            return PAjax();
         }
 
         //

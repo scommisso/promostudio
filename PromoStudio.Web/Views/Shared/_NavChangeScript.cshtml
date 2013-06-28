@@ -1,0 +1,12 @@
+﻿@{  
+    string activeSelector = "null";
+    if (isHomeController) { activeSelector = "'#navHome'"; }
+    else if (isVideosController) { activeSelector = "'#navVideos'"; }
+    else if (isResourcesController) { activeSelector = "'#navResources'"; }
+    else if (isBuildController) { activeSelector = "'#navBuild'"; }
+}
+    <script type="text/javascript">
+        require(["jquery", "pjax"],
+            function ($) {
+            });
+    </script>

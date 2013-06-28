@@ -7,12 +7,15 @@
     <script type="text/javascript">
         require(["viewModels/resourcesViewModel", "jquery", "knockout", "bootstrap"],
             function (resourcesVm, $, ko) {
-                $(function() {                    
-                    var data = {}, vm;
+                $(function() {
+                    var data = {},
+                        container = $("div.main-data-container")[0],
+                        vm;
                     data.Customer = @Html.Raw(ViewBag.CustomerJson);
                     data.CustomerResources = @Html.Raw(ViewBag.CustomerResourcesJson);
                     vm = new resourcesVm(data);
-                    ko.applyBindings(vm);
+                    ko.cleanNode(container);
+                    ko.applyBindings(vm, container);
                 });
             });
     </script>

@@ -25,7 +25,7 @@ namespace PromoStudio.Web.Controllers
             object model = null)
         {
             bool isPAJAX = Request.IsPAjaxRequest();
-            ViewBag.IsPAJAX = isPAJAX;
+            ViewData["IsPAJAX"] = isPAJAX;
             return isPAJAX ?
                     PartialView(viewName, model) :
                     View(viewName, model) as ActionResult;

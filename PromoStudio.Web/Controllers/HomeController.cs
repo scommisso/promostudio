@@ -20,7 +20,7 @@ namespace PromoStudio.Web.Controllers
         // GET: /Home/
         public ActionResult Index()
         {
-            return View(HttpContext.User as PromoStudioPrincipal);
+            return PAjax(model: HttpContext.User as PromoStudioPrincipal);
         }
 
         //

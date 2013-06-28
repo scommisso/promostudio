@@ -49,7 +49,7 @@ namespace PromoStudio.Web.Controllers
             ViewBag.CustomerJson = JsonConvert.SerializeObject(customerInfo);
             ViewBag.CustomerVideosJson = JsonConvert.SerializeObject(videos);
 
-            return View();
+            return PAjax();
         }
 
         //

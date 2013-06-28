@@ -7,12 +7,15 @@
     <script type="text/javascript">
         require(["viewModels/videosViewModel", "jquery", "knockout", "bootstrap"],
             function (videosVm, $, ko) {
-                $(function() {                    
-                    var data = {}, vm;
+                $(function() {
+                    var data = {},
+                        container = $("div.main-data-container")[0],
+                        vm;
                     data.Customer = @Html.Raw(ViewBag.CustomerJson);
                     data.CustomerVideos = @Html.Raw(ViewBag.CustomerVideosJson);
                     vm = new videosVm(data);
-                    ko.applyBindings(vm);
+                    ko.cleanNode(container);
+                    ko.applyBindings(vm, container);
                     window.setInterval(function () {
                         vm.UpdateStatus();
                     }, 5000);

@@ -8,19 +8,20 @@
         require(["viewModels/buildViewModel", "jquery", "knockout", "bootstrap", "bootstrapWizard"],
             function (buildVm, $, ko) {
                 $(function() {
+                    $(document).pjax('div.main-data-container a[data-pjax]', '#build-container')
                     $('#rootwizard').bootstrapWizard({'tabClass': 'nav nav-pills build-nav-pills'});
                 });
-                var data = {}, vm;
+                var data = {},
+                    container = $("div.main-data-container")[0],
+                    vm;
                 data.TemplateScripts = @Html.Raw(ViewBag.TemplateScriptsJson);
                 data.StockVideos = @Html.Raw(ViewBag.StockVideosJson);
                 data.StockAudio = @Html.Raw(ViewBag.StockAudioJson);
                 data.CustomerResources = @Html.Raw(ViewBag.CustomerResourcesJson);
                 vm = new buildVm(data);
-                ko.applyBindings(vm);
+                ko.cleanNode(container);
+                ko.applyBindings(vm, container);
                 vm.SetActive('intro');
-
-                $(document).pjax('a[data-pjax]', '#build-container')
-
             });
     </script>
 }

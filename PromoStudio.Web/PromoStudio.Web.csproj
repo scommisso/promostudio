@@ -282,6 +282,7 @@
     <Content Include="Views\Build\_Script.cshtml" />
     <Content Include="Views\Build\_Footage.cshtml" />
     <Content Include="Views\Shared\_PjaxLayout.cshtml" />
+    <Content Include="Views\Shared\_NavChangeScript.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

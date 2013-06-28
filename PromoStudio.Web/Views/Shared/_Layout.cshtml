@@ -4,7 +4,6 @@
     if (DateTime.Today.Year > 2013) {
         copyrightDate = "2013-" + copyrightDate;
     }
-
     bool isHomeController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Home", StringComparison.OrdinalIgnoreCase) == 0;
     bool isVideosController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Videos", StringComparison.OrdinalIgnoreCase) == 0;
     bool isResourcesController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Resources", StringComparison.OrdinalIgnoreCase) == 0;
@@ -28,24 +27,27 @@
         <div class="navbar-inner">
         <div class="container">
             <ul class="nav">
-            <li @Html.Raw(isHomeController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Home")">Home</a></li>
-            <li @Html.Raw(isVideosController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Videos")">My Videos</a></li>
-            <li @Html.Raw(isResourcesController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Resources")">My Resources</a></li>
-            <li @Html.Raw(isBuildController ? "class=\"active\"" : "")><a href="@Url.Action("Index", "Build")">Build</a></li>
+                @* Add detection to _NavChangeScript *@
+                <li id="navHome" @Html.Raw(isHomeController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Home")">Home</a></li>
+                <li id="navVideos" @Html.Raw(isVideosController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Videos")">My Videos</a></li>
+                <li id="navResources" @Html.Raw(isResourcesController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Resources")">My Resources</a></li>
+                <li id="navBuild" @Html.Raw(isBuildController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Build")">Build</a></li>
             </ul>
         </div>
         </div>
     </div>
     <div class="container header-container clearfix">
         <div class="logo">
-            <a href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/Content/img/ps_logo.png")" alt="PromoStudio" /></a>
+            <a data-pjax href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/Content/img/ps_logo.png")" alt="PromoStudio" /></a>
         </div>
         <div class="header-nav">
             @RenderSection("headerNav", false)
         </div>
     </div>
     <div class="container main-container">
-        @RenderBody()
+        <div class="main-data-container">
+            @RenderBody()
+        </div>
         <hr />
         <div class="footer">
             <p>&copy; PromoStudio @copyrightDate</p>
@@ -53,6 +55,38 @@
     </div>
     <script src="~/Scripts/require.min.js"></script>
     <script src="~/Scripts/requireConfig.js"></script>
+    <script type="text/javascript">
+        require(["jquery", "pjax"],
+            function ($) {
+                var
+                    qualifyUrl = function (url) {
+                        var a = document.createElement('a');
+                        a.href = url; // set string url
+                        url = a.href; // get qualified url
+                        return url;
+                    },
+                    determineActiveNav = function () {
+                        var root = qualifyUrl("@Html.Raw(Url.Content("~/"))"),
+                            loc = document.location.href.substring(root.length).toLowerCase();
+                        if (loc.indexOf("videos") === 0) { return "#navVideos"; }
+                        if (loc.indexOf("resources") === 0) { return "#navResources"; }
+                        if (loc.indexOf("build") === 0) { return "#navBuild"; }
+                        return "#navHome";
+                    },
+                    main = function () {
+                        var s = determineActiveNav();
+                        $("ul.nav li").removeClass("active");
+                        if (s !== null) {
+                            $(s).addClass("active");
+                        }
+                    };
+                $(document).pjax('ul.nav a[data-pjax], div.logo a[data-pjax]', 'div.main-data-container');
+                $("div.main-data-container").bind("pjax:end", main);
+                $(function () {
+                    main();
+                });
+            });
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
