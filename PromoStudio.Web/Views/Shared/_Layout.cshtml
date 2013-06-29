@@ -28,8 +28,7 @@
     <script src="@Url.Content("~/Scripts/lib/modernizr.js")"></script>
 </head>
 <body>
-    <div class="color-band"></div>
-    <div class="navbar" @Html.Raw(Context.User.Identity.IsAuthenticated ? "" : "style='display:none'")>
+    <div class="navbar navbar-fixed-top" @Html.Raw(Context.User.Identity.IsAuthenticated ? "" : "style='display:none'")>
         <div class="navbar-inner">
         <div class="container">
             <ul class="nav">
@@ -43,6 +42,7 @@
         </div>
         </div>
     </div>
+    <div class="color-band"></div>
     <div class="container header-container clearfix">
         <div class="logo">
             <a data-pjax href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/Content/img/ps_logo.png")" alt="PromoStudio" /></a>
