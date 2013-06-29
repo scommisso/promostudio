@@ -8,6 +8,12 @@
     bool isVideosController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Videos", StringComparison.OrdinalIgnoreCase) == 0;
     bool isResourcesController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Resources", StringComparison.OrdinalIgnoreCase) == 0;
     bool isBuildController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Build", StringComparison.OrdinalIgnoreCase) == 0;
+
+    var user = Context.User != null
+        && Context.User.Identity != null
+        && Context.User.Identity.IsAuthenticated
+            ? (PromoStudio.Web.PromoStudioIdentity)Context.User.Identity
+            : null;
 }
 <!DOCTYPE html>
 <html>
@@ -32,6 +38,7 @@
                 <li id="navVideos" @Html.Raw(isVideosController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Videos")">My Videos</a></li>
                 <li id="navResources" @Html.Raw(isResourcesController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Resources")">My Resources</a></li>
                 <li id="navBuild" @Html.Raw(isBuildController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Build")">Build</a></li>
+                <li><a id="logout" href="javascript:void(0)">Log Out</a></li>
             </ul>
         </div>
         </div>
@@ -53,39 +60,12 @@
             <p>&copy; PromoStudio @copyrightDate</p>
         </div>
     </div>
-    <script src="~/Scripts/require.min.js"></script>
-    <script src="~/Scripts/requireConfig.js"></script>
+    <script src="@Url.Content("~/Scripts/require.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/requireConfig.js")"></script>
     <script type="text/javascript">
-        require(["jquery", "pjax"],
-            function ($) {
-                var
-                    qualifyUrl = function (url) {
-                        var a = document.createElement('a');
-                        a.href = url; // set string url
-                        url = a.href; // get qualified url
-                        return url;
-                    },
-                    determineActiveNav = function () {
-                        var root = qualifyUrl("@Html.Raw(Url.Content("~/"))"),
-                            loc = document.location.href.substring(root.length).toLowerCase();
-                        if (loc.indexOf("videos") === 0) { return "#navVideos"; }
-                        if (loc.indexOf("resources") === 0) { return "#navResources"; }
-                        if (loc.indexOf("build") === 0) { return "#navBuild"; }
-                        return "#navHome";
-                    },
-                    main = function () {
-                        var s = determineActiveNav();
-                        $("ul.nav li").removeClass("active");
-                        if (s !== null) {
-                            $(s).addClass("active");
-                        }
-                    };
-                $(document).pjax('ul.nav a[data-pjax], div.logo a[data-pjax]', 'div.main-data-container');
-                $("div.main-data-container").bind("pjax:end", main);
-                $(function () {
-                    main();
-                });
-            });
+        require(["viewModels/scaffold"], function (scaffold) {
+            scaffold();
+        });
     </script>
     @RenderSection("scripts", required: false)
 </body>

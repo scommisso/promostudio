@@ -16,7 +16,7 @@ define(["models/customer",
         self.Customer = ko.observable(null);
         self.CustomerVideos = ko.observableArray([]);
 
-        self.LoadItems = function (customerData, videos) {
+        function loadItems(customerData, videos) {
             var i, item;
             videos = videos || [];
 
@@ -31,13 +31,13 @@ define(["models/customer",
             self.CustomerVideos(videos);
         };
 
-        self.UpdateStatus = function () {
+        function updateStatus() {
             $.ajax({
                 type: "GET",
                 dataType: "json",
                 url: "/Videos/Status",
                 success: function (data, textStatus, jqXHR) {
-                    self.LoadItems(null, data);
+                    loadItems(null, data);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log("Error retrieving video status: " + textStatus);
@@ -46,6 +46,25 @@ define(["models/customer",
             });
         };
 
-        self.LoadItems(data.Customer, data.CustomerVideos);
+        self.pageLoaded = function () {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/Videos/Data",
+                success: function (data, textStatus, jqXHR) {
+                    loadItems(data.Customer, data.CustomerVideos);
+                    var interval = window.setInterval(function () {
+                        updateStatus();
+                    }, 5000);
+                    $.fn.pjaxScaffold.clearIntervals = function () {
+                        window.clearInterval(interval);
+                    };
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error retrieving data: " + textStatus);
+                    console.log(errorThrown);
+                }
+            });
+        };
     };
 });

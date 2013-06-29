@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Mvc;
 using System.Web.Security;
 using log4net;
@@ -22,6 +23,7 @@ namespace PromoStudio.Web.Controllers
         {
         }
 
+        // /OAuth/Authorize
         [HttpPost]
         public async Task<ActionResult> Authorize(sbyte pId, string key, string name, string email)
         {
@@ -73,22 +75,46 @@ namespace PromoStudio.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
-    
-        public ActionResult GetFacebookAccessToken() {
 
-            // TODO: Add memory cache lookup for this since it doesn't expire often
-
+        // /OAuth/Logout
+        [HttpPost]
+        public ActionResult Logout()
+        {
             try
             {
-                var wc = new WebClient();
-                string result = wc.DownloadString(new Uri("https://graph.facebook.com/oauth/access_token" +
-                    "?client_id=" + Url.Encode(Settings.Default.FacebookClientId) +
-                    "&client_secret=" + Url.Encode(Settings.Default.FacebookClientSecret) +
-                    "&grant_type=client_credentials"));
+                FormsAuthentication.SignOut();
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error logging out", ex);
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
 
-                if (!string.IsNullOrEmpty(result) && result.Length > 13 && result.Substring(0, 13).ToLower() == "access_token=")
+        // /OAuth/GetFacebookAccessToken
+        public ActionResult GetFacebookAccessToken() {            
+            try
+            {
+                // Add/Remove from Memory cache
+                var accessToken = HttpContext.Cache["FacebookAccessToken"] as string;
+                if (accessToken == null)
                 {
-                    return Json(new { access_token = result.Substring(13) }, JsonRequestBehavior.AllowGet);
+                    var wc = new WebClient();
+                    accessToken = wc.DownloadString(new Uri("https://graph.facebook.com/oauth/access_token" +
+                        "?client_id=" + Url.Encode(Settings.Default.FacebookClientId) +
+                        "&client_secret=" + Url.Encode(Settings.Default.FacebookClientSecret) +
+                        "&grant_type=client_credentials"));
+                    if (!string.IsNullOrEmpty(accessToken) && accessToken.Length > 13 && accessToken.Substring(0, 13).ToLower() == "access_token=")
+                    {
+                        accessToken = accessToken.Substring(13);
+                        HttpContext.Cache.Add("FacebookAccessToken", accessToken, null, DateTime.Now.AddMinutes(10), Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+                    }
+                }
+
+                if (accessToken != null)
+                {
+                    return Json(new { access_token = accessToken }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

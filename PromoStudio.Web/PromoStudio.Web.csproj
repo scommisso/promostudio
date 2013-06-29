@@ -200,6 +200,7 @@
     <Content Include="Scripts\require.min.js" />
     <Content Include="Scripts\requireConfig.js" />
     <Content Include="Scripts\lib\jquery-1.9.1.js" />
+    <Content Include="Scripts\viewModels\scaffold.js" />
     <Content Include="Scripts\viewModels\buildViewModel.js" />
     <Content Include="Scripts\viewModels\loginViewModel.js" />
     <Content Include="Scripts\viewModels\resourcesViewModel.js" />

@@ -2,8 +2,14 @@
 @{
     ViewBag.Title = "Welcome to PromoStudio";
     string firstName = null;
-    if (Model != null) {
-        firstName = ((PromoStudio.Web.PromoStudioIdentity)Model.Identity).FullName;
+    var user = Context.User != null
+        && Context.User.Identity != null
+        && Context.User.Identity.IsAuthenticated
+            ? (PromoStudio.Web.PromoStudioIdentity)Context.User.Identity
+            : null;
+    if (user != null)
+    {
+        firstName = user.FullName;
         int ix = firstName.IndexOf(" ");
         if (ix > 0) {
             firstName = firstName.Substring(0, ix);
@@ -13,38 +19,13 @@
 
 @section scripts
 {
-    @if (Model == null) {
     <script type="text/javascript">
-        require(["jquery", "viewModels/loginViewModel", "googleOAuth", "facebookOAuth", "bootstrap"],
-            function ($, loginViewModel, googleOauth, facebookOAuth) {
-                var goa = new googleOauth("#gLogin", function (user) {
-                    $("#loginButtons").hide();
-                    $('#userName').text("Welcome, " + user.name + " (" + user.email + ")");
-                    $('#loginResult').show();
-                    $('.navbar').show();
-                    var vm = new loginViewModel(1, user.id, user.name, user.email);
-                    vm.PerformLogin();
-                });
-                $("#gLogin").click(function () {
-                    $("#fbLogin").hide();
-                    goa.login();
-                });
-
-                var foa = new facebookOAuth("#fbLogin", function (user) {
-                    $("#loginButtons").hide();
-                    $('#userName').text("Welcome, " + user.name + " (" + user.email + ")");
-                    $('#loginResult').show();
-                    $('.navbar').show();
-                    var vm = new loginViewModel(2, user.id, user.name, user.email);
-                    vm.PerformLogin();
-                });
-                $("#fbLogin").click(function () {
-                    $("#gLogin").hide();
-                    foa.login();
-                });
+        require(["viewModels/loginViewModel"],
+            function (loginViewModel) {
+                var vm = new loginViewModel();
+                vm.pageLoaded();
             });
     </script>
-    }
 }
 <h1>@ViewBag.Title</h1>
 <hr />
@@ -54,15 +35,15 @@
     <img class="logo" src="@Url.Content("~/Content/img/promoStudio.jpg")" alt="PromoStudio Logo" />
     <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
     
-    @if (Model == null) {
-    <div id="loginButtons">
-        <a id="fbLogin" class="signinBtn facebookSignin"></a>
-        <a id="gLogin" class="signinBtn googleSignin"></a>
-    </div>
+    @if (user == null) {
+        <div id="loginButtons">
+            <a id="fbLogin" class="signinBtn facebookSignin"></a>
+            <a id="gLogin" class="signinBtn googleSignin"></a>
+        </div>
 
-    <div id="loginResult" style="display: none">
-        <div id="userName"></div>
-    </div>
+        <div id="loginResult" style="display: none">
+            <div id="userName"></div>
+        </div>
     }
     else {
         <div>

@@ -34,6 +34,23 @@ namespace PromoStudio.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
+
+            return PAjax();
+        }
+
+        //
+        // GET: /Videos/Data
+        public async Task<ActionResult> Data()
+        {
+            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            var customer = HttpContext.User.Identity as PromoStudioIdentity;
+            if (customer == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
             long customerId = customer.CustomerId;
 
             var customerInfo = (await _dataService.Customer_SelectAsync(customerId));
@@ -44,12 +61,11 @@ namespace PromoStudio.Web.Controllers
 
             var videos = (await _dataService.CustomerVideo_SelectByCustomerIdAsync(customerId));
 
-            ViewBag.Customer = customerInfo;
-            ViewBag.CustomerVideos = videos;
-            ViewBag.CustomerJson = JsonConvert.SerializeObject(customerInfo);
-            ViewBag.CustomerVideosJson = JsonConvert.SerializeObject(videos);
-
-            return PAjax();
+            return Json(new
+            {
+                Customer = customerInfo,
+                CustomerVideos = videos
+            }, JsonRequestBehavior.AllowGet);
         }
 
         //
