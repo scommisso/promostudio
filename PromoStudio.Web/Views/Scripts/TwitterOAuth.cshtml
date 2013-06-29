@@ -97,10 +97,10 @@ define(["jquery"], function ($) {
             win = window.open(oauthLoginUrl, "toauth2", 'width=800,height=600,toolbar=0,scrollbars=0,status=0,resizable=0,location=0,menuBar=0');
             pollTimer = window.setInterval(function () {
                 try {
-                    console.log(win.document.URL);
-                    if (win.document.URL.indexOf(oauthRedirect) != -1) {
+                    console.log(win.document.location.href);
+                    if (win.document.location.href.indexOf(oauthRedirect) != -1) {
                         window.clearInterval(pollTimer);
-                        var url = win.document.URL,
+                        var url = win.document.location.href,
                             token = gup(url, 'access_token'),
                             state = gup(url, 'state'),
                             tokenType = gup(url, 'token_type'),

@@ -13,6 +13,7 @@ define(["models/customerVideo",
         "models/enums",
         "jquery",
         "knockout",
+        "history",
         "pjax"], function (
             customerVideo,
             customerVideoItem,
@@ -24,6 +25,7 @@ define(["models/customerVideo",
             customerTemplateScript,
             customerTemplateScriptItem,
             enums,
+            hist,
             $,
             ko) {
     return function (data) {

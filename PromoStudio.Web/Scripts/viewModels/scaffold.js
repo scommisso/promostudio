@@ -3,7 +3,7 @@
         return function () {
             
             $.fn.pjaxScaffold = {
-                containerSelector: "div.main-data-container",
+                containerSelector: "div.main-container div[data-pjax-container]",
                 getContainer: function () {
                     return $($.fn.pjaxScaffold.containerSelector);
                 }
@@ -65,7 +65,7 @@
                     $.fn.pjaxScaffold.clearIntervals();
                 }
 
-                // Bind href-specific asynchronous initialization
+                // Bind href-specific asynchronous initialization$(document)
                 $(document).on('ready pjax:success', container, function () {
                     bindModel(target); // Call initializers
                     $(document).off('ready pjax:success', container); // Unbind initialization
@@ -73,6 +73,10 @@
             };
 
             function wireupPjaxEvents() {
+                var container = $.fn.pjaxScaffold.getContainer();
+                $(document)
+                    .on("pjax:start", function () { container.stop(true, true).fadeOut(300); })
+                    .on("pjax:end", function () { container.stop(true, true).fadeIn(300); })
                 $('a[data-pjax]').on('click', function (event) {
                     var container = $.fn.pjaxScaffold.containerSelector,
                         emptyRoute = 'login', // The function that will be called on domain's root
@@ -83,7 +87,7 @@
                     initContainer(link, target);
 
                     // PJAX-load the new content
-                    $.pjax.click(event, { container: $.fn.pjaxScaffold.getContainer() });
+                    $.pjax.click(event, { container: container });
                 })
             };
 

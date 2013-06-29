@@ -183,6 +183,7 @@
     <Content Include="Content\img\signin-twitter-sprite.png" />
     <Content Include="Content\img\subnav.png" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\lib\history.js" />
     <Content Include="Scripts\lib\jquery.bootstrap.wizard.js" />
     <Content Include="Scripts\lib\jquery.pjax.js" />
     <Content Include="Scripts\lib\modernizr.js" />
