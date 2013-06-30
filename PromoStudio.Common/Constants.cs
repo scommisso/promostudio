@@ -10,6 +10,12 @@ namespace PromoStudio.Common
     {
         public static class StoredProcedures
         {
+            public const string AudioScriptTemplateInsert_sp = "promostudio.AudioScriptTemplateInsert_sp";
+            public const string AudioScriptTemplateSelectAll_sp = "promostudio.AudioScriptTemplateSelectAll_sp";
+            public const string AudioScriptTemplateSelectByCustomerVideoId_sp = "promostudio.AudioScriptTemplateSelectByCustomerVideoId_sp";
+            public const string AudioScriptTemplateSelectById_sp = "promostudio.AudioScriptTemplateSelectById_sp";
+            public const string AudioScriptTemplateUpdate_sp = "promostudio.AudioScriptTemplateUpdate_sp";
+
             public const string CustomerInsert_sp = "promostudio.CustomerInsert_sp";
             public const string CustomerSelectById_sp = "promostudio.CustomerSelectById_sp";
             public const string CustomerSelectByLoginCredential_sp = "promostudio.CustomerSelectByLoginCredential_sp";
@@ -30,6 +36,10 @@ namespace PromoStudio.Common
             public const string CustomerVideoItemSelectByCustomerVideoId_sp = "promostudio.CustomerVideoItemSelectByCustomerVideoId_sp";
             public const string CustomerVideoItemUpdate_sp = "promostudio.CustomerVideoItemUpdate_sp";
             public const string CustomerVideoItemDelete_sp = "promostudio.CustomerVideoItemDelete_sp";
+
+            public const string CustomerVideoScriptInsert_sp = "promostudio.CustomerVideoScriptInsert_sp";
+            public const string CustomerVideoScriptSelectByCustomerVideoId_sp = "promostudio.CustomerVideoScriptSelectByCustomerVideoId_sp";
+            public const string CustomerVideoScriptSelectById_sp = "promostudio.CustomerVideoScriptSelectById_sp";
 
             public const string CustomerVideoVoiceOverInsert_sp = "promostudio.CustomerVideoVoiceOverInsert_sp";
             public const string CustomerVideoVoiceOverSelectById_sp = "promostudio.CustomerVideoVoiceOverSelectById_sp";

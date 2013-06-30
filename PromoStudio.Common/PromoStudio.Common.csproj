@@ -63,7 +63,9 @@
     <Compile Include="Enumerations\TemplateScriptStatus.cs" />
     <Compile Include="Enumerations\TemplateScriptItemType.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Models\AudioTemplateScript.cs" />
     <Compile Include="Models\CustomerLoginCredential.cs" />
+    <Compile Include="Models\CustomerVideoScript.cs" />
     <Compile Include="Models\CustomerVideoVoiceOver.cs" />
     <Compile Include="Models\CustomerWithLoginCredential.cs" />
     <Compile Include="Models\StockAudio.cs" />

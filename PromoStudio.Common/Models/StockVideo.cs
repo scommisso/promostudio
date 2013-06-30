@@ -9,6 +9,7 @@ namespace PromoStudio.Common.Models
     public class StockVideo
     {
         public long pk_StockVideoId { get; set; }
+        public int? fk_OrganizationId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string FilePath { get; set; }

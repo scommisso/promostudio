@@ -30,6 +30,51 @@ namespace PromoStudio.Data
 
         #endregion
 
+        #region AudioTemplateScript
+
+        public async Task<AudioTemplateScript> AudioTemplateScript_InsertAsync(AudioTemplateScript audioScript)
+        {
+            var result = ((IEnumerable<AudioTemplateScript>)await DataWrapper.QueryStoredProcAsync<AudioTemplateScript>(Constants.StoredProcedures.AudioScriptTemplateInsert_sp,
+                dbParams: audioScript.ToPoco()))
+                .FirstOrDefault();
+
+            return result;
+        }
+
+        public void AudioTemplateScript_Update(AudioTemplateScript audioScript)
+        {
+            DataWrapper.ExecuteStoredProc(Constants.StoredProcedures.AudioScriptTemplateUpdate_sp,
+                dbParams: audioScript.ToPoco());
+        }
+
+        public async Task<AudioTemplateScript> AudioTemplateScript_SelectAsync(long audioTemplateScriptId)
+        {
+            var audioScript = ((IEnumerable<AudioTemplateScript>)await DataWrapper.QueryStoredProcAsync<AudioTemplateScript>(Constants.StoredProcedures.AudioScriptTemplateSelectById_sp,
+                dbParams: new { AudioTemplateScriptId = audioTemplateScriptId }))
+                .FirstOrDefault();
+
+            return audioScript;
+        }
+
+        public async Task<AudioTemplateScript> AudioTemplateScript_SelectByCustomerVideoIdAsync(long customerVideoId)
+        {
+            var audioScript = ((IEnumerable<AudioTemplateScript>)await DataWrapper.QueryStoredProcAsync<AudioTemplateScript>(Constants.StoredProcedures.AudioScriptTemplateSelectByCustomerVideoId_sp,
+                dbParams: new { CustomerVideoId = customerVideoId }))
+                .FirstOrDefault();
+
+            return audioScript;
+        }
+
+        public async Task<IEnumerable<AudioTemplateScript>> AudioTemplateScript_SelectAllAsync()
+        {
+            var audioScripts = ((IEnumerable<AudioTemplateScript>)await DataWrapper.QueryStoredProcAsync<AudioTemplateScript>(Constants.StoredProcedures.AudioScriptTemplateSelectAll_sp))
+                .ToList();
+
+            return audioScripts;
+        }
+
+        #endregion
+
         #region Customer
 
         public async Task<Customer> Customer_SelectAsync(long customerId)
@@ -272,6 +317,37 @@ namespace PromoStudio.Data
         {
             DataWrapper.ExecuteStoredProc(Constants.StoredProcedures.CustomerVideoItemDelete_sp,
                 dbParams: new { CustomerVideoItemId = customerVideoItemId });
+        }
+
+        #endregion
+
+        #region CustomerVideoScript
+
+        public async Task<CustomerVideoScript> CustomerVideoScript_InsertAsync(CustomerVideoScript customerVideoScript)
+        {
+            var result = ((IEnumerable<CustomerVideoScript>)await DataWrapper.QueryStoredProcAsync<CustomerVideoScript>(Constants.StoredProcedures.CustomerVideoScriptInsert_sp,
+                dbParams: customerVideoScript.ToPoco()))
+                .FirstOrDefault();
+
+            return result;
+        }
+
+        public async Task<CustomerVideoScript> CustomerVideoScript_SelectAsync(long customerVideoScriptId)
+        {
+            var audioScript = ((IEnumerable<CustomerVideoScript>)await DataWrapper.QueryStoredProcAsync<CustomerVideoScript>(Constants.StoredProcedures.AudioScriptTemplateSelectById_sp,
+                dbParams: new { CustomerVideoScriptId = customerVideoScriptId }))
+                .FirstOrDefault();
+
+            return audioScript;
+        }
+
+        public async Task<CustomerVideoScript> CustomerVideoScript_SelectByCustomerVideoIdAsync(long customerVideoId)
+        {
+            var audioScript = ((IEnumerable<CustomerVideoScript>)await DataWrapper.QueryStoredProcAsync<CustomerVideoScript>(Constants.StoredProcedures.AudioScriptTemplateSelectByCustomerVideoId_sp,
+                dbParams: new { CustomerVideoId = customerVideoId }))
+                .FirstOrDefault();
+
+            return audioScript;
         }
 
         #endregion

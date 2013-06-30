@@ -3,11 +3,14 @@ namespace PromoStudio.Data
 {
     public interface IDataService
     {
-        IDataWrapper DataWrapper { get; set; }
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.AudioTemplateScript> AudioTemplateScript_InsertAsync(PromoStudio.Common.Models.AudioTemplateScript audioScript);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.AudioTemplateScript>> AudioTemplateScript_SelectAllAsync();
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.AudioTemplateScript> AudioTemplateScript_SelectAsync(long audioTemplateScriptId);
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.AudioTemplateScript> AudioTemplateScript_SelectByCustomerVideoIdAsync(long customerVideoId);
+        void AudioTemplateScript_Update(PromoStudio.Common.Models.AudioTemplateScript audioScript);
         void Customer_Delete(long customerId);
         System.Threading.Tasks.Task<PromoStudio.Common.Models.Customer> Customer_InsertAsync(PromoStudio.Common.Models.Customer customer);
         System.Threading.Tasks.Task<PromoStudio.Common.Models.Customer> Customer_SelectAsync(long customerId);
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.CustomerWithLoginCredential>> CustomerWithLoginCredential_SelectAsyncByLoginCredential(sbyte customerLoginPlatformId, string loginKey, string emailAddress);
         void Customer_Update(PromoStudio.Common.Models.Customer customer);
         void CustomerLoginCredential_InsertUpdate(PromoStudio.Common.Models.CustomerLoginCredential customerLoginCredential);
         void CustomerResource_Delete(long customerResourceId);
@@ -36,10 +39,15 @@ namespace PromoStudio.Data
         System.Threading.Tasks.Task<PromoStudio.Common.Models.CustomerVideoItem> CustomerVideoItem_SelectAsync(long customerVideoItemId);
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.CustomerVideoItem>> CustomerVideoItem_SelectByCustomerVideoIdAsync(long customerVideoId);
         void CustomerVideoItem_Update(PromoStudio.Common.Models.CustomerVideoItem customerVideoItem);
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.CustomerVideoScript> CustomerVideoScript_InsertAsync(PromoStudio.Common.Models.CustomerVideoScript customerVideoScript);
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.CustomerVideoScript> CustomerVideoScript_SelectAsync(long customerVideoScriptId);
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.CustomerVideoScript> CustomerVideoScript_SelectByCustomerVideoIdAsync(long customerVideoId);
         System.Threading.Tasks.Task<PromoStudio.Common.Models.CustomerVideoVoiceOver> CustomerVideoVoiceOver_InsertAsync(PromoStudio.Common.Models.CustomerVideoVoiceOver customerVideoVoiceOver);
         System.Threading.Tasks.Task<PromoStudio.Common.Models.CustomerVideoVoiceOver> CustomerVideoVoiceOver_SelectAsync(long customerVideoVoiceOverId);
         System.Threading.Tasks.Task<PromoStudio.Common.Models.CustomerVideoVoiceOver> CustomerVideoVoiceOver_SelectByCustomerVideoIdAsync(long customerVideoId);
         void CustomerVideoVoiceOver_Update(PromoStudio.Common.Models.CustomerVideoVoiceOver customerVideoVoiceOver);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.CustomerWithLoginCredential>> CustomerWithLoginCredential_SelectAsyncByLoginCredential(sbyte customerLoginPlatformId, string loginKey, string emailAddress);
+        IDataWrapper DataWrapper { get; set; }
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StockAudio>> StockAudio_SelectAll();
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StockAudio>> StockAudio_SelectByCustomerVideoId(long customerVideoId);
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StockVideo>> StockVideo_SelectAll();
