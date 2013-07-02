@@ -11,7 +11,6 @@ define(["models/customer",
             ko) {
     return function (data) {
         var self = this;
-        data = data || {};
 
         self.Customer = ko.observable(null);
         self.CustomerVideos = ko.observableArray([]);

@@ -63,12 +63,25 @@ namespace PromoStudio.Common
 
             public const string StockAudioSelectAll_sp = "promostudio.StockAudioSelectAll_sp";
             public const string StockAudioSelectByCustomerVideoId_sp = "promostudio.StockAudioSelectByCustomerVideoId_sp";
+            public const string StockAudioSelectByOrganizationIdAndVerticalId_sp = "promostudio.StockAudioSelectByOrganizationIdAndVerticalId_sp";
 
             public const string StockVideoSelectAll_sp = "promostudio.StockVideoSelectAll_sp";
             public const string StockVideoSelectByCustomerVideoId_sp = "promostudio.StockVideoSelectByCustomerVideoId_sp";
+            public const string StockVideoSelectByOrganizationIdAndVerticalId_sp = "promostudio.StockVideoSelectByOrganizationIdAndVerticalId_sp";
+
+            public const string StoryboardSelectAll_sp = "promostudio.StoryboardSelectAll_sp";
+            public const string StoryboardSelectById_sp = "promostudio.StoryboardSelectById_sp";
+            public const string StoryboardSelectByOrganizationIdAndVerticalId_sp = "promostudio.StoryboardSelectByOrganizationIdAndVerticalId_sp";
+
+            public const string StoryboardItemDelete_sp = "promostudio.StoryboardItemDelete_sp";
+            public const string StoryboardItemInsert_sp = "promostudio.StoryboardItemInsert_sp";
+            public const string StoryboardItemSelectByCustomerVideoId_sp = "promostudio.StoryboardItemSelectByCustomerVideoId_sp";
+            public const string StoryboardItemSelectById_sp = "promostudio.StoryboardItemSelectById_sp";
+            public const string StoryboardItemSelectByStoryboardId_sp = "promostudio.StoryboardItemSelectByStoryboardId_sp";
 
             public const string TemplateScriptSelectAll_sp = "promostudio.TemplateScriptSelectAll_sp";
             public const string TemplateScriptSelectById_sp = "promostudio.TemplateScriptSelectById_sp";
+            public const string TemplateScriptSelectByOrganizationIdAndVerticalId_sp = "promostudio.TemplateScriptSelectByOrganizationIdAndVerticalId_sp";
 
             public const string TemplateScriptItemSelectAll_sp = "promostudio.TemplateScriptItemSelectAll_sp";
             public const string TemplateScriptItemSelectByTemplateScriptId_sp = "promostudio.TemplateScriptItemSelectByTemplateScriptId_sp";

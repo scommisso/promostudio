@@ -50,10 +50,21 @@ namespace PromoStudio.Data
         IDataWrapper DataWrapper { get; set; }
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StockAudio>> StockAudio_SelectAll();
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StockAudio>> StockAudio_SelectByCustomerVideoId(long customerVideoId);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StockAudio>> StockAudio_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId);
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StockVideo>> StockVideo_SelectAll();
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StockVideo>> StockVideo_SelectByCustomerVideoId(long customerVideoId);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StockVideo>> StockVideo_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.Storyboard>> Storyboard_SelectAll();
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.Storyboard> Storyboard_SelectById(int storyboardId);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.Storyboard>> Storyboard_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId);
+        void StoryboardItem_Delete(long storyboardItemId);
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.StoryboardItem> StoryboardItem_InsertAsync(PromoStudio.Common.Models.StoryboardItem storyboardItem);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StoryboardItem>> StoryboardItem_SelectByCustomerVideoId(long customerVideoId);
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.StoryboardItem> StoryboardItem_SelectById(long storyboardItemId);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.StoryboardItem>> StoryboardItem_SelectByStoryboardId(int storyboardId);
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.TemplateScript>> TemplateScript_SelectAllWithItemsAsync();
         System.Threading.Tasks.Task<PromoStudio.Common.Models.TemplateScript> TemplateScript_SelectAsync(long templateScriptId);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.TemplateScript>> TemplateScript_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId);
         System.Threading.Tasks.Task<PromoStudio.Common.Models.TemplateScript> TemplateScript_SelectWithItemsAsync(long templateScriptId);
         System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.TemplateScriptItem>> TemplateScriptItem_SelectByTemplateScriptIdAsync(long templateScriptId);
     }

@@ -474,7 +474,7 @@ namespace PromoStudio.Data
 
         #endregion
 
-        #region
+        #region CustomerTemplateScriptItem
 
         public async Task<CustomerTemplateScriptItem> CustomerTemplateScriptItem_SelectByIdAsync(long customerTemplateScriptItemId)
         {
@@ -529,6 +529,17 @@ namespace PromoStudio.Data
             return stockAudio;
         }
 
+        public async Task<IEnumerable<StockAudio>> StockAudio_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId)
+        {
+            var stockAudio = (await DataWrapper.QueryStoredProcAsync<StockAudio>(Constants.StoredProcedures.StockAudioSelectByOrganizationIdAndVerticalId_sp,
+                dbParams: new {
+                    OrganizationId = organizationId,
+                    VerticalId = verticalId
+                }))
+                .ToList();
+            return stockAudio;
+        }
+
         #endregion
 
         #region StockVideo
@@ -546,6 +557,93 @@ namespace PromoStudio.Data
                 dbParams: new { CustomerVideoId = customerVideoId }))
                 .ToList();
             return stockVideo;
+        }
+
+        public async Task<IEnumerable<StockVideo>> StockVideo_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId)
+        {
+            var stockVideo = (await DataWrapper.QueryStoredProcAsync<StockVideo>(Constants.StoredProcedures.StockVideoSelectByOrganizationIdAndVerticalId_sp,
+                dbParams: new
+                {
+                    OrganizationId = organizationId,
+                    VerticalId = verticalId
+                }))
+                .ToList();
+            return stockVideo;
+        }
+
+        #endregion
+
+        #region Storyboard
+
+        public async Task<IEnumerable<Storyboard>> Storyboard_SelectAll()
+        {
+            var storyboard = (await DataWrapper.QueryStoredProcAsync<Storyboard>(Constants.StoredProcedures.StoryboardSelectAll_sp))
+                .ToList();
+            return storyboard;
+        }
+
+        public async Task<Storyboard> Storyboard_SelectById(int storyboardId)
+        {
+            var storyboard = (await DataWrapper.QueryStoredProcAsync<Storyboard>(Constants.StoredProcedures.StoryboardSelectById_sp,
+                dbParams: new { StoryboardId = storyboardId }))
+                .FirstOrDefault();
+            return storyboard;
+        }
+
+        public async Task<IEnumerable<Storyboard>> Storyboard_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId)
+        {
+            var storyboard = (await DataWrapper.QueryStoredProcAsync<Storyboard>(Constants.StoredProcedures.StoryboardSelectByOrganizationIdAndVerticalId_sp,
+                dbParams: new
+                {
+                    OrganizationId = organizationId,
+                    VerticalId = verticalId
+                }))
+                .ToList();
+            return storyboard;
+        }
+
+        #endregion
+
+        #region StoryboardItem
+
+        public async Task<StoryboardItem> StoryboardItem_InsertAsync(StoryboardItem storyboardItem)
+        {
+            var result =
+                ((IEnumerable<StoryboardItem>)await DataWrapper.QueryStoredProcAsync<StoryboardItem>(Constants.StoredProcedures.StoryboardItemInsert_sp,
+                dbParams: storyboardItem.ToPoco()))
+                .FirstOrDefault();
+
+            return result;
+        }
+
+        public void StoryboardItem_Delete(long storyboardItemId)
+        {
+            DataWrapper.ExecuteStoredProc(Constants.StoredProcedures.StoryboardItemDelete_sp,
+                dbParams: new { StoryboardItemId = storyboardItemId });
+        }
+
+        public async Task<IEnumerable<StoryboardItem>> StoryboardItem_SelectByCustomerVideoId(long customerVideoId)
+        {
+            var storyboardItems = (await DataWrapper.QueryStoredProcAsync<StoryboardItem>(Constants.StoredProcedures.StoryboardItemSelectByCustomerVideoId_sp,
+                dbParams: new { CustomerVideoId = customerVideoId }))
+                .ToList();
+            return storyboardItems;
+        }
+
+        public async Task<StoryboardItem> StoryboardItem_SelectById(long storyboardItemId)
+        {
+            var storyboardItem = (await DataWrapper.QueryStoredProcAsync<StoryboardItem>(Constants.StoredProcedures.StoryboardItemSelectById_sp,
+                dbParams: new { StoryboardItemId = storyboardItemId }))
+                .FirstOrDefault();
+            return storyboardItem;
+        }
+
+        public async Task<IEnumerable<StoryboardItem>> StoryboardItem_SelectByStoryboardId(int storyboardId)
+        {
+            var storyboardItems = (await DataWrapper.QueryStoredProcAsync<StoryboardItem>(Constants.StoredProcedures.StoryboardItemSelectByStoryboardId_sp,
+                dbParams: new { StoryboardId = storyboardId }))
+                .ToList();
+            return storyboardItems;
         }
 
         #endregion
@@ -575,6 +673,18 @@ namespace PromoStudio.Data
                 .FirstOrDefault();
 
             return script;
+        }
+
+        public async Task<IEnumerable<TemplateScript>> TemplateScript_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId)
+        {
+            var templateScripts = (await DataWrapper.QueryStoredProcAsync<TemplateScript>(Constants.StoredProcedures.TemplateScriptSelectByOrganizationIdAndVerticalId_sp,
+                dbParams: new
+                {
+                    OrganizationId = organizationId,
+                    VerticalId = verticalId
+                }))
+                .ToList();
+            return templateScripts;
         }
 
         public async Task<TemplateScript> TemplateScript_SelectWithItemsAsync(long templateScriptId)

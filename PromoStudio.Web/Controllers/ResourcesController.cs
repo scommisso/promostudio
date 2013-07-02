@@ -36,6 +36,24 @@ namespace PromoStudio.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
+
+            return PAjax();
+        }
+
+        //
+        // GET: /Resources/Data
+        public async Task<ActionResult> Data()
+        {
+            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            var customer = HttpContext.User.Identity as PromoStudioIdentity;
+            if (customer == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+
             long customerId = customer.CustomerId;
 
             var customerInfo = (await _dataService.Customer_SelectAsync(customerId));
@@ -47,17 +65,16 @@ namespace PromoStudio.Web.Controllers
             var resources = (await _dataService.CustomerResource_SelectActiveByCustomerIdAsync(customerId))
                 .Where(r => r.Type != TemplateScriptItemType.Text)
                 .ToList();
-
-            ViewBag.Customer = customerInfo;
-            ViewBag.CustomerResources = resources;
-            ViewBag.CustomerJson = JsonConvert.SerializeObject(customerInfo);
-            ViewBag.CustomerResourcesJson = JsonConvert.SerializeObject(resources);
-
-            return PAjax();
+            
+            return Json(new
+            {
+                Customer = customerInfo,
+                CustomerResources = resources
+            }, JsonRequestBehavior.AllowGet);
         }
 
         //
-        // GET: /Resources/Upload?category={category}
+        // POST: /Resources/Upload?category={category}
         [HttpPost]
         public async Task<ActionResult> Upload(HttpPostedFileBase file, int category)
         {

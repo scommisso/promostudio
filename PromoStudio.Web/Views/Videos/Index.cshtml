@@ -5,15 +5,13 @@
 @section scripts
 {
     <script type="text/javascript">
-        require(["viewModels/videosViewModel", "jquery", "knockout", "bootstrap"],
+        require(["viewModels/videosViewModel", "jquery", "knockout"],
             function (videosVm, $, ko) {
                 $(function() {
-                    var data = {},
-                        container = $("div.main-data-container")[0],
-                        vm;
-                    vm = new videosVm();
-                    ko.applyBindings(vm, container);
+                    var container = $("div.main-container div[data-pjax-container]")[0],
+                        vm = new videosVm();
                     vm.pageLoaded();
+                    ko.applyBindings(vm, container);
                 });
             });
     </script>

@@ -39,9 +39,7 @@ namespace PromoStudio.Web
             if (decrypted == null) { return; }
 
             var userData = JsonConvert.DeserializeObject<AuthData>(decrypted.UserData);
-            var principal = new PromoStudioPrincipal(userData);
-
-            HttpContext.Current.User = principal;
+            HttpContext.Current.User = new PromoStudioPrincipal(userData);
         }
     }
 }

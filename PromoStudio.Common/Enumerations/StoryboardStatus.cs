@@ -1,9 +1,8 @@
 ﻿namespace PromoStudio.Common.Enumerations
 {
-    public enum CustomerStatus : sbyte
+    public enum StoryboardStatus : sbyte
     {
         Active = 1,
-        Deleted,
-        Suspended
+        Deleted
     }
 }

@@ -14,6 +14,7 @@ namespace PromoStudio.Common.Models
         public long pk_TemplateScriptId { get; set; }
         public sbyte fk_TemplateScriptStatusId { get; set; }
         public int? fk_OrganizationId { get; set; }
+        public short fk_StoryboardItemType { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string ProjectFilePath { get; set; }
@@ -35,6 +36,12 @@ namespace PromoStudio.Common.Models
             set { fk_TemplateScriptStatusId = (sbyte)value; }
         }
 
+        public StoryboardItemType StoryboardType
+        {
+            get { return (StoryboardItemType)fk_StoryboardItemType; }
+            set { fk_StoryboardItemType = (short)value; }
+        }
+
         public dynamic ToPoco()
         {
             return new
@@ -42,6 +49,7 @@ namespace PromoStudio.Common.Models
                 pk_TemplateScriptId = pk_TemplateScriptId,
                 fk_TemplateScriptStatusId = fk_TemplateScriptStatusId,
                 fk_OrganizationId = fk_OrganizationId,
+                fk_StoryboardItemType = fk_StoryboardItemType,
                 Name = Name,
                 Description = Description,
                 ProjectFilePath = ProjectFilePath,

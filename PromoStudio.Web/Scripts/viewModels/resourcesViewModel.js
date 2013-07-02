@@ -5,20 +5,29 @@ define(["models/customer",
         "models/customerResource",
         "models/enums",
         "jquery",
-        "knockout"], function (
+        "knockout",
+        "form"], function (
             customer,
             customerResource,
             enums,
             $,
             ko) {
-    return function (data) {
+    return function () {
         var self = this;
-        data = data || {};
 
         self.Customer = ko.observable(null);
         self.CustomerResources = ko.observableArray([]);
 
-        self.LoadItems = function (customerData, resources) {
+        self.CategoryList = buildCategoryList();
+        self.SelectedCategory = ko.observable(self.CategoryList[0]);
+
+        self.FormAction = ko.computed(function () {
+            var cat = self.SelectedCategory();
+            cat = cat ? cat.Value : 1;
+            return "/Resources/Upload?category=" + cat;
+        });
+
+        function loadItems(customerData, resources) {
             var i, item;
             resources = resources || [];
 
@@ -33,18 +42,6 @@ define(["models/customer",
             self.CustomerResources(resources);
         };
 
-        self.CategoryList = buildCategoryList();
-        self.SelectedCategory = ko.observable(self.CategoryList[0]);
-
-        self.FormAction = ko.computed(function () {
-            var cat = self.SelectedCategory();
-            cat = cat ? cat.Value : 1;
-            return "/Resources/Upload?category=" + cat;
-        });
-        
-
-        self.LoadItems(data.Customer, data.CustomerResources);
-
         function buildCategoryList() {
             var items = enums.templateScriptItemCategory(),
                 i;
@@ -57,5 +54,34 @@ define(["models/customer",
             }
             return items;
         }
+
+        self.pageLoaded = function () {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/Resources/Data",
+                success: function (data, textStatus, jqXHR) {
+                    loadItems(data.Customer, data.CustomerResources);
+                    $('form').ajaxForm({
+                        beforeSubmit: function (arr, $form, options) {
+                            // TODO: Submitting                
+                        },
+                        success: function (responseText, statusText, xhr, form) {
+                            // TODO: Hide submission
+                            $('form input').val("");
+                        },
+                        uploadProgress: function (event, position, total, percentComplete) {
+                            // TODO: Show progress
+                        }
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Error retrieving data: " + textStatus);
+                    console.log(errorThrown);
+                }
+            });
+        };
     };
 });
+
+

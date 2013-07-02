@@ -5,16 +5,12 @@
 @section scripts
 {
     <script type="text/javascript">
-        require(["viewModels/resourcesViewModel", "jquery", "knockout", "bootstrap"],
-            function (resourcesVm, $, ko) {
-                $(function() {
-                    var data = {},
-                        container = $("div.main-data-container")[0],
-                        vm;
-                    data.Customer = @Html.Raw(ViewBag.CustomerJson);
-                    data.CustomerResources = @Html.Raw(ViewBag.CustomerResourcesJson);
-                    vm = new resourcesVm(data);
-                    ko.cleanNode(container);
+        require(["viewModels/resourcesViewModel", "jquery", "knockout"],
+            function (resourcesViewModel, $, ko) {
+                $(function () {
+                    var container = $("div.main-container div[data-pjax-container]")[0],
+                        vm = new resourcesViewModel();
+                    vm.pageLoaded();
                     ko.applyBindings(vm, container);
                 });
             });
@@ -61,4 +57,5 @@
       <input type="file" name="file" id="file" />
       <input type="submit" />
     </form>
+    <div id="formSubmitResponse"></div>
 </div>
