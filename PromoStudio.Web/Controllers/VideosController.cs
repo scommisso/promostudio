@@ -23,14 +23,9 @@ namespace PromoStudio.Web.Controllers
 
         //
         // GET: /Videos/
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-            var customer = HttpContext.User.Identity as PromoStudioIdentity;
-            if (customer == null)
+            if (CurrentUser == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
@@ -42,16 +37,11 @@ namespace PromoStudio.Web.Controllers
         // GET: /Videos/Data
         public async Task<ActionResult> Data()
         {
-            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            if (CurrentUser == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
-            var customer = HttpContext.User.Identity as PromoStudioIdentity;
-            if (customer == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-            long customerId = customer.CustomerId;
+            long customerId = CurrentUser.CustomerId;
 
             var customerInfo = (await _dataService.Customer_SelectAsync(customerId));
             if (customerInfo == null)
@@ -72,16 +62,11 @@ namespace PromoStudio.Web.Controllers
         // GET: /Videos/Status
         public async Task<ActionResult> Status()
         {
-            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            if (CurrentUser == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
-            var customer = HttpContext.User.Identity as PromoStudioIdentity;
-            if (customer == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-            long customerId = customer.CustomerId;
+            long customerId = CurrentUser.CustomerId;
 
             var videos = (await _dataService.CustomerVideo_SelectByCustomerIdAsync(customerId));
 

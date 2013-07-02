@@ -25,10 +25,16 @@ namespace PromoStudio.Web.Controllers
         // GET: /Build/
         public async Task<ActionResult> Index()
         {
+            if (CurrentUser == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            long customerId = CurrentUser.CustomerId;
+
             var items = (await _dataService.TemplateScript_SelectAllWithItemsAsync());
             var videos = (await _dataService.StockVideo_SelectAll());
             var audio = (await _dataService.StockAudio_SelectAll());
-            var resources = (await _dataService.CustomerResource_SelectActiveByCustomerIdAsync(1));
+            var resources = (await _dataService.CustomerResource_SelectActiveByCustomerIdAsync(customerId));
 
             ViewBag.CustomerResourcesJson = JsonConvert.SerializeObject(resources);
             ViewBag.TemplateScriptsJson = JsonConvert.SerializeObject(items);
@@ -86,18 +92,13 @@ namespace PromoStudio.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Submit(CustomerVideo video)
         {
-            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            if (CurrentUser == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
-            var customer = HttpContext.User.Identity as PromoStudioIdentity;
-            if (customer == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
+            long customerId = CurrentUser.CustomerId;
 
             string json = JsonConvert.SerializeObject(video);
-            long customerId = customer.CustomerId;
             _log.InfoFormat("Customer {0} submitted video: {1}", customerId, json);
             try
             {

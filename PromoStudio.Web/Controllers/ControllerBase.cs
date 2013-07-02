@@ -12,6 +12,25 @@ namespace PromoStudio.Web.Controllers
     {
         protected IDataService _dataService;
         protected ILog _log;
+        protected PromoStudioIdentity _currentUser;
+
+        protected PromoStudioIdentity CurrentUser
+        {
+            get
+            {
+                if (_currentUser == null)
+                {
+                    if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+                    {
+                        return null;
+                    }
+                    var ident = Request.RequestContext.HttpContext.User.Identity as PromoStudioIdentity;
+                    if (ident == null) { return null; }
+                    _currentUser = ident;
+                }
+                return _currentUser;
+            }
+        }
 
         protected ControllerBase(IDataService dataService, ILog log)
         {

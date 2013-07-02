@@ -25,14 +25,9 @@ namespace PromoStudio.Web.Controllers
 
         //
         // GET: /Resources/
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-            var customer = HttpContext.User.Identity as PromoStudioIdentity;
-            if (customer == null)
+            if (CurrentUser == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
@@ -44,17 +39,11 @@ namespace PromoStudio.Web.Controllers
         // GET: /Resources/Data
         public async Task<ActionResult> Data()
         {
-            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            if (CurrentUser == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
-            var customer = HttpContext.User.Identity as PromoStudioIdentity;
-            if (customer == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-
-            long customerId = customer.CustomerId;
+            long customerId = CurrentUser.CustomerId;
 
             var customerInfo = (await _dataService.Customer_SelectAsync(customerId));
             if (customerInfo == null)
@@ -78,16 +67,11 @@ namespace PromoStudio.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Upload(HttpPostedFileBase file, int category)
         {
-            if (HttpContext.User == null || HttpContext.User.Identity == null || !HttpContext.User.Identity.IsAuthenticated)
+            if (CurrentUser == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
-            var customer = HttpContext.User.Identity as PromoStudioIdentity;
-            if (customer == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-            long customerId = customer.CustomerId;
+            long customerId = CurrentUser.CustomerId;
 
             if (file.ContentLength > 0)
             {
