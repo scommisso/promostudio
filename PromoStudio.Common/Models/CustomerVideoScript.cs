@@ -10,10 +10,10 @@ namespace PromoStudio.Common.Models
     {
         public long pk_CustomerVideoScriptId { get; set; }
         public long fk_CustomerVideoId { get; set; }
-        public int fk_AudioTemplateScriptId { get; set; }
+        public int fk_AudioScriptTemplateId { get; set; }
         public string ReplacementData { get; set; }
 
-        public AudioTemplateScript AudioScript { get; set; }
+        public AudioScriptTemplate AudioScript { get; set; }
 
         public dynamic ToPoco()
         {
@@ -21,7 +21,7 @@ namespace PromoStudio.Common.Models
             {
                 pk_CustomerVideoScriptId = pk_CustomerVideoScriptId,
                 fk_CustomerVideoId = fk_CustomerVideoId,
-                fk_AudioTemplateScriptId = fk_AudioTemplateScriptId,
+                fk_AudioScriptTemplateId = fk_AudioScriptTemplateId,
                 ReplacementData = ReplacementData
             };
         }

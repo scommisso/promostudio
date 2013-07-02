@@ -3,11 +3,12 @@ namespace PromoStudio.Data
 {
     public interface IDataService
     {
-        System.Threading.Tasks.Task<PromoStudio.Common.Models.AudioTemplateScript> AudioTemplateScript_InsertAsync(PromoStudio.Common.Models.AudioTemplateScript audioScript);
-        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.AudioTemplateScript>> AudioTemplateScript_SelectAllAsync();
-        System.Threading.Tasks.Task<PromoStudio.Common.Models.AudioTemplateScript> AudioTemplateScript_SelectAsync(long audioTemplateScriptId);
-        System.Threading.Tasks.Task<PromoStudio.Common.Models.AudioTemplateScript> AudioTemplateScript_SelectByCustomerVideoIdAsync(long customerVideoId);
-        void AudioTemplateScript_Update(PromoStudio.Common.Models.AudioTemplateScript audioScript);
+        void AudioScriptTemplate_Delete(int audioScriptTemplateId);
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.AudioScriptTemplate> AudioScriptTemplate_InsertAsync(PromoStudio.Common.Models.AudioScriptTemplate audioScript);
+        System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<PromoStudio.Common.Models.AudioScriptTemplate>> AudioScriptTemplate_SelectAllAsync();
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.AudioScriptTemplate> AudioScriptTemplate_SelectAsync(long audioTemplateScriptId);
+        System.Threading.Tasks.Task<PromoStudio.Common.Models.AudioScriptTemplate> AudioScriptTemplate_SelectByCustomerVideoIdAsync(long customerVideoId);
+        void AudioScriptTemplate_Update(PromoStudio.Common.Models.AudioScriptTemplate audioScript);
         void Customer_Delete(long customerId);
         System.Threading.Tasks.Task<PromoStudio.Common.Models.Customer> Customer_InsertAsync(PromoStudio.Common.Models.Customer customer);
         System.Threading.Tasks.Task<PromoStudio.Common.Models.Customer> Customer_SelectAsync(long customerId);

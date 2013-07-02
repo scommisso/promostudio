@@ -30,44 +30,51 @@ namespace PromoStudio.Data
 
         #endregion
 
-        #region AudioTemplateScript
+        #region AudioScriptTemplate
 
-        public async Task<AudioTemplateScript> AudioTemplateScript_InsertAsync(AudioTemplateScript audioScript)
+        public void AudioScriptTemplate_Delete(int audioScriptTemplateId)
         {
-            var result = ((IEnumerable<AudioTemplateScript>)await DataWrapper.QueryStoredProcAsync<AudioTemplateScript>(Constants.StoredProcedures.AudioScriptTemplateInsert_sp,
+            DataWrapper.ExecuteStoredProc(Constants.StoredProcedures.AudioScriptTemplateDelete_sp,
+                dbParams: new { AudioScriptTemplateId = audioScriptTemplateId });
+        }
+
+        public async Task<AudioScriptTemplate> AudioScriptTemplate_InsertAsync(AudioScriptTemplate audioScript)
+        {
+            audioScript.DateCreated = DateTime.Now;
+            var result = ((IEnumerable<AudioScriptTemplate>)await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateInsert_sp,
                 dbParams: audioScript.ToPoco()))
                 .FirstOrDefault();
 
             return result;
         }
 
-        public void AudioTemplateScript_Update(AudioTemplateScript audioScript)
+        public void AudioScriptTemplate_Update(AudioScriptTemplate audioScript)
         {
             DataWrapper.ExecuteStoredProc(Constants.StoredProcedures.AudioScriptTemplateUpdate_sp,
                 dbParams: audioScript.ToPoco());
         }
 
-        public async Task<AudioTemplateScript> AudioTemplateScript_SelectAsync(long audioTemplateScriptId)
+        public async Task<AudioScriptTemplate> AudioScriptTemplate_SelectAsync(long audioScriptTemplateId)
         {
-            var audioScript = ((IEnumerable<AudioTemplateScript>)await DataWrapper.QueryStoredProcAsync<AudioTemplateScript>(Constants.StoredProcedures.AudioScriptTemplateSelectById_sp,
-                dbParams: new { AudioTemplateScriptId = audioTemplateScriptId }))
+            var audioScript = ((IEnumerable<AudioScriptTemplate>)await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateSelectById_sp,
+                dbParams: new { AudioScriptTemplateId = audioScriptTemplateId }))
                 .FirstOrDefault();
 
             return audioScript;
         }
 
-        public async Task<AudioTemplateScript> AudioTemplateScript_SelectByCustomerVideoIdAsync(long customerVideoId)
+        public async Task<AudioScriptTemplate> AudioScriptTemplate_SelectByCustomerVideoIdAsync(long customerVideoId)
         {
-            var audioScript = ((IEnumerable<AudioTemplateScript>)await DataWrapper.QueryStoredProcAsync<AudioTemplateScript>(Constants.StoredProcedures.AudioScriptTemplateSelectByCustomerVideoId_sp,
+            var audioScript = ((IEnumerable<AudioScriptTemplate>)await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateSelectByCustomerVideoId_sp,
                 dbParams: new { CustomerVideoId = customerVideoId }))
                 .FirstOrDefault();
 
             return audioScript;
         }
 
-        public async Task<IEnumerable<AudioTemplateScript>> AudioTemplateScript_SelectAllAsync()
+        public async Task<IEnumerable<AudioScriptTemplate>> AudioScriptTemplate_SelectAllAsync()
         {
-            var audioScripts = ((IEnumerable<AudioTemplateScript>)await DataWrapper.QueryStoredProcAsync<AudioTemplateScript>(Constants.StoredProcedures.AudioScriptTemplateSelectAll_sp))
+            var audioScripts = ((IEnumerable<AudioScriptTemplate>)await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateSelectAll_sp))
                 .ToList();
 
             return audioScripts;
@@ -88,6 +95,7 @@ namespace PromoStudio.Data
 
         public async Task<Customer> Customer_InsertAsync(Customer customer)
         {
+            customer.DateCreated = DateTime.Now;
             var result =
                 ((IEnumerable<Customer>)await DataWrapper.QueryStoredProcAsync<Customer>(Constants.StoredProcedures.CustomerInsert_sp,
                 dbParams: customer.ToPoco()))
@@ -217,6 +225,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerVideo> CustomerVideo_InsertAsync(CustomerVideo customerVideo)
         {
+            customerVideo.DateCreated = DateTime.Now;
             var result =
                 ((IEnumerable<CustomerVideo>)await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoInsert_sp,
                 dbParams: customerVideo.ToPoco()))
@@ -261,6 +270,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerVideoVoiceOver> CustomerVideoVoiceOver_InsertAsync(CustomerVideoVoiceOver customerVideoVoiceOver)
         {
+            customerVideoVoiceOver.DateCreated = DateTime.Now;
             var result =
                 ((IEnumerable<CustomerVideoVoiceOver>)await DataWrapper.QueryStoredProcAsync<CustomerVideoVoiceOver>(Constants.StoredProcedures.CustomerVideoVoiceOverInsert_sp,
                 dbParams: customerVideoVoiceOver.ToPoco()))
@@ -383,6 +393,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerResource> CustomerResource_InsertAsync(CustomerResource customerResource)
         {
+            customerResource.DateCreated = DateTime.Now;
             var result =
                 ((IEnumerable<CustomerResource>) await DataWrapper.QueryStoredProcAsync<CustomerResource>(Constants.StoredProcedures.CustomerResourceInsert_sp,
                 dbParams: customerResource.ToPoco()))
@@ -458,6 +469,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerTemplateScript> CustomerTemplateScript_InsertAsync(CustomerTemplateScript customerTemplateScript)
         {
+            customerTemplateScript.DateCreated = DateTime.Now;
             var result =
                 ((IEnumerable<CustomerTemplateScript>)await DataWrapper.QueryStoredProcAsync<CustomerTemplateScript>(Constants.StoredProcedures.CustomerTemplateScriptInsert_sp,
                 dbParams: customerTemplateScript.ToPoco()))

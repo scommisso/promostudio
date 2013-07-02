@@ -102,7 +102,6 @@ namespace PromoStudio.Web.Controllers
             _log.InfoFormat("Customer {0} submitted video: {1}", customerId, json);
             try
             {
-                video.DateCreated = DateTime.Now;
                 video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Canceled; // store as canceled state until all children have populated
                 var newVideo = await _dataService.CustomerVideo_InsertAsync(video);
                 foreach (var item in video.Items)
@@ -110,7 +109,6 @@ namespace PromoStudio.Web.Controllers
                     item.fk_CustomerVideoId = newVideo.pk_CustomerVideoId;
                     if (item.fk_CustomerVideoItemTypeId == (sbyte)CustomerVideoItemType.CustomerTemplateScript)
                     {
-                        item.CustomerScript.DateCreated = DateTime.Now;
                         item.CustomerScript.fk_CustomerId = customerId;
                         var newScript = await _dataService.CustomerTemplateScript_InsertAsync(item.CustomerScript);
                         foreach (var scriptItem in item.CustomerScript.Items)

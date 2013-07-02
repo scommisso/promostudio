@@ -14,6 +14,8 @@ namespace PromoStudio.Common.Models
         public short fk_TemplateScriptItemCategoryId { get; set; }
         public sbyte fk_CustomerResourceStatusId { get; set; }
         public string Value { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
 
         public TemplateScriptItemType Type
         {

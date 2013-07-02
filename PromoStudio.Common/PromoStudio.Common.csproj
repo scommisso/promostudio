@@ -51,6 +51,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Enumerations\AudioScriptTemplateStatus.cs" />
+    <Compile Include="Enumerations\StockItemStatus.cs" />
     <Compile Include="Enumerations\StoryboardStatus.cs" />
     <Compile Include="Enumerations\StoryboardItemType.cs" />
     <Compile Include="Enumerations\CustomerLoginPlatform.cs" />
@@ -65,7 +67,7 @@
     <Compile Include="Enumerations\TemplateScriptStatus.cs" />
     <Compile Include="Enumerations\TemplateScriptItemType.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Models\AudioTemplateScript.cs" />
+    <Compile Include="Models\AudioScriptTemplate.cs" />
     <Compile Include="Models\StoryboardItem.cs" />
     <Compile Include="Models\Storyboard.cs" />
     <Compile Include="Models\CustomerLoginCredential.cs" />

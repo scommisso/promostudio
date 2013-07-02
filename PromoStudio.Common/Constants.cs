@@ -10,6 +10,7 @@ namespace PromoStudio.Common
     {
         public static class StoredProcedures
         {
+            public const string AudioScriptTemplateDelete_sp = "promostudio.AudioScriptTemplateDelete_sp";
             public const string AudioScriptTemplateInsert_sp = "promostudio.AudioScriptTemplateInsert_sp";
             public const string AudioScriptTemplateSelectAll_sp = "promostudio.AudioScriptTemplateSelectAll_sp";
             public const string AudioScriptTemplateSelectByCustomerVideoId_sp = "promostudio.AudioScriptTemplateSelectByCustomerVideoId_sp";

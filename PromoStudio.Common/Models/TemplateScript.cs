@@ -24,6 +24,8 @@ namespace PromoStudio.Common.Models
         public string RenderPreviewCompName { get; set; }
         public double? RenderCompStartTime { get; set; }
         public double? RenderCompEndTime { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
 
         public List<TemplateScriptItem> Items {
             get { return _scriptItems; }
@@ -58,7 +60,9 @@ namespace PromoStudio.Common.Models
                 RenderCompName = RenderCompName,
                 RenderPreviewCompName = RenderPreviewCompName,
                 RenderCompStartTime = RenderCompStartTime,
-                RenderCompEndTime = RenderCompEndTime
+                RenderCompEndTime = RenderCompEndTime,
+                DateCreated = DateCreated,
+                DateUpdated = DateUpdated
             };
         }
     }
