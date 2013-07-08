@@ -19,12 +19,10 @@
 <h1>@ViewBag.Title</h1>
 <hr />
 
-<!-- Jumbotron -->
-<div class="jumbotron">
-    <p class="lead">Your Resources</p>
+<div style="display: none" data-bind="visible: LoadingData">
+    <h3>Loading your resources...</h3>
+    <div class="loader-large"></div>
 </div>
-
-<hr />
 
 <!-- ko if: CustomerResources().length > 0 -->
 <div data-bind="foreach: CustomerResources()">
@@ -49,13 +47,30 @@
 <!-- ko if: CustomerResources().length === 0 -->
 <h2>You have no resources</h2>
 <!-- /ko -->
+
+<hr />
 <div>
     <h3>Resource Upload</h3>
-    <select data-bind="options: CategoryList, optionsText: 'Text', value: SelectedCategory, optionsCaption: 'Choose a Category'"></select>
-    <form data-bind="attr: { action: FormAction }" method="post" enctype="multipart/form-data">  
-      <label for="file">Filename:</label>
-      <input type="file" name="file" id="file" />
-      <input type="submit" />
-    </form>
+    <div style="display: none" class="alert alert-success" data-bind="fadeVisible: FileLoadSuccess">
+        <a href="javascript:void(0);" class="close" data-bind="click: function () { FileLoadSuccess(false); }">&times;</a>
+        File uploaded successfully.
+    </div>
+    <div style="display: none" class="alert alert-error" data-bind="fadeVisible: FileLoadError">
+        <a href="javascript:void(0);" class="close" data-bind="click: function () { FileLoadError(false); }">&times;</a>
+        There was a problem loading your file. Please try again.
+    </div>
+    <div data-bind="fadeVisible: !LoadingFile()">
+        <select data-bind="options: CategoryList, optionsText: 'Text', value: SelectedCategory, optionsCaption: 'Choose a Category'"></select>
+        <form data-bind="attr: { action: FormAction }" method="post" enctype="multipart/form-data">  
+          <label for="file">Filename:</label>
+          <input type="file" name="file" id="file" />
+          <input type="submit" />
+        </form>
+    </div>
+    <div style="display: none" data-bind="fadeVisible: LoadingFile">
+        <div class="progress progress-striped">
+            <div class="bar" data-bind="style: { width: (LoadingFilePercentage() + '%') }" style="width:0;"></div>
+        </div>
+    </div>
     <div id="formSubmitResponse"></div>
 </div>

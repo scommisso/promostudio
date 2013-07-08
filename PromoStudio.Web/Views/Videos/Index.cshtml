@@ -19,12 +19,10 @@
 <h1>@ViewBag.Title</h1>
 <hr />
 
-<!-- Jumbotron -->
-<div class="jumbotron">
-    <p class="lead">Your Videos</p>
+<div style="display: none" data-bind="visible: LoadingData">
+    <h3>Loading your videos...</h3>
+    <div class="loader-large"></div>
 </div>
-
-<hr />
 
 <!-- ko if: CustomerVideos().length > 0 -->
 <div data-bind="foreach: CustomerVideos()">

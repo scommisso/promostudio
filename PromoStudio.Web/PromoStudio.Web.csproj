@@ -187,6 +187,7 @@
     <Content Include="Scripts\lib\jquery.bootstrap.wizard.js" />
     <Content Include="Scripts\lib\jquery.form.js" />
     <Content Include="Scripts\lib\jquery.pjax.js" />
+    <Content Include="Scripts\lib\ko.custom.js" />
     <Content Include="Scripts\lib\modernizr.js" />
     <Content Include="Scripts\models\customer.js" />
     <Content Include="Scripts\models\customerTemplateScriptItem.js" />

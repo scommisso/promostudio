@@ -6,6 +6,7 @@ define(["models/customer",
         "models/enums",
         "jquery",
         "knockout",
+        "lib/ko.custom",
         "form"], function (
             customer,
             customerResource,
@@ -26,6 +27,12 @@ define(["models/customer",
             cat = cat ? cat.Value : 1;
             return "/Resources/Upload?category=" + cat;
         });
+
+        self.LoadingData = ko.observable(false);
+        self.LoadingFile = ko.observable(false);
+        self.LoadingFilePercentage = ko.observable(0);
+        self.FileLoadSuccess = ko.observable(false);
+        self.FileLoadError = ko.observable(false);
 
         function loadItems(customerData, resources) {
             var i, item;
@@ -53,32 +60,54 @@ define(["models/customer",
                 };
             }
             return items;
-        }
+        };
 
-        self.pageLoaded = function () {
+        function loadData(callback) {
+            self.LoadingData(true);
             $.ajax({
                 type: "GET",
                 dataType: "json",
                 url: "/Resources/Data",
                 success: function (data, textStatus, jqXHR) {
                     loadItems(data.Customer, data.CustomerResources);
-                    $('form').ajaxForm({
-                        beforeSubmit: function (arr, $form, options) {
-                            // TODO: Submitting                
-                        },
-                        success: function (responseText, statusText, xhr, form) {
-                            // TODO: Hide submission
-                            $('form input').val("");
-                        },
-                        uploadProgress: function (event, position, total, percentComplete) {
-                            // TODO: Show progress
-                        }
-                    });
+                    self.LoadingData(false);
+                    if (typeof (callback) === "function") {
+                        callback();
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    self.LoadingData(false);
                     console.log("Error retrieving data: " + textStatus);
                     console.log(errorThrown);
                 }
+            });
+        };
+
+        self.pageLoaded = function () {
+            loadData(function () {
+                var form = $("form");
+                form.ajaxForm({
+                    beforeSubmit: function (arr, $form, options) {
+                        self.LoadingFilePercentage(0);
+                        self.LoadingFile(true);
+                        self.FileLoadSuccess(false);
+                        self.FileLoadError(false);
+                    },
+                    success: function (responseText, statusText, xhr, form) {
+                        form.clearForm();
+                        self.LoadingFile(false);
+                        if (xhr.status === 200) {
+                            self.FileLoadSuccess(true);
+                            loadData();
+                        }
+                        else {
+                            self.FileLoadError(true);
+                        }
+                    },
+                    uploadProgress: function (event, position, total, percentComplete) {
+                        self.LoadingFilePercentage(percentComplete);
+                    }
+                });
             });
         };
     };

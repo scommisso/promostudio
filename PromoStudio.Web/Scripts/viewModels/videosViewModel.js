@@ -14,6 +14,7 @@ define(["models/customer",
 
         self.Customer = ko.observable(null);
         self.CustomerVideos = ko.observableArray([]);
+        self.LoadingData = ko.observable(false);
 
         function loadItems(customerData, videos) {
             var i, item;
@@ -46,12 +47,14 @@ define(["models/customer",
         };
 
         self.pageLoaded = function () {
+            self.LoadingData(true);
             $.ajax({
                 type: "GET",
                 dataType: "json",
                 url: "/Videos/Data",
                 success: function (data, textStatus, jqXHR) {
                     loadItems(data.Customer, data.CustomerVideos);
+                    self.LoadingData(false);
                     var interval = window.setInterval(function () {
                         updateStatus();
                     }, 5000);
