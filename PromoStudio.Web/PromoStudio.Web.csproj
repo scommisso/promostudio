@@ -187,8 +187,13 @@
     <Content Include="Scripts\lib\jquery.bootstrap.wizard.js" />
     <Content Include="Scripts\lib\jquery.form.js" />
     <Content Include="Scripts\lib\jquery.pjax.js" />
+    <Content Include="Scripts\lib\knockout-2.3.0.js" />
     <Content Include="Scripts\lib\ko.custom.js" />
     <Content Include="Scripts\lib\modernizr.js" />
+    <Content Include="Scripts\models\audioScriptTemplate.js" />
+    <Content Include="Scripts\models\customerVideoScript.js" />
+    <Content Include="Scripts\models\storyboardItem.js" />
+    <Content Include="Scripts\models\storyboard.js" />
     <Content Include="Scripts\models\customer.js" />
     <Content Include="Scripts\models\customerTemplateScriptItem.js" />
     <Content Include="Scripts\models\customerTemplateScript.js" />
@@ -209,7 +214,6 @@
     <Content Include="Scripts\viewModels\resourcesViewModel.js" />
     <Content Include="Scripts\viewModels\videosViewModel.js" />
     <Content Include="Scripts\vsdoc\knockout-2.2.1.debug.js" />
-    <Content Include="Scripts\lib\knockout-2.2.1.js" />
     <Content Include="Scripts\models\customerVideo.js" />
     <Content Include="Scripts\vsdoc\require.js" />
     <Content Include="Web.config" />
