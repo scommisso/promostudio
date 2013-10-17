@@ -5,7 +5,7 @@ require.onError = function(e) {
     }
 };
 require.config({
-    baseUrl: "/Scripts/",
+    baseUrl: "./Scripts/",
     paths: {
         jquery: ["//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min", "/Scripts/jquery-1.9.1.min"],
         jqueryui: ["//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min", "/Scripts/lib/jquery-ui-1.10.3.min"],

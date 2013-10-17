@@ -12,7 +12,7 @@ define(["viewModels/photosViewModel",
         "strings",
         "models/enums",
         "ps/logger",
-        "lib/ko.custom",
+        "lib/ko.custom.min",
         "ps/extensions"],
     function (
         photosViewModel,

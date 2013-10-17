@@ -1,5 +1,5 @@
 ﻿define([], function () {
-    var logger = new (function() {
+    var logger = (function() {
         var self = this;
 
         self.log = function (message) {
@@ -7,6 +7,8 @@
                 window.console.log(message);
             }
         };
+
+        return self;
     })();
     return logger;
 });

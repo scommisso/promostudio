@@ -5,9 +5,12 @@
 /// <reference path="../ps/vidyardPlayer.js" />
 
 define(["models/storyboardItem",
+        "ps/vidyardPlayer",
         "knockout",
-        "ps/extensions"], function (
+        "ps/extensions"],
+    function (
         storyboardItem,
+        vPlayer,
         ko) {
     return function (data) {
         var self = this;
@@ -29,9 +32,7 @@ define(["models/storyboardItem",
 
         self.Player = null;
         self.LoadPlayer = function () {
-            require(["ps/vidyardPlayer"], function(vPlayer) {
-                self.Player = new vPlayer({ VideoId: self.VidyardId() });
-            });
+            self.Player = new vPlayer({ VideoId: self.VidyardId() });
         };
         self.PlayLightbox = function(d, e) {
             if (self.Player) {

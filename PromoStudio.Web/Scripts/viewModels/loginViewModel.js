@@ -38,7 +38,7 @@ define(["jquery",
                         logger.log(errorThrown);
                         alert("error logging in");
                     });
-            };
+            }
 
             self.pageLoaded = function () {
                 if ($("#loginButtons").size() > 0) {

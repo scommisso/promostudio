@@ -7,7 +7,7 @@ define(["models/customer",
         "ps/logger",
         "jquery",
         "knockout",
-        "lib/ko.custom",
+        "lib/ko.custom.min",
         "form"], function (
             customer,
             customerResource,

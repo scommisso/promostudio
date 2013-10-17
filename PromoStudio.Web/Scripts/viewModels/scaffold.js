@@ -9,18 +9,18 @@ define(["ps/logger",
     "knockout",
     "lib/jquery-scrolltofixed"],
     function (logger, $, ko) {
-        return function () {
-            
+        return function() {
+
             $.fn.pjaxScaffold = {
                 containerSelector: "div.main-container div[data-pjax-container]",
-                getContainer: function () {
+                getContainer: function() {
                     return $($.fn.pjaxScaffold.containerSelector);
                 }
             };
 
             function bindModel(key) {
                 require(["viewModels/" + key + "ViewModel"],
-                    function (viewModel) {
+                    function(viewModel) {
                         if (typeof viewModel === "function") {
                             var vm = new viewModel(),
                                 container = $.fn.pjaxScaffold.getContainer()[0];
@@ -37,26 +37,32 @@ define(["ps/logger",
                 $.ajax({
                     type: "POST",
                     url: "/OAuth/Logout",
-                    success: function (data, textStatus, jqXHR) {
+                    success: function(data, textStatus, jqXHR) {
                         initContainer("", "login");
                         $("div.navbar").hide();
                         $.pjax({ url: "/", container: $.fn.pjaxScaffold.containerSelector });
                     },
-                    error: function (jqXHR, textStatus, errorThrown) {
+                    error: function(jqXHR, textStatus, errorThrown) {
                         logger.log("Error logging in ");
                         logger.log(errorThrown);
                         alert("error logging in");
                     }
                 });
-            };
+            }
 
             function initContainer(link, target) {
                 var container = $.fn.pjaxScaffold.containerSelector,
-                    determineActiveNav = function (url) {
+                    determineActiveNav = function(url) {
                         var loc = url.toLowerCase();
-                        if (loc.indexOf("videos") === 0) { return "#navVideos"; }
-                        if (loc.indexOf("resources") === 0) { return "#navResources"; }
-                        if (loc.indexOf("build") === 0) { return "#navBuild"; }
+                        if (loc.indexOf("videos") === 0) {
+                            return "#navVideos";
+                        }
+                        if (loc.indexOf("resources") === 0) {
+                            return "#navResources";
+                        }
+                        if (loc.indexOf("build") === 0) {
+                            return "#navBuild";
+                        }
                         return "#navHome";
                     },
                     navSelector = determineActiveNav(link);
@@ -73,17 +79,17 @@ define(["ps/logger",
                 }
 
                 // Bind href-specific asynchronous initialization$(document)
-                $(document).on('ready pjax:success', container, function () {
+                $(document).on('ready pjax:success', container, function() {
                     bindModel(target); // Call initializers
                     $(document).off('ready pjax:success', container); // Unbind initialization
                 });
-            };
+            }
 
             function wireupPjaxEvents() {
                 var container = $.fn.pjaxScaffold.getContainer();
                 $(document)
-                    .on("pjax:start", function () { container.stop(true, true).fadeOut(300); })
-                    .on("pjax:end", function () { container.stop(true, true).fadeIn(300); })
+                    .on("pjax:start", function() { container.stop(true, true).fadeOut(300); })
+                    .on("pjax:end", function() { container.stop(true, true).fadeIn(300); });
                 $('a[data-pjax]').on('click', function(event) {
                     var cs = $.fn.pjaxScaffold.containerSelector,
                         emptyRoute = 'login', // The function that will be called on domain's root
@@ -96,14 +102,14 @@ define(["ps/logger",
                     // PJAX-load the new content
                     $.pjax.click(event, { container: cs });
                 });
-            };
+            }
 
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $("div.navbar").scrollToFixed();
 
 
                 // Wire logout button
-                $("#logout").click(function () {
+                $("#logout").click(function() {
                     // TODO: When user name is in header, show/hide this as necessary
                     performLogout();
                 });
@@ -113,5 +119,5 @@ define(["ps/logger",
                 //    wireupPjaxEvents();
                 //}
             });
-        }
+        };
     });

@@ -91,21 +91,6 @@ namespace PromoStudio.Web.Controllers
             var storyboards = (await _dataService.Storyboard_SelectByOrganizationIdAndVerticalIdAsync(
                 CurrentUser.OrganizationId, CurrentUser.VerticalId));
 
-            storyboards = storyboards
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards)
-                .Concat(storyboards);
-
             var data = GetFromCookie();
             var vm = new FootageViewModel()
             {

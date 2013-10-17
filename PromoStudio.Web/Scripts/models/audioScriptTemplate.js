@@ -24,14 +24,14 @@ define(["knockout"], function (ko) {
                 matches.push(match[i]);
             }
             return matches;
-        };
+        }
 
         function getReplacementItems() {
             var scriptText = self.ScriptText(),
                 matches = getMatches(myString, replacementRegex, 1);
 
             return matches;
-        };
+        }
 
         self.getScriptVariables = function () {
             return getReplacementItems();

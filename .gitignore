@@ -68,6 +68,9 @@ _TeamCity*
 # DotCover is a Code Coverage Tool
 *.dotCover
 
+# WebEssentials
+WE-Palette.css
+
 # NCrunch
 *.ncrunch*
 .*crunch*.local.xml
@@ -92,9 +95,9 @@ publish/
 *.Publish.xml
 *.pubxml
 
-# NuGet Packages Directory
-## TODO: If you have NuGet Package Restore enabled, uncomment the next line
+# NuGet /NPM Packages Directory
 packages/
+node_modules/
 
 # Windows Azure Build Output
 csx
@@ -154,4 +157,6 @@ $RECYCLE.BIN/
 
 # MySql Backups
 *.mwb.bak
-WE-Palette.css
+
+# r.js optimized folder
+optimizedScripts/
