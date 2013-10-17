@@ -47,7 +47,7 @@ namespace PromoStudio.RenderQueue
                     return null;
                 }
                 var video = videosToProcess.Take(1).FirstOrDefault();
-                video = await _dataService.CustomerVideo_SelectAsyncWithItems(video.pk_CustomerVideoId);
+                video = await _dataService.CustomerVideo_SelectWithItemsAsync(video.pk_CustomerVideoId);
                 _log.InfoFormat("Retrieved CustomerVideo:{0} for processing. Status: {1}",
                     video.pk_CustomerVideoId, (CustomerVideoRenderStatus)video.fk_CustomerVideoRenderStatusId);
                 return video;
