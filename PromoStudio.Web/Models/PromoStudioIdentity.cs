@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
+﻿using System.Security.Principal;
 
 namespace PromoStudio.Web
 {
     public class PromoStudioIdentity : IPromoStudioIdentity, IIdentity
     {
         public long CustomerId { get; set; }
-        public long? OrganizationId { get; set; }
+        public int? OrganizationId { get; set; }
+        public int? VerticalId { get; set; }
         public string FullName { get; set; }
         public string EmailAddress { get; set; }
         public string OrganizationName { get; set; }
@@ -33,6 +30,7 @@ namespace PromoStudio.Web
         {
             CustomerId = authData.CustomerId;
             OrganizationId = authData.OrganizationId;
+            VerticalId = authData.VerticalId;
             FullName = authData.FullName;
             EmailAddress = authData.EmailAddress;
             OrganizationName = authData.OrganizationName;

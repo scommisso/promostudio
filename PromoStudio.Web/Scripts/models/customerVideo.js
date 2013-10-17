@@ -1,7 +1,17 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/knockout-2.2.1.debug.js" />
+/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="customerVideoItem.js" />
+/// <reference path="enums.js" />
 
-define(["models/customerVideoItem", "models/enums", "knockout"], function (customerVideoItem, enums, ko) {
+define(["models/customerVideoItem",
+        "models/storyboard",
+        "models/enums",
+        "knockout"],
+    function (
+        customerVideoItem,
+        storyboard,
+        enums,
+        ko) {
     return function (data) {
         var self = this;
         data = data || {};
@@ -9,6 +19,7 @@ define(["models/customerVideoItem", "models/enums", "knockout"], function (custo
         self.pk_CustomerVideoId = ko.observable(data.pk_CustomerVideoId || null);
         self.fk_CustomerId = ko.observable(data.fk_CustomerId || null);
         self.fk_CustomerVideoRenderStatusId = ko.observable(data.fk_CustomerVideoRenderStatusId || 1); // pending
+        self.fk_StoryboardId = ko.observable(data.fk_StoryboardId || null);
         self.Name = ko.observable(data.Name || null);
         self.Description = ko.observable(data.Description || null);
         self.RenderFailureMessage = ko.observable(data.RenderFailureMessage || null);
@@ -18,6 +29,7 @@ define(["models/customerVideoItem", "models/enums", "knockout"], function (custo
         self.PreviewFilePath = ko.observable(data.PreviewFilePath || null);
         self.CompletedFilePath = ko.observable(data.CompletedFilePath || null);
 
+        self.Storyboard = ko.observable(null);
         self.Items = ko.observableArray([]);
 
         self.CustomerVideoRenderStatus = ko.computed(function () {
@@ -46,17 +58,21 @@ define(["models/customerVideoItem", "models/enums", "knockout"], function (custo
             return displayPath;
         });
 
-        self.LoadItems = function (items) {
+        self.LoadItems = function (storyboardData, items) {
             var i, item;
             items = items || [];
+
+            storyboardData = storyboardData || {};
+            storyboardData = new storyboard(storyboardData);
 
             for (i = 0; i < items.length; i++) {
                 item = items[i];
                 items[i] = new customerVideoItem(item);
             }
 
+            self.Storyboard(storyboardData);
             self.Items(items);
         };
-        self.LoadItems(data.Items);
+        self.LoadItems(data.Storyboard, data.Items);
     };
 });

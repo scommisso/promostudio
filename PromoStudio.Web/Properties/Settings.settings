@@ -26,5 +26,8 @@
     <Setting Name="TwitterAccessSecret" Type="System.String" Scope="Application">
       <Value Profile="(Default)">tr6I1PgrV4MCOO2TnxXkM4bDfLi9AdklNZwRkodMyPA</Value>
     </Setting>
+    <Setting Name="BuildCookieSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Rnk1MXh2cnBEbU9HRGVxVUNWMEJsREk3Zi91dG1BNlJvdzhiT2p1a3A0Zz0sU25iWVc0V1hBTk5SeDU3bUxyRVlwZz09</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

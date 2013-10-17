@@ -1,0 +1,35 @@
+﻿@using System.Collections
+@using System.Globalization
+@using System.Resources
+@using System.Text
+@using PromoStudio.Resources
+@{
+    var json = new StringBuilder();
+    var resType = typeof (Strings);
+    var resMan = new ResourceManager(resType.FullName, resType.Assembly);
+    var stringsSet = resMan.GetResourceSet(CultureInfo.CurrentCulture, true, true);
+    json.Append("{");
+    foreach (DictionaryEntry de in stringsSet)
+    {
+        json.AppendFormat("\"{0}\":\"{1}\",",
+            HttpUtility.JavaScriptStringEncode(Convert.ToString(de.Key)),
+            HttpUtility.JavaScriptStringEncode(Convert.ToString(de.Value)));
+    }
+    json.Append("}");
+}
+<script>
+define(["ps/logger"], function (logger) {
+    var resX = new (function() {
+        var self = this,
+            dict = @Html.Raw(json.ToString());
+        self.getResource = function(key) {
+            if (!dict.hasOwnProperty(key)) {
+                logger.log("Missing resource key: " + key);
+                return "";
+            }
+            return dict[key];
+        };
+    })();
+    return resX;
+});
+</script>

@@ -1,5 +1,14 @@
-﻿define(["jquery", "knockout", "pjax", "bootstrap"],
-    function ($, ko) {
+﻿/// <reference path="../vsdoc/require.js" />
+/// <reference path="../vsdoc/jquery-1.9.1.intellisense.js" />
+/// <reference path="../lib/jquery-scrolltofixed.js" />
+/// /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="../ps/logger.js" />
+
+define(["ps/logger",
+    "jquery",
+    "knockout",
+    "lib/jquery-scrolltofixed"],
+    function (logger, $, ko) {
         return function () {
             
             $.fn.pjaxScaffold = {
@@ -16,11 +25,9 @@
                             var vm = new viewModel(),
                                 container = $.fn.pjaxScaffold.getContainer()[0];
                             ko.cleanNode(container);
-                            if (vm !== null) {
-                                ko.applyBindings(vm, container);
-                                if (typeof vm.pageLoaded === "function") {
-                                    vm.pageLoaded();
-                                }
+                            ko.applyBindings(vm, container);
+                            if (typeof vm.pageLoaded === "function") {
+                                vm.pageLoaded();
                             }
                         }
                     });
@@ -36,8 +43,8 @@
                         $.pjax({ url: "/", container: $.fn.pjaxScaffold.containerSelector });
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        console.log("Error logging in ");
-                        console.log(errorThrown);
+                        logger.log("Error logging in ");
+                        logger.log(errorThrown);
                         alert("error logging in");
                     }
                 });
@@ -77,8 +84,8 @@
                 $(document)
                     .on("pjax:start", function () { container.stop(true, true).fadeOut(300); })
                     .on("pjax:end", function () { container.stop(true, true).fadeIn(300); })
-                $('a[data-pjax]').on('click', function (event) {
-                    var container = $.fn.pjaxScaffold.containerSelector,
+                $('a[data-pjax]').on('click', function(event) {
+                    var cs = $.fn.pjaxScaffold.containerSelector,
                         emptyRoute = 'login', // The function that will be called on domain's root
                         link = event.currentTarget.href.replace(/^.*\/\/[^\/]+\//, ''),
                         // Store current href without domain
@@ -87,21 +94,24 @@
                     initContainer(link, target);
 
                     // PJAX-load the new content
-                    $.pjax.click(event, { container: container });
-                })
+                    $.pjax.click(event, { container: cs });
+                });
             };
 
             $(document).ready(function () {
+                $("div.navbar").scrollToFixed();
+
+
                 // Wire logout button
                 $("#logout").click(function () {
                     // TODO: When user name is in header, show/hide this as necessary
                     performLogout();
                 });
 
-                // Setup PJAX scaffold
-                if ($.support.pjax) {
-                    wireupPjaxEvents();
-                }
+                //// Setup PJAX scaffold
+                //if ($.support.pjax) {
+                //    wireupPjaxEvents();
+                //}
             });
         }
     });

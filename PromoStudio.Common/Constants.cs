@@ -70,8 +70,12 @@ namespace PromoStudio.Common
             public const string StockVideoSelectByCustomerVideoId_sp = "promostudio.StockVideoSelectByCustomerVideoId_sp";
             public const string StockVideoSelectByOrganizationIdAndVerticalId_sp = "promostudio.StockVideoSelectByOrganizationIdAndVerticalId_sp";
 
+            public const string StoryboardInsert_sp = "promostudio.StoryboardInsert_sp";
+            public const string StoryboardUpdate_sp = "promostudio.StoryboardUpdate_sp";
+            public const string StoryboardDelete_sp = "promostudio.StoryboardDelete_sp";
             public const string StoryboardSelectAll_sp = "promostudio.StoryboardSelectAll_sp";
             public const string StoryboardSelectById_sp = "promostudio.StoryboardSelectById_sp";
+            public const string StoryboardSelectByCustomerVideoId_sp = "promostudio.StoryboardSelectByCustomerVideoId_sp";
             public const string StoryboardSelectByOrganizationIdAndVerticalId_sp = "promostudio.StoryboardSelectByOrganizationIdAndVerticalId_sp";
 
             public const string StoryboardItemDelete_sp = "promostudio.StoryboardItemDelete_sp";
@@ -83,9 +87,11 @@ namespace PromoStudio.Common
             public const string TemplateScriptSelectAll_sp = "promostudio.TemplateScriptSelectAll_sp";
             public const string TemplateScriptSelectById_sp = "promostudio.TemplateScriptSelectById_sp";
             public const string TemplateScriptSelectByOrganizationIdAndVerticalId_sp = "promostudio.TemplateScriptSelectByOrganizationIdAndVerticalId_sp";
+            public const string TemplateScriptSelectByStoryboardId_sp = "promostudio.TemplateScriptSelectByStoryboardId_sp";
 
             public const string TemplateScriptItemSelectAll_sp = "promostudio.TemplateScriptItemSelectAll_sp";
             public const string TemplateScriptItemSelectByTemplateScriptId_sp = "promostudio.TemplateScriptItemSelectByTemplateScriptId_sp";
+            public const string TemplateScriptItemSelectByStoryboardId_sp = "promostudio.TemplateScriptItemSelectByStoryboardId_sp";
         }
     }
 }

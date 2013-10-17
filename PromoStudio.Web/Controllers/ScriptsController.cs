@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace PromoStudio.Web.Controllers
 {
@@ -18,6 +14,12 @@ namespace PromoStudio.Web.Controllers
         public ActionResult FacebookOAuth2()
         {
             return this.JavaScriptFromView("FacebookOAuth");
+        }
+
+        [ActionName("strings.js")]
+        public ActionResult Strings()
+        {
+            return this.JavaScriptFromView("Strings");
         }
 
         protected override void HandleUnknownAction(string actionName)

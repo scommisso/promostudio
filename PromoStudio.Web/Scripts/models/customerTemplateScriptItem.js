@@ -1,5 +1,5 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/knockout-2.2.1.debug.js" />
+/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
 define(["models/customerResource", "knockout"], function (customerResource, ko) {
     return function (data) {

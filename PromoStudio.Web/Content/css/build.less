@@ -1,0 +1,123 @@
+﻿@import url('elements.less');
+@import url('themevariables.less');
+
+@shadowColor: darken(@bgbasecolor, 41%);
+
+.build-steps {
+    margin-top: 40px;
+
+    .build-step {
+        color: @navcolor;
+        width: auto;
+        max-width: 300px;
+        border: solid 1px transparent;
+
+        > .glyphicons,
+        > .glyphicons:before {
+            color: @navcolor;
+        }
+
+        label {
+            font-size: 14px;
+            float: left;
+            cursor: pointer;
+            width: auto;
+            white-space: nowrap;
+            line-height: 1.2em;
+            color: @navcolor;
+
+            .muted {
+                color: inherit;
+                width: auto;
+                white-space: nowrap;
+                display: block;
+                font-weight: normal;
+            }
+        }
+    }
+
+    .build-previous-step {
+        float: left;
+        text-align: left;
+        padding: 0 0 4px 10px;
+
+        > .glyphicons,
+        > .glyphicons:before {
+            margin: -2px 0 0 0;
+        }
+
+        label {
+            margin: -14px 0 2px 80px;
+        }
+    }
+
+    .build-next-step {
+        float: right;
+        text-align: right;
+        padding: 0 10px 4px 10px;
+
+        > .glyphicons,
+        > .glyphicons:before {
+            margin: -2px -20px 0 0;
+        }
+
+        label {
+            margin: -14px 56px 2px 0;
+        }
+    }
+
+    a,
+    a:link,
+    a:visited {
+        cursor: pointer;
+        color: @navcolor;
+
+        label,
+        span.glyphicons:before {
+            cursor: pointer;
+            color: @navcolor;
+        }
+    }
+
+        a:hover,
+        a:focus,
+        a:active {
+            color: @completedColor;
+
+            label,
+            span.glyphicons:before {
+                color: @completedColor;
+            }
+
+            .build-step {
+                background-color: @bgbasecolor;
+                .rounded(@cs);
+                .box-shadow(0 1px 8px @shadowColor);
+            }
+        }
+
+        a.notready,
+        a.notready label,
+        a.notready:link,
+        a.notready:hover,
+        a.notready:focus,
+        a.notready:active,
+        a.notready:visited {
+            cursor: default;
+            color: @navinactivecolor;
+
+            span.glyphicons:before {
+                cursor: default;
+                color: @navinactivecolor;
+            }
+
+            .build-step {
+                background-color: transparent;
+                .rounded(0);
+                .box-shadow(none);
+            }
+        }
+}
+
+@import url('build-footage.less');
+@import url('build-branding.less');

@@ -1,10 +1,11 @@
-﻿@using PromoStudio.Web
+﻿@using PromoStudio.Resources
+@using PromoStudio.Web
 @{
     string copyrightDate = DateTime.Today.Year.ToString();
-    if (DateTime.Today.Year > 2013) {
+    if (DateTime.Today.Year > 2013)
+    {
         copyrightDate = "2013-" + copyrightDate;
     }
-    bool isHomeController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Home", StringComparison.OrdinalIgnoreCase) == 0;
     bool isVideosController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Videos", StringComparison.OrdinalIgnoreCase) == 0;
     bool isResourcesController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Resources", StringComparison.OrdinalIgnoreCase) == 0;
     bool isBuildController = string.Compare((string)ViewContext.RouteData.Values["controller"], "Build", StringComparison.OrdinalIgnoreCase) == 0;
@@ -18,48 +19,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PromoStudio - @ViewBag.Title</title>
+    <title>@Strings.PromoStudio - @ViewBag.Title</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow">
-    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/css/bootstrap-responsive.css" rel="stylesheet" />
-    <link href="~/Content/css/site.css" rel="stylesheet" />
-    <script src="@Url.Content("~/Scripts/lib/modernizr.js")"></script>
+    <link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/site.min.css" rel="stylesheet" />
+    <script type="text/javascript">if(navigator.userAgent.match(/IEMobile\/10\.0/)){var msViewportStyle=document.createElement("style");msViewportStyle.appendChild(document.createTextNode("@@-ms-viewport{width:auto!important}"));document.getElementsByTagName("head")[0].appendChild(msViewportStyle)};</script>
+    <script src="@Url.Content("~/Scripts/lib/modernizr.min.js")"></script>
 </head>
 <body>
-    <div class="navbar navbar-fixed-top" @Html.Raw(Context.User.Identity.IsAuthenticated ? "" : "style='display:none'")>
+    <div class="color-band clearfix">
+        <a data-pjax href="@Url.Action("Index", "Home")">@Html.Partial("_Header")</a>
+        <a id="logout" href="javascript:void(0)"><span class="glyphicons user"></span><label>Log Out</label></a>
+    </div>
+    <div class="navbar navbar-default" role="navigation">
         <div class="navbar-inner">
-        <div class="container">
-            <ul class="nav">
-                @* Add detection to _NavChangeScript *@
-                <li id="navHome" @Html.Raw(isHomeController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Home")">Home</a></li>
-                <li id="navVideos" @Html.Raw(isVideosController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Videos")">My Videos</a></li>
-                <li id="navResources" @Html.Raw(isResourcesController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Resources")">My Resources</a></li>
-                <li id="navBuild" @Html.Raw(isBuildController ? "class=\"active\"" : "")><a data-pjax href="@Url.Action("Index", "Build")">Build</a></li>
-                <li><a id="logout" href="javascript:void(0)">Log Out</a></li>
-            </ul>
+
         </div>
-        </div>
+        <ul class="nav navbar-nav">
+            @RenderSection("Navigation", false)
+            @if (!IsSectionDefined("Navigation"))
+            {
+                <li id="navVideos"@Html.Raw(isVideosController ? " class=\"active\"" : "")>
+                    <a data-pjax href="@Url.Action("Index", "Videos")">
+                        <div class="clearfix">
+                            <span class="glyphicons display"></span>
+                            <label>
+                                @Strings.Navigation__Videos
+                                <span class="muted">@Strings.Navigation__View_your_video_library</span>
+                            </label>
+                        </div>
+                    </a>
+                    <div class="arrow"></div>
+                </li>
+                <li id="navBuild">
+                    <a data-pjax href="@Url.Action("Index", "Build")">
+                        <div class="clearfix">
+                            <span class="glyphicons film"></span>
+                            <label>
+                                @Strings.Navigation__Build
+                                <span class="muted">@Strings.Navigation__Create_a_new_video</span>
+                            </label>
+                        </div>
+                    </a>
+                    <div class="arrow"></div>
+                </li>
+            }
+        </ul>
     </div>
-    <div class="color-band"></div>
-    <div class="container header-container clearfix">
-        <div class="logo">
-            <a data-pjax href="@Url.Action("Index", "Home")"><img src="@Url.Content("~/Content/img/ps_logo.png")" alt="PromoStudio" /></a>
-        </div>
-        <div class="header-nav">
-            @RenderSection("headerNav", false)
-        </div>
-    </div>
-    <div class="container main-container">
+
+    <section class="content">
+        
         <div data-pjax-container>
             @RenderBody()
         </div>
         <hr />
         <div class="footer">
-            <p>&copy; PromoStudio @copyrightDate</p>
+            <p>&copy; @Strings.PromoStudio @copyrightDate</p>
         </div>
-    </div>
+
+    </section>
+
+    @RenderSection("modals", required: false)
     <script src="@Url.Content("~/Scripts/require.min.js")"></script>
     <script src="@Url.Content("~/Scripts/requireConfig.js")"></script>
     <script type="text/javascript">

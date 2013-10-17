@@ -1,0 +1,144 @@
+﻿@import url('elements.less');
+@import url('themevariables.less');
+
+@mediabgcolor: darken(@bgbasecolor, 71%);
+@shadowColor: lighten(@mediabgcolor, 30%);
+
+.inlineblock() {
+    display: inline-block;
+    *display: inline;
+}
+
+.thumbcontainer {
+
+    > a.footage-thumbnail,
+    > a.footage-thumbnail:link,
+    > a.footage-thumbnail:hover,
+    > a.footage-thumbnail:active,
+    > a.footage-thumbnail:visited {
+        color: @basecolor;
+    }
+
+    > a.footage-thumbnail {
+        display: block;
+        float: left;
+        width: 272px;
+        margin:20px 0 0 20px;
+        overflow: hidden;
+        text-decoration: none;
+        color: @basecolor;
+        .rounded(@cs);
+        .box-shadow(0 1px 2px @shadowColor);
+
+        > .footage-preview {
+            background-color: @mediabgcolor;
+            .bgSize(contain);
+            height: 140px;
+
+            > .footage-play {
+                display: none;
+                position: relative;
+                top: 48px;
+                left: 114px;
+                width: 43px;
+                height: 43px;
+                .rounded(@cs);
+                background-color: @bgbasecolor;
+                opacity: 0.6;
+                .box-shadow(0 0 5px @mediabgcolor);
+
+                > .glyphicons:before {
+                    margin: -2px 0 0 9px;
+                    color: @mediabgcolor;
+                }
+            }
+        }
+
+        > .footage-selection {
+            height: 52px;
+            background-color: @bgbasecolor;
+
+            > .footage-title {
+                position: relative;
+                top: 17px;
+            }
+
+            > .glyphicons:before {
+                margin: 0 0 0 9px;
+            }
+
+            > .glyphicons.check {
+                display: none;
+                color: @completedColor;
+            }
+
+                > .glyphicons.check:before {
+                    display: none;
+                    color: @completedColor;
+                }
+
+            > .glyphicons.unchecked {
+                .inlineblock();
+                color: lighten(@basecolor, 30%);
+            }
+
+                > .glyphicons.unchecked:before {
+                    .inlineblock();
+                    color: lighten(@basecolor, 30%);
+                }
+        }
+    }
+
+        > a.footage-thumbnail:hover {
+            .box-shadow(0 1px 8px @shadowColor);
+
+            > .footage-preview {
+                > .footage-play {
+                    display: block;
+                }
+            }
+
+            > .footage-selection {
+                > .glyphicons.check {
+                    .inlineblock();
+                }
+
+                    > .glyphicons.check:before {
+                        .inlineblock();
+                        color: lighten(desaturate(@completedColor, 10%), 26%);
+                    }
+
+                > .glyphicons.unchecked {
+                    display: none;
+                }
+
+                    > .glyphicons.unchecked:before {
+                        display: none;
+                    }
+            }
+        }
+
+        > a.footage-thumbnail.selected,
+        > a.footage-thumbnail.selected:hover {
+            .box-shadow(0 1px 8px @completedColor);
+
+            > .footage-selection {
+                > .glyphicons.check {
+                    .inlineblock();
+                }
+
+                    > .glyphicons.check:before {
+                        .inlineblock();
+                        color: @completedColor;
+                    }
+
+                > .glyphicons.unchecked {
+                    display: none;
+                }
+
+                    > .glyphicons.unchecked:before {
+                        display: none;
+                    }
+            }
+        }
+}

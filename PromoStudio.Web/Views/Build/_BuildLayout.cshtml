@@ -1,0 +1,59 @@
+﻿@using Newtonsoft.Json
+@using PromoStudio.Resources
+@model PromoStudio.Web.ViewModels.BuildViewModelBase
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Navigation {
+    @Html.Partial("_BuildNavigation", Model)
+}
+@section modals {
+    @RenderSection("modals", required: false)
+}
+@section scripts {
+    <script>
+        require(["viewModels/buildNavViewModel", "jquery", "knockout"], function(buildNavViewModel, $, ko) {
+            $(function () {
+                var navVm = new buildNavViewModel({
+                    Video: @Html.Raw(JsonConvert.SerializeObject(Model.Video)),
+                    CurrentStep: @Html.Raw(@Model.CurrentStep),
+                    StepsCompleted: @Html.Raw(JsonConvert.SerializeObject(Model.StepsCompleted)),
+                    IsStepCompleted: @Html.Raw(Model.IsStepCompleted(Model.CurrentStep).ToString().ToLower()),
+                });
+                ko.applyBindings(navVm, $(".build-steps")[0]);
+                ko.applyBindings(navVm, $(".nav.navbar-nav")[0]);
+            });
+        })
+    </script>
+    @RenderSection("scripts", required: false)
+}
+
+@RenderBody()
+<div class="build-steps clearfix">
+@if (Model.CurrentStep > 1)
+{
+    <a data-pjax data-bind="click: StepChange" href="@Url.Action(Model.GetStepTitle(Model.CurrentStep - 1), "Build")">
+        <div class="build-step build-previous-step clearfix">
+            <span class="glyphicons circle_arrow_left"></span>
+            <label>
+                @Strings.Previous_step
+                <span class="muted">@Model.GetStepDescription(Model.CurrentStep - 1)</span>
+            </label>
+        </div>
+    </a>
+}
+@if (Model.CurrentStep < 5)
+{
+    <a data-pjax data-bind="click: StepChange, css: { notready: !IsStepCompleted() }" href="@Url.Action(Model.GetStepTitle(Model.CurrentStep + 1), "Build")"
+        @Html.Raw(Model.GetFooterClassAttribute(Model.CurrentStep + 1))>
+        <div class="build-step build-next-step clearfix">
+            <span class="glyphicons circle_arrow_right"></span>
+            <label>
+                @Strings.Next_step
+                <span class="muted">@Model.GetStepDescription(Model.CurrentStep + 1)</span>
+            </label>
+        </div>
+    </a>
+}
+</div>

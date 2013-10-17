@@ -1,6 +1,6 @@
 ﻿@{
     Layout = (ViewContext.Controller.ViewData.ContainsKey("IsPAJAX")
         && (bool)ViewContext.Controller.ViewData["IsPAJAX"])
-        ? "~/Views/Shared/_Layout.cshtml"
+        ? "~/Views/Shared/_PjaxLayout.cshtml"
         : "~/Views/Shared/_Layout.cshtml";
 }

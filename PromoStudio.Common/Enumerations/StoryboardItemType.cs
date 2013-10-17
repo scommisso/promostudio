@@ -2,10 +2,10 @@
 {
     public enum StoryboardItemType : short
     {
-        Intro = 1,
+        Logo = 1,
         Stock,
-        TextTemplate,
-        PhotoTemplate,
+        Text,
+        Photo,
         Ending
     }
 }

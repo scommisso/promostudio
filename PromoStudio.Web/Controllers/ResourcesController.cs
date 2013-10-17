@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using log4net;
+using PromoStudio.Common.Enumerations;
+using PromoStudio.Common.Models;
+using PromoStudio.Data;
+using PromoStudio.Rendering.Properties;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using log4net;
-using Newtonsoft.Json;
-using PromoStudio.Common.Enumerations;
-using PromoStudio.Common.Models;
-using PromoStudio.Data;
-using PromoStudio.Rendering.Properties;
 
 namespace PromoStudio.Web.Controllers
 {
@@ -110,7 +107,7 @@ namespace PromoStudio.Web.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var resource = (await _dataService.CustomerResource_Select(crid));
+            var resource = (await _dataService.CustomerResource_SelectAsync(crid));
             if (resource.fk_CustomerId != customerId)
             {
                 return new HttpNotFoundResult();

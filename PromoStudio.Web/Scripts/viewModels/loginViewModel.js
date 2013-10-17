@@ -1,7 +1,23 @@
-﻿define(["jquery", "googleOAuth", "facebookOAuth"],
-    function ($, googleOauth, facebookOAuth) {
+﻿/// <reference path="../vsdoc/require.js" />
+/// <reference path="../vsdoc/jquery-1.9.1.intellisense.js" />
+/// <reference path="../ps/logger.js" />
+/// <reference path="../ps/extensions.js" />
+
+
+define(["jquery",
+        "googleOAuth",
+        "facebookOAuth",
+        "strings",
+        "ps/logger",
+        "ps/extensions"],
+    function ($,
+        googleOauth,
+        facebookOAuth,
+        strings,
+        logger) {
         return function () {
-            var self = this;
+            var self = this,
+                welcomeText = strings.getResource("Login__Welcome");
 
             function performLogin(platformId, loginKey, userName, userEmail) {
                 $.ajax({
@@ -10,23 +26,25 @@
                         "?pId=" + encodeURIComponent(platformId) +
                         "&key=" + encodeURIComponent(loginKey) +
                         "&name=" + encodeURIComponent(userName) +
-                        "&email=" + encodeURIComponent(userEmail),
-                    success: function (data, textStatus, jqXHR) {
-                        $.pjax({ url: "/", container: $.fn.pjaxScaffold.getContainer() });
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log("Error logging in ");
-                        console.log(errorThrown);
+                        "&email=" + encodeURIComponent(userEmail)
+                })
+                    .done(function() {
+                        if ($.pjax) {
+                            $.pjax({ url: "/", container: $.fn.pjaxScaffold.getContainer() });
+                        }
+                    })
+                    .error(function (jqXhr, textStatus, errorThrown) {
+                        logger.log("Error logging in ");
+                        logger.log(errorThrown);
                         alert("error logging in");
-                    }
-                });
+                    });
             };
 
             self.pageLoaded = function () {
                 if ($("#loginButtons").size() > 0) {
                     var goa = new googleOauth("#gLogin", function (user) {
                         $("#loginButtons").hide();
-                        $('#userName').text("Welcome, " + user.name + " (" + user.email + ")");
+                        $('#userName').text(welcomeText.format(user.name, user.email));
                         $('#loginResult').show();
                         $('.navbar').show();
                         performLogin(1, user.id, user.name, user.email);
@@ -38,7 +56,7 @@
 
                     var foa = new facebookOAuth("#fbLogin", function (user) {
                         $("#loginButtons").hide();
-                        $('#userName').text("Welcome, " + user.name + " (" + user.email + ")");
+                        $('#userName').text(welcomeText.format(user.name, user.email));
                         $('#loginResult').show();
                         $('.navbar').show();
                         performLogin(2, user.id, user.name, user.email);

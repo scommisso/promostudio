@@ -1,13 +1,11 @@
-﻿using Dapper;
-using PromoStudio.Common;
+﻿using PromoStudio.Common;
+using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
-using PromoStudio.Common.Enumerations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PromoStudio.Data
 {
@@ -41,7 +39,7 @@ namespace PromoStudio.Data
         public async Task<AudioScriptTemplate> AudioScriptTemplate_InsertAsync(AudioScriptTemplate audioScript)
         {
             audioScript.DateCreated = DateTime.Now;
-            var result = ((IEnumerable<AudioScriptTemplate>)await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateInsert_sp,
+            var result = (await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateInsert_sp,
                 dbParams: audioScript.ToPoco()))
                 .FirstOrDefault();
 
@@ -56,7 +54,7 @@ namespace PromoStudio.Data
 
         public async Task<AudioScriptTemplate> AudioScriptTemplate_SelectAsync(long audioScriptTemplateId)
         {
-            var audioScript = ((IEnumerable<AudioScriptTemplate>)await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateSelectById_sp,
+            var audioScript = (await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateSelectById_sp,
                 dbParams: new { AudioScriptTemplateId = audioScriptTemplateId }))
                 .FirstOrDefault();
 
@@ -65,7 +63,7 @@ namespace PromoStudio.Data
 
         public async Task<AudioScriptTemplate> AudioScriptTemplate_SelectByCustomerVideoIdAsync(long customerVideoId)
         {
-            var audioScript = ((IEnumerable<AudioScriptTemplate>)await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateSelectByCustomerVideoId_sp,
+            var audioScript = (await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateSelectByCustomerVideoId_sp,
                 dbParams: new { CustomerVideoId = customerVideoId }))
                 .FirstOrDefault();
 
@@ -74,7 +72,7 @@ namespace PromoStudio.Data
 
         public async Task<IEnumerable<AudioScriptTemplate>> AudioScriptTemplate_SelectAllAsync()
         {
-            var audioScripts = ((IEnumerable<AudioScriptTemplate>)await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateSelectAll_sp))
+            var audioScripts = (await DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(Constants.StoredProcedures.AudioScriptTemplateSelectAll_sp))
                 .ToList();
 
             return audioScripts;
@@ -86,7 +84,7 @@ namespace PromoStudio.Data
 
         public async Task<Customer> Customer_SelectAsync(long customerId)
         {
-            var customer = ((IEnumerable<Customer>)await DataWrapper.QueryStoredProcAsync<Customer>(Constants.StoredProcedures.CustomerSelectById_sp,
+            var customer = (await DataWrapper.QueryStoredProcAsync<Customer>(Constants.StoredProcedures.CustomerSelectById_sp,
                 dbParams: new { CustomerId = customerId }))
                 .FirstOrDefault();
 
@@ -120,9 +118,9 @@ namespace PromoStudio.Data
 
         #region CustomerLoginCredential
 
-        public async Task<IEnumerable<CustomerWithLoginCredential>> CustomerWithLoginCredential_SelectAsyncByLoginCredential(sbyte customerLoginPlatformId, string loginKey, string emailAddress)
+        public async Task<IEnumerable<CustomerWithLoginCredential>> CustomerWithLoginCredential_SelectByLoginCredentialAsync(sbyte customerLoginPlatformId, string loginKey, string emailAddress)
         {
-            var customerLogins = ((IEnumerable<CustomerWithLoginCredential>)await DataWrapper.QueryStoredProcAsync<CustomerWithLoginCredential>(Constants.StoredProcedures.CustomerSelectByLoginCredential_sp,
+            var customerLogins = (await DataWrapper.QueryStoredProcAsync<CustomerWithLoginCredential>(Constants.StoredProcedures.CustomerSelectByLoginCredential_sp,
                 dbParams: new { CustomerLoginPlatformId = customerLoginPlatformId, LoginKey = loginKey, EmailAddress = emailAddress }))
                 .ToList();
 
@@ -141,7 +139,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerVideo> CustomerVideo_SelectAsync(long customerVideoId)
         {
-            var customerVideo = ((IEnumerable<CustomerVideo>)await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoSelectById_sp,
+            var customerVideo = (await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoSelectById_sp,
                 dbParams: new { CustomerVideoId = customerVideoId }))
                 .FirstOrDefault();
 
@@ -150,7 +148,7 @@ namespace PromoStudio.Data
 
         public async Task<IEnumerable<CustomerVideo>> CustomerVideo_SelectByCustomerIdAsync(long customerId)
         {
-            var customerVideos = ((IEnumerable<CustomerVideo>)await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoSelectByCustomerId_sp,
+            var customerVideos = (await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoSelectByCustomerId_sp,
                 dbParams: new { CustomerId = customerId }))
                 .ToList();
 
@@ -159,18 +157,18 @@ namespace PromoStudio.Data
 
         public async Task<IEnumerable<CustomerVideo>> CustomerVideo_SelectForProcessingAsync(int errorProcessingDelayInSeconds)
         {
-            var customerVideos = ((IEnumerable<CustomerVideo>)await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoSelectForProcessing_sp,
+            var customerVideos = (await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoSelectForProcessing_sp,
                     dbParams: new { ErrorDelaySeconds = errorProcessingDelayInSeconds }))
                 .ToList();
 
             return customerVideos;
         }
 
-        public async Task<CustomerVideo> CustomerVideo_SelectAsyncWithItems(long customerVideoId)
+        public async Task<CustomerVideo> CustomerVideo_SelectWithItemsAsync(long customerVideoId)
         {
             using (var conn = DataWrapper.OpenConnection())
             {
-                var customerVideo = ((IEnumerable<CustomerVideo>)await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoSelectById_sp,
+                var customerVideo = (await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoSelectById_sp,
                     dbParams: new { CustomerVideoId = customerVideoId }))
                     .FirstOrDefault();
                 if (customerVideo == null) { return null; }
@@ -183,27 +181,60 @@ namespace PromoStudio.Data
                 IEnumerable<StockAudio> stockAudio = new StockAudio[0];
                 IEnumerable<CustomerVideoVoiceOver> voiceOver = new CustomerVideoVoiceOver[0];
 
-                if (items.Any(cvi => cvi.Type == CustomerVideoItemType.StockVideo)) {
-                    stockVideo = (await DataWrapper.QueryStoredProcAsync<StockVideo>(conn, Constants.StoredProcedures.StockVideoSelectByCustomerVideoId_sp,
-                        dbParams: new { CustomerVideoId = customerVideoId }))
-                        .ToList();
+                var templateTasks = new List<Task<CustomerTemplateScript>>();
+                Task<IEnumerable<StockVideo>> stockVideoTask = null;
+                Task<IEnumerable<StockAudio>> stockAudioTask = null;
+                Task<IEnumerable<CustomerVideoVoiceOver>> voiceOverTask = null;
+                var tasks = new List<Task>();
+
+                templateTasks.AddRange(items
+                    .Where(cvi => cvi.Type == CustomerVideoItemType.CustomerTemplateScript)
+                    .Select(cvi => CustomerTemplateScript_SelectWithItemsAsync(conn, cvi.fk_CustomerVideoItemId)));
+                tasks.AddRange(templateTasks);
+
+                if (items.Any(cvi => cvi.Type == CustomerVideoItemType.StockVideo))
+                {
+                    stockVideoTask = DataWrapper.QueryStoredProcAsync<StockVideo>(conn,
+                        Constants.StoredProcedures.StockVideoSelectByCustomerVideoId_sp,
+                        dbParams: new {CustomerVideoId = customerVideoId});
+                    tasks.Add(stockVideoTask);
                 }
-                if (items.Any(cvi => cvi.Type == CustomerVideoItemType.StockAudio)) {
-                    stockAudio = (await DataWrapper.QueryStoredProcAsync<StockAudio>(conn, Constants.StoredProcedures.StockAudioSelectByCustomerVideoId_sp,
-                        dbParams: new { CustomerVideoId = customerVideoId }))
-                        .ToList();
+                if (items.Any(cvi => cvi.Type == CustomerVideoItemType.StockAudio))
+                {
+                    stockAudioTask = DataWrapper.QueryStoredProcAsync<StockAudio>(conn,
+                        Constants.StoredProcedures.StockAudioSelectByCustomerVideoId_sp,
+                        dbParams: new { CustomerVideoId = customerVideoId });
+                    tasks.Add(stockAudioTask);
                 }
-                if (items.Any(cvi => cvi.Type == CustomerVideoItemType.CustomerVideoVoiceOver)) {
-                    voiceOver = (await DataWrapper.QueryStoredProcAsync<CustomerVideoVoiceOver>(conn, Constants.StoredProcedures.CustomerVideoVoiceOverSelectByCustomerVideoId_sp,
-                        dbParams: new { CustomerVideoId = customerVideoId }))
-                        .ToList();
+                if (items.Any(cvi => cvi.Type == CustomerVideoItemType.CustomerVideoVoiceOver))
+                {
+                    voiceOverTask = DataWrapper.QueryStoredProcAsync<CustomerVideoVoiceOver>(conn,
+                        Constants.StoredProcedures.CustomerVideoVoiceOverSelectByCustomerVideoId_sp,
+                        dbParams: new { CustomerVideoId = customerVideoId });
+                    tasks.Add(voiceOverTask);
+                }
+
+                await Task.WhenAll(tasks);
+
+                var templates = templateTasks.Select(tt => tt.Result).ToList();
+                if (stockVideoTask != null)
+                {
+                    stockVideo = stockVideoTask.Result.ToList();
+                }
+                if (stockAudioTask != null)
+                {
+                    stockAudio = stockAudioTask.Result.ToList();
+                }
+                if (voiceOverTask != null)
+                {
+                    voiceOver = voiceOverTask.Result.ToList();
                 }
 
                 foreach (var item in items)
                 {
                     if (item.Type == CustomerVideoItemType.CustomerTemplateScript)
                     {
-                        item.CustomerScript = await CustomerTemplateScript_SelectWithItemsAsync(conn, item.fk_CustomerVideoItemId);
+                        item.CustomerScript = templates.FirstOrDefault(t => t.pk_CustomerTemplateScriptId == item.fk_CustomerVideoItemId);
                     }
                     else if (item.Type == CustomerVideoItemType.CustomerVideoVoiceOver) {
                         item.VoiceOver = voiceOver.FirstOrDefault(vo => vo.pk_CustomerVideoVoiceOverId == item.fk_CustomerVideoItemId);
@@ -227,7 +258,7 @@ namespace PromoStudio.Data
         {
             customerVideo.DateCreated = DateTime.Now;
             var result =
-                ((IEnumerable<CustomerVideo>)await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoInsert_sp,
+                (await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoInsert_sp,
                 dbParams: customerVideo.ToPoco()))
                 .FirstOrDefault();
 
@@ -252,7 +283,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerVideoVoiceOver> CustomerVideoVoiceOver_SelectAsync(long customerVideoVoiceOverId)
         {
-            var customerVideoVoiceOver = ((IEnumerable<CustomerVideoVoiceOver>)await DataWrapper.QueryStoredProcAsync<CustomerVideoVoiceOver>(Constants.StoredProcedures.CustomerVideoVoiceOverSelectById_sp,
+            var customerVideoVoiceOver = (await DataWrapper.QueryStoredProcAsync<CustomerVideoVoiceOver>(Constants.StoredProcedures.CustomerVideoVoiceOverSelectById_sp,
                 dbParams: new { CustomerVideoVoiceOverId = customerVideoVoiceOverId }))
                 .FirstOrDefault();
 
@@ -261,7 +292,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerVideoVoiceOver> CustomerVideoVoiceOver_SelectByCustomerVideoIdAsync(long customerVideoId)
         {
-            var customerVideoVoiceOver = ((IEnumerable<CustomerVideoVoiceOver>)await DataWrapper.QueryStoredProcAsync<CustomerVideoVoiceOver>(Constants.StoredProcedures.CustomerVideoVoiceOverSelectByCustomerVideoId_sp,
+            var customerVideoVoiceOver = (await DataWrapper.QueryStoredProcAsync<CustomerVideoVoiceOver>(Constants.StoredProcedures.CustomerVideoVoiceOverSelectByCustomerVideoId_sp,
                 dbParams: new { CustomerVideoId = customerVideoId }))
                 .FirstOrDefault();
 
@@ -272,7 +303,7 @@ namespace PromoStudio.Data
         {
             customerVideoVoiceOver.DateCreated = DateTime.Now;
             var result =
-                ((IEnumerable<CustomerVideoVoiceOver>)await DataWrapper.QueryStoredProcAsync<CustomerVideoVoiceOver>(Constants.StoredProcedures.CustomerVideoVoiceOverInsert_sp,
+                (await DataWrapper.QueryStoredProcAsync<CustomerVideoVoiceOver>(Constants.StoredProcedures.CustomerVideoVoiceOverInsert_sp,
                 dbParams: customerVideoVoiceOver.ToPoco()))
                 .FirstOrDefault();
 
@@ -291,7 +322,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerVideoItem> CustomerVideoItem_SelectAsync(long customerVideoItemId)
         {
-            var customerVideoItem = ((IEnumerable<CustomerVideoItem>)await DataWrapper.QueryStoredProcAsync<CustomerVideoItem>(Constants.StoredProcedures.CustomerVideoItemSelectById_sp,
+            var customerVideoItem = (await DataWrapper.QueryStoredProcAsync<CustomerVideoItem>(Constants.StoredProcedures.CustomerVideoItemSelectById_sp,
                 dbParams: new { CustomerVideoItemId = customerVideoItemId }))
                 .FirstOrDefault();
 
@@ -310,7 +341,7 @@ namespace PromoStudio.Data
         public async Task<CustomerVideoItem> CustomerVideoItem_InsertAsync(CustomerVideoItem customerVideoItem)
         {
             var result =
-                ((IEnumerable<CustomerVideoItem>)await DataWrapper.QueryStoredProcAsync<CustomerVideoItem>(Constants.StoredProcedures.CustomerVideoItemInsert_sp,
+                (await DataWrapper.QueryStoredProcAsync<CustomerVideoItem>(Constants.StoredProcedures.CustomerVideoItemInsert_sp,
                 dbParams: customerVideoItem.ToPoco()))
                 .FirstOrDefault();
 
@@ -335,7 +366,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerVideoScript> CustomerVideoScript_InsertAsync(CustomerVideoScript customerVideoScript)
         {
-            var result = ((IEnumerable<CustomerVideoScript>)await DataWrapper.QueryStoredProcAsync<CustomerVideoScript>(Constants.StoredProcedures.CustomerVideoScriptInsert_sp,
+            var result = (await DataWrapper.QueryStoredProcAsync<CustomerVideoScript>(Constants.StoredProcedures.CustomerVideoScriptInsert_sp,
                 dbParams: customerVideoScript.ToPoco()))
                 .FirstOrDefault();
 
@@ -344,7 +375,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerVideoScript> CustomerVideoScript_SelectAsync(long customerVideoScriptId)
         {
-            var audioScript = ((IEnumerable<CustomerVideoScript>)await DataWrapper.QueryStoredProcAsync<CustomerVideoScript>(Constants.StoredProcedures.AudioScriptTemplateSelectById_sp,
+            var audioScript = (await DataWrapper.QueryStoredProcAsync<CustomerVideoScript>(Constants.StoredProcedures.AudioScriptTemplateSelectById_sp,
                 dbParams: new { CustomerVideoScriptId = customerVideoScriptId }))
                 .FirstOrDefault();
 
@@ -353,7 +384,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerVideoScript> CustomerVideoScript_SelectByCustomerVideoIdAsync(long customerVideoId)
         {
-            var audioScript = ((IEnumerable<CustomerVideoScript>)await DataWrapper.QueryStoredProcAsync<CustomerVideoScript>(Constants.StoredProcedures.AudioScriptTemplateSelectByCustomerVideoId_sp,
+            var audioScript = (await DataWrapper.QueryStoredProcAsync<CustomerVideoScript>(Constants.StoredProcedures.AudioScriptTemplateSelectByCustomerVideoId_sp,
                 dbParams: new { CustomerVideoId = customerVideoId }))
                 .FirstOrDefault();
 
@@ -364,9 +395,9 @@ namespace PromoStudio.Data
 
         #region CustomerResource
 
-        public async Task<CustomerResource> CustomerResource_Select(long customerResourceId)
+        public async Task<CustomerResource> CustomerResource_SelectAsync(long customerResourceId)
         {
-            var resource = ((IEnumerable<CustomerResource>)await DataWrapper.QueryStoredProcAsync<CustomerResource>(Constants.StoredProcedures.CustomerResourceSelectById_sp,
+            var resource = (await DataWrapper.QueryStoredProcAsync<CustomerResource>(Constants.StoredProcedures.CustomerResourceSelectById_sp,
                 dbParams: new { CustomerResourceId = customerResourceId }))
                 .FirstOrDefault();
 
@@ -395,7 +426,7 @@ namespace PromoStudio.Data
         {
             customerResource.DateCreated = DateTime.Now;
             var result =
-                ((IEnumerable<CustomerResource>) await DataWrapper.QueryStoredProcAsync<CustomerResource>(Constants.StoredProcedures.CustomerResourceInsert_sp,
+                (await DataWrapper.QueryStoredProcAsync<CustomerResource>(Constants.StoredProcedures.CustomerResourceInsert_sp,
                 dbParams: customerResource.ToPoco()))
                 .FirstOrDefault();
 
@@ -414,7 +445,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerTemplateScript> CustomerTemplateScript_SelectAsync(long customerTemplateScriptId)
         {
-            var script = ((IEnumerable<CustomerTemplateScript>)await DataWrapper.QueryStoredProcAsync<CustomerTemplateScript>(Constants.StoredProcedures.CustomerTemplateScriptSelectById_sp,
+            var script = (await DataWrapper.QueryStoredProcAsync<CustomerTemplateScript>(Constants.StoredProcedures.CustomerTemplateScriptSelectById_sp,
                 dbParams: new { CustomerTemplateScriptId = customerTemplateScriptId }))
                 .FirstOrDefault();
 
@@ -431,23 +462,30 @@ namespace PromoStudio.Data
 
         public async Task<CustomerTemplateScript> CustomerTemplateScript_SelectWithItemsAsync(IDbConnection conn, long customerTemplateScriptId)
         {
-            var script = ((IEnumerable<CustomerTemplateScript>)await DataWrapper.QueryStoredProcAsync<CustomerTemplateScript>(conn, Constants.StoredProcedures.CustomerTemplateScriptSelectById_sp,
+            var script = (await DataWrapper.QueryStoredProcAsync<CustomerTemplateScript>(conn, Constants.StoredProcedures.CustomerTemplateScriptSelectById_sp,
                 dbParams: new { CustomerTemplateScriptId = customerTemplateScriptId }))
                 .FirstOrDefault();
             if (script == null) { return null; }
 
-            var template = ((IEnumerable<TemplateScript>)await DataWrapper.QueryStoredProcAsync<TemplateScript>(Constants.StoredProcedures.TemplateScriptSelectById_sp,
-                dbParams: new { TemplateScriptId = script.fk_TemplateScriptId }))
-                .FirstOrDefault();
-            var templateItems = (await DataWrapper.QueryStoredProcAsync<TemplateScriptItem>(conn, Constants.StoredProcedures.TemplateScriptItemSelectByTemplateScriptId_sp,
-                dbParams: new { TemplateScriptId = script.fk_TemplateScriptId }))
-                .ToList();
-            var items = (await DataWrapper.QueryStoredProcAsync<CustomerTemplateScriptItem>(conn, Constants.StoredProcedures.CustomerTemplateScriptItemSelectByCustomerTemplateScriptId_sp,
-                dbParams: new { CustomerTemplateScriptId = customerTemplateScriptId }))
-                .ToList();
-            var resources = (await DataWrapper.QueryStoredProcAsync<CustomerResource>(conn, Constants.StoredProcedures.CustomerResourceSelectByCustomerTemplateScriptId_sp,
-                dbParams: new { CustomerTemplateScriptId = customerTemplateScriptId }))
-                .ToList();
+            var templateTask =
+                DataWrapper.QueryStoredProcAsync<TemplateScript>(Constants.StoredProcedures.TemplateScriptSelectById_sp,
+                    dbParams: new {TemplateScriptId = script.fk_TemplateScriptId});
+            var templateItemsTask = DataWrapper.QueryStoredProcAsync<TemplateScriptItem>(conn,
+                Constants.StoredProcedures.TemplateScriptItemSelectByTemplateScriptId_sp,
+                dbParams: new {TemplateScriptId = script.fk_TemplateScriptId});
+            var itemsTask = DataWrapper.QueryStoredProcAsync<CustomerTemplateScriptItem>(conn,
+                Constants.StoredProcedures.CustomerTemplateScriptItemSelectByCustomerTemplateScriptId_sp,
+                dbParams: new {CustomerTemplateScriptId = customerTemplateScriptId});
+            var resourcesTask = DataWrapper.QueryStoredProcAsync<CustomerResource>(conn,
+                Constants.StoredProcedures.CustomerResourceSelectByCustomerTemplateScriptId_sp,
+                dbParams: new {CustomerTemplateScriptId = customerTemplateScriptId});
+
+            await Task.WhenAll(templateTask, templateItemsTask, itemsTask, resourcesTask);
+
+            var template = templateTask.Result.FirstOrDefault();
+            var templateItems = templateItemsTask.Result.ToList();
+            var items = itemsTask.Result.ToList();
+            var resources = resourcesTask.Result.ToList();
 
             // Map resource to item
             foreach (var item in items)
@@ -471,7 +509,7 @@ namespace PromoStudio.Data
         {
             customerTemplateScript.DateCreated = DateTime.Now;
             var result =
-                ((IEnumerable<CustomerTemplateScript>)await DataWrapper.QueryStoredProcAsync<CustomerTemplateScript>(Constants.StoredProcedures.CustomerTemplateScriptInsert_sp,
+                (await DataWrapper.QueryStoredProcAsync<CustomerTemplateScript>(Constants.StoredProcedures.CustomerTemplateScriptInsert_sp,
                 dbParams: customerTemplateScript.ToPoco()))
                 .FirstOrDefault();
 
@@ -490,7 +528,7 @@ namespace PromoStudio.Data
 
         public async Task<CustomerTemplateScriptItem> CustomerTemplateScriptItem_SelectByIdAsync(long customerTemplateScriptItemId)
         {
-            var scriptItem = ((IEnumerable<CustomerTemplateScriptItem>)await DataWrapper.QueryStoredProcAsync<CustomerTemplateScriptItem>(Constants.StoredProcedures.CustomerTemplateScriptItemSelectById_sp,
+            var scriptItem = (await DataWrapper.QueryStoredProcAsync<CustomerTemplateScriptItem>(Constants.StoredProcedures.CustomerTemplateScriptItemSelectById_sp,
                 dbParams: new { CustomerTemplateScriptItemId = customerTemplateScriptItemId }))
                 .FirstOrDefault();
 
@@ -509,7 +547,7 @@ namespace PromoStudio.Data
         public async Task<CustomerTemplateScriptItem> CustomerTemplateScriptItem_InsertAsync(CustomerTemplateScriptItem customerTemplateScriptItem)
         {
             var result =
-                ((IEnumerable<CustomerTemplateScriptItem>)await DataWrapper.QueryStoredProcAsync<CustomerTemplateScriptItem>(Constants.StoredProcedures.CustomerTemplateScriptItemInsert_sp,
+                (await DataWrapper.QueryStoredProcAsync<CustomerTemplateScriptItem>(Constants.StoredProcedures.CustomerTemplateScriptItemInsert_sp,
                 dbParams: customerTemplateScriptItem.ToPoco()))
                 .FirstOrDefault();
 
@@ -526,14 +564,14 @@ namespace PromoStudio.Data
 
         #region StockAudio
 
-        public async Task<IEnumerable<StockAudio>> StockAudio_SelectAll()
+        public async Task<IEnumerable<StockAudio>> StockAudio_SelectAllAsync()
         {
             var stockAudio = (await DataWrapper.QueryStoredProcAsync<StockAudio>(Constants.StoredProcedures.StockAudioSelectAll_sp))
                 .ToList();
             return stockAudio;
         }
 
-        public async Task<IEnumerable<StockAudio>> StockAudio_SelectByCustomerVideoId(long customerVideoId)
+        public async Task<IEnumerable<StockAudio>> StockAudio_SelectByCustomerVideoIdAsync(long customerVideoId)
         {
             var stockAudio = (await DataWrapper.QueryStoredProcAsync<StockAudio>(Constants.StoredProcedures.StockAudioSelectByCustomerVideoId_sp,
                 dbParams: new { CustomerVideoId = customerVideoId }))
@@ -541,7 +579,7 @@ namespace PromoStudio.Data
             return stockAudio;
         }
 
-        public async Task<IEnumerable<StockAudio>> StockAudio_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId)
+        public async Task<IEnumerable<StockAudio>> StockAudio_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId)
         {
             var stockAudio = (await DataWrapper.QueryStoredProcAsync<StockAudio>(Constants.StoredProcedures.StockAudioSelectByOrganizationIdAndVerticalId_sp,
                 dbParams: new {
@@ -556,14 +594,14 @@ namespace PromoStudio.Data
 
         #region StockVideo
 
-        public async Task<IEnumerable<StockVideo>> StockVideo_SelectAll()
+        public async Task<IEnumerable<StockVideo>> StockVideo_SelectAllAsync()
         {
             var stockVideo = (await DataWrapper.QueryStoredProcAsync<StockVideo>(Constants.StoredProcedures.StockVideoSelectAll_sp))
                 .ToList();
             return stockVideo;
         }
 
-        public async Task<IEnumerable<StockVideo>> StockVideo_SelectByCustomerVideoId(long customerVideoId)
+        public async Task<IEnumerable<StockVideo>> StockVideo_SelectByCustomerVideoIdAsync(long customerVideoId)
         {
             var stockVideo = (await DataWrapper.QueryStoredProcAsync<StockVideo>(Constants.StoredProcedures.StockVideoSelectByCustomerVideoId_sp,
                 dbParams: new { CustomerVideoId = customerVideoId }))
@@ -571,7 +609,7 @@ namespace PromoStudio.Data
             return stockVideo;
         }
 
-        public async Task<IEnumerable<StockVideo>> StockVideo_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId)
+        public async Task<IEnumerable<StockVideo>> StockVideo_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId)
         {
             var stockVideo = (await DataWrapper.QueryStoredProcAsync<StockVideo>(Constants.StoredProcedures.StockVideoSelectByOrganizationIdAndVerticalId_sp,
                 dbParams: new
@@ -587,14 +625,36 @@ namespace PromoStudio.Data
 
         #region Storyboard
 
-        public async Task<IEnumerable<Storyboard>> Storyboard_SelectAll()
+        public void Storyboard_Delete(int storyboardId)
+        {
+            DataWrapper.ExecuteStoredProc(Constants.StoredProcedures.StoryboardDelete_sp,
+                dbParams: new { StoryboardId = storyboardId });
+        }
+
+        public async Task<Storyboard> Storyboard_InsertAsync(Storyboard storyboard)
+        {
+            var newStoryboard = (await DataWrapper.QueryStoredProcAsync<Storyboard>(Constants.StoredProcedures.StoryboardInsert_sp,
+                dbParams: storyboard.ToPoco()))
+                .FirstOrDefault();
+            return newStoryboard;
+        }
+
+        public async Task<IEnumerable<Storyboard>> Storyboard_SelectAllAsync()
         {
             var storyboard = (await DataWrapper.QueryStoredProcAsync<Storyboard>(Constants.StoredProcedures.StoryboardSelectAll_sp))
                 .ToList();
             return storyboard;
         }
 
-        public async Task<Storyboard> Storyboard_SelectById(int storyboardId)
+        public async Task<IEnumerable<Storyboard>> Storyboard_SelectByCustomerVideoIdAsync(long customerVideoId)
+        {
+            var storyboard = (await DataWrapper.QueryStoredProcAsync<Storyboard>(Constants.StoredProcedures.StoryboardSelectByCustomerVideoId_sp,
+                dbParams: new { CustomerVideoId = customerVideoId }))
+                .ToList();
+            return storyboard;
+        }
+
+        public async Task<Storyboard> Storyboard_SelectAsync(int storyboardId)
         {
             var storyboard = (await DataWrapper.QueryStoredProcAsync<Storyboard>(Constants.StoredProcedures.StoryboardSelectById_sp,
                 dbParams: new { StoryboardId = storyboardId }))
@@ -602,7 +662,30 @@ namespace PromoStudio.Data
             return storyboard;
         }
 
-        public async Task<IEnumerable<Storyboard>> Storyboard_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId)
+        public async Task<Storyboard> Storyboard_SelectWithItemsAsync(int storyboardId)
+        {
+            var storyboardTask =
+                DataWrapper.QueryStoredProcAsync<Storyboard>(Constants.StoredProcedures.StoryboardSelectById_sp,
+                    dbParams: new {StoryboardId = storyboardId});
+            var itemsTask =
+                DataWrapper.QueryStoredProcAsync<StoryboardItem>(
+                    Constants.StoredProcedures.StoryboardItemSelectByStoryboardId_sp,
+                    dbParams: new {StoryboardId = storyboardId});
+
+            await Task.WhenAll(storyboardTask, itemsTask);
+
+            var storyboard = storyboardTask.Result.FirstOrDefault();
+            if (storyboard != null)
+            {
+                var items = itemsTask.Result.ToList();
+                storyboard.Items = items;
+            }
+
+
+            return storyboard;
+        }
+
+        public async Task<IEnumerable<Storyboard>> Storyboard_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId)
         {
             var storyboard = (await DataWrapper.QueryStoredProcAsync<Storyboard>(Constants.StoredProcedures.StoryboardSelectByOrganizationIdAndVerticalId_sp,
                 dbParams: new
@@ -614,6 +697,12 @@ namespace PromoStudio.Data
             return storyboard;
         }
 
+        public void Storyboard_Update(Storyboard storyboard)
+        {
+            DataWrapper.ExecuteStoredProc(Constants.StoredProcedures.StoryboardUpdate_sp,
+                dbParams: storyboard.ToPoco());
+        }
+
         #endregion
 
         #region StoryboardItem
@@ -621,7 +710,7 @@ namespace PromoStudio.Data
         public async Task<StoryboardItem> StoryboardItem_InsertAsync(StoryboardItem storyboardItem)
         {
             var result =
-                ((IEnumerable<StoryboardItem>)await DataWrapper.QueryStoredProcAsync<StoryboardItem>(Constants.StoredProcedures.StoryboardItemInsert_sp,
+                (await DataWrapper.QueryStoredProcAsync<StoryboardItem>(Constants.StoredProcedures.StoryboardItemInsert_sp,
                 dbParams: storyboardItem.ToPoco()))
                 .FirstOrDefault();
 
@@ -634,7 +723,7 @@ namespace PromoStudio.Data
                 dbParams: new { StoryboardItemId = storyboardItemId });
         }
 
-        public async Task<IEnumerable<StoryboardItem>> StoryboardItem_SelectByCustomerVideoId(long customerVideoId)
+        public async Task<IEnumerable<StoryboardItem>> StoryboardItem_SelectByCustomerVideoIdAsync(long customerVideoId)
         {
             var storyboardItems = (await DataWrapper.QueryStoredProcAsync<StoryboardItem>(Constants.StoredProcedures.StoryboardItemSelectByCustomerVideoId_sp,
                 dbParams: new { CustomerVideoId = customerVideoId }))
@@ -642,7 +731,7 @@ namespace PromoStudio.Data
             return storyboardItems;
         }
 
-        public async Task<StoryboardItem> StoryboardItem_SelectById(long storyboardItemId)
+        public async Task<StoryboardItem> StoryboardItem_SelectByIdAsync(long storyboardItemId)
         {
             var storyboardItem = (await DataWrapper.QueryStoredProcAsync<StoryboardItem>(Constants.StoredProcedures.StoryboardItemSelectById_sp,
                 dbParams: new { StoryboardItemId = storyboardItemId }))
@@ -650,7 +739,7 @@ namespace PromoStudio.Data
             return storyboardItem;
         }
 
-        public async Task<IEnumerable<StoryboardItem>> StoryboardItem_SelectByStoryboardId(int storyboardId)
+        public async Task<IEnumerable<StoryboardItem>> StoryboardItem_SelectByStoryboardIdAsync(int storyboardId)
         {
             var storyboardItems = (await DataWrapper.QueryStoredProcAsync<StoryboardItem>(Constants.StoredProcedures.StoryboardItemSelectByStoryboardId_sp,
                 dbParams: new { StoryboardId = storyboardId }))
@@ -666,8 +755,13 @@ namespace PromoStudio.Data
         {
             using (var conn = DataWrapper.OpenConnection())
             {
-                var scripts = (await DataWrapper.QueryStoredProcAsync<TemplateScript>(conn, Constants.StoredProcedures.TemplateScriptSelectAll_sp)).ToList();
-                var items = (await DataWrapper.QueryStoredProcAsync<TemplateScriptItem>(conn, Constants.StoredProcedures.TemplateScriptItemSelectAll_sp)).ToList();
+                var scriptsTask = DataWrapper.QueryStoredProcAsync<TemplateScript>(conn, Constants.StoredProcedures.TemplateScriptSelectAll_sp);
+                var itemsTask = DataWrapper.QueryStoredProcAsync<TemplateScriptItem>(conn, Constants.StoredProcedures.TemplateScriptItemSelectAll_sp);
+
+                await Task.WhenAll(scriptsTask, itemsTask);
+
+                var scripts = scriptsTask.Result.ToList();
+                var items = itemsTask.Result.ToList();
 
                 foreach (var script in scripts)
                 {
@@ -680,14 +774,14 @@ namespace PromoStudio.Data
 
         public async Task<TemplateScript> TemplateScript_SelectAsync(long templateScriptId)
         {
-            var script = ((IEnumerable<TemplateScript>)await DataWrapper.QueryStoredProcAsync<TemplateScript>(Constants.StoredProcedures.TemplateScriptSelectById_sp,
+            var script = (await DataWrapper.QueryStoredProcAsync<TemplateScript>(Constants.StoredProcedures.TemplateScriptSelectById_sp,
                 dbParams: new { TemplateScriptId = templateScriptId }))
                 .FirstOrDefault();
 
             return script;
         }
 
-        public async Task<IEnumerable<TemplateScript>> TemplateScript_SelectByOrganizationIdAndVerticalId(int? organizationId, int? verticalId)
+        public async Task<IEnumerable<TemplateScript>> TemplateScript_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId)
         {
             var templateScripts = (await DataWrapper.QueryStoredProcAsync<TemplateScript>(Constants.StoredProcedures.TemplateScriptSelectByOrganizationIdAndVerticalId_sp,
                 dbParams: new
@@ -703,15 +797,63 @@ namespace PromoStudio.Data
         {
             using (var conn = DataWrapper.OpenConnection())
             {
-                var script = ((IEnumerable<TemplateScript>)await DataWrapper.QueryStoredProcAsync<TemplateScript>(conn, Constants.StoredProcedures.TemplateScriptSelectById_sp,
-                    dbParams: new { TemplateScriptId = templateScriptId }))
-                    .FirstOrDefault();
-                var items = (await DataWrapper.QueryStoredProcAsync<TemplateScriptItem>(conn, Constants.StoredProcedures.TemplateScriptItemSelectByTemplateScriptId_sp,
-                    dbParams: new { TemplateScriptId = templateScriptId }))
-                    .ToList();
+                var scriptTask = DataWrapper.QueryStoredProcAsync<TemplateScript>(conn,
+                    Constants.StoredProcedures.TemplateScriptSelectById_sp,
+                    dbParams: new {TemplateScriptId = templateScriptId});
+                var itemsTask = DataWrapper.QueryStoredProcAsync<TemplateScriptItem>(conn,
+                    Constants.StoredProcedures.TemplateScriptItemSelectByTemplateScriptId_sp,
+                    dbParams: new {TemplateScriptId = templateScriptId});
 
-                script.Items.AddRange(items);
+                await Task.WhenAll(scriptTask, itemsTask);
+
+                var script = scriptTask.Result.FirstOrDefault();
+
+                if (script != null)
+                {
+                    var items = itemsTask.Result.ToList();
+                    script.Items.AddRange(items);
+                }
                 return script;
+            }
+        }
+
+        public async Task<IEnumerable<TemplateScript>> TemplateScript_SelectByStoryboardIdAsync(int storyboardId)
+        {
+            using (var conn = DataWrapper.OpenConnection())
+            {
+                var templateScripts = (await DataWrapper.QueryStoredProcAsync<TemplateScript>(conn,
+                    Constants.StoredProcedures.TemplateScriptSelectByStoryboardId_sp,
+                    dbParams: new {StoryboardId = storyboardId})
+                    ).ToList();
+
+                return templateScripts;
+            }
+        }
+
+        public async Task<IEnumerable<TemplateScript>> TemplateScript_SelectByStoryboardIdWithItemsAsync(int storyboardId)
+        {
+            using (var conn = DataWrapper.OpenConnection())
+            {
+                var scriptsTask = DataWrapper.QueryStoredProcAsync<TemplateScript>(conn,
+                    Constants.StoredProcedures.TemplateScriptSelectByStoryboardId_sp,
+                    dbParams: new { StoryboardId = storyboardId });
+                var itemsTask = DataWrapper.QueryStoredProcAsync<TemplateScriptItem>(conn,
+                    Constants.StoredProcedures.TemplateScriptItemSelectByStoryboardId_sp,
+                    dbParams: new { StoryboardId = storyboardId });
+
+                await Task.WhenAll(scriptsTask, itemsTask);
+
+                var scripts = scriptsTask.Result.ToList();
+                var items = itemsTask.Result.ToList();
+
+                foreach (var script in scripts)
+                {
+                    var matchingItems =
+                        items.Where(tsi => tsi.fk_TemplateScriptId == script.pk_TemplateScriptId)
+                        .ToList();
+                    script.Items.AddRange(matchingItems);
+                }
+                return scripts;
             }
         }
 

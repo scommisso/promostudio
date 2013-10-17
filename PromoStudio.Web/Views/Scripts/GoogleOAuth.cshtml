@@ -4,7 +4,7 @@
     var random = new System.Random();
 }
 <script>
-define(["jquery"], function ($) {
+define(["ps/logger", "jquery"], function (logger, $) {
     return function (buttonSelector, loginCallback) {
         var self = this,
             clientId = '@(Settings.Default.GoogleClientId)',
@@ -59,7 +59,7 @@ define(["jquery"], function ($) {
                         alert(user.error);
                     }
                     else {
-                        console.log(user);
+                        logger.log(user);
                         if (typeof (loginCallback) === "function") {
                             btn.removeClass("wait");
                             loginCallback(user);
@@ -94,7 +94,7 @@ define(["jquery"], function ($) {
             win = window.open(oauthLoginUrl, "goauth2", 'width=800,height=600,toolbar=0,scrollbars=0,status=0,resizable=0,location=0,menuBar=0');
             pollTimer = window.setInterval(function () {
                 try {
-                    console.log(win.document.location.href);
+                    logger.log(win.document.location.href);
                     if (win.document.location.href.indexOf(oauthRedirect) != -1) {
                         window.clearInterval(pollTimer);
                         var url = win.document.location.href,

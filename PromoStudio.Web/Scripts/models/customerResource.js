@@ -1,5 +1,6 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/knockout-2.2.1.debug.js" />
+/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="enums.js" />
 
 define(["models/enums", "knockout"], function (enums, ko) {
     return function (data) {

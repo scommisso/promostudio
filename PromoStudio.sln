@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoStudio.Storage", "Prom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoStudio.Web", "PromoStudio.Web\PromoStudio.Web.csproj", "{7BF94D4F-B5F7-417B-9A8E-49CF191202C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoStudio.Resources", "PromoStudio.Resources\PromoStudio.Resources.csproj", "{F91EE58B-4179-4CA6-9EA6-6039AFE7E782}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{7BF94D4F-B5F7-417B-9A8E-49CF191202C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BF94D4F-B5F7-417B-9A8E-49CF191202C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BF94D4F-B5F7-417B-9A8E-49CF191202C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F91EE58B-4179-4CA6-9EA6-6039AFE7E782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F91EE58B-4179-4CA6-9EA6-6039AFE7E782}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F91EE58B-4179-4CA6-9EA6-6039AFE7E782}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F91EE58B-4179-4CA6-9EA6-6039AFE7E782}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

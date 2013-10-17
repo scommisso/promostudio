@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Your Videos";
+﻿@using PromoStudio.Resources
+@{
+    ViewBag.Title = @Strings.Videos__Your_Videos;
 }
 
 @section scripts
@@ -20,7 +21,7 @@
 <hr />
 
 <div style="display: none" data-bind="visible: LoadingData">
-    <h3>Loading your videos...</h3>
+    <h3>@Strings.Videos__Loading_your_videos_ellipsis</h3>
     <div class="loader-large"></div>
 </div>
 
@@ -41,6 +42,6 @@
 </div>
 <!-- /ko -->
 <!-- ko if: CustomerVideos().length === 0 -->
-<h2>You have no videos</h2>
-<h3><a href="@Url.Action("Index", "Build")">Build a Video</a></h3>
+<h2>@Strings.Videos__You_have_no_videos</h2>
+<h3><a href="@Url.Action("Index", "Build")">@Strings.Videos__Build_a_new_video</a></h3>
 <!-- /ko -->

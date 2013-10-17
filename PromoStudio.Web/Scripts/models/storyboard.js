@@ -1,7 +1,14 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/knockout-2.2.1.debug.js" />
+/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="storyboardItem.js" />
+/// <reference path="../ps/extensions.js" />
+/// <reference path="../ps/vidyardPlayer.js" />
 
-define(["models/storyboardItem", "knockout"], function (storyboardItem, ko) {
+define(["models/storyboardItem",
+        "knockout",
+        "ps/extensions"], function (
+        storyboardItem,
+        ko) {
     return function (data) {
         var self = this;
         data = data || {};
@@ -12,8 +19,26 @@ define(["models/storyboardItem", "knockout"], function (storyboardItem, ko) {
         self.fk_VerticalId = ko.observable(data.fk_VerticalId || null);
         self.Name = ko.observable(data.Name || null);
         self.Description = ko.observable(data.Description || null);
+        self.VidyardId = ko.observable(data.VidyardId || null);
+        self.ThumbnailUrl = ko.computed(function() {
+            var vId = self.VidyardId();
+            return "//embed.vidyard.com/embed/{0}/thumbnail.jpg".format(vId);
+        });
 
         self.Items = ko.observableArray([]);
+
+        self.Player = null;
+        self.LoadPlayer = function () {
+            require(["ps/vidyardPlayer"], function(vPlayer) {
+                self.Player = new vPlayer({ VideoId: self.VidyardId() });
+            });
+        };
+        self.PlayLightbox = function(d, e) {
+            if (self.Player) {
+                self.Player.ShowLightbox();
+            }
+            e.stopImmediatePropagation();
+        };
 
         self.LoadItems = function (items) {
             var i, item;

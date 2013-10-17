@@ -1,9 +1,6 @@
 ﻿using PromoStudio.Common.Enumerations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PromoStudio.Common.Models
 {
@@ -11,12 +8,15 @@ namespace PromoStudio.Common.Models
     {
         private List<StoryboardItem> _storyboardItems = new List<StoryboardItem>();
 
-        public long pk_StoryboardId { get; set; }
+        public int pk_StoryboardId { get; set; }
         public sbyte fk_StoryboardStatusId { get; set; }
         public int? fk_OrganizationId { get; set; }
         public int? fk_VerticalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string VidyardId { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
 
         public List<StoryboardItem> Items {
             get { return _storyboardItems; }
@@ -38,7 +38,10 @@ namespace PromoStudio.Common.Models
                 fk_OrganizationId = fk_OrganizationId,
                 fk_VerticalId = fk_VerticalId,
                 Name = Name,
-                Description = Description
+                Description = Description,
+                VidyardId = VidyardId,
+                DateCreated = DateCreated,
+                DateUpdated = DateUpdated
             };
         }
     }

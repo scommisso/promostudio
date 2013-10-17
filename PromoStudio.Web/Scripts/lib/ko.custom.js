@@ -13,5 +13,27 @@
                 : $(element).fadeOut();
         }
     };
+    ko.callbackOnBind = function(element, callback, timeout) {
+        var vm = null,
+            interval = null,
+            start = new Date().getTime(),
+            now;
+        interval = setInterval(function() {
+            try {
+                vm = ko.dataFor(element);
+            } catch(e) {
+                // not bound
+            }
+            if (vm !== undefined && vm !== null) {
+                clearInterval(interval);
+                callback(vm);
+                return;
+            }
+            now = new Date().getTime();
+            if ((now - start) > timeout) {
+                clearInterval(interval);
+            }
+        }, 10);
+    };
     return ko;
 });

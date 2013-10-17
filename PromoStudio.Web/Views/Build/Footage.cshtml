@@ -1,0 +1,30 @@
+﻿@using Newtonsoft.Json
+@model PromoStudio.Web.ViewModels.FootageViewModel
+@{
+    Layout = "~/Views/Build/_BuildLayout.cshtml";
+}
+@section scripts {
+    <script>
+        require(["viewModels/footageViewModel", "jquery"], function (footage, $) {
+            $(function () {
+                var vm = new footage(@Html.Raw(JsonConvert.SerializeObject(Model)));
+                vm.Bind(".thumbcontainer", ".build-steps");
+            });
+        });
+    </script>
+}
+<div class="thumbcontainer clearfix" data-bind="foreach: Storyboards">
+    <a style="display: none" href="#" class="footage-thumbnail"
+        data-bind="visible: true, css: { selected: $root.IsSelected($data) }, click: function () { $parent.SelectStoryboard($data); }">
+        <div class="footage-preview" data-bind="style: { backgroundImage: 'url(' + $data.ThumbnailUrl() + ')' }">
+            <div class="footage-play" data-bind="click: $data.PlayLightbox">
+                <span class="glyphicons play"></span>
+            </div>
+        </div>
+        <div class="footage-selection">
+            <span class="glyphicons check"></span>
+            <span class="glyphicons unchecked"></span>
+            <span class="footage-title" data-bind="text: $data.Name"></span>
+        </div>
+    </a>
+</div>

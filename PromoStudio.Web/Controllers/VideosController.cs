@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using log4net;
+using PromoStudio.Data;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using log4net;
-using Newtonsoft.Json;
-using PromoStudio.Common.Enumerations;
-using PromoStudio.Common.Models;
-using PromoStudio.Data;
 
 namespace PromoStudio.Web.Controllers
 {

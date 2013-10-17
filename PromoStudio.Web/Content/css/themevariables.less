@@ -1,0 +1,34 @@
+﻿@import url('elements.less');
+@import url('glyphicons.css');
+
+@import url('//fonts.googleapis.com/css?family=Josefin+Sans:100&.css');
+
+.headerfont () {
+    font-family: 'Josefin Sans', sans-serif;
+    text-transform: uppercase;
+}
+
+/* white-label banner */
+@bannerbgcolor: #3d7395;
+@bannercolor: #fff;
+
+@bgbasecolor: #fff;
+@basecolor: #4f4f4f;
+@linkcolor: desaturate(@bannerbgcolor, 10%);
+@linkactivecolor: saturate(@bannerbgcolor, 40%);
+
+
+@navbgcolor: @bgbasecolor;
+@navcolor: @basecolor;
+@backcolor: darken(@bgbasecolor, 6%);
+@contentbgcolor: darken(@bgbasecolor, 3%);
+@contentcolor: @basecolor;
+@contentmutedcolor: lighten(@contentcolor, 35%);
+
+@completedColor: #57c446;
+
+@navcolormuted: lighten(@navcolor, 16%);
+@navinactivecolor: lighten(@navcolor, 50%);
+@navhovercolor: @contentmutedcolor;
+
+@cs: 4px; /* rounded corner size */

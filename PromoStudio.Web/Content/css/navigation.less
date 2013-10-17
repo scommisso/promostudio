@@ -1,0 +1,140 @@
+﻿@import url('themevariables.less');
+
+div.navbar {
+    position: absolute;
+    top: 75px;
+    width: 100%;
+    min-width: 1018px;
+    background-color: @navbgcolor;
+    border: 0;
+    border-bottom: solid 1px darken(@navbgcolor, 11%);
+    .border-radius(0,0,0,0);
+    margin: 0;
+    padding: 0 7px;
+
+    .navbar-nav {
+        float: left;
+        margin: 0;
+
+        > li {
+            float: left;
+
+            > a {
+                padding-top: 15px;
+                padding-bottom: 8px;
+                color: @navinactivecolor;
+                background-color: @navbgcolor !important;
+            }
+
+                > a:hover,
+                > a:focus {
+                    color: @navhovercolor;
+                }
+        }
+
+            > li.active > a {
+                color: @navcolor;
+            }
+
+                > li.active > a .muted {
+                    color: @navcolormuted;
+                }
+    }
+
+    li {
+        color: @navinactivecolor;
+
+        > a {
+            > div {
+                margin-top: -12px;
+                width: auto;
+                max-width: 170px;
+            }
+
+            span.glyphicons:before {
+                color: @navinactivecolor;
+                margin: -2px 0 0 0;
+            }
+
+            span.glyphicons.stepDone:before {
+                font-size: 16px;
+                color: @completedColor !important;
+                margin: 13px 0 0 -37px;
+            }
+
+            label {
+                font-size: 14px;
+                float: left;
+                cursor: pointer;
+                margin: -14px 0 2px 40px;
+                width: auto;
+                white-space: nowrap;
+                line-height: 1.2em;
+
+                .muted {
+                    color: inherit;
+                    width: auto;
+                    white-space: nowrap;
+                    display: block;
+                    font-weight: normal;
+                }
+            }
+        }
+
+            > a:hover span.glyphicons:before,
+            > a:focus span.glyphicons:before {
+                color: @navhovercolor;
+            }
+    }
+
+        li.active {
+            > a span.glyphicons:before {
+                color: @navcolor;
+            }
+
+            .arrow {
+                bottom: -11px;
+                left: 27px;
+                margin-left: -11px;
+                border-top-color: darken(@navbgcolor, 14%);
+                border-width: 11px;
+                border-bottom-width: 0;
+            }
+
+                .arrow:after {
+                    bottom: 1px;
+                    margin-left: -10px;
+                    border-top-color: @navbgcolor;
+                    border-width: 10px;
+                    border-bottom-width: 0;
+                    content: " ";
+                }
+        }
+
+        li.notready {
+            cursor: default;
+
+            > a,
+            > a:hover,
+            > a:focus {
+                color: @navinactivecolor;
+                cursor: default;
+
+                label,
+                span.glyphicons:before {
+                    color: @navinactivecolor;
+                    cursor: default;
+                }
+            }
+        }
+
+        li .arrow,
+        li .arrow:after {
+            position: absolute;
+            display: block;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+        }
+}

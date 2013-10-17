@@ -1,4 +1,5 @@
-﻿@model PromoStudio.Web.PromoStudioPrincipal
+﻿@using PromoStudio.Resources
+@model PromoStudio.Web.PromoStudioPrincipal
 @{
     ViewBag.Title = "Welcome to PromoStudio";
     string firstName = null;
@@ -47,7 +48,7 @@
     }
     else {
         <div>
-            Welcome back, @(firstName)!
+            @string.Format(Strings.Login__Welcome_back, firstName)
         </div>
     }
 </div>
@@ -59,7 +60,7 @@
     <div class="span4">
         <h2>Heading</h2>
         <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn" href="#">View details &raquo;</a></p>
+        <p><a class="btn" href="#lbImg" data-toggle="lightbox">View details &raquo;</a></p>
     </div>
     <div class="span4">
         <h2>Heading</h2>
@@ -72,3 +73,13 @@
         <p><a class="btn" href="#">View details &raquo;</a></p>
     </div>
 </div>
+
+@section modals
+{
+    <div id="lbImg" class="lightbox hide fade"  tabindex="-1" role="dialog" aria-hidden="true">
+	    <div class='lightbox-content'>
+		    <img src="/Content/img/promoStudio.jpg">
+		    <div class="lightbox-caption"><p>Your caption here</p></div>
+	    </div>
+    </div>
+}

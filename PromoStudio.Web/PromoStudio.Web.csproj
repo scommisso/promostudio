@@ -28,6 +28,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +48,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.0.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
@@ -60,15 +65,56 @@
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.15\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.15\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -86,13 +132,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http">
-    </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
@@ -102,45 +142,22 @@
     <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Optimization">
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Providers">
       <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.2\lib\net40\System.Web.Providers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="WebGrease">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.3.0\lib\WebGrease.dll</HintPath>
-    </Reference>
-    <Reference Include="Antlr3.Runtime">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.3.0\lib\Antlr3.Runtime.dll</HintPath>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="App_Start\BootstrapBundleConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\IocConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -168,13 +185,85 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\BuildCookieViewModel.cs" />
+    <Compile Include="ViewModels\BuildViewModelBase.cs" />
+    <Compile Include="ViewModels\BrandingViewModel.cs" />
+    <Compile Include="ViewModels\AudioViewModel.cs" />
+    <Compile Include="ViewModels\SummaryViewModel.cs" />
+    <Compile Include="ViewModels\ScriptViewModel.cs" />
+    <Compile Include="ViewModels\FootageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\css\bootstrap-responsive.css" />
-    <Content Include="Content\css\bootstrap.css" />
-    <Content Include="Content\css\site.css" />
-    <Content Include="Content\img\glyphicons-halflings-white.png" />
-    <Content Include="Content\img\glyphicons-halflings.png" />
+    <Content Include="Content\bootstrap\bootstrap.css">
+      <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap\bootstrap.min.css">
+      <DependentUpon>bootstrap.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\bootstrap-lightbox.css" />
+    <Content Include="Content\css\bootstrap-lightbox.min.css">
+      <DependentUpon>bootstrap-lightbox.css</DependentUpon>
+    </Content>
+    <Content Include="Content\css\build-branding.css">
+      <DependentUpon>build-branding.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\build-branding.min.css">
+      <DependentUpon>build-branding.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\build-footage.css">
+      <DependentUpon>build-footage.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\build-footage.min.css">
+      <DependentUpon>build-footage.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\build.css">
+      <DependentUpon>build.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\build.min.css">
+      <DependentUpon>build.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\elements.css">
+      <DependentUpon>elements.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\elements.min.css">
+      <DependentUpon>elements.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\glyphicons.css" />
+    <Content Include="Content\css\login.css">
+      <DependentUpon>login.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\login.min.css">
+      <DependentUpon>login.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\navigation.css">
+      <DependentUpon>navigation.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\navigation.min.css">
+      <DependentUpon>navigation.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\site.css">
+      <DependentUpon>site.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\site.min.css">
+      <DependentUpon>site.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\themevariables.css">
+      <DependentUpon>themevariables.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\themevariables.min.css">
+      <DependentUpon>themevariables.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\vidyard.css">
+      <DependentUpon>vidyard.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\vidyard.min.css">
+      <DependentUpon>vidyard.less</DependentUpon>
+    </Content>
+    <Content Include="Content\fonts\glyphicons-regular.svg" />
+    <Content Include="Content\img\glyphicons-white.png" />
+    <Content Include="Content\img\glyphicons-white.svg" />
+    <Content Include="Content\img\glyphicons.png" />
+    <Content Include="Content\img\glyphicons.svg" />
     <Content Include="Content\img\loader-large.gif" />
     <Content Include="Content\img\promoStudio.jpg" />
     <Content Include="Content\img\ps_logo.png" />
@@ -183,13 +272,103 @@
     <Content Include="Content\img\signin-twitter-sprite.png" />
     <Content Include="Content\img\subnav.png" />
     <Content Include="Global.asax" />
+    <Content Include="Content\bootstrap\wells.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\bootstrap\utilities.less" />
+    <Content Include="Content\bootstrap\type.less" />
+    <Content Include="Content\bootstrap\tooltip.less" />
+    <Content Include="Content\bootstrap\thumbnails.less" />
+    <Content Include="Content\bootstrap\theme.less" />
+    <Content Include="Content\bootstrap\tables.less" />
+    <Content Include="Content\bootstrap\scaffolding.less" />
+    <Content Include="Content\bootstrap\responsive-utilities.less" />
+    <Content Include="Content\bootstrap\progress-bars.less" />
+    <Content Include="Content\bootstrap\print.less" />
+    <Content Include="Content\bootstrap\popovers.less" />
+    <Content Include="Content\bootstrap\panels.less" />
+    <Content Include="Content\bootstrap\pagination.less" />
+    <Content Include="Content\bootstrap\pager.less" />
+    <Content Include="Content\bootstrap\normalize.less" />
+    <Content Include="Content\bootstrap\navs.less" />
+    <Content Include="Content\bootstrap\navbar.less" />
+    <Content Include="Content\bootstrap\modals.less" />
+    <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\bootstrap\media.less" />
+    <Content Include="Content\bootstrap\list-group.less" />
+    <Content Include="Content\bootstrap\labels.less" />
+    <Content Include="Content\bootstrap\jumbotron.less" />
+    <Content Include="Content\bootstrap\input-groups.less" />
+    <Content Include="Content\bootstrap\grid.less" />
+    <Content Include="Content\bootstrap\forms.less" />
+    <Content Include="Content\bootstrap\dropdowns.less" />
+    <Content Include="Content\bootstrap\component-animations.less" />
+    <Content Include="Content\bootstrap\code.less" />
+    <Content Include="Content\bootstrap\close.less" />
+    <Content Include="Content\bootstrap\carousel.less" />
+    <Content Include="Content\bootstrap\buttons.less" />
+    <Content Include="Content\bootstrap\button-groups.less" />
+    <Content Include="Content\bootstrap\breadcrumbs.less" />
+    <Content Include="Content\bootstrap\bootstrap.less" />
+    <Content Include="Content\bootstrap\badges.less" />
+    <Content Include="Content\bootstrap\alerts.less" />
+    <Content Include="Content\css\themevariables.less" />
+    <Content Include="Content\css\site.less" />
+    <Content Include="Content\css\elements.less" />
+    <Content Include="Content\fonts\glyphicons-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-regular.woff" />
+    <Content Include="Content\css\login.less" />
+    <Content Include="Content\css\navigation.less" />
+    <Content Include="Content\css\build.less" />
+    <Content Include="Content\css\vidyard.less" />
+    <Content Include="Content\css\build-footage.less" />
+    <Content Include="Scripts\bootstrap.min.js">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\bootstrap.min.js.map">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\lib\jquery-ui-1.10.3.min.js">
+      <DependentUpon>jquery-ui-1.10.3.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\lib\jquery-ui-1.10.3.min.js.map">
+      <DependentUpon>jquery-ui-1.10.3.js</DependentUpon>
+    </Content>
+    <Content Include="Content\css\build-branding.less" />
+    <None Include="Scripts\vsdoc\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js">
+      <DependentUpon>jquery-1.9.1.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\knockout-2.3.0.debug.js" />
+    <Content Include="Scripts\knockout-2.3.0.js" />
+    <Content Include="Scripts\less-1.4.1.min.js" />
+    <Content Include="Scripts\lib\bootstrap-lightbox.js" />
+    <Content Include="Scripts\lib\bootstrap-lightbox.min.js">
+      <DependentUpon>bootstrap-lightbox.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\lib\css.js" />
+    <Content Include="Scripts\lib\css.min.js" />
+    <Content Include="Scripts\lib\jquery-ui-1.10.3.js" />
+    <Content Include="Scripts\ps\extensions.js" />
     <Content Include="Scripts\lib\history.js" />
+    <Content Include="Scripts\lib\jquery-scrolltofixed.js" />
+    <Content Include="Scripts\lib\jquery-scrolltofixed.min.js">
+      <DependentUpon>jquery-scrolltofixed.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\lib\jquery.bootstrap.wizard.js" />
     <Content Include="Scripts\lib\jquery.form.js" />
     <Content Include="Scripts\lib\jquery.pjax.js" />
     <Content Include="Scripts\lib\knockout-2.3.0.js" />
     <Content Include="Scripts\lib\ko.custom.js" />
     <Content Include="Scripts\lib\modernizr.js" />
+    <Content Include="Scripts\lib\modernizr.min.js">
+      <DependentUpon>modernizr.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\lib\normalize.js" />
+    <Content Include="Scripts\lib\normalize.min.js" />
+    <Content Include="Scripts\lib\bs-lightbox.js" />
     <Content Include="Scripts\models\audioScriptTemplate.js" />
     <Content Include="Scripts\models\customerVideoScript.js" />
     <Content Include="Scripts\models\storyboardItem.js" />
@@ -198,23 +377,28 @@
     <Content Include="Scripts\models\customerTemplateScriptItem.js" />
     <Content Include="Scripts\models\customerTemplateScript.js" />
     <Content Include="Scripts\models\enums.js" />
-    <Content Include="Scripts\lib\bootstrap.js" />
     <Content Include="Scripts\models\customerResource.js" />
     <Content Include="Scripts\models\stockAudio.js" />
     <Content Include="Scripts\models\stockVideo.js" />
     <Content Include="Scripts\models\customerVideoItem.js" />
     <Content Include="Scripts\models\templateScriptItem.js" />
     <Content Include="Scripts\models\templateScript.js" />
+    <Content Include="Scripts\ps\logger.js" />
     <Content Include="Scripts\require.min.js" />
     <Content Include="Scripts\requireConfig.js" />
-    <Content Include="Scripts\lib\jquery-1.9.1.js" />
+    <Content Include="Scripts\viewModels\buildNavViewModel.js" />
+    <Content Include="Scripts\viewModels\brandingViewModel.js" />
+    <Content Include="Scripts\viewModels\photoPlaceholderViewModel.js" />
+    <Content Include="Scripts\viewModels\photosViewModel.js" />
+    <Content Include="Scripts\viewModels\footageViewModel.js" />
     <Content Include="Scripts\viewModels\scaffold.js" />
-    <Content Include="Scripts\viewModels\buildViewModel.js" />
+    <Content Include="Scripts\viewModels\old.buildViewModel.js" />
     <Content Include="Scripts\viewModels\loginViewModel.js" />
-    <Content Include="Scripts\viewModels\resourcesViewModel.js" />
-    <Content Include="Scripts\viewModels\videosViewModel.js" />
-    <Content Include="Scripts\vsdoc\knockout-2.2.1.debug.js" />
+    <Content Include="Scripts\viewModels\old.resourcesViewModel.js" />
+    <Content Include="Scripts\viewModels\old.videosViewModel.js" />
+    <Content Include="Scripts\ps\vidyardPlayer.js" />
     <Content Include="Scripts\models\customerVideo.js" />
+    <Content Include="Scripts\vsdoc\knockout-2.3.0.debug.js" />
     <Content Include="Scripts\vsdoc\require.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -227,6 +411,27 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Scripts\lib\css.min.js.map">
+      <DependentUpon>css.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\lib\bootstrap-lightbox.min.js.map">
+      <DependentUpon>bootstrap-lightbox.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\lib\jquery-scrolltofixed.min.js.map">
+      <DependentUpon>jquery-scrolltofixed.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\lib\modernizr.min.js.map">
+      <DependentUpon>modernizr.js</DependentUpon>
+    </Content>
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Build\_BuildNavigation.cshtml" />
+    <Content Include="Views\Build\_BuildLayout.cshtml" />
+    <Content Include="Views\Build\Audio.cshtml" />
+    <Content Include="Views\Build\Summary.cshtml" />
+    <Content Include="Views\Scripts\Strings.cshtml" />
+    <Content Include="Scripts\jquery-1.9.1.min.js.map">
+      <DependentUpon>jquery-1.9.1.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -250,18 +455,16 @@
       <Project>{c3ce665c-3fac-4074-883e-a5662fdafaea}</Project>
       <Name>PromoStudio.Rendering</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Build\Index.cshtml" />
+    <ProjectReference Include="..\PromoStudio.Resources\PromoStudio.Resources.csproj">
+      <Project>{f91ee58b-4179-4ca6-9ea6-6039afe7e782}</Project>
+      <Name>PromoStudio.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Videos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Resources\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Build\_BuildCrumbs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Scripts\GoogleOAuth.cshtml" />
@@ -286,9 +489,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\Local.pubxml" />
-    <Content Include="Views\Build\_Media-Logo.cshtml" />
-    <Content Include="Views\Build\_Script.cshtml" />
-    <Content Include="Views\Build\_Footage.cshtml" />
+    <Content Include="Views\Build\Branding.cshtml" />
+    <Content Include="Views\Build\Script.cshtml" />
+    <Content Include="Views\Build\Footage.cshtml" />
     <Content Include="Views\Shared\_PjaxLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
@@ -306,10 +509,10 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>18969</DevelopmentServerPort>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>57486</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:17363/</IISUrl>
+          <IISUrl>http://localhost:18969/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -319,6 +522,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

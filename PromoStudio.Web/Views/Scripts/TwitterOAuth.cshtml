@@ -1,8 +1,8 @@
 ﻿@using PromoStudio.Web
 @using PromoStudio.Web.Properties
 <script>
-    //https://dev.twitter.com/docs/auth/implementing-sign-twitter
-define(["jquery"], function ($) {
+//https://dev.twitter.com/docs/auth/implementing-sign-twitter
+define(["ps/logger", "jquery"], function (logger, $) {
     return function (buttonSelector, loginCallback) {
         var self = this,
             oauthConsumerKey = '@(Settings.Default.TwitterConsumerKey)',
@@ -13,7 +13,6 @@ define(["jquery"], function ($) {
             oauth_timestamp = null,
             oauth_token = null,
             oauth_version = '1.0',
-
 
             oauthUrl = 'https://accounts.google.com/o/oauth2/auth?',
             oauthRedirect = '@(Url.Absolute(Url.Action("goa2cb", "Home")))',
@@ -62,7 +61,7 @@ define(["jquery"], function ($) {
                         alert(user.error);
                     }
                     else {
-                        console.log(user);
+                        logger.log(user);
                         if (typeof (loginCallback) === "function") {
                             btn.removeClass("wait");
                             loginCallback(user);
@@ -97,7 +96,7 @@ define(["jquery"], function ($) {
             win = window.open(oauthLoginUrl, "toauth2", 'width=800,height=600,toolbar=0,scrollbars=0,status=0,resizable=0,location=0,menuBar=0');
             pollTimer = window.setInterval(function () {
                 try {
-                    console.log(win.document.location.href);
+                    logger.log(win.document.location.href);
                     if (win.document.location.href.indexOf(oauthRedirect) != -1) {
                         window.clearInterval(pollTimer);
                         var url = win.document.location.href,

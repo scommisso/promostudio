@@ -1,0 +1,40 @@
+﻿@using Newtonsoft.Json
+@using PromoStudio.Resources
+@model PromoStudio.Web.ViewModels.BrandingViewModel
+@{
+    Layout = "~/Views/Build/_BuildLayout.cshtml";
+}
+@section scripts {
+    <script>
+        require(["viewModels/brandingViewModel", "jquery", "bootstrap"], function (branding, $) {
+            $(function () {
+                var vm = new branding(@Html.Raw(JsonConvert.SerializeObject(Model)));
+                vm.Bind(".brandingWizard", ".build-steps");
+            });
+        });
+    </script>
+}
+
+<div class="brandingWizard">
+    
+    <div class="panel-group" id="brandingWizard">
+        <div id="photoCollapse" class="panel panel-default" style="display:none" data-bind="visible: PhotoSection().IsVisible">
+            <div class="panel-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#brandingWizard" href="#photoPanel">
+                    <h4 class="panel-title">
+                        <div class="step-title" data-bind="text: PhotoSection().TitleText, css: { 'opened': PhotoSection().StartOpen }"></div>
+                        <div class="step-subtitle" data-bind="css: { 'opened': PhotoSection().StartOpen }">@Strings.BuildStep__Your_potential_clients_want_to_see_you</div>
+                        <div class="step-completed">
+                            <span class="step-done glyphicons circle_ok" style="display:none" data-bind="visible: PhotoSection().IsCompleted, css: { 'opened': PhotoSection().StartOpen }"></span>
+                        </div>
+                    </h4>
+                </a>
+            </div>
+            <div id="photoPanel" class="panel-collapse collapse" data-bind="css: { 'in': PhotoSection().StartOpen }">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

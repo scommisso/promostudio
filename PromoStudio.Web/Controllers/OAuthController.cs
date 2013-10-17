@@ -1,5 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using log4net;
+using Newtonsoft.Json;
+using PromoStudio.Common.Enumerations;
+using PromoStudio.Common.Models;
+using PromoStudio.Data;
+using PromoStudio.Web.Properties;
+using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -7,12 +12,6 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
 using System.Web.Security;
-using log4net;
-using Newtonsoft.Json;
-using PromoStudio.Common.Enumerations;
-using PromoStudio.Common.Models;
-using PromoStudio.Data;
-using PromoStudio.Web.Properties;
 
 namespace PromoStudio.Web.Controllers
 {
@@ -29,7 +28,7 @@ namespace PromoStudio.Web.Controllers
         {
             try
             {
-                var clcs = await _dataService.CustomerWithLoginCredential_SelectAsyncByLoginCredential(pId, key, email);
+                var clcs = await _dataService.CustomerWithLoginCredential_SelectByLoginCredentialAsync(pId, key, email);
                 var clc = clcs.FirstOrDefault(c => c.fk_CustomerLoginPlatformId == pId);
                 if (clc == null) { clc = clcs.FirstOrDefault(); }
 
@@ -42,6 +41,7 @@ namespace PromoStudio.Web.Controllers
                     {
                         FullName = name,
                         fk_OrganizationId = null,
+                        fk_VerticalId = null,
                         fk_CustomerStatusId = (sbyte)CustomerStatus.Active,
                         DateCreated = DateTime.Now
                     };
@@ -135,7 +135,8 @@ namespace PromoStudio.Web.Controllers
                 CustomerId = customer.pk_CustomerId,
                 EmailAddress = loginInfo.EmailAddress,
                 FullName = customer.FullName,
-                OrganizationId = organization == null ? (long?) null : organization.pk_OrganizationId,
+                VerticalId = customer.fk_VerticalId,
+                OrganizationId = organization == null ? (int?) null : organization.pk_OrganizationId,
                 OrganizationName = organization == null ? (string) null : organization.DisplayName
             };
 

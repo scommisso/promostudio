@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PromoStudio.Common.Models
 {
@@ -13,6 +12,7 @@ namespace PromoStudio.Common.Models
         public long pk_CustomerVideoId { get; set; }
         public long fk_CustomerId { get; set; }
         public sbyte fk_CustomerVideoRenderStatusId { get; set; }
+        public int fk_StoryboardId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string RenderFailureMessage { get; set; }
@@ -27,6 +27,8 @@ namespace PromoStudio.Common.Models
             get { return (CustomerVideoRenderStatus)fk_CustomerVideoRenderStatusId; }
             set { fk_CustomerVideoRenderStatusId = (sbyte)value; }
         }
+
+        public Storyboard Storyboard { get; set; }
 
         public List<CustomerVideoItem> Items
         {
@@ -66,6 +68,7 @@ namespace PromoStudio.Common.Models
                 pk_CustomerVideoId = pk_CustomerVideoId,
                 fk_CustomerId = fk_CustomerId,
                 fk_CustomerVideoRenderStatusId = fk_CustomerVideoRenderStatusId,
+                fk_StoryboardId = fk_StoryboardId,
                 Name = Name,
                 Description = Description,
                 RenderFailureMessage = RenderFailureMessage,

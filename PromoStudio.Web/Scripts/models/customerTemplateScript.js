@@ -1,5 +1,8 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/knockout-2.2.1.debug.js" />
+/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="customerTemplateScriptItem.js" />
+/// <reference path="templateScript.js" />
+/// <reference path="templateScriptItem.js" />
 
 define(["models/customerTemplateScriptItem", "knockout"], function (customerTemplateScriptItem, ko) {
     return function (data) {
@@ -42,6 +45,26 @@ define(["models/customerTemplateScriptItem", "knockout"], function (customerTemp
 
             self.Items(items);
         };
+
+        self.LoadTemplateScriptData = function (templateScript) {
+            var scriptItems = templateScript.Items(),
+                customerScriptItems = [],
+                i, item, scriptItem;
+            self.fk_TemplateScriptId(templateScript.pk_TemplateScriptId());
+            
+            for (i = 0; i < scriptItems.length; i++) {
+                item = scriptItems[i];
+                scriptItem = new customerTemplateScriptItem({  
+                    fk_TemplateScriptItemId: item.pk_TemplateScriptItemId(),
+                    CustomerScript: self,
+                    ScriptItem: item
+                });
+                customerScriptItems.push(scriptItem);
+            }
+
+            self.Items(customerScriptItems);
+        };
+
         self.LoadItems(data.Items);
     };
 });
