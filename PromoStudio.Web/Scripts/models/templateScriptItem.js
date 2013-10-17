@@ -2,7 +2,7 @@
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
 define(["models/templateScriptItem", "knockout"], function (templateScriptItem, ko) {
-    return function (data) {
+    var ctor = function (data) {
         var self = this;
         data = data || {};
 
@@ -17,4 +17,13 @@ define(["models/templateScriptItem", "knockout"], function (templateScriptItem, 
 
         self.Value = ko.observable(null);
     };
+
+    ctor.prototype.toJSON = function () {
+        var copy = ko.toJS(this);
+        // remove any unneeded properties
+        delete copy.Value;
+
+        return copy;
+    };
+    return ctor;
 });

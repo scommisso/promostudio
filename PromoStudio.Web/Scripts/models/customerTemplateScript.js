@@ -5,7 +5,7 @@
 /// <reference path="templateScriptItem.js" />
 
 define(["models/customerTemplateScriptItem", "knockout"], function (customerTemplateScriptItem, ko) {
-    return function (data) {
+    var ctor = function(data) {
         var self = this;
         data = data || {};
 
@@ -17,11 +17,11 @@ define(["models/customerTemplateScriptItem", "knockout"], function (customerTemp
         self.DateCompleted = ko.observable(data.DateCompleted || null);
         self.PreviewFilePath = ko.observable(data.PreviewFilePath || null);
         self.CompletedFilePath = ko.observable(data.CompletedFilePath || null);
-        
+
         self.Template = ko.observable(data.Template || null);
         self.Items = ko.observableArray([]);
 
-        self.LoadTemplateData = function (templateScript) {
+        self.LoadTemplateData = function(templateScript) {
             var items = templateScript.Items(),
                 item, i;
             self.Template(templateScript);
@@ -34,7 +34,7 @@ define(["models/customerTemplateScriptItem", "knockout"], function (customerTemp
             self.Items(items);
         };
 
-        self.LoadItems = function (items) {
+        self.LoadItems = function(items) {
             var i, item;
             items = items || [];
 
@@ -46,15 +46,15 @@ define(["models/customerTemplateScriptItem", "knockout"], function (customerTemp
             self.Items(items);
         };
 
-        self.LoadTemplateScriptData = function (templateScript) {
+        self.LoadTemplateScriptData = function(templateScript) {
             var scriptItems = templateScript.Items(),
                 customerScriptItems = [],
                 i, item, scriptItem;
             self.fk_TemplateScriptId(templateScript.pk_TemplateScriptId());
-            
+
             for (i = 0; i < scriptItems.length; i++) {
                 item = scriptItems[i];
-                scriptItem = new customerTemplateScriptItem({  
+                scriptItem = new customerTemplateScriptItem({
                     fk_TemplateScriptItemId: item.pk_TemplateScriptItemId(),
                     CustomerScript: self,
                     ScriptItem: item
@@ -67,4 +67,13 @@ define(["models/customerTemplateScriptItem", "knockout"], function (customerTemp
 
         self.LoadItems(data.Items);
     };
+
+    ctor.prototype.toJSON = function () {
+        var copy = ko.toJS(this);
+        // remove any unneeded properties
+        delete copy.Template;
+
+        return copy;
+    };
+    return ctor;
 });

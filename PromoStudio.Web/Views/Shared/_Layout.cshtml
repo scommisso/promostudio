@@ -1,4 +1,5 @@
-﻿@using PromoStudio.Resources
+﻿@using PromoStudio.Rendering.Properties
+@using PromoStudio.Resources
 @using PromoStudio.Web
 @{
     string copyrightDate = DateTime.Today.Year.ToString();
@@ -15,6 +16,8 @@
         && Context.User.Identity.IsAuthenticated
             ? (PromoStudio.Web.PromoStudioIdentity)Context.User.Identity
             : null;
+
+    var useOptimizedScripts = PromoStudio.Web.Properties.Settings.Default.UseOptimizedScripts;
 }
 <!DOCTYPE html>
 <html>
@@ -84,6 +87,10 @@
     @RenderSection("modals", required: false)
     <script src="@Url.Content("~/Scripts/require.min.js")"></script>
     <script src="@Url.Content("~/Scripts/requireConfig.js")"></script>
+    @if (useOptimizedScripts)
+    {
+    <script src="@Url.Content("~/optimizedScripts/viewModels/scaffold.js")"></script>
+    }
     <script type="text/javascript">
         require(["viewModels/scaffold"], function (scaffold) {
             scaffold();

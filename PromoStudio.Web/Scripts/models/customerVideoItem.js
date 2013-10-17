@@ -2,7 +2,7 @@
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
 define(["knockout"], function (ko) {
-    return function (data) {
+    var ctor = function (data) {
         var self = this;
         data = data || {};
 
@@ -52,4 +52,18 @@ define(["knockout"], function (ko) {
             return item;
         });
     };
+
+    ctor.prototype.toJSON = function () {
+        var copy = ko.toJS(this);
+        // remove any unneeded properties
+        delete copy.FootageItem;
+        delete copy.FootageItemName;
+        delete copy.StockVideo;
+        delete copy.StockAudio;
+        delete copy.CustomerScript;
+        delete copy.VoiceOver;
+
+        return copy;
+    };
+    return ctor;
 });

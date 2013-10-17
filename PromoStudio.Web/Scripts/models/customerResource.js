@@ -3,7 +3,7 @@
 /// <reference path="enums.js" />
 
 define(["models/enums", "knockout"], function (enums, ko) {
-    return function (data) {
+    var ctor = function (data) {
         var self = this;
         data = data || {};
 
@@ -44,4 +44,16 @@ define(["models/enums", "knockout"], function (enums, ko) {
             return displayPath;
         });
     };
+
+    ctor.prototype.toJSON = function () {
+        var copy = ko.toJS(this);
+        // remove any unneeded properties
+        delete copy.TemplateScriptItemCategory;
+        delete copy.TemplateScriptItemType;
+        delete copy.LinkUrl;
+        delete copy.LinkFileName;
+
+        return copy;
+    };
+    return ctor;
 });

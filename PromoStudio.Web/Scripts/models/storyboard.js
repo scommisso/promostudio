@@ -12,7 +12,7 @@ define(["models/storyboardItem",
         storyboardItem,
         vPlayer,
         ko) {
-    return function (data) {
+    var ctor = function (data) {
         var self = this;
         data = data || {};
 
@@ -54,4 +54,14 @@ define(["models/storyboardItem",
         };
         self.LoadItems(data.Items);
     };
+
+    ctor.prototype.toJSON = function () {
+        var copy = ko.toJS(this);
+        // remove any unneeded properties
+        delete copy.ThumbnailUrl;
+        delete copy.Player;
+
+        return copy;
+    };
+    return ctor;
 });

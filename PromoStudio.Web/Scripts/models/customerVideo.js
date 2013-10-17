@@ -12,7 +12,7 @@ define(["models/customerVideoItem",
         storyboard,
         enums,
         ko) {
-    return function (data) {
+    var ctor = function (data) {
         var self = this;
         data = data || {};
 
@@ -75,4 +75,16 @@ define(["models/customerVideoItem",
         };
         self.LoadItems(data.Storyboard, data.Items);
     };
+
+    ctor.prototype.toJSON = function () {
+        var copy = ko.toJS(this);
+        // remove any unneeded properties
+        delete copy.Storyboard;
+        delete copy.CustomerVideoRenderStatus;
+        delete copy.LinkUrl;
+        delete copy.LinkFileName;
+
+        return copy;
+    };
+    return ctor;
 });

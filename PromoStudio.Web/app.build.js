@@ -16,11 +16,6 @@
     //or require.config({}) call found in that file will be used.
     mainConfigFile: './Scripts/requireConfig.js',
 
-    //The directory path to save the output. If not specified, then
-    //the path will default to be a directory called "build" as a sibling
-    //to the build file. All relative paths are relative to the build file.
-    dir: "optimizedScripts",
-
     //How to optimize all the JS files in the build output directory.
     //Right now only the following values
     //are supported:
@@ -32,7 +27,7 @@
     //- "closure.keepLines": Same as closure option, but keeps line returns
     //in the minified files.
     //- "none": no minification will be done.
-    optimize: "none",//"uglify",
+    optimize: "uglify2",//"uglify",
 
     //Allow CSS optimizations. Allowed values:
     //- "standard": @import inlining, comment removal and line returns.
@@ -60,7 +55,6 @@
     //dependencies will be included in the module's file when the build is
     //done. If that module or any of its dependencies includes i18n bundles,
     //only the root bundles will be included unless the locale: section is set above.
-    
     paths: {
         "modernizr": "empty:",
         "jquery": "empty:",
@@ -75,15 +69,18 @@
         "twitterOAuth": "empty:"
     },
 
+    //The directory path to save the output. If not specified, then
+    //the path will default to be a directory called "build" as a sibling
+    //to the build file. All relative paths are relative to the build file.
+    dir: "optimizedScripts",
+
     modules: [{
-        name: "viewModels/scaffold"
-    }, {
-        name: "viewModels/loginViewModel"
-    }, {
-        name: "viewModels/buildNavViewModel"
-    }, {
-        name: "viewModels/footageViewModel"
-    }, {
-        name: "viewModels/brandingViewModel"
+        name: "viewModels/scaffold",
+        include: [
+            "viewModels/loginViewModel",
+            "viewModels/buildNavViewModel",
+            "viewModels/footageViewModel",
+            "viewModels/brandingViewModel"
+        ]
     }]
 }

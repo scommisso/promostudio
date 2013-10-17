@@ -163,6 +163,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <None Include="build.bat" />
     <Compile Include="Controllers\BuildController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\OAuthController.cs" />
@@ -185,7 +186,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <None Include="app.build.json" />
+    <Content Include="app.build.js" />
     <Compile Include="ViewModels\BuildCookieViewModel.cs" />
     <Compile Include="ViewModels\BuildViewModelBase.cs" />
     <Compile Include="ViewModels\BrandingViewModel.cs" />
@@ -323,47 +324,16 @@
     <Content Include="Content\css\build.less" />
     <Content Include="Content\css\vidyard.less" />
     <Content Include="Content\css\build-footage.less" />
-    <Content Include="Scripts\bootstrap.min.js">
-      <DependentUpon>bootstrap.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\bootstrap.min.js.map">
-      <DependentUpon>bootstrap.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\lib\jquery-ui-1.10.3.min.js">
-      <DependentUpon>jquery-ui-1.10.3.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\lib\jquery-ui-1.10.3.min.js.map">
-      <DependentUpon>jquery-ui-1.10.3.js</DependentUpon>
-    </Content>
     <Content Include="Content\css\build-branding.less" />
-    <Content Include="Scripts\lib\ko.custom.min.js">
-      <DependentUpon>ko.custom.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\lib\ko.custom.min.js.map">
-      <DependentUpon>ko.custom.js</DependentUpon>
-    </Content>
     <None Include="Scripts\vsdoc\jquery-1.9.1.intellisense.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js">
-      <DependentUpon>jquery-1.9.1.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\knockout-2.3.0.debug.js" />
-    <Content Include="Scripts\knockout-2.3.0.js" />
-    <Content Include="Scripts\less-1.4.1.min.js" />
+    <Content Include="Scripts\lib\bootstrap.js" />
+    <Content Include="Scripts\lib\jquery-1.9.1.js" />
     <Content Include="Scripts\lib\bootstrap-lightbox.js" />
-    <Content Include="Scripts\lib\bootstrap-lightbox.min.js">
-      <DependentUpon>bootstrap-lightbox.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\lib\css.js" />
-    <Content Include="Scripts\lib\css.min.js" />
     <Content Include="Scripts\lib\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\ps\extensions.js" />
     <Content Include="Scripts\lib\history.js" />
     <Content Include="Scripts\lib\jquery-scrolltofixed.js" />
-    <Content Include="Scripts\lib\jquery-scrolltofixed.min.js">
-      <DependentUpon>jquery-scrolltofixed.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\lib\jquery.bootstrap.wizard.js" />
     <Content Include="Scripts\lib\jquery.form.js" />
     <Content Include="Scripts\lib\jquery.pjax.js" />
@@ -374,7 +344,6 @@
       <DependentUpon>modernizr.js</DependentUpon>
     </Content>
     <Content Include="Scripts\lib\normalize.js" />
-    <Content Include="Scripts\lib\normalize.min.js" />
     <Content Include="Scripts\lib\bs-lightbox.js" />
     <Content Include="Scripts\models\audioScriptTemplate.js" />
     <Content Include="Scripts\models\customerVideoScript.js" />
@@ -419,15 +388,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Scripts\lib\css.min.js.map">
-      <DependentUpon>css.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\lib\bootstrap-lightbox.min.js.map">
-      <DependentUpon>bootstrap-lightbox.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\lib\jquery-scrolltofixed.min.js.map">
-      <DependentUpon>jquery-scrolltofixed.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\lib\modernizr.min.js.map">
       <DependentUpon>modernizr.js</DependentUpon>
     </Content>
@@ -437,9 +397,6 @@
     <Content Include="Views\Build\Audio.cshtml" />
     <Content Include="Views\Build\Summary.cshtml" />
     <Content Include="Views\Scripts\Strings.cshtml" />
-    <Content Include="Scripts\jquery-1.9.1.min.js.map">
-      <DependentUpon>jquery-1.9.1.js</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -535,6 +492,10 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

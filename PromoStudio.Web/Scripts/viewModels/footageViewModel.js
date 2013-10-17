@@ -9,7 +9,7 @@ define(["models/storyboard",
         "jquery",
         "knockout",
         "ps/logger",
-        "lib/ko.custom.min"],
+        "lib/ko.custom"],
     function (
         storyboard,
         $,

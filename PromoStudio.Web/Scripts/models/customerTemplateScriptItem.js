@@ -2,7 +2,7 @@
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
 define(["models/customerResource", "knockout"], function (customerResource, ko) {
-    return function (data) {
+    var ctor = function (data) {
         var self = this;
         data = data || {};
 
@@ -43,4 +43,14 @@ define(["models/customerResource", "knockout"], function (customerResource, ko) 
             self.fk_TemplateScriptItemId(ko.utils.unwrapObservable(templateScriptItem.pk_TemplateScriptItemId));
         };
     };
+
+    ctor.prototype.toJSON = function () {
+        var copy = ko.toJS(this);
+        // remove any unneeded properties
+        delete copy.Value;
+        delete copy.Resource;
+
+        return copy;
+    };
+    return ctor;
 });

@@ -18,7 +18,7 @@ define(["viewModels/photoPlaceholderViewModel",
         "strings",
         "models/enums",
         "ps/logger",
-        "lib/ko.custom.min",
+        "lib/ko.custom",
         "ps/extensions",
         "bootstrap",
         "jqueryui"

@@ -5,7 +5,7 @@ define(["models/templateScript",
         "knockout"],
     function (templateScript,
         ko) {
-    return function (data) {
+    var ctor = function (data) {
         var self = this;
         data = data || {};
 
@@ -25,4 +25,13 @@ define(["models/templateScript",
         };
         self.LoadScript(data.TemplateScript);
     };
+
+    ctor.prototype.toJSON = function () {
+        var copy = ko.toJS(this);
+        // remove any unneeded properties
+        delete copy.TemplateScript;
+
+        return copy;
+    };
+    return ctor;
 });
