@@ -621,6 +621,14 @@ namespace PromoStudio.Data
             return stockVideo;
         }
 
+        public async Task<IEnumerable<StockVideo>> StockVideo_SelectByStoryboardIdAsync(int storyboardId)
+        {
+            var stockVideo = (await DataWrapper.QueryStoredProcAsync<StockVideo>(Constants.StoredProcedures.StockVideoSelectByStoryboardId_sp,
+                dbParams: new { StoryboardId = storyboardId }))
+                .ToList();
+            return stockVideo;
+        }
+
         #endregion
 
         #region Storyboard

@@ -88,6 +88,8 @@
     <Compile Include="Models\TemplateScriptItem.cs" />
     <Compile Include="Models\TemplateScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\ISerializationManager.cs" />
+    <Compile Include="Serialization\SerializationManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

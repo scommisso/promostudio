@@ -1,14 +1,11 @@
 ﻿using PromoStudio.Common.Enumerations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PromoStudio.Common.Models
 {
     public class StockAudio
     {
-        public long pk_StockAudioId { get; set; }
+        public int pk_StockAudioId { get; set; }
         public sbyte fk_StockItemStatusId { get; set; }
         public int? fk_OrganizationId { get; set; }
         public int? fk_VerticalId { get; set; }

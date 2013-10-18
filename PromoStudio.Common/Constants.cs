@@ -69,6 +69,7 @@ namespace PromoStudio.Common
             public const string StockVideoSelectAll_sp = "promostudio.StockVideoSelectAll_sp";
             public const string StockVideoSelectByCustomerVideoId_sp = "promostudio.StockVideoSelectByCustomerVideoId_sp";
             public const string StockVideoSelectByOrganizationIdAndVerticalId_sp = "promostudio.StockVideoSelectByOrganizationIdAndVerticalId_sp";
+            public const string StockVideoSelectByStoryboardId_sp = "promostudio.StockVideoSelectByStoryboardId_sp";
 
             public const string StoryboardInsert_sp = "promostudio.StoryboardInsert_sp";
             public const string StoryboardUpdate_sp = "promostudio.StoryboardUpdate_sp";

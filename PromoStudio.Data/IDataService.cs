@@ -58,6 +58,7 @@ namespace PromoStudio.Data
         Task<IEnumerable<StockVideo>> StockVideo_SelectAllAsync();
         Task<IEnumerable<StockVideo>> StockVideo_SelectByCustomerVideoIdAsync(long customerVideoId);
         Task<IEnumerable<StockVideo>> StockVideo_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId);
+        Task<IEnumerable<StockVideo>> StockVideo_SelectByStoryboardIdAsync(int storyboardId);
         void Storyboard_Delete(int storyboardId);
         Task<Storyboard> Storyboard_InsertAsync(Storyboard storyboard);
         Task<IEnumerable<Storyboard>> Storyboard_SelectAllAsync();

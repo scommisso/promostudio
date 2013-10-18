@@ -26,8 +26,7 @@ define(["models/enums", "knockout"], function (enums, ko) {
 
         self.LinkUrl = ko.computed(function () {
             // TODO: This should point to our content host (VidYard) instead of local
-            var type = self.TemplateScriptItemType(),
-                val = self.Value();
+            var type = self.TemplateScriptItemType();
             if (type === "Text") { return "javascript:void(0);"; }
             return "/Resources/Download?crid=" + self.pk_CustomerResourceId();
         });

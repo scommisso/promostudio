@@ -8,7 +8,9 @@ namespace PromoStudio.Common.Models
         public int fk_StoryboardId { get; set; }
         public short fk_StoryboardItemTypeId { get; set; }
         public long? fk_TemplateScriptId { get; set; }
+        public long? fk_StockVideoId { get; set; }
         public string Name { get; set; }
+        public int LengthInSeconds { get; set; }
         public sbyte SortOrder { get; set; }
 
         public StoryboardItemType Type {
@@ -17,6 +19,7 @@ namespace PromoStudio.Common.Models
         }
 
         public TemplateScript TemplateScript { get; set; }
+        public StockVideo StockVideo { get; set; }
 
         public dynamic ToPoco()
         {
@@ -26,7 +29,9 @@ namespace PromoStudio.Common.Models
                 fk_StoryboardId = fk_StoryboardId,
                 fk_StoryboardItemTypeId = fk_StoryboardItemTypeId,
                 fk_TemplateScriptId = fk_TemplateScriptId,
+                fk_StockVideoId = fk_StockVideoId,
                 Name = Name,
+                LengthInSeconds = LengthInSeconds,
                 SortOrder = SortOrder
             };
         }

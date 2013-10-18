@@ -46,7 +46,7 @@ define(["models/customerTemplateScriptItem", "knockout"], function (customerTemp
             self.Items(items);
         };
 
-        self.LoadTemplateScriptData = function(templateScript) {
+        self.LoadTemplateScriptData = function (templateScript) {
             var scriptItems = templateScript.Items(),
                 customerScriptItems = [],
                 i, item, scriptItem;
@@ -71,6 +71,11 @@ define(["models/customerTemplateScriptItem", "knockout"], function (customerTemp
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);
         // remove any unneeded properties
+        delete copy.DateCreated;
+        delete copy.DateUpdated;
+        delete copy.DateCompleted;
+        delete copy.PreviewFilePath;
+        delete copy.CompletedFilePath;
         delete copy.Template;
 
         return copy;

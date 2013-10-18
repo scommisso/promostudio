@@ -58,7 +58,13 @@ define(["models/storyboard",
         };
         
         function stepChanging(navVm, callback) {
-            video().fk_StoryboardId(self.SelectedStoryboardId());
+            var customerVideo = video(),
+                selectedStoryboard = self.SelectedStoryboardId();
+            if (customerVideo.fk_StoryboardId() !== selectedStoryboard) {
+                // clear previous selection
+                customerVideo.fk_StoryboardId(self.SelectedStoryboardId());
+                customerVideo.Items([]);
+            }
             callback();
         }
         

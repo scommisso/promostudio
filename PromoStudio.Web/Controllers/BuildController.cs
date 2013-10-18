@@ -6,15 +6,18 @@ using log4net;
 using Newtonsoft.Json;
 using PromoStudio.Common.Encryption;
 using PromoStudio.Common.Enumerations;
-using PromoStudio.Common.Models;
+using PromoStudio.Common.Serialization;
 using PromoStudio.Data;
 using PromoStudio.Rendering.Properties;
+using PromoStudio.Web.Models.Session;
 using PromoStudio.Web.ViewModels;
 using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using CustomerVideo = PromoStudio.Common.Models.CustomerVideo;
+using CustomerVideoItem = PromoStudio.Common.Models.CustomerVideoItem;
 
 namespace PromoStudio.Web.Controllers
 {
@@ -22,11 +25,13 @@ namespace PromoStudio.Web.Controllers
     public class BuildController : ControllerBase
     {
         private ICryptoManager _cryptoManager;
+        private ISerializationManager _serializationManager;
 
-        public BuildController(IDataService dataService, ILog log, ICryptoManager cryptoManager)
+        public BuildController(IDataService dataService, ILog log, ICryptoManager cryptoManager, ISerializationManager serializationManager)
             : base(dataService, log)
         {
             _cryptoManager = cryptoManager;
+            _serializationManager = serializationManager;
         }
 
         //
@@ -43,10 +48,9 @@ namespace PromoStudio.Web.Controllers
             if (data == null
                 || data.CompletedSteps == null
                 || data.CompletedSteps.Count == 0
-                || data.Video == null
-                || data.Video.fk_CustomerId != customerId)
+                || data.Video == null)
             {
-                ClearCookie();
+                ClearBuildCookies();
                 return new RedirectResult("~/Build/Footage");
             }
 
@@ -73,7 +77,7 @@ namespace PromoStudio.Web.Controllers
                 case 0:
                 case 5:
                 default:
-                    ClearCookie();
+                    ClearBuildCookies();
                     return new RedirectResult("~/Build/Footage");
             }
         }
@@ -123,8 +127,10 @@ namespace PromoStudio.Web.Controllers
 
             var data = GetFromCookie();
 
+            // Get required db items
             var storyboardTask = _dataService.Storyboard_SelectWithItemsAsync(data.Video.fk_StoryboardId);
-            var templatesTask = _dataService.TemplateScript_SelectByStoryboardIdWithItemsAsync(data.Video.fk_StoryboardId);
+            var templatesTask =
+                _dataService.TemplateScript_SelectByStoryboardIdWithItemsAsync(data.Video.fk_StoryboardId);
 
             await Task.WhenAll(storyboardTask, templatesTask);
 
@@ -132,11 +138,29 @@ namespace PromoStudio.Web.Controllers
             var templates = templatesTask.Result.ToList();
             foreach (var sbi in storyboard.Items)
             {
-                if (!sbi.fk_TemplateScriptId.HasValue) { continue; }
-                sbi.TemplateScript = templates.FirstOrDefault(ts => ts.pk_TemplateScriptId == sbi.fk_TemplateScriptId);
+                if (sbi.fk_TemplateScriptId.HasValue)
+                {
+                    sbi.TemplateScript =
+                        templates.FirstOrDefault(ts => ts.pk_TemplateScriptId == sbi.fk_TemplateScriptId);
+                }
             }
 
             data.Video.Storyboard = storyboard;
+
+            // Link items to storyboard if populated
+            foreach (var cvItem in data.Video.Items)
+            {
+                if (cvItem.CustomerScript != null)
+                {
+                    foreach (var csi in cvItem.CustomerScript.Items)
+                    {
+                        csi.ScriptItem = templates
+                            .SelectMany(t => t.Items)
+                            .FirstOrDefault(ti => ti.pk_TemplateScriptItemId == csi.fk_TemplateScriptItemId);
+                    }
+                }
+            }
+
             var vm = new BrandingViewModel()
             {
                 Video = data.Video,
@@ -245,7 +269,8 @@ namespace PromoStudio.Web.Controllers
             }
             try
             {
-                CreateCookie(cookieModel);
+                MergeData(cookieModel);
+                CreateCookies(cookieModel);
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             catch (Exception ex)
@@ -308,8 +333,6 @@ namespace PromoStudio.Web.Controllers
             }
         }
 
-        private const string buildCookieKey = "BuildData";
-        private BuildCookieViewModel _buildCookieViewModel = null;
         private bool ValidateUserStep(int stepId)
         {
             if (stepId == 1)
@@ -331,6 +354,54 @@ namespace PromoStudio.Web.Controllers
             return data.CompletedSteps.Contains(stepId - 1);
         }
 
+        private void MergeData(BuildCookieViewModel newCookie)
+        {
+            var oldCookie = GetFromCookie();
+            if (oldCookie == null)
+            {
+                return;
+            }
+
+            var oldCookieVideo = oldCookie.Video;
+            var newCookieVideo = newCookie.Video;
+
+            if (oldCookieVideo.fk_StoryboardId != newCookieVideo.fk_StoryboardId)
+            {
+                // user changed the storyboard
+                newCookieVideo.Items.Clear();
+            }
+            else
+            {
+                // ensure that video has the matching footage items
+                foreach (var cvItem in newCookieVideo.Items)
+                {
+                    if (cvItem.StockAudio != null
+                        || cvItem.StockVideo != null
+                        || cvItem.CustomerScript != null
+                        || cvItem.VoiceOver != null)
+                    {
+                        continue; // data already present
+                    }
+                    var matchItem = oldCookieVideo.Items
+                        .FirstOrDefault(ocvItem =>
+                            ocvItem.fk_CustomerVideoItemTypeId == cvItem.fk_CustomerVideoItemTypeId
+                            && ocvItem.SortOrder == cvItem.SortOrder);
+                    if (matchItem != null)
+                    {
+                        cvItem.StockAudio = matchItem.StockAudio;
+                        cvItem.StockVideo = matchItem.StockVideo;
+                        cvItem.CustomerScript = matchItem.CustomerScript;
+                        cvItem.VoiceOver = matchItem.VoiceOver;
+                    }
+                }
+            }
+        }
+
+        private const string buildCookieStateKey = "BuildData_State";
+        private const string buildCookieVideoItemsKey = "BuildData_VideoItems";
+        private const string buildCookieTemplateKey = "BuildData_Template";
+        private const string buildCookieTemplateItemsKey = "BuildData_TemplateItems";
+        private BuildCookieViewModel _buildCookieViewModel = null;
         private BuildCookieViewModel GetFromCookie()
         {
             if (_buildCookieViewModel != null)
@@ -338,7 +409,40 @@ namespace PromoStudio.Web.Controllers
                 return _buildCookieViewModel;
             }
 
-            var cookie = Request.Cookies.Get(buildCookieKey);
+            var buildState = GetBuildCookieValue<BuildState>(buildCookieStateKey);
+            if (buildState == null || buildState.Video.fk_CustomerId != CurrentUser.CustomerId)
+            {
+                ClearBuildCookies();
+                return null;
+            }
+
+            // get the cookies
+            var videoItemsState = GetBuildCookieValue<Models.Session.CustomerVideoItem[]>(buildCookieVideoItemsKey);
+            var templatesState = GetBuildCookieValue<Models.Session.CustomerTemplateScript[]>(buildCookieTemplateKey);
+            var templateItemsState = GetBuildCookieValue<Models.Session.CustomerTemplateScriptItem[]>(buildCookieTemplateItemsKey);
+
+            // combine the cookies back together
+            _buildCookieViewModel = buildState.ToModel();
+            var videoItems = videoItemsState.Select(vis => vis.ToModel()).ToList();
+            var templates = templatesState.Select(ts => ts.ToModel()).ToList();
+            var templateItems = templateItemsState.Select(tsi => tsi.ToModel()).ToList();
+            _buildCookieViewModel.Video.Items.AddRange(videoItems);
+            foreach (var vidItem in videoItems.Where(vi => vi.Type == CustomerVideoItemType.CustomerTemplateScript))
+            {
+                vidItem.CustomerScript =
+                    templates.FirstOrDefault(t => t.pk_CustomerTemplateScriptId == vidItem.fk_CustomerVideoItemId);
+            }
+            foreach (var template in templates)
+            {
+                template.Items.AddRange(templateItems.Where(ti => ti.fk_CustomerTemplateScriptId == template.pk_CustomerTemplateScriptId));
+            }
+
+            return _buildCookieViewModel;
+        }
+
+        private T GetBuildCookieValue<T>(string key) where T : class
+        {
+            var cookie = Request.Cookies.Get(key);
             if (cookie == null || string.IsNullOrEmpty(cookie.Value))
             {
                 return null;
@@ -346,37 +450,81 @@ namespace PromoStudio.Web.Controllers
 
             try
             {
-                var json = _cryptoManager.DecryptString(
-                    cookie.Value, Properties.Settings.Default.BuildCookieSecret);
-                var video = JsonConvert.DeserializeObject<BuildCookieViewModel>(json);
-                _buildCookieViewModel = video;
-                return video;
+                var val = _serializationManager.DeserializeFromString<T>(cookie.Value);
+                return val;
             }
             catch
             {
-                // invalid data, expire the bad cookie
-                _buildCookieViewModel = null;
-                ClearCookie();
+                // bad data, expire it
+                ClearCookie(key);
                 return null;
             }
         }
 
-        private void ClearCookie()
+        private void ClearBuildCookies()
         {
-            var cookie = new HttpCookie(buildCookieKey, string.Empty);
+            ClearCookie(buildCookieStateKey);
+            ClearCookie(buildCookieVideoItemsKey);
+            ClearCookie(buildCookieTemplateKey);
+            ClearCookie(buildCookieTemplateItemsKey);
+        }
+
+        private void ClearCookie(string key)
+        {
+            var cookie = new HttpCookie(key, string.Empty);
             cookie.Expires = DateTime.Today.AddYears(-5);
             cookie.HttpOnly = true;
             Response.Cookies.Add(cookie);
         }
 
-        private void CreateCookie(BuildCookieViewModel video)
+        private void CreateCookies(BuildCookieViewModel cookieModel)
         {
-            var json = JsonConvert.SerializeObject(video);
-            var encrypted = _cryptoManager.EncryptString(json, Properties.Settings.Default.BuildCookieSecret);
-            var cookie = new HttpCookie(buildCookieKey, encrypted);
+            var videoItems = cookieModel.Video.Items.ToList();
+            var templates = videoItems.Where(vi => vi.CustomerScript != null).Select(vi => vi.CustomerScript).ToList();
+
+            // Ensure all customer templates have IDs
+            if (templates.Count > 0)
+            {
+                long minTemplateId = templates.Min(t => t.pk_CustomerTemplateScriptId);
+                foreach (var template in templates)
+                {
+                    if (template.pk_CustomerTemplateScriptId == 0)
+                    {
+                        minTemplateId -= 1;
+                        template.pk_CustomerTemplateScriptId = minTemplateId;
+                        var matchingItem = videoItems.FirstOrDefault(cvi => cvi.CustomerScript == template);
+                        if (matchingItem != null)
+                        {
+                            matchingItem.fk_CustomerVideoItemId = minTemplateId;
+                        }
+                    }
+                    template.Items.ForEach(ti => ti.fk_CustomerTemplateScriptId = template.pk_CustomerTemplateScriptId);
+                }
+            }
+            var templateItems = templates.SelectMany(t => t.Items).ToList();
+            
+            // Create trimmed-down models for cookie storage
+            var buildState = new BuildState(cookieModel);
+            var videoItemsState = videoItems.Select(vi => new Models.Session.CustomerVideoItem(vi)).ToArray();
+            var templatesState = templates.Select(t => new Models.Session.CustomerTemplateScript(t)).ToArray();
+            var templateItemsState = templateItems.Select(ti => new Models.Session.CustomerTemplateScriptItem(ti)).ToArray();
+
+            var serializedBuildState = _serializationManager.SerializeToString(buildState);
+            var serializedVideoItems = _serializationManager.SerializeToString(videoItemsState);
+            var serializedTemplates = _serializationManager.SerializeToString(templatesState);
+            var serializedTemplateItems = _serializationManager.SerializeToString(templateItemsState);
+
+            CreateBuildCookie(buildCookieStateKey, serializedBuildState);
+            CreateBuildCookie(buildCookieVideoItemsKey, serializedVideoItems);
+            CreateBuildCookie(buildCookieTemplateKey, serializedTemplates);
+            CreateBuildCookie(buildCookieTemplateItemsKey, serializedTemplateItems);
+        }
+
+        private void CreateBuildCookie(string key, string value)
+        {
+            var cookie = new HttpCookie(key, value);
             cookie.Expires = DateTime.Now.AddDays(7);
             cookie.HttpOnly = true;
-
             Response.Cookies.Add(cookie);
         }
     }

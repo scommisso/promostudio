@@ -47,7 +47,7 @@ define(["models/storyboardItem",
 
             for (i = 0; i < items.length; i++) {
                 item = items[i];
-                items[i] = new storyboardItem(item);
+                items[i] = new storyboardItem(self, item);
             }
 
             self.Items(items);

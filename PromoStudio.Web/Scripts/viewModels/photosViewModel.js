@@ -9,7 +9,7 @@
 /// <reference path="../models/customerTemplateScriptItem.js" />
 /// <reference path="../models/customerVideoItem.js" />
 
-define(["viewModels/photoPlaceholderViewModel",
+define(["viewModels/photoTemplatesViewModel",
         "models/customerTemplateScript",
         "models/customerTemplateScriptItem",
         "models/customerVideoItem",
@@ -24,7 +24,7 @@ define(["viewModels/photoPlaceholderViewModel",
         "jqueryui"
     ],
     function (
-        photoPlaceholderViewModel,
+        photoTemplatesViewModel,
         customerTemplateScript,
         customerTemplateScriptItem,
         customerVideoItem,
@@ -37,35 +37,49 @@ define(["viewModels/photoPlaceholderViewModel",
             var self = this,
                 transitionTime = 350, /* from bootstrap-transitions */
                 photoTitle = strings.getResource("BuildStep__Num_spots_need_your_own_photos"),
-                customerTemplateScripts = [];
+                customerTemplateScripts;
             data = data || {};
             video = video || {};
 
             self.PhotoTemplates = ko.observableArray([]);
-            self.PhotoPlaceholders = ko.computed(function() {
+            self.PhotoSlots = ko.computed(function() {
                 var templates = self.PhotoTemplates(),
-                    placeholders = [],
-                    slots, i, j;
+                    slots = [],
+                    templateSlots, i, j;
                 for (i = 0; i < templates.length; i++) {
-                    slots = templates[i].PhotoSlots();
-                    for (j = 0; j < slots.length; j++) {
-                        placeholders.push(slots[j]);
+                    templateSlots = templates[i].PhotoSlots();
+                    for (j = 0; j < templateSlots.length; j++) {
+                        slots.push(templateSlots[j]);
                     }
                 }
-                return placeholders;
+                return slots;
             });
+            self.SelectedSlot = ko.observable(null);
+            self.IsSelected = function (slot) {
+                return self.SelectedSlot() === slot;
+            };
+            self.SelectSlot = function (slot) {
+                self.SelectedSlot(slot);
+            };
             
             self.IsVisible = ko.computed(function () {
-                var length = self.PhotoTemplates().length;
+                var length = self.PhotoSlots().length;
                 return length > 0;
             });
             self.IsCompleted = ko.computed(function () {
-                // TODO: Check if all photos have been selected
-                return true;//true;
+                var slots = self.PhotoSlots(),
+                    i;
+                for (i = 0; i < slots.length; i++) {
+                    if (!slots[i].IsCompleted()) {
+                        return false;
+                    }
+                }
+                return true;
             });
+            
             self.StartOpen = ko.observable(true);
             self.TitleText = ko.computed(function () {
-                var length = self.PhotoPlaceholders().length;
+                var length = self.PhotoSlots().length;
                 if (length === 0) {
                     length = "no";
                 }
@@ -83,14 +97,17 @@ define(["viewModels/photoPlaceholderViewModel",
                 var storyboardData = videoData.Storyboard(),
                     items = videoData.Items(),
                     photoTemplates = [],
-                    storyboardItems, i, item, sbItem, scriptItem;
+                    storyboardItems, i, item, sbItem, sbItemType, scriptItem;
 
                 storyboardItems = storyboardData.Items();
 
                 for (i = 0; i < storyboardItems.length; i++) {
                     sbItem = storyboardItems[i];
-                    if (sbItem.fk_StoryboardItemTypeId() === 4) {
-                        // Look for any matches in videoItems
+                    sbItemType = sbItem.fk_StoryboardItemTypeId();
+                    
+                    // Create template items
+                    if (sbItemType === 1 || sbItemType === 3 || sbItemType === 4 || sbItemType === 5) {
+                        // Look for any photo matches in videoItems
                         item = $.grep(items, function(cvi) {
                             var itemType = cvi.fk_CustomerVideoItemTypeId(),
                                 custScript;
@@ -108,14 +125,42 @@ define(["viewModels/photoPlaceholderViewModel",
                         if (item === null) {
                             // setup a new script item as necessary
                             item = new customerVideoItem({
-                                fk_CustomerVideoItemTypeId: 3
+                                fk_CustomerVideoItemTypeId: 3,
+                                SortOrder: sbItem.SortOrder()
                             });
                             scriptItem = new customerTemplateScript({ fk_CustomerId: video.fk_CustomerId() });
                             scriptItem.LoadTemplateScriptData(sbItem.TemplateScript());
                             item.FootageItem(scriptItem);
                             videoData.Items.push(item);
                         }
-                        photoTemplates.push(new photoPlaceholderViewModel(sbItem, item));
+                        photoTemplates.push(new photoTemplatesViewModel(sbItem, item));
+                    }
+                    
+                    // Create stock video items
+                    else if (sbItemType === 2) {
+                        // look for any stock video matches in videoItems
+                        item = $.grep(items, function (cvi) {
+                            var itemType = cvi.fk_CustomerVideoItemTypeId(),
+                                videoId = cvi.fk_CustomerVideoItemId();
+                            if (itemType !== 1) { return false; }
+                            return cvi.fk_CustomerVideoItemId() === sbItem.fk_StockVideoId();
+                        });
+
+                        if (item && item.length > 0) {
+                            item = item[0];
+                        } else {
+                            item = null;
+                        }
+                        if (item === null) {
+                            // setup a new script item as necessary
+                            item = new customerVideoItem({
+                                fk_CustomerVideoItemTypeId: 1,
+                                fk_CustomerVideoItemId: sbItem.fk_StockVideoId(),
+                                SortOrder: sbItem.SortOrder()
+                            });
+                            item.FootageItem(sbItem.StockVideo());
+                            videoData.Items.push(item);
+                        }
                     }
                 }
 

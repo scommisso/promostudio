@@ -1,10 +1,6 @@
 ﻿using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PromoStudio.Common.Models
 {
@@ -18,6 +14,7 @@ namespace PromoStudio.Common.Models
         public string Description { get; set; }
         public int ItemWidth { get; set; }
         public int ItemHeight { get; set; }
+        public sbyte SortOrder { get; set; }
 
         public TemplateScriptItemType Type {
             get { return (TemplateScriptItemType)fk_TemplateScriptItemTypeId; }
@@ -56,7 +53,8 @@ namespace PromoStudio.Common.Models
                 Name = Name,
                 Description = Description,
                 ItemWidth = ItemWidth,
-                ItemHeight = ItemHeight
+                ItemHeight = ItemHeight,
+                SortOrder = SortOrder
             };
         }
     }

@@ -14,6 +14,7 @@ define(["models/templateScriptItem", "knockout"], function (templateScriptItem, 
         self.Description = ko.observable(data.Description || null);
         self.ItemWidth = ko.observable(data.ItemWidth || null);
         self.ItemHeight = ko.observable(data.ItemHeight || null);
+        self.SortOrder = ko.observable(data.SortOrder || 1);
 
         self.Value = ko.observable(null);
     };

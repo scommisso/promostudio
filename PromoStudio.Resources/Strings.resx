@@ -309,4 +309,7 @@
   <data name="StoryboardItemType__Text" xml:space="preserve">
     <value>Text Template</value>
   </data>
+  <data name="BuildStep__Section_num_timing" xml:space="preserve">
+    <value>Sect. {0} - appx. {1} into video, slot {2}</value>
+  </data>
 </root>

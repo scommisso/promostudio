@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using PromoStudio.Common.Serialization;
 
 namespace PromoStudio.Common.Encryption
 {
     public class CryptoManager : ICryptoManager
     {
-        public CryptoManager()
+        private readonly ISerializationManager _serializationManager;
+
+        public CryptoManager(ISerializationManager serializationManager)
         {
+            _serializationManager = serializationManager;
         }
 
         public string EncryptString(string value, string keys)
@@ -17,17 +21,37 @@ namespace PromoStudio.Common.Encryption
             if (string.IsNullOrEmpty(keys))
                 throw new ArgumentNullException("keys");
 
-            string result = null;
+            var decrypted = Encoding.UTF8.GetBytes(value);
+            var encrypted = EncryptBytes(decrypted, keys);
+            return Convert.ToBase64String(encrypted);
+        }
+
+        public string EncryptObject(object value, string keys)
+        {
+            if (value == null)
+                throw new ArgumentNullException("value");
+            if (string.IsNullOrEmpty(keys))
+                throw new ArgumentNullException("keys");
+
+            var serialized = _serializationManager.Serialize(value);
+            var encrypted = EncryptBytes(serialized, keys);
+            return Convert.ToBase64String(encrypted);
+        }
+
+        public byte[] EncryptBytes(byte[] data, string keys)
+        {
+            if (data == null)
+                throw new ArgumentNullException("data");
+            if (string.IsNullOrEmpty(keys))
+                throw new ArgumentNullException("keys");
+
             using (var aesAlg = new AesManaged())
             {
                 SetupCipher(aesAlg, keys);
                 var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-                var decrypted = Encoding.UTF8.GetBytes(value);
-                var encrypted = encryptor.TransformFinalBlock(decrypted, 0, decrypted.Length);
-                result = Convert.ToBase64String(encrypted);
+                var encrypted = encryptor.TransformFinalBlock(data, 0, data.Length);
+                return encrypted;
             }
-
-            return result;
         }
 
         public string DecryptString(string encryptedValue, string keys)
@@ -37,17 +61,37 @@ namespace PromoStudio.Common.Encryption
             if (string.IsNullOrEmpty(keys))
                 throw new ArgumentNullException("keys");
 
-            string result = null;
+            var encrypted = Convert.FromBase64String(encryptedValue);
+            var decrypted = DecryptBytes(encrypted, keys);
+            return Encoding.UTF8.GetString(decrypted);
+        }
+
+        public T DecryptObject<T>(string encryptedValue, string keys)
+        {
+            if (string.IsNullOrEmpty(encryptedValue))
+                throw new ArgumentNullException("encryptedValue");
+            if (string.IsNullOrEmpty(keys))
+                throw new ArgumentNullException("keys");
+
+            var encrypted = Convert.FromBase64String(encryptedValue);
+            var decrypted = DecryptBytes(encrypted, keys);
+            return _serializationManager.Deserialize<T>(decrypted);
+        }
+
+        public byte[] DecryptBytes(byte[] data, string keys)
+        {
+            if (data == null)
+                throw new ArgumentNullException("data");
+            if (string.IsNullOrEmpty(keys))
+                throw new ArgumentNullException("keys");
+
             using (var aesAlg = new AesManaged())
             {
                 SetupCipher(aesAlg, keys);
                 var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-                var encrypted = Convert.FromBase64String(encryptedValue);
-                var decrypted = decryptor.TransformFinalBlock(encrypted, 0, encrypted.Length);
-                result = Encoding.UTF8.GetString(decrypted);
+                var decrypted = decryptor.TransformFinalBlock(data, 0, data.Length);
+                return decrypted;
             }
-
-            return result;
         }
 
         private void SetupCipher(AesManaged aesAlg, string keys)

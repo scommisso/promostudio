@@ -1,7 +1,17 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
-define(["knockout"], function (ko) {
+define([
+        "models/stockVideo",
+        "models/stockAudio",
+        "models/customerTemplateScript",
+        "knockout"
+    ],
+    function (
+        stockVideo,
+        stockAudio,
+        customerTemplateScript,
+        ko) {
     var ctor = function (data) {
         var self = this;
         data = data || {};
@@ -51,6 +61,27 @@ define(["knockout"], function (ko) {
             if (item === null || type !== 4) { return null; }
             return item;
         });
+        
+        function loadData() {
+            if (data.StockVideo) {
+                self.fk_CustomerVideoItemTypeId(1);
+                self.FootageItem(new stockVideo(data.StockVideo));
+            }
+            else if (data.StockAudio) {
+                self.fk_CustomerVideoItemTypeId(2);
+                self.FootageItem(new stockAudio(data.StockAudio));
+            }
+            else if (data.CustomerScript) {
+                self.fk_CustomerVideoItemTypeId(3);
+                self.FootageItem(new customerTemplateScript(data.CustomerScript));
+            }
+            //else if (data.VoiceOver) {
+            //    self.fk_CustomerVideoItemTypeId(4);
+            //    self.FootageItem(data.VoiceOver);
+            //}
+        }
+
+        loadData();
     };
 
     ctor.prototype.toJSON = function () {
@@ -58,10 +89,6 @@ define(["knockout"], function (ko) {
         // remove any unneeded properties
         delete copy.FootageItem;
         delete copy.FootageItemName;
-        delete copy.StockVideo;
-        delete copy.StockAudio;
-        delete copy.CustomerScript;
-        delete copy.VoiceOver;
 
         return copy;
     };

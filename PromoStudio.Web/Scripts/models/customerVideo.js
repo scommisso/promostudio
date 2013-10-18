@@ -79,6 +79,12 @@ define(["models/customerVideoItem",
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);
         // remove any unneeded properties
+        delete copy.DateCreated;
+        delete copy.DateUpdated;
+        delete copy.DateCompleted;
+        delete copy.RenderFailureMessage;
+        delete copy.PreviewFilePath;
+        delete copy.CompletedFilePath;
         delete copy.Storyboard;
         delete copy.CustomerVideoRenderStatus;
         delete copy.LinkUrl;
