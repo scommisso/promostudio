@@ -335,7 +335,7 @@
     <Content Include="Scripts\lib\jquery-1.9.1.js" />
     <Content Include="Scripts\lib\bootstrap-lightbox.js" />
     <Content Include="Scripts\lib\css.js" />
-    <Content Include="Scripts\lib\jquery-ui-1.10.3.js" />
+    <Content Include="Scripts\lib\jquery-ui-effects-1.10.3.js" />
     <Content Include="Scripts\ps\extensions.js" />
     <Content Include="Scripts\lib\history.js" />
     <Content Include="Scripts\lib\jquery-scrolltofixed.js" />
@@ -370,6 +370,7 @@
     <Content Include="Scripts\requireConfig.js" />
     <Content Include="Scripts\viewModels\buildNavViewModel.js" />
     <Content Include="Scripts\viewModels\brandingViewModel.js" />
+    <Content Include="Scripts\viewModels\photoUploadViewModel.js" />
     <Content Include="Scripts\viewModels\photoSlotViewModel.js" />
     <Content Include="Scripts\viewModels\photoTemplatesViewModel.js" />
     <Content Include="Scripts\viewModels\photosViewModel.js" />

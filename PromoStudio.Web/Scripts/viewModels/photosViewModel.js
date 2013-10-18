@@ -1,5 +1,6 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/jquery-1.9.1.intellisense.js" />
+/// <reference path="../lib/jquery-ui-effects-1.10.3.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 /// <reference path="../models/enums.js" />
 /// <reference path="../ps/logger.js" />
@@ -55,11 +56,20 @@ define(["viewModels/photoTemplatesViewModel",
                 return slots;
             });
             self.SelectedSlot = ko.observable(null);
+            self.PhotoPreviewShown = ko.computed(function () {
+                return self.SelectedSlot() !== null;
+            });
             self.IsSelected = function (slot) {
                 return self.SelectedSlot() === slot;
             };
             self.SelectSlot = function (slot) {
-                self.SelectedSlot(slot);
+                if (!slot.IsCompleted()) {
+                    slot.ChoosePhoto(function () {
+                        self.SelectedSlot(slot);
+                    });
+                } else {
+                    self.SelectedSlot(slot);
+                }
             };
             
             self.IsVisible = ko.computed(function () {
@@ -169,7 +179,13 @@ define(["viewModels/photoTemplatesViewModel",
             
             function registerEvents() {
                 $(function () {
-                    var $elems = $("#photoCollapse .panel-heading .step-title,#photoCollapse .panel-heading .step-subtitle,#photoCollapse .panel-heading .step-done");
+                    var $elems = $("#photoCollapse .panel-heading .step-title,#photoCollapse .panel-heading .step-subtitle,#photoCollapse .panel-heading .step-done"),
+                        $panel = $("#photoPanel .photo-selected");
+                    self.PhotoPreviewShown.subscribe(function(newVal) {
+                        if (newVal) {
+                            $panel.slideDown(transitionTime);
+                        }
+                    });
                     $('#photoPanel')
                         .on('show.bs.collapse', function() {
                             $elems.switchClass("collapsed", "opened", transitionTime);

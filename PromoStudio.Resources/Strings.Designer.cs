@@ -178,11 +178,29 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload photo.
+        /// </summary>
+        public static string BuildStep__Upload_photo {
+            get {
+                return ResourceManager.GetString("BuildStep__Upload_photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your potential clients want to see you, so show us that big smile!.
         /// </summary>
         public static string BuildStep__Your_potential_clients_want_to_see_you {
             get {
                 return ResourceManager.GetString("BuildStep__Your_potential_clients_want_to_see_you", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -210,6 +228,15 @@ namespace PromoStudio.Resources {
         public static string Login__Welcome_back {
             get {
                 return ResourceManager.GetString("Login__Welcome_back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose a Photo.
+        /// </summary>
+        public static string Modals__Choose_a_Photo {
+            get {
+                return ResourceManager.GetString("Modals__Choose_a_Photo", resourceCulture);
             }
         }
         
@@ -255,6 +282,15 @@ namespace PromoStudio.Resources {
         public static string Next_step {
             get {
                 return ResourceManager.GetString("Next_step", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
             }
         }
         

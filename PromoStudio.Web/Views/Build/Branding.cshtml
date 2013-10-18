@@ -16,16 +16,16 @@
 }
 
 <div class="brandingWizard">
-    
+
     <div class="panel-group" id="brandingWizard">
-        <div id="photoCollapse" class="panel panel-default" style="display:none" data-bind="visible: PhotoSection().IsVisible">
+        <div id="photoCollapse" class="panel panel-default" style="display: none" data-bind="visible: PhotoSection().IsVisible">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#brandingWizard" href="#photoPanel">
                     <h4 class="panel-title">
                         <div class="step-title" data-bind="text: PhotoSection().TitleText, css: { 'opened': PhotoSection().StartOpen }"></div>
                         <div class="step-subtitle" data-bind="css: { 'opened': PhotoSection().StartOpen }">@Strings.BuildStep__Your_potential_clients_want_to_see_you</div>
                         <div class="step-completed">
-                            <span class="step-done glyphicons circle_ok" style="display:none" data-bind="visible: PhotoSection().IsCompleted, css: { 'opened': PhotoSection().StartOpen }"></span>
+                            <span class="step-done glyphicons circle_ok" style="display: none" data-bind="visible: PhotoSection().IsCompleted, css: { 'opened': PhotoSection().StartOpen }"></span>
                         </div>
                     </h4>
                 </a>
@@ -34,19 +34,45 @@
                 <div class="panel-body">
                     <div class="thumbcontainer clearfix" data-bind="foreach: PhotoSection().PhotoSlots">
                         <a style="display: none" href="#" class="photo-thumbnail"
-                            data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
+                           data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
                             <div class="photo-preview" data-bind="style: { backgroundImage: $data.PhotoBackground }">
-                            </div>
-                            <div class="photo-selection">
+                                <div class="photo-upload" data-bind="css: { hidden: $data.IsCompleted }">
+                                    <span class="glyphicons plus"></span>
+                                    <span class="photo-upload-label">@Strings.BuildStep__Upload_photo</span>
+                                </div>
                                 <span class="photo-title" data-bind="text: $data.Title"></span>
                             </div>
                         </a>
                     </div>
-                    
-
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    <div class="photo-selected" style="display: none">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 </div>
+
+@section modals {
+    <div class="modal fade" id="photoUploadModal" tabindex="-1" role="dialog" data-show="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-bind="click: Cancel">&times;</button>
+                    <h4 class="modal-title">@Strings.Modals__Choose_a_Photo</h4>
+                </div>
+                <div class="modal-body">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bind="click: Cancel">@Strings.Cancel</button>
+                    <button type="button" class="btn btn-primary" data-bind="click: Save">@Strings.OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

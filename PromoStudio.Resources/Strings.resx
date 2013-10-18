@@ -312,4 +312,16 @@
   <data name="BuildStep__Section_num_timing" xml:space="preserve">
     <value>Sect. {0} - appx. {1} into video, slot {2}</value>
   </data>
+  <data name="BuildStep__Upload_photo" xml:space="preserve">
+    <value>Upload photo</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Modals__Choose_a_Photo" xml:space="preserve">
+    <value>Choose a Photo</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
 </root>

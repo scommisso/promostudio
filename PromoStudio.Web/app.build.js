@@ -65,10 +65,10 @@
     paths: {
         'modernizr': 'empty:',
         'jquery': 'empty:',
-        'jqueryui': 'empty:',
         'knockout': 'empty:',
         'bootstrap': 'empty:',
-        'bootstrap-lightbox': 'empty:',
+        'bootstrap-lightbox': 'lib/bootstrap-lightbox',
+        'jqueryui': 'lib/jquery-ui-effects-1.10.3',
         'form': 'empty:',
         'strings': 'empty:',
         'facebookOAuth': 'empty:',

@@ -6,21 +6,26 @@
 /// <reference path="../models/storyboardItem.js" />
 /// <reference path="../models/customerTemplateScriptItem.js" />
 /// <reference path="../models/customerResource.js" />
+/// <reference path="photoUploadViewModel.js" />
 
-define(["knockout",
+define([
+        "viewModels/photoUploadViewModel",
+        "knockout",
         "strings",
         "models/enums",
         "ps/logger",
         "ps/extensions"
     ],
     function (
+        photoUploadViewModel,
         ko,
         strings,
         enums,
         logger) {
         return function (storyboardItem, customerTemplateScriptItem) {
             var self = this,
-                photoTitleFormatString = strings.getResource("BuildStep__Section_num_timing"); //Sect. {0} - appx. {1} into video, slot {2}
+                photoTitleFormatString = strings.getResource("BuildStep__Section_num_timing"), //Sect. {0} - appx. {1} into video, slot {2}
+                photoUpload, photoCloseCallback;
 
             self.Title = ko.computed(function () {
                 var storyboardSort = storyboardItem.SortOrder(),
@@ -68,10 +73,39 @@ define(["knockout",
                 return prevSeconds.toString().toMMSS(false);
             }
 
+            function onPhotoChosen() {
+                if (typeof photoCloseCallback === "function") {
+                    photoCloseCallback();
+                }
+            }
+            
+            function onPhotoCanceled() {
+            }
+            
+            function createPhotoUpload() {
+                $(function() {
+                    photoUpload = new photoUploadViewModel({
+                        Slot: self,
+                        Element: $("#photoUploadModal"),
+                        OnSave: onPhotoChosen,
+                        OnCancel: onPhotoCanceled
+                    });
+                });
+            }
+
+            self.ChoosePhoto = function(callback) {
+                // pop modal to select a photo
+                logger.log("choosing photo");
+                photoCloseCallback = callback;
+                photoUpload.Show();
+            };
+
             self.AddPhoto = function () {
                 // TODO: Add photo chooser module
                 // TODO: Show list of existing photos
                 // TODO: Present file uploader
             };
+
+            createPhotoUpload();
         };
     });

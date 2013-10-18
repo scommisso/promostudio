@@ -83,11 +83,13 @@ section.content {
 @panelheader: @bgbasecolor;
 @panelbody: darken(@bgbasecolor, 1%);
 @panelshadow: darken(@panelheader, 10%);
+@shadowColor: darken(@bgbasecolor, 41%);
 
 .brandingWizard {
     .panel-group {
         .rounded(@cs);
         .box-shadow(0 1px 4px @panelshadow);
+
         .panel.panel-default {
             .panel-heading {
                 padding: 0;
@@ -126,6 +128,7 @@ section.content {
                     }
                 }
             }
+
             .panel-collapse {
                 background-color: @panelbody;
             }
@@ -154,8 +157,92 @@ section.content {
         .step-done.opened {
             margin-top: -164px;
         }
+
         .step-done.collapsed {
             margin-top: -82px;
         }
     }
+}
+
+.thumbcontainer {
+
+    > a.photo-thumbnail,
+    > a.photo-thumbnail:link,
+    > a.photo-thumbnail:hover,
+    > a.photo-thumbnail:active,
+    > a.photo-thumbnail:visited {
+        color: @basecolor;
+    }
+
+    > a.photo-thumbnail {
+        display: block;
+        float: left;
+        margin: 0 8px 8px 0;
+        overflow: hidden;
+        text-decoration: none;
+        color: @basecolor;
+        .rounded(@cs);
+        .box-shadow(0 1px 2px @shadowColor);
+
+        > .photo-preview {
+            background-color: @panelheader;
+            width: 228px;
+            height: 130px;
+            text-align: center;
+            .bgSize(contain);
+
+            > .photo-upload {
+                text-align: center;
+
+                > span.photo-upload-label {
+                    display: block;
+                    color: @contentcolor;
+                    font-size: 12px;
+                    font-weight: bold;
+                    margin-top: 66px;
+                }
+
+                > span.glyphicons,
+                > span.glyphicons:before {
+                    font-size: 36px;
+                    width: 35px;
+                    color: @completedColor;
+                }
+
+                    > span.glyphicons:before {
+                        margin: 10px 0 0 6px;
+                    }
+            }
+
+            > .photo-title {
+                display: inline-block;
+                margin-top: 6px;
+                text-transform: uppercase;
+                color: @contentmutedcolor;
+                font-size: 9px;
+            }
+
+            > .photo-upload.hidden {
+                opacity: 0;
+            }
+        }
+    }
+
+        > a.photo-thumbnail:hover {
+            .box-shadow(0 1px 8px @shadowColor);
+
+            > .photo-selection {
+            }
+        }
+
+        > a.photo-thumbnail.selected,
+        > a.photo-thumbnail.selected:hover {
+            .box-shadow(0 1px 8px @completedColor);
+        }
+}
+
+.photo-selected {
+    background-color: @mediabgcolor;
+    .bgSize(contain);
+    height: 300px;
 }
