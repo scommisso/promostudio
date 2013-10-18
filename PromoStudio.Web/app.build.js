@@ -27,7 +27,14 @@
     //- "closure.keepLines": Same as closure option, but keeps line returns
     //in the minified files.
     //- "none": no minification will be done.
-    optimize: "uglify2",//"uglify",
+    generateSourceMaps: false,
+    preserveLicenseComments: false,
+    optimize: 'uglify2',
+    uglify2: {
+        mangle: {
+            except: ['$super']
+        }
+    },
 
     //Allow CSS optimizations. Allowed values:
     //- "standard": @import inlining, comment removal and line returns.
@@ -39,7 +46,7 @@
     //returns.  (r.js 1.0.8+)
     //- "standard.keepComments.keepLines": keeps the file comments and line
     //returns. (r.js 1.0.8+)
-    optimizeCss: "none",
+    optimizeCss: 'none',
 
     //If optimizeCss is in use, a list of files to ignore for the @import
     //inlining. The value of this option should be a string of comma separated
@@ -56,31 +63,31 @@
     //done. If that module or any of its dependencies includes i18n bundles,
     //only the root bundles will be included unless the locale: section is set above.
     paths: {
-        "modernizr": "empty:",
-        "jquery": "empty:",
-        "jqueryui": "empty:",
-        "knockout": "empty:",
-        "bootstrap": "empty:",
-        "bootstrap-lightbox": "empty:",
-        "form": "empty:",
-        "strings": "empty:",
-        "facebookOAuth": "empty:",
-        "googleOAuth": "empty:",
-        "twitterOAuth": "empty:"
+        'modernizr': 'empty:',
+        'jquery': 'empty:',
+        'jqueryui': 'empty:',
+        'knockout': 'empty:',
+        'bootstrap': 'empty:',
+        'bootstrap-lightbox': 'empty:',
+        'form': 'empty:',
+        'strings': 'empty:',
+        'facebookOAuth': 'empty:',
+        'googleOAuth': 'empty:',
+        'twitterOAuth': 'empty:'
     },
 
     //The directory path to save the output. If not specified, then
-    //the path will default to be a directory called "build" as a sibling
+    //the path will default to be a directory called 'build' as a sibling
     //to the build file. All relative paths are relative to the build file.
-    dir: "optimizedScripts",
+    dir: 'optimizedScripts',
 
     modules: [{
-        name: "viewModels/scaffold",
+        name: 'viewModels/scaffold',
         include: [
-            "viewModels/loginViewModel",
-            "viewModels/buildNavViewModel",
-            "viewModels/footageViewModel",
-            "viewModels/brandingViewModel"
+            'viewModels/loginViewModel',
+            'viewModels/buildNavViewModel',
+            'viewModels/footageViewModel',
+            'viewModels/brandingViewModel'
         ]
     }]
 }

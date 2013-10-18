@@ -12,7 +12,7 @@
       <Value Profile="(Default)">1fabbf90eead4d904c035eb42fcfc4fba443b254e7cf3bc6c97165ba98ecf407</Value>
     </Setting>
     <Setting Name="BucketNamePrefix" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">PromoStudio-Demo-</Value>
+      <Value Profile="(Default)">PromoStudio-</Value>
     </Setting>
   </Settings>
 </SettingsFile>
