@@ -40,7 +40,11 @@ define(["ps/logger",
                     success: function(data, textStatus, jqXHR) {
                         initContainer("", "login");
                         $("div.navbar").hide();
-                        $.pjax({ url: "/", container: $.fn.pjaxScaffold.containerSelector });
+                        if ($.pjax) {
+                            $.pjax({ url: "/", container: $.fn.pjaxScaffold.containerSelector });
+                        } else {
+                            document.location.reload();
+                        }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         logger.log("Error logging in ");

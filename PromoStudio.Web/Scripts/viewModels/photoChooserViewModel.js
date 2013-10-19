@@ -23,6 +23,7 @@ define(["models/customerResource",
         return function (data) {
             var self = this,
                 photoSlot = data.Slot,
+                categoryId = data.CategoryId,
                 $elem = data.Element,
                 saveCallback = data.OnSave,
                 cancelCallback = data.OnCancel,
@@ -76,7 +77,7 @@ define(["models/customerResource",
                     orgPhotos = [],
                     i, photo;
                 for (i = 0; i < photoResources.length; i++) {
-                    if (photoResources[i].fk_TemplateScriptItemCategoryId !== 2) {
+                    if (photoResources[i].fk_TemplateScriptItemCategoryId !== categoryId) {
                         continue;
                     }
                     photo = new customerResource(photoResources[i]);
@@ -88,6 +89,12 @@ define(["models/customerResource",
                     }
                     if (photo.pk_CustomerResourceId() === selectedResourceId) {
                         self.SelectedPhoto(photo);
+                        if (photo.IsCustomerResource()) {
+                            $("#custPhotosTab").tab("show");
+                        }
+                        else if (photo.IsOrganizationResource()) {
+                            $("#orgPhotosTab").tab("show");
+                        }
                     }
                 }
                 self.CustomerPhotos(custPhotos);

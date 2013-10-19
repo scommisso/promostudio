@@ -384,10 +384,11 @@
     <Content Include="Scripts\requireConfig.js" />
     <Content Include="Scripts\viewModels\buildNavViewModel.js" />
     <Content Include="Scripts\viewModels\brandingViewModel.js" />
+    <Content Include="Scripts\viewModels\brandingSectionViewModel.js" />
     <Content Include="Scripts\viewModels\photoChooserViewModel.js" />
     <Content Include="Scripts\viewModels\photoSlotViewModel.js" />
     <Content Include="Scripts\viewModels\photoTemplatesViewModel.js" />
-    <Content Include="Scripts\viewModels\photosViewModel.js" />
+    <Content Include="Scripts\viewModels\photosSectionViewModel.js" />
     <Content Include="Scripts\viewModels\footageViewModel.js" />
     <Content Include="Scripts\viewModels\scaffold.js" />
     <Content Include="Scripts\viewModels\old.buildViewModel.js" />

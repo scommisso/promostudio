@@ -141,6 +141,9 @@
   -moz-box-shadow: 0 1px 4px #e6e6e6;
   box-shadow: 0 1px 4px #e6e6e6;
 }
+.panel-group .panel.panel-default {
+  margin: 0;
+}
 .panel-group .panel.panel-default .panel-heading {
   padding: 0;
   background-color: #ffffff;

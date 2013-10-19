@@ -22,7 +22,7 @@ define([
         strings,
         enums,
         logger) {
-        return function (storyboardItem, customerVideoItem) {
+        return function (storyboardItem, customerVideoItem, categoryId) {
             var self = this;
             storyboardItem = ko.utils.unwrapObservable(storyboardItem || {});
             customerVideoItem = ko.utils.unwrapObservable(customerVideoItem || {});
@@ -49,13 +49,13 @@ define([
                     item = scriptItems[i];
                     // only add photos
                     if (item.fk_TemplateScriptItemTypeId() === 1
-                        && item.fk_TemplateScriptItemCategoryId() === 2) {
+                        && item.fk_TemplateScriptItemCategoryId() === categoryId) {
                         // find matching script item
                         var matching = $.grep(custScriptItems, function (csi) {
                             return csi.fk_TemplateScriptItemId() === item.pk_TemplateScriptItemId();
                         });
                         if (matching && matching.length > 0) {
-                            photos.push(new photoSlotViewModel(storyboardItem, matching[0]));
+                            photos.push(new photoSlotViewModel(storyboardItem, matching[0], categoryId));
                         }
                     }
                 }

@@ -159,6 +159,8 @@
 }
 .thumbcontainer > a.footage-thumbnail > .footage-preview {
   background-color: #4a4a4a;
+  background-position: center;
+  background-repeat: no-repeat;
   -moz-background-size: contain;
   -o-background-size: contain;
   -webkit-background-size: contain;

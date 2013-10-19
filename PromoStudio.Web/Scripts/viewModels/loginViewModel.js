@@ -31,6 +31,8 @@ define(["jquery",
                     .done(function() {
                         if ($.pjax) {
                             $.pjax({ url: "/", container: $.fn.pjaxScaffold.getContainer() });
+                        } else {
+                            document.location.reload();
                         }
                     })
                     .error(function (jqXhr, textStatus, errorThrown) {

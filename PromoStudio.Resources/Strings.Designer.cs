@@ -106,11 +106,47 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change logo.
+        /// </summary>
+        public static string BuildStep__Change_logo {
+            get {
+                return ResourceManager.GetString("BuildStep__Change_logo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change photo.
         /// </summary>
         public static string BuildStep__Change_photo {
             get {
                 return ResourceManager.GetString("BuildStep__Change_photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose logo.
+        /// </summary>
+        public static string BuildStep__Choose_logo {
+            get {
+                return ResourceManager.GetString("BuildStep__Choose_logo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose photo.
+        /// </summary>
+        public static string BuildStep__Choose_photo {
+            get {
+                return ResourceManager.GetString("BuildStep__Choose_photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose your logo placements.
+        /// </summary>
+        public static string BuildStep__Choose_your_logo_placements {
+            get {
+                return ResourceManager.GetString("BuildStep__Choose_your_logo_placements", resourceCulture);
             }
         }
         
@@ -187,15 +223,6 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload photo.
-        /// </summary>
-        public static string BuildStep__Upload_photo {
-            get {
-                return ResourceManager.GetString("BuildStep__Upload_photo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Your potential clients want to see you, so show us that big smile!.
         /// </summary>
         public static string BuildStep__Your_potential_clients_want_to_see_you {
@@ -219,6 +246,15 @@ namespace PromoStudio.Resources {
         public static string Error_period {
             get {
                 return ResourceManager.GetString("Error_period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log out.
+        /// </summary>
+        public static string Log_out {
+            get {
+                return ResourceManager.GetString("Log_out", resourceCulture);
             }
         }
         

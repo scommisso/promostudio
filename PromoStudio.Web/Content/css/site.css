@@ -47,7 +47,8 @@ div.color-band a:visited {
 }
 div.color-band a#logout {
   float: right;
-  margin-left: 20px;
+  margin: 9px 0 0 20px;
+  font-weight: bold;
 }
 div.color-band h1 {
   font-family: 'Josefin Sans', sans-serif;
@@ -202,6 +203,9 @@ section.content {
   -webkit-box-shadow: 0 1px 4px #e6e6e6;
   -moz-box-shadow: 0 1px 4px #e6e6e6;
   box-shadow: 0 1px 4px #e6e6e6;
+}
+.panel-group .panel.panel-default {
+  margin: 0;
 }
 .panel-group .panel.panel-default .panel-heading {
   padding: 0;
@@ -523,6 +527,8 @@ a.twitterSignin {
 }
 .thumbcontainer > a.footage-thumbnail > .footage-preview {
   background-color: #4a4a4a;
+  background-position: center;
+  background-repeat: no-repeat;
   -moz-background-size: contain;
   -o-background-size: contain;
   -webkit-background-size: contain;
@@ -656,6 +662,8 @@ div.vidyard_tbox {
 }
 .thumbcontainer > a.photo-thumbnail > .photo-preview {
   background-color: #ffffff;
+  background-position: center;
+  background-repeat: no-repeat;
   width: 228px;
   height: 130px;
   text-align: center;
@@ -772,6 +780,8 @@ div.vidyard_tbox {
 /* TODO: Move to build-branding.less */
 .photo-selected {
   background-color: #4a4a4a;
+  background-position: center;
+  background-repeat: no-repeat;
   -moz-background-size: contain;
   -o-background-size: contain;
   -webkit-background-size: contain;

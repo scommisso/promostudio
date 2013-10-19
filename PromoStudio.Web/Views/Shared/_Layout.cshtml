@@ -34,7 +34,10 @@
 <body>
     <div class="color-band clearfix">
         <a data-pjax href="@Url.Action("Index", "Home")">@Html.Partial("_Header")</a>
-        <a id="logout" href="javascript:void(0)"><span class="glyphicons user"></span><label>Log Out</label></a>
+        @if (user != null)
+        {
+        <a id="logout" href="javascript:void(0)">@Strings.Log_out</a>
+        }
     </div>
     <div class="navbar navbar-default" role="navigation">
         <div class="navbar-inner">

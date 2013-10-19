@@ -312,8 +312,8 @@
   <data name="BuildStep__Section_num_timing" xml:space="preserve">
     <value>Sect. {0} - appx. {1} into video, slot {2}</value>
   </data>
-  <data name="BuildStep__Upload_photo" xml:space="preserve">
-    <value>Upload photo</value>
+  <data name="BuildStep__Choose_photo" xml:space="preserve">
+    <value>Choose photo</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -324,7 +324,19 @@
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="BuildStep__Change_logo" xml:space="preserve">
+    <value>Change logo</value>
+  </data>
   <data name="BuildStep__Change_photo" xml:space="preserve">
     <value>Change photo</value>
+  </data>
+  <data name="BuildStep__Choose_logo" xml:space="preserve">
+    <value>Choose logo</value>
+  </data>
+  <data name="BuildStep__Choose_your_logo_placements" xml:space="preserve">
+    <value>Choose your logo placements</value>
+  </data>
+  <data name="Log_out" xml:space="preserve">
+    <value>Log out</value>
   </data>
 </root>

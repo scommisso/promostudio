@@ -22,7 +22,7 @@ define([
         strings,
         enums,
         logger) {
-        return function (storyboardItem, customerTemplateScriptItem) {
+        return function (storyboardItem, customerTemplateScriptItem, categoryId) {
             var self = this,
                 photoTitleFormatString = strings.getResource("BuildStep__Section_num_timing"), //Sect. {0} - appx. {1} into video, slot {2}
                 photoChooser, photoCloseCallback;
@@ -93,6 +93,7 @@ define([
                 $(function() {
                     photoChooser = new photoChooserViewModel({
                         Slot: self,
+                        CategoryId: categoryId,
                         Element: $("#photoChooserModal"),
                         OnSave: onPhotoChosen,
                         OnCancel: onPhotoCanceled

@@ -31,6 +31,8 @@
 }
 .thumbcontainer > a.photo-thumbnail > .photo-preview {
   background-color: #ffffff;
+  background-position: center;
+  background-repeat: no-repeat;
   width: 228px;
   height: 130px;
   text-align: center;
