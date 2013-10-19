@@ -46,6 +46,18 @@ define(["models/customerTemplateScriptItem", "knockout"], function (customerTemp
             self.Items(items);
         };
 
+        self.CreateTextResources = function() {
+            var items = self.Items(),
+                i, item, tsItem;
+            for (i = 0; i < items.length; i++) {
+                item = items[i];
+                tsItem = item.ScriptItem();
+                if (tsItem && tsItem.fk_TemplateScriptItemTypeId() === 4) {
+                    // TODO: Add new resource to item with default text
+                }
+            }
+        };
+
         self.LoadTemplateScriptData = function (templateScript) {
             var scriptItems = templateScript.Items(),
                 customerScriptItems = [],

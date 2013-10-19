@@ -180,6 +180,7 @@
     <Compile Include="Models\IPromoStudioIdentity.cs" />
     <Compile Include="Models\PromoStudioIdentity.cs" />
     <Compile Include="Models\PromoStudioPrincipal.cs" />
+    <Compile Include="Models\Session\CustomerResource.cs" />
     <Compile Include="Models\Session\CustomerVideo.cs" />
     <Compile Include="Models\Session\CustomerTemplateScriptItem.cs" />
     <Compile Include="Models\Session\CustomerTemplateScript.cs" />
@@ -350,6 +351,7 @@
     <Content Include="Scripts\lib\bootstrap-lightbox.js" />
     <Content Include="Scripts\lib\css.js" />
     <Content Include="Scripts\lib\jquery-ui-effects-1.10.3.js" />
+    <Content Include="Scripts\models\organization.js" />
     <Content Include="Scripts\ps\extensions.js" />
     <Content Include="Scripts\lib\history.js" />
     <Content Include="Scripts\lib\jquery-scrolltofixed.js" />

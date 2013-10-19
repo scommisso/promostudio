@@ -5,13 +5,17 @@
 /// <reference path="../ps/logger.js" />
 /// <reference path="../lib/ko.custom.js" />
 /// <reference path="../ps/extensions.js" />
+/// <reference path="../models/customerResource.js" />
 /// <reference path="../models/customerTemplateScript.js" />
 /// <reference path="../models/customerVideoItem.js" />
+/// <reference path="../models/organization.js" />
 
 define(["viewModels/photosSectionViewModel",
         "viewModels/brandingSectionViewModel",
         "models/customerTemplateScript",
         "models/customerVideoItem",
+        "models/customerResource",
+        "models/organization",
         "jquery",
         "knockout",
         "strings",
@@ -24,6 +28,8 @@ define(["viewModels/photosSectionViewModel",
         brandingSectionViewModel,
         customerTemplateScript,
         customerVideoItem,
+        customerResource,
+        organization,
         $,
         ko,
         strings,
@@ -34,7 +40,8 @@ define(["viewModels/photosSectionViewModel",
         data = data || {};
 
         var isStepCompleted = null,
-            video = null;
+            video = null,
+            customerOrganization = null;
 
         self.PhotoSection = ko.observable({});
         self.BrandingSection = ko.observable({});
@@ -66,13 +73,40 @@ define(["viewModels/photosSectionViewModel",
         });
         
         function stepChanging(navVm, callback) {
-            // TODO: Set appropriate video items prior to update
             callback();
         }
-        
+
+        function createScriptItemTextResources(scriptItem) {
+            var items = scriptItem.Items(),
+                vid = video(),
+                i, item, tsItem, res, defText;
+            for (i = 0; i < items.length; i++) {
+                item = items[i];
+                tsItem = item.ScriptItem();
+                defText = tsItem.DefaultText();
+                if (tsItem && tsItem.fk_TemplateScriptItemTypeId() === 4) {
+                    res = new customerResource({                        
+                        fk_CustomerId: vid.fk_CustomerId(),
+                        fk_TemplateScriptItemTypeId: 4,
+                        fk_TemplateScriptItemCategoryId: 5,
+                        fk_CustomerResourceStatusId: 1
+                    });
+                    if (customerOrganization !== null) {
+                        defText = defText.replace(/\[\[COMPANY\]\]/, customerOrganization.Name());
+                        defText = defText.replace(/\[\[PHONENUM\]\]/, customerOrganization.ContactPhone());
+                        defText = defText.replace(/\[\[EMAIL\]\]/, customerOrganization.ContactEmail());
+                        defText = defText.replace(/\[\[WEBSITE\]\]/, customerOrganization.Website());
+                    }
+                    res.Value(defText);
+                    item.Resource(res);
+                }
+            }
+        }
+
         function loadVideoData(videoData) {
             var storyboardData = videoData.Storyboard(),
                 items = videoData.Items(),
+                vid = video(),
                 storyboardItems, i, item, sbItem, sbItemType, scriptItem;
 
             storyboardItems = storyboardData.Items();
@@ -83,7 +117,6 @@ define(["viewModels/photosSectionViewModel",
 
                 // Create template items
                 if (sbItemType === 1 || sbItemType === 3 || sbItemType === 4 || sbItemType === 5) {
-                    // Look for any photo matches in videoItems
                     item = $.grep(items, function (cvi) {
                         var itemType = cvi.fk_CustomerVideoItemTypeId(),
                             custScript;
@@ -104,14 +137,15 @@ define(["viewModels/photosSectionViewModel",
                             fk_CustomerVideoItemTypeId: 3,
                             SortOrder: sbItem.SortOrder()
                         });
-                        scriptItem = new customerTemplateScript({ fk_CustomerId: video.fk_CustomerId() });
+                        scriptItem = new customerTemplateScript({ fk_CustomerId: vid.fk_CustomerId() });
                         scriptItem.LoadTemplateScriptData(sbItem.TemplateScript());
+                        createScriptItemTextResources(scriptItem);
                         item.FootageItem(scriptItem);
                         videoData.Items.push(item);
                     }
                 }
 
-                    // Create stock video items
+                // Create stock video items
                 else if (sbItemType === 2) {
                     // look for any stock video matches in videoItems
                     item = $.grep(items, function (cvi) {
@@ -150,7 +184,7 @@ define(["viewModels/photosSectionViewModel",
         }
         
         function loadData() {
-            // TODO: Load any static data
+            customerOrganization = new organization(data.Organization);
         }
 
         loadData();

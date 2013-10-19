@@ -562,6 +562,19 @@ namespace PromoStudio.Data
 
         #endregion
 
+        #region Organization
+
+        public async Task<Organization> Organization_SelectAsync(int organizationId)
+        {
+            var organization = (await DataWrapper.QueryStoredProcAsync<Organization>(Constants.StoredProcedures.OrganizationSelectById_sp,
+                dbParams: new { OrganizationId = organizationId }))
+                .FirstOrDefault();
+
+            return organization;
+        }
+
+        #endregion
+
         #region StockAudio
 
         public async Task<IEnumerable<StockAudio>> StockAudio_SelectAllAsync()

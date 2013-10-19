@@ -62,6 +62,8 @@ namespace PromoStudio.Common
             public const string CustomerTemplateScriptItemInsert_sp = "promostudio.CustomerTemplateScriptItemInsert_sp";
             public const string CustomerTemplateScriptItemUpdate_sp = "promostudio.CustomerTemplateScriptItemUpdate_sp";
 
+            public const string OrganizationSelectById_sp = "promostudio.OrganizationSelectById_sp";
+
             public const string StockAudioSelectAll_sp = "promostudio.StockAudioSelectAll_sp";
             public const string StockAudioSelectByCustomerVideoId_sp = "promostudio.StockAudioSelectByCustomerVideoId_sp";
             public const string StockAudioSelectByOrganizationIdAndVerticalId_sp = "promostudio.StockAudioSelectByOrganizationIdAndVerticalId_sp";

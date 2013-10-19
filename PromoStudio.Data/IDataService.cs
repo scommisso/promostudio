@@ -52,6 +52,7 @@ namespace PromoStudio.Data
         Task<IEnumerable<CustomerTemplateScriptItem>> CustomerTemplateScriptItem_SelectByCustomerTemplateScriptIdAsync(long customerTemplateScriptId);
         Task<CustomerTemplateScriptItem> CustomerTemplateScriptItem_InsertAsync(CustomerTemplateScriptItem customerTemplateScriptItem);
         void CustomerTemplateScriptItem_Update(CustomerTemplateScriptItem customerTemplateScriptItem);
+        Task<Organization> Organization_SelectAsync(int organizationId);
         Task<IEnumerable<StockAudio>> StockAudio_SelectAllAsync();
         Task<IEnumerable<StockAudio>> StockAudio_SelectByCustomerVideoIdAsync(long customerVideoId);
         Task<IEnumerable<StockAudio>> StockAudio_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId);

@@ -1,8 +1,4 @@
-﻿using PromoStudio.Common.Enumerations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 
 namespace PromoStudio.Common.Models
 {
@@ -12,6 +8,11 @@ namespace PromoStudio.Common.Models
         public int? fk_VerticalId { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
+        public string ContactPhone { get; set; }
+        public string ContactEmail { get; set; }
+        public string Website { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
 
         public dynamic ToPoco()
         {
@@ -20,7 +21,12 @@ namespace PromoStudio.Common.Models
                 pk_OrganizationId = pk_OrganizationId,
                 fk_VerticalId = fk_VerticalId,
                 Name = Name,
-                DisplayName = DisplayName
+                DisplayName = DisplayName,
+                ContactPhone = ContactPhone,
+                ContactEmail = ContactEmail,
+                Website = Website,
+                DateCreated = DateCreated,
+                DateUpdated = DateUpdated
             };
         }
     }

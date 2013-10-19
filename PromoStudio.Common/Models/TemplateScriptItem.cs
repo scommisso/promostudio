@@ -15,6 +15,7 @@ namespace PromoStudio.Common.Models
         public int ItemWidth { get; set; }
         public int ItemHeight { get; set; }
         public sbyte SortOrder { get; set; }
+        public string DefaultText { get; set; }
 
         public TemplateScriptItemType Type {
             get { return (TemplateScriptItemType)fk_TemplateScriptItemTypeId; }
@@ -54,7 +55,8 @@ namespace PromoStudio.Common.Models
                 Description = Description,
                 ItemWidth = ItemWidth,
                 ItemHeight = ItemHeight,
-                SortOrder = SortOrder
+                SortOrder = SortOrder,
+                DefaultText = DefaultText
             };
         }
     }

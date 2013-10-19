@@ -128,16 +128,29 @@ namespace PromoStudio.Web.Controllers
             var data = GetFromCookie();
 
             // Get required db items
+            var tasks = new List<Task>();
+            Task<Common.Models.Organization> orgTask = null;
             var storyboardTask = _dataService.Storyboard_SelectWithItemsAsync(data.Video.fk_StoryboardId);
             var templatesTask =
                 _dataService.TemplateScript_SelectByStoryboardIdWithItemsAsync(data.Video.fk_StoryboardId);
             var resourcesTask = _dataService.CustomerResource_SelectActiveByCustomerIdAsync(CurrentUser.CustomerId);
+            tasks.AddRange(new Task[] {storyboardTask, templatesTask, resourcesTask});
 
-            await Task.WhenAll(storyboardTask, templatesTask, resourcesTask);
+            if (CurrentUser.OrganizationId.HasValue)
+            {
+                orgTask = _dataService.Organization_SelectAsync(CurrentUser.OrganizationId.Value);
+            }
 
+            await Task.WhenAll(tasks);
+
+            Common.Models.Organization organization = null;
             var storyboard = storyboardTask.Result;
             var templates = templatesTask.Result.ToList();
             var resources = resourcesTask.Result.ToList();
+            if (orgTask != null)
+            {
+                organization = orgTask.Result;
+            }
             foreach (var sbi in storyboard.Items)
             {
                 if (sbi.fk_TemplateScriptId.HasValue)
@@ -170,6 +183,7 @@ namespace PromoStudio.Web.Controllers
 
             var vm = new BrandingViewModel()
             {
+                Organization = organization,
                 Video = data.Video,
                 StepsCompleted = new List<int>(data.CompletedSteps)
             };
@@ -408,6 +422,7 @@ namespace PromoStudio.Web.Controllers
         private const string buildCookieVideoItemsKey = "BuildData_VideoItems";
         private const string buildCookieTemplateKey = "BuildData_Template";
         private const string buildCookieTemplateItemsKey = "BuildData_TemplateItems";
+        private const string buildCookieResourcesKey = "BuildData_Resources";
         private BuildCookieViewModel _buildCookieViewModel = null;
         private BuildCookieViewModel GetFromCookie()
         {
@@ -427,12 +442,14 @@ namespace PromoStudio.Web.Controllers
             var videoItemsState = GetBuildCookieValue<Models.Session.CustomerVideoItem[]>(buildCookieVideoItemsKey);
             var templatesState = GetBuildCookieValue<Models.Session.CustomerTemplateScript[]>(buildCookieTemplateKey);
             var templateItemsState = GetBuildCookieValue<Models.Session.CustomerTemplateScriptItem[]>(buildCookieTemplateItemsKey);
+            var resourcesState = GetBuildCookieValue<Models.Session.CustomerResource[]>(buildCookieResourcesKey);
 
             // combine the cookies back together
             _buildCookieViewModel = buildState.ToModel();
             var videoItems = videoItemsState.Select(vis => vis.ToModel()).ToList();
             var templates = templatesState.Select(ts => ts.ToModel()).ToList();
             var templateItems = templateItemsState.Select(tsi => tsi.ToModel()).ToList();
+            var resources = resourcesState.Select(tsi => tsi.ToModel()).ToList();
             _buildCookieViewModel.Video.Items.AddRange(videoItems);
             foreach (var vidItem in videoItems.Where(vi => vi.Type == CustomerVideoItemType.CustomerTemplateScript))
             {
@@ -442,6 +459,10 @@ namespace PromoStudio.Web.Controllers
             foreach (var template in templates)
             {
                 template.Items.AddRange(templateItems.Where(ti => ti.fk_CustomerTemplateScriptId == template.pk_CustomerTemplateScriptId));
+            }
+            foreach (var templateItem in templateItems)
+            {
+                templateItem.Resource = resources.FirstOrDefault(r => r.pk_CustomerResourceId == templateItem.fk_CustomerResourceId);
             }
 
             return _buildCookieViewModel;
@@ -474,6 +495,7 @@ namespace PromoStudio.Web.Controllers
             ClearCookie(buildCookieVideoItemsKey);
             ClearCookie(buildCookieTemplateKey);
             ClearCookie(buildCookieTemplateItemsKey);
+            ClearCookie(buildCookieResourcesKey);
         }
 
         private void ClearCookie(string key)
@@ -509,22 +531,46 @@ namespace PromoStudio.Web.Controllers
                 }
             }
             var templateItems = templates.SelectMany(t => t.Items).ToList();
+
+            // Ensure all resources have IDs
+            var resources = new List<Common.Models.CustomerResource>();
+            if (templateItems.Count > 0)
+            {
+                long minResourceId = templates.Min(t => t.pk_CustomerTemplateScriptId);
+                resources = templateItems.Where(ti => ti.Resource != null).Select(ti => ti.Resource).ToList();
+                foreach (var resource in resources)
+                {
+                    if (resource.pk_CustomerResourceId == 0)
+                    {
+                        minResourceId -= 1;
+                        resource.pk_CustomerResourceId = minResourceId;
+                        var matchingItem = templateItems.FirstOrDefault(ti => ti.Resource == resource);
+                        if (matchingItem != null)
+                        {
+                            matchingItem.fk_CustomerResourceId = minResourceId;
+                        }
+                    }
+                }
+            }
             
             // Create trimmed-down models for cookie storage
             var buildState = new BuildState(cookieModel);
             var videoItemsState = videoItems.Select(vi => new Models.Session.CustomerVideoItem(vi)).ToArray();
             var templatesState = templates.Select(t => new Models.Session.CustomerTemplateScript(t)).ToArray();
             var templateItemsState = templateItems.Select(ti => new Models.Session.CustomerTemplateScriptItem(ti)).ToArray();
+            var resourcesState = resources.Select(r => new Models.Session.CustomerResource(r)).ToArray();
 
             var serializedBuildState = _serializationManager.SerializeToString(buildState);
             var serializedVideoItems = _serializationManager.SerializeToString(videoItemsState);
             var serializedTemplates = _serializationManager.SerializeToString(templatesState);
             var serializedTemplateItems = _serializationManager.SerializeToString(templateItemsState);
+            var serializedResources = _serializationManager.SerializeToString(resourcesState);
 
             CreateBuildCookie(buildCookieStateKey, serializedBuildState);
             CreateBuildCookie(buildCookieVideoItemsKey, serializedVideoItems);
             CreateBuildCookie(buildCookieTemplateKey, serializedTemplates);
             CreateBuildCookie(buildCookieTemplateItemsKey, serializedTemplateItems);
+            CreateBuildCookie(buildCookieResourcesKey, serializedResources);
         }
 
         private void CreateBuildCookie(string key, string value)

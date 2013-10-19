@@ -85,7 +85,6 @@ define([
         delete copy.CustomerScript;
         delete copy.ScriptItem;
         delete copy.Value;
-        delete copy.Resource;
 
         return copy;
     };
