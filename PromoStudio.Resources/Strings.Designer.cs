@@ -106,6 +106,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change photo.
+        /// </summary>
+        public static string BuildStep__Change_photo {
+            get {
+                return ResourceManager.GetString("BuildStep__Change_photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose your template.
         /// </summary>
         public static string BuildStep__Choose_your_template {

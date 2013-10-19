@@ -73,20 +73,27 @@ define([
                 return prevSeconds.toString().toMMSS(false);
             }
 
-            function onPhotoChosen() {
+            function onPhotoChosen(photo) {
+                if (photo) {
+                    customerTemplateScriptItem.fk_CustomerResourceId(photo.pk_CustomerResourceId());
+                    customerTemplateScriptItem.Resource(photo);
+                }
                 if (typeof photoCloseCallback === "function") {
                     photoCloseCallback();
                 }
             }
             
             function onPhotoCanceled() {
+                if (typeof photoCloseCallback === "function") {
+                    photoCloseCallback();
+                }
             }
             
-            function createPhotoUpload() {
+            function createPhotoChooser() {
                 $(function() {
                     photoChooser = new photoChooserViewModel({
                         Slot: self,
-                        Element: $("#photoUploadModal"),
+                        Element: $("#photoChooserModal"),
                         OnSave: onPhotoChosen,
                         OnCancel: onPhotoCanceled
                     });
@@ -97,9 +104,9 @@ define([
                 // pop modal to select a photo
                 logger.log("choosing photo");
                 photoCloseCallback = callback;
-                photoChooser.Show();
+                photoChooser.Show(customerTemplateScriptItem.fk_CustomerResourceId());
             };
 
-            createPhotoUpload();
+            createPhotoChooser();
         };
     });

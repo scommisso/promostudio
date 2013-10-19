@@ -33,18 +33,27 @@
                 <div class="panel-body">
                     <div class="thumbcontainer clearfix" data-bind="foreach: PhotoSection().PhotoSlots">
                         <a style="display: none" href="#" class="photo-thumbnail"
-                            data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
-                            <div class="photo-preview" data-bind="css: { completed: $data.IsCompleted }, style: { backgroundImage: $data.PhotoBackground }">
-                                <div class="photo-upload" data-bind="css: { hidden: $data.IsCompleted }">
+                           data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
+                            <div class="photo-preview clearfix" data-bind="css: { completed: $data.IsCompleted }, style: { backgroundImage: $data.PhotoBackground }">
+                    @*put this back in when we can edit text associated with a photo*@
+              @*                  <div class="photo-select">
+                                    <span class="glyphicons circle_ok"></span>
+                                </div>*@
+                                <div class="photo-upload">
                                     <span class="glyphicons plus"></span>
                                     <span class="photo-upload-label">@Strings.BuildStep__Upload_photo</span>
+                                </div>
+                                <div class="photo-change" data-bind="click: function (d, e) { e.stopImmediatePropagation();$root.PhotoSection().ChangeSlot($data); }">
+                                    <span class="glyphicons edit"></span>
+                                    <span class="photo-change-label">@Strings.BuildStep__Change_photo</span>
                                 </div>
                                 <span class="photo-title" data-bind="text: $data.Title"></span>
                             </div>
                         </a>
                     </div>
-                    <div class="photo-selected" style="display: none">
-                    </div>
+                    @*put this back in when we can edit text associated with a photo*@
+  @*                  <div class="photo-selected" style="display: none">
+                    </div>*@
                 </div>
             </div>
         </div>
@@ -52,13 +61,13 @@
 </div>
 
 @section modals {
-    <div class="modal fade" id="photoUploadModal" tabindex="-1" role="dialog" data-show="false">
-        <div class="modal-dialog" data-bind="template: { name: 'photo-upload-template' }">
+    <div class="modal fade" id="photoChooserModal" tabindex="-1" role="dialog" data-show="false">
+        <div class="modal-dialog" data-bind="template: { name: 'photo-chooser-template' }">
         </div>
     </div>
     
     @* This is in a template to prevent issues with multiple bindings when re-opening the modal *@
-    <script type="text/html" id="photo-upload-template">
+    <script type="text/html" id="photo-chooser-template">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-bind="click: Cancel">&times;</button>
@@ -66,21 +75,18 @@
             </div>
             <div class="modal-body">
                 <ul class="nav nav-tabs">
-                    <li><a href="#orgPhotos" data-toggle="tab">Company Photos</a></li>
+                    <li class="active"><a href="#orgPhotos" data-toggle="tab">Company Photos</a></li>
                     <li><a href="#custPhotos" data-toggle="tab">My Photos</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="orgPhotos" class="tab-pane fade active in">
                         <div class="thumbcontainer clearfix" data-bind="foreach: OrganizationPhotos">
-                            @*                        <a style="display: none" href="#" class="photo-thumbnail"
-                                data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
-                                <div class="photo-preview" data-bind="style: { backgroundImage: $data.PhotoBackground }">
-                                    <span class="photo-title" data-bind="text: $data.Title"></span>
-                                </div>
-                            </a>*@
                             <a style="display: none" href="#" class="photo-thumbnail"
-                               data-bind="visible: true">
-                                <div class="photo-preview no-upload" data-bind="style: { backgroundImage: 'url(' + $data.LinkUrl() + ')' }">
+                                data-bind="visible: true, css: { selected: $parent.IsSelected($data) }, click: function () { $parent.SelectPhoto($data); }">
+                                <div class="photo-preview no-choose clearfix" data-bind="style: { backgroundImage: 'url(' + $data.LinkUrl() + ')' }">
+                                    <div class="photo-select">
+                                        <span class="glyphicons circle_ok"></span>
+                                    </div>
                                     <span class="photo-title" data-bind="text: $data.LinkFileName"></span>
                                 </div>
                             </a>
@@ -88,15 +94,12 @@
                     </div>
                     <div id="custPhotos" class="tab-pane fade">
                         <div class="thumbcontainer clearfix" data-bind="foreach: CustomerPhotos">
-                            @*                        <a style="display: none" href="#" class="photo-thumbnail"
-                                data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
-                                <div class="photo-preview" data-bind="style: { backgroundImage: $data.PhotoBackground }">
-                                    <span class="photo-title" data-bind="text: $data.Title"></span>
-                                </div>
-                            </a>*@
                             <a style="display: none" href="#" class="photo-thumbnail"
-                               data-bind="visible: true">
-                                <div class="photo-preview no-upload" data-bind="style: { backgroundImage: 'url(' + $data.LinkUrl() + ')' }">
+                                data-bind="visible: true, css: { selected: $parent.IsSelected($data) }, click: function () { $parent.SelectPhoto($data); }">
+                                <div class="photo-preview no-choose clearfix" data-bind="style: { backgroundImage: 'url(' + $data.LinkUrl() + ')' }">
+                                    <div class="photo-select">
+                                        <span class="glyphicons circle_ok"></span>
+                                    </div>
                                     <span class="photo-title" data-bind="text: $data.LinkFileName"></span>
                                 </div>
                             </a>

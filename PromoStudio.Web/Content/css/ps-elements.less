@@ -27,6 +27,22 @@
             text-align: center;
             .bgSize(contain);
 
+            > .photo-select {
+                display: none;
+
+                > span.glyphicons,
+                > span.glyphicons:before {
+                    font-size: 24px;
+                    color: @completedcolor;
+                }
+                > span.glyphicons {                    
+                    float:left;
+                }
+                > span.glyphicons:before {                    
+                    margin: 8px 0 0 12px;
+                }
+            }
+
             > .photo-upload {
                 text-align: center;
 
@@ -52,23 +68,70 @@
 
             > .photo-title {
                 display: inline-block;
-                margin-top: 6px;
+                margin-top: 8px;
                 text-transform: uppercase;
                 color: @contentmutedcolor;
                 font-size: 9px;
             }
 
-            > .photo-upload.hidden {
+            > .photo-change {
+                display: none;
+                width: 120px;
+                height: 92px;
+                margin-top: 12px;
+                .rounded(@cs);
                 opacity: 0;
+                background-color: fade(@bgbasecolor, 80%);
+
+                > span.photo-change-label {
+                    display: block;
+                    color: @contentcolor;
+                    font-size: 12px;
+                    font-weight: bold;
+                    margin-top: 54px;
+                }
+
+                > span.glyphicons,
+                > span.glyphicons:before {
+                    font-size: 36px;
+                    width: 35px;
+                    color: @contentcolor;
+                }
+
+                    > span.glyphicons:before {
+                        margin: -2px 0 0 6px;
+                    }
             }
         }
 
+            > .photo-preview.completed {
+                > .photo-upload {
+                    display: none;
+                }
+
+                > .photo-change {
+                    display: inline-block;
+                }
+            }
+
             > .photo-preview.completed,
-            > .photo-preview.no-upload {
+            > .photo-preview.no-choose {
                 > .photo-title {
                     background-color: fade(@contentcolor, 70%);
                     padding: 2px;
                     .rounded(2px);
+                }
+            }
+
+            > .photo-preview.completed {
+                > .photo-title {
+                    margin-top: 0px;
+                }
+            }
+
+            > .photo-preview.no-choose {
+                > .photo-title {
+                    margin-top: 112px;
                 }
             }
     }
@@ -78,10 +141,21 @@
 
             > .photo-selection {
             }
+
+            > .photo-preview {
+
+                > .photo-change {
+                    opacity: 1;
+                }
+            }
         }
 
         > a.photo-thumbnail.selected,
         > a.photo-thumbnail.selected:hover {
             .box-shadow(0 1px 8px @completedcolor);
+
+            .photo-select {
+                display: block;
+            }
         }
 }

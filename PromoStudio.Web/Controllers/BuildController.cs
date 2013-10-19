@@ -131,11 +131,13 @@ namespace PromoStudio.Web.Controllers
             var storyboardTask = _dataService.Storyboard_SelectWithItemsAsync(data.Video.fk_StoryboardId);
             var templatesTask =
                 _dataService.TemplateScript_SelectByStoryboardIdWithItemsAsync(data.Video.fk_StoryboardId);
+            var resourcesTask = _dataService.CustomerResource_SelectActiveByCustomerIdAsync(CurrentUser.CustomerId);
 
-            await Task.WhenAll(storyboardTask, templatesTask);
+            await Task.WhenAll(storyboardTask, templatesTask, resourcesTask);
 
             var storyboard = storyboardTask.Result;
             var templates = templatesTask.Result.ToList();
+            var resources = resourcesTask.Result.ToList();
             foreach (var sbi in storyboard.Items)
             {
                 if (sbi.fk_TemplateScriptId.HasValue)
@@ -157,6 +159,11 @@ namespace PromoStudio.Web.Controllers
                         csi.ScriptItem = templates
                             .SelectMany(t => t.Items)
                             .FirstOrDefault(ti => ti.pk_TemplateScriptItemId == csi.fk_TemplateScriptItemId);
+                        if (csi.fk_CustomerResourceId > 0)
+                        {
+                            csi.Resource =
+                                resources.FirstOrDefault(cr => cr.pk_CustomerResourceId == csi.fk_CustomerResourceId);
+                        }
                     }
                 }
             }

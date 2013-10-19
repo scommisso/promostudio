@@ -25,13 +25,26 @@ define(["models/customerResource",
                 photoSlot = data.Slot,
                 $elem = data.Element,
                 saveCallback = data.OnSave,
-                cancelCallback = data.OnCancel;
+                cancelCallback = data.OnCancel,
+                selectedResourceId = null;
 
             self.IsLoading = ko.observable(true);
             self.CustomerPhotos = ko.observableArray([]);
             self.OrganizationPhotos = ko.observableArray([]);
+            
+            self.SelectedPhoto = ko.observable(null);
+            self.PhotoPreviewShown = ko.computed(function () {
+                return self.SelectedPhoto() !== null;
+            });
+            self.IsSelected = function (photo) {
+                return self.SelectedPhoto() === photo;
+            };
+            self.SelectPhoto = function (photo) {
+                self.SelectedPhoto(photo);
+            };
 
-            self.Show = function () {
+            self.Show = function (selectedId) {
+                selectedResourceId = selectedId;
                 ko.cleanNode($elem[0]);
                 $elem.find(".modal-dialog").empty();
                 ko.applyBindings(self, $elem[0]);
@@ -51,8 +64,11 @@ define(["models/customerResource",
 
             self.Save = function () {
                 logger.log("Saving");
+
+                var selected = self.SelectedPhoto();
+
                 self.Hide();
-                saveCallback();
+                saveCallback(selected);
             };
             
             function loadPhotos(photoResources) {
@@ -69,6 +85,9 @@ define(["models/customerResource",
                     }
                     else if (photo.IsOrganizationResource()) {
                         orgPhotos.push(photo);
+                    }
+                    if (photo.pk_CustomerResourceId() === selectedResourceId) {
+                        self.SelectedPhoto(photo);
                     }
                 }
                 self.CustomerPhotos(custPhotos);

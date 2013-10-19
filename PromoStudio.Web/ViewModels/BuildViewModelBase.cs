@@ -34,7 +34,7 @@ namespace PromoStudio.Web.ViewModels
         };
         private static readonly string[] _icons = new string[]
         {
-            "circle_ok",
+            "show_thumbnails",
             "magic",
             "align_left",
             "playlist",

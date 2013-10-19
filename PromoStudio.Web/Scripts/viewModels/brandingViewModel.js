@@ -39,6 +39,17 @@ define(["viewModels/photosViewModel",
                 loadVideoData(video());
             }, 1000);
         };
+        self.IsCompleted = ko.computed(function() {
+            var ps = ko.toJS(self.PhotoSection()),
+                stepCompleted = true;
+            if (!ps || !ps.IsCompleted) {
+                stepCompleted = false;
+            }
+            if (ko.isObservable(isStepCompleted)) {
+                isStepCompleted(stepCompleted);
+            }
+            return stepCompleted;
+        });
         
         function stepChanging(navVm, callback) {
             // TODO: Set appropriate video items prior to update

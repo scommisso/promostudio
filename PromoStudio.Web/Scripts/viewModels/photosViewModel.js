@@ -64,12 +64,15 @@ define(["viewModels/photoTemplatesViewModel",
             };
             self.SelectSlot = function (slot) {
                 if (!slot.IsCompleted()) {
-                    slot.ChoosePhoto(function () {
-                        self.SelectedSlot(slot);
-                    });
+                    self.ChangeSlot(slot);
                 } else {
                     self.SelectedSlot(slot);
                 }
+            };
+            self.ChangeSlot = function (slot) {
+                slot.ChoosePhoto(function () {
+                    self.SelectedSlot(slot);
+                });
             };
             
             self.IsVisible = ko.computed(function () {

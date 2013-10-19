@@ -324,4 +324,7 @@
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="BuildStep__Change_photo" xml:space="preserve">
+    <value>Change photo</value>
+  </data>
 </root>
