@@ -71,185 +71,16 @@ section.content {
 }
 
 
+@import url('bootstrap-overrides.less');
 @import url('navigation.less');
 @import url('login.less');
 @import url('build.less');
 @import url('vidyard.less');
-
+@import url('ps-elements.less');
 
 
 
 /* TODO: Move to build-branding.less */
-@panelheader: @bgbasecolor;
-@panelbody: darken(@bgbasecolor, 1%);
-@panelshadow: darken(@panelheader, 10%);
-@shadowcolor: darken(@bgbasecolor, 41%);
-@inactivecolor: darken(@bgbasecolor, 13%);
-
-.brandingWizard {
-    .panel-group {
-        .rounded(@cs);
-        .box-shadow(0 1px 4px @panelshadow);
-
-        .panel.panel-default {
-            .panel-heading {
-                padding: 0;
-                background-color: @panelheader;
-
-                a,
-                a:link,
-                a:focus,
-                a:hover,
-                a:active,
-                a:visited {
-                    text-decoration: none;
-
-                    .step-title {
-                        font-size: 24px;
-                        line-height: 1em;
-                        color: @contentcolor;
-                    }
-
-                    .step-subtitle {
-                        font-size: 15px;
-                        line-height: 1em;
-                        color: @contentmutedcolor;
-                    }
-
-                    .step-completed {
-                        width: 100%;
-                        text-align: right;
-                        height: 20px;
-                        margin: -20px 31px 0 20px;
-
-                        .step-done:before {
-                            color: @completedcolor;
-                            margin-left: -26px;
-                        }
-                    }
-                }
-            }
-
-            .panel-collapse {
-                background-color: @panelbody;
-            }
-        }
-        /* Important to have these broken out so switchClass() transition works properly */
-        .step-title.opened {
-            padding: 50px 0 0 30px;
-        }
-
-        .step-title.collapsed {
-            padding: 30px 0 10px 30px;
-        }
-
-        .step-subtitle.opened {
-            padding: 12px 0 50px 35px;
-            opacity: 1;
-            margin: 0 0 0 0;
-        }
-
-        .step-subtitle.collapsed {
-            padding: 0 0 0 35px;
-            opacity: 0;
-            margin: -28px 0 28px 0;
-        }
-
-        .step-done.opened {
-            margin-top: -164px;
-        }
-
-        .step-done.collapsed {
-            margin-top: -82px;
-        }
-    }
-}
-
-.thumbcontainer {
-
-    > a.photo-thumbnail,
-    > a.photo-thumbnail:link,
-    > a.photo-thumbnail:hover,
-    > a.photo-thumbnail:active,
-    > a.photo-thumbnail:visited {
-        color: @basecolor;
-    }
-
-    > a.photo-thumbnail {
-        display: block;
-        float: left;
-        margin: 0 8px 8px 0;
-        overflow: hidden;
-        text-decoration: none;
-        color: @basecolor;
-        .rounded(@cs);
-        .box-shadow(0 1px 2px @shadowcolor);
-
-        > .photo-preview {
-            background-color: @panelheader;
-            width: 228px;
-            height: 130px;
-            text-align: center;
-            .bgSize(contain);
-
-            > .photo-upload {
-                text-align: center;
-
-                > span.photo-upload-label {
-                    display: block;
-                    color: @contentcolor;
-                    font-size: 12px;
-                    font-weight: bold;
-                    margin-top: 66px;
-                }
-
-                > span.glyphicons,
-                > span.glyphicons:before {
-                    font-size: 36px;
-                    width: 35px;
-                    color: @completedcolor;
-                }
-
-                    > span.glyphicons:before {
-                        margin: 10px 0 0 6px;
-                    }
-            }
-
-            > .photo-title {
-                display: inline-block;
-                margin-top: 6px;
-                text-transform: uppercase;
-                color: @contentmutedcolor;
-                font-size: 9px;
-            }
-
-            > .photo-upload.hidden {
-                opacity: 0;
-            }
-        }
-
-        > .photo-preview.completed {
-            > .photo-title {                
-                background-color: fade(@contentcolor, 70%);
-                padding:2px;
-                .rounded(2px);
-            }
-        }
-    }
-
-        > a.photo-thumbnail:hover {
-            .box-shadow(0 1px 8px @shadowcolor);
-
-            > .photo-selection {
-            }
-        }
-
-        > a.photo-thumbnail.selected,
-        > a.photo-thumbnail.selected:hover {
-            .box-shadow(0 1px 8px @completedcolor);
-        }
-}
-
 .photo-selected {
     background-color: @mediabgcolor;
     .bgSize(contain);
@@ -260,45 +91,8 @@ section.content {
     .modal-dialog {
         width: 800px;
     }
-    .modal-content {
-        background-color: @panelbody;
-    }
+
     .photo-title {
-        margin-top:112px;
-    }
-
-    .nav-tabs > li > a,
-    .nav-tabs > li > a:link,
-    .nav-tabs > li > a:visited {
-        color: @contentmutedcolor;
-    }
-      
-    .nav-tabs > li > a:hover,
-    .nav-tabs > li > a:focus,
-    .nav-tabs > li > a:active,
-    .nav-tabs > li.active > a,
-    .nav-tabs > li.active > a:link,
-    .nav-tabs > li.active > a:hover,
-    .nav-tabs > li.active > a:focus,
-    .nav-tabs > li.active > a:active,
-    .nav-tabs > li.active > a:visited {
-        color: @contentcolor;
-    }
-    
-        .nav-tabs > li > a:hover {
-            @bc1: lighten(@inactivecolor, 7%);
-            border-color: @bc1 @bc1 @inactivecolor @bc1;
-        }
-        .nav-tabs > li.active > a:hover {
-            border-color: @inactivecolor @inactivecolor transparent @inactivecolor;
-        }
-
-    .tab-content {
-        padding: 12px;
-        background-color: @panelheader;
-        border: solid 1px @inactivecolor;
-        border-top: none;
-        overflow: hidden;
-        .border-radius(0, @cs, @cs, 0);
+        margin-top: 112px;
     }
 }

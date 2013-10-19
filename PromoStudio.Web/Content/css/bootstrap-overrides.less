@@ -1,0 +1,142 @@
+﻿@import url('themevariables.less');
+
+@panelheader: @bgbasecolor;
+@panelbody: darken(@bgbasecolor, 1%);
+@panelshadow: darken(@panelheader, 10%);
+@modalbgcolor: darken(@bgbasecolor, 1%);
+@inactivecolor: darken(@bgbasecolor, 13%);
+
+/* TODO: Buttons */
+.btn-default {
+
+}
+
+/* Accordion */
+
+.accordion {
+    .panel-group {
+
+        .panel.panel-default {
+            .panel-heading {
+                a,
+                a:link,
+                a:focus,
+                a:hover,
+                a:active,
+                a:visited {
+                    text-decoration: none;
+
+                    .step-title {
+                        font-size: 24px;
+                        line-height: 1em;
+                        color: @contentcolor;
+                    }
+
+                    .step-subtitle {
+                        font-size: 15px;
+                        line-height: 1em;
+                        color: @contentmutedcolor;
+                    }
+
+                    .step-completed {
+                        width: 100%;
+                        text-align: right;
+                        height: 20px;
+                        margin: -20px 31px 0 20px;
+
+                        .step-done:before {
+                            color: @completedcolor;
+                            margin-left: -26px;
+                        }
+                    }
+                }
+            }
+        }
+        /* Important to have these broken out so switchClass() transition works properly */
+        .step-title.opened {
+            padding: 50px 0 0 30px;
+        }
+
+        .step-title.collapsed {
+            padding: 30px 0 10px 30px;
+        }
+
+        .step-subtitle.opened {
+            padding: 12px 0 50px 35px;
+            opacity: 1;
+            margin: 0 0 0 0;
+        }
+
+        .step-subtitle.collapsed {
+            padding: 0 0 0 35px;
+            opacity: 0;
+            margin: -28px 0 28px 0;
+        }
+
+        .step-done.opened {
+            margin-top: -164px;
+        }
+
+        .step-done.collapsed {
+            margin-top: -82px;
+        }
+    }
+}
+
+/* Modal with tabs */
+.modal-content {
+    background-color: @modalbgcolor;
+
+    .nav-tabs > li > a,
+    .nav-tabs > li > a:link,
+    .nav-tabs > li > a:visited {
+        color: @contentmutedcolor;
+    }
+
+        .nav-tabs > li > a:hover,
+        .nav-tabs > li > a:focus,
+        .nav-tabs > li > a:active,
+        .nav-tabs > li.active > a,
+        .nav-tabs > li.active > a:link,
+        .nav-tabs > li.active > a:hover,
+        .nav-tabs > li.active > a:focus,
+        .nav-tabs > li.active > a:active,
+        .nav-tabs > li.active > a:visited {
+            color: @contentcolor;
+        }
+
+        .nav-tabs > li > a:hover {
+            @bc1: lighten(@inactivecolor, 7%);
+            border-color: @bc1 @bc1 @inactivecolor @bc1;
+        }
+
+    .nav-tabs > li.active > a:hover {
+        border-color: @inactivecolor @inactivecolor transparent @inactivecolor;
+    }
+
+    .tab-content {
+        padding: 12px;
+        background-color: @bgbasecolor;
+        border: solid 1px @inactivecolor;
+        border-top: none;
+        overflow: hidden;
+        .border-radius(0, @cs, @cs, 0);
+    }
+}
+
+/* Accordion */
+.panel-group {
+    .rounded(@cs);
+    .box-shadow(0 1px 4px @panelshadow);
+
+    .panel.panel-default {
+        .panel-heading {
+            padding: 0;
+            background-color: @panelheader;
+        }
+
+        .panel-collapse {
+            background-color: @panelbody;
+        }
+    }
+}

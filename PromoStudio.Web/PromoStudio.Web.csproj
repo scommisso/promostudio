@@ -211,6 +211,12 @@
     <Content Include="Content\css\bootstrap-lightbox.min.css">
       <DependentUpon>bootstrap-lightbox.css</DependentUpon>
     </Content>
+    <Content Include="Content\css\bootstrap-overrides.css">
+      <DependentUpon>bootstrap-overrides.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\bootstrap-overrides.min.css">
+      <DependentUpon>bootstrap-overrides.less</DependentUpon>
+    </Content>
     <Content Include="Content\css\build-branding.css">
       <DependentUpon>build-branding.less</DependentUpon>
     </Content>
@@ -247,6 +253,12 @@
     </Content>
     <Content Include="Content\css\navigation.min.css">
       <DependentUpon>navigation.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\ps-elements.css">
+      <DependentUpon>ps-elements.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\ps-elements.min.css">
+      <DependentUpon>ps-elements.less</DependentUpon>
     </Content>
     <Content Include="Content\css\site.css">
       <DependentUpon>site.less</DependentUpon>
@@ -330,6 +342,8 @@
     <Content Include="Content\css\vidyard.less" />
     <Content Include="Content\css\build-footage.less" />
     <Content Include="Content\css\build-branding.less" />
+    <Content Include="Content\css\bootstrap-overrides.less" />
+    <Content Include="Content\css\ps-elements.less" />
     <None Include="Scripts\vsdoc\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\lib\bootstrap.js" />
     <Content Include="Scripts\lib\jquery-1.9.1.js" />

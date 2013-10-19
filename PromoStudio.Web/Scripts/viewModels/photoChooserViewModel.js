@@ -32,8 +32,8 @@ define(["models/customerResource",
             self.OrganizationPhotos = ko.observableArray([]);
 
             self.Show = function () {
-                // TODO: Move the modal contents into a template
                 ko.cleanNode($elem[0]);
+                $elem.find(".modal-dialog").empty();
                 ko.applyBindings(self, $elem[0]);
                 $elem.modal("show");
                 getPhotos();
@@ -60,6 +60,9 @@ define(["models/customerResource",
                     orgPhotos = [],
                     i, photo;
                 for (i = 0; i < photoResources.length; i++) {
+                    if (photoResources[i].fk_TemplateScriptItemCategoryId !== 2) {
+                        continue;
+                    }
                     photo = new customerResource(photoResources[i]);
                     if (photo.IsCustomerResource()) {
                         custPhotos.push(photo);
