@@ -69,12 +69,12 @@
 
             > .glyphicons.check {
                 display: none;
-                color: @completedColor;
+                color: @completedcolor;
             }
 
                 > .glyphicons.check:before {
                     display: none;
-                    color: @completedColor;
+                    color: @completedcolor;
                 }
 
             > .glyphicons.unchecked {
@@ -105,7 +105,7 @@
 
                     > .glyphicons.check:before {
                         .inlineblock();
-                        color: lighten(desaturate(@completedColor, 10%), 26%);
+                        color: lighten(desaturate(@completedcolor, 10%), 26%);
                     }
 
                 > .glyphicons.unchecked {
@@ -120,7 +120,7 @@
 
         > a.footage-thumbnail.selected,
         > a.footage-thumbnail.selected:hover {
-            .box-shadow(0 1px 8px @completedColor);
+            .box-shadow(0 1px 8px @completedcolor);
 
             > .footage-selection {
                 > .glyphicons.check {
@@ -129,7 +129,7 @@
 
                     > .glyphicons.check:before {
                         .inlineblock();
-                        color: @completedColor;
+                        color: @completedcolor;
                     }
 
                 > .glyphicons.unchecked {

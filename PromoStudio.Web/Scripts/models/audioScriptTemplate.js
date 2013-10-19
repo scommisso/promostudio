@@ -19,7 +19,7 @@ define(["knockout"], function (ko) {
 
         function getMatches(val, re, i) {
             i = (i || 1);
-            var matches = [], m;
+            var matches = [], match;
             while (match = re.exec(val)) {
                 matches.push(match[i]);
             }
@@ -28,7 +28,7 @@ define(["knockout"], function (ko) {
 
         function getReplacementItems() {
             var scriptText = self.ScriptText(),
-                matches = getMatches(myString, replacementRegex, 1);
+                matches = getMatches(scriptText, replacementRegex, 1);
 
             return matches;
         }

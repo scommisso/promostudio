@@ -33,8 +33,8 @@ namespace PromoStudio.Web.Controllers
         }
 
         //
-        // GET: /Resources/Data
-        public async Task<ActionResult> Data()
+        // GET: /Resources/Data?typeId={typeId}
+        public async Task<ActionResult> Data(int? typeId)
         {
             if (CurrentUser == null)
             {
@@ -49,7 +49,9 @@ namespace PromoStudio.Web.Controllers
             }
 
             var resources = (await _dataService.CustomerResource_SelectActiveByCustomerIdAsync(customerId))
-                .Where(r => r.Type != TemplateScriptItemType.Text)
+                .Where(r => typeId.HasValue
+                    ? r.fk_TemplateScriptItemTypeId == (sbyte)typeId.Value
+                    : r.Type != TemplateScriptItemType.Text)
                 .ToList();
             
             return Json(new
@@ -60,9 +62,9 @@ namespace PromoStudio.Web.Controllers
         }
 
         //
-        // POST: /Resources/Upload?category={category}
+        // POST: /Resources/Upload?category={category}&isOrgResource={isOrgResource}
         [HttpPost]
-        public async Task<ActionResult> Upload(HttpPostedFileBase file, int category)
+        public async Task<ActionResult> Upload(HttpPostedFileBase file, int category, bool? isOrgResource)
         {
             if (CurrentUser == null)
             {
@@ -76,16 +78,23 @@ namespace PromoStudio.Web.Controllers
                 TemplateScriptItemType type = TemplateScriptItemType.Image;
 
                 var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(Settings.Default.UploadPath, string.Format("{0}\\{1}", customerId, fileName));
-                file.SaveAs(path);
-
                 var res = new CustomerResource() {
                     fk_CustomerId = customerId,
                     fk_CustomerResourceStatusId = (sbyte) CustomerResourceStatus.Active,
                     fk_TemplateScriptItemCategoryId = (sbyte) category,
                     fk_TemplateScriptItemTypeId = (sbyte) type,
-                    Value = path                    
+                    Value = Path.Combine(Settings.Default.UploadPath, string.Format("{0}\\{1}", customerId, fileName))                    
                 };
+
+                if (isOrgResource == true && CurrentUser.OrganizationId.HasValue)
+                {
+                    int orgId = CurrentUser.OrganizationId.Value;
+                    res.Value = Path.Combine(Settings.Default.UploadPath, string.Format("org_{0}\\{1}", orgId, fileName));
+                    res.fk_CustomerId = null;
+                    res.fk_OrganizationId = orgId;
+                }
+
+                file.SaveAs(res.Value);
                 res = await _dataService.CustomerResource_InsertAsync(res);
 
                 // TODO: Log upload
@@ -98,8 +107,7 @@ namespace PromoStudio.Web.Controllers
         // GET: /Resources/Download?crid={crid}
         public async Task<ActionResult> Download(long crid)
         {
-            // TODO: Use login cookie
-            long customerId = 1;
+            long customerId = CurrentUser.CustomerId;
 
             var customer = (await _dataService.Customer_SelectAsync(customerId));
             if (customer == null)
@@ -108,7 +116,8 @@ namespace PromoStudio.Web.Controllers
             }
 
             var resource = (await _dataService.CustomerResource_SelectAsync(crid));
-            if (resource.fk_CustomerId != customerId)
+            if (resource.fk_CustomerId != customerId
+                && resource.fk_OrganizationId != customer.fk_OrganizationId)
             {
                 return new HttpNotFoundResult();
             }

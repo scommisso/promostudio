@@ -83,7 +83,8 @@ section.content {
 @panelheader: @bgbasecolor;
 @panelbody: darken(@bgbasecolor, 1%);
 @panelshadow: darken(@panelheader, 10%);
-@shadowColor: darken(@bgbasecolor, 41%);
+@shadowcolor: darken(@bgbasecolor, 41%);
+@inactivecolor: darken(@bgbasecolor, 13%);
 
 .brandingWizard {
     .panel-group {
@@ -122,7 +123,7 @@ section.content {
                         margin: -20px 31px 0 20px;
 
                         .step-done:before {
-                            color: @completedColor;
+                            color: @completedcolor;
                             margin-left: -26px;
                         }
                     }
@@ -182,7 +183,7 @@ section.content {
         text-decoration: none;
         color: @basecolor;
         .rounded(@cs);
-        .box-shadow(0 1px 2px @shadowColor);
+        .box-shadow(0 1px 2px @shadowcolor);
 
         > .photo-preview {
             background-color: @panelheader;
@@ -206,7 +207,7 @@ section.content {
                 > span.glyphicons:before {
                     font-size: 36px;
                     width: 35px;
-                    color: @completedColor;
+                    color: @completedcolor;
                 }
 
                     > span.glyphicons:before {
@@ -226,10 +227,18 @@ section.content {
                 opacity: 0;
             }
         }
+
+        > .photo-preview.completed {
+            > .photo-title {                
+                background-color: fade(@contentcolor, 70%);
+                padding:2px;
+                .rounded(2px);
+            }
+        }
     }
 
         > a.photo-thumbnail:hover {
-            .box-shadow(0 1px 8px @shadowColor);
+            .box-shadow(0 1px 8px @shadowcolor);
 
             > .photo-selection {
             }
@@ -237,7 +246,7 @@ section.content {
 
         > a.photo-thumbnail.selected,
         > a.photo-thumbnail.selected:hover {
-            .box-shadow(0 1px 8px @completedColor);
+            .box-shadow(0 1px 8px @completedcolor);
         }
 }
 
@@ -245,4 +254,51 @@ section.content {
     background-color: @mediabgcolor;
     .bgSize(contain);
     height: 300px;
+}
+
+#photoUploadModal {
+    .modal-dialog {
+        width: 800px;
+    }
+    .modal-content {
+        background-color: @panelbody;
+    }
+    .photo-title {
+        margin-top:112px;
+    }
+
+    .nav-tabs > li > a,
+    .nav-tabs > li > a:link,
+    .nav-tabs > li > a:visited {
+        color: @contentmutedcolor;
+    }
+      
+    .nav-tabs > li > a:hover,
+    .nav-tabs > li > a:focus,
+    .nav-tabs > li > a:active,
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:link,
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus,
+    .nav-tabs > li.active > a:active,
+    .nav-tabs > li.active > a:visited {
+        color: @contentcolor;
+    }
+    
+        .nav-tabs > li > a:hover {
+            @bc1: lighten(@inactivecolor, 7%);
+            border-color: @bc1 @bc1 @inactivecolor @bc1;
+        }
+        .nav-tabs > li.active > a:hover {
+            border-color: @inactivecolor @inactivecolor transparent @inactivecolor;
+        }
+
+    .tab-content {
+        padding: 12px;
+        background-color: @panelheader;
+        border: solid 1px @inactivecolor;
+        border-top: none;
+        overflow: hidden;
+        .border-radius(0, @cs, @cs, 0);
+    }
 }

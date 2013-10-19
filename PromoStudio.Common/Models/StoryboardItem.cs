@@ -19,6 +19,7 @@ namespace PromoStudio.Common.Models
         }
 
         public TemplateScript TemplateScript { get; set; }
+
         public StockVideo StockVideo { get; set; }
 
         public dynamic ToPoco()

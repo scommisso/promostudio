@@ -6,10 +6,10 @@
 /// <reference path="../models/storyboardItem.js" />
 /// <reference path="../models/customerTemplateScriptItem.js" />
 /// <reference path="../models/customerResource.js" />
-/// <reference path="photoUploadViewModel.js" />
+/// <reference path="photoChooserViewModel.js" />
 
 define([
-        "viewModels/photoUploadViewModel",
+        "viewModels/photoChooserViewModel",
         "knockout",
         "strings",
         "models/enums",
@@ -17,7 +17,7 @@ define([
         "ps/extensions"
     ],
     function (
-        photoUploadViewModel,
+        photoChooserViewModel,
         ko,
         strings,
         enums,
@@ -25,7 +25,7 @@ define([
         return function (storyboardItem, customerTemplateScriptItem) {
             var self = this,
                 photoTitleFormatString = strings.getResource("BuildStep__Section_num_timing"), //Sect. {0} - appx. {1} into video, slot {2}
-                photoUpload, photoCloseCallback;
+                photoChooser, photoCloseCallback;
 
             self.Title = ko.computed(function () {
                 var storyboardSort = storyboardItem.SortOrder(),
@@ -84,7 +84,7 @@ define([
             
             function createPhotoUpload() {
                 $(function() {
-                    photoUpload = new photoUploadViewModel({
+                    photoChooser = new photoChooserViewModel({
                         Slot: self,
                         Element: $("#photoUploadModal"),
                         OnSave: onPhotoChosen,
@@ -97,13 +97,7 @@ define([
                 // pop modal to select a photo
                 logger.log("choosing photo");
                 photoCloseCallback = callback;
-                photoUpload.Show();
-            };
-
-            self.AddPhoto = function () {
-                // TODO: Add photo chooser module
-                // TODO: Show list of existing photos
-                // TODO: Present file uploader
+                photoChooser.Show();
             };
 
             createPhotoUpload();

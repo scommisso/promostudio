@@ -12,11 +12,14 @@ namespace PromoStudio.Common.Models
         public sbyte fk_StoryboardStatusId { get; set; }
         public int? fk_OrganizationId { get; set; }
         public int? fk_VerticalId { get; set; }
+        public int? fk_AudioScriptTemplateId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string VidyardId { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
+
+        public AudioScriptTemplate AudioScriptTemplate { get; set; }
 
         public List<StoryboardItem> Items {
             get { return _storyboardItems; }
@@ -37,6 +40,7 @@ namespace PromoStudio.Common.Models
                 fk_StoryboardStatusId = fk_StoryboardStatusId,
                 fk_OrganizationId = fk_OrganizationId,
                 fk_VerticalId = fk_VerticalId,
+                fk_AudioScriptTemplateId = fk_AudioScriptTemplateId,
                 Name = Name,
                 Description = Description,
                 VidyardId = VidyardId,

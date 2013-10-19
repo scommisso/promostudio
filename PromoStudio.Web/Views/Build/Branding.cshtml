@@ -34,8 +34,8 @@
                 <div class="panel-body">
                     <div class="thumbcontainer clearfix" data-bind="foreach: PhotoSection().PhotoSlots">
                         <a style="display: none" href="#" class="photo-thumbnail"
-                           data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
-                            <div class="photo-preview" data-bind="style: { backgroundImage: $data.PhotoBackground }">
+                            data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
+                            <div class="photo-preview" data-bind="css: { completed: $data.IsCompleted }, style: { backgroundImage: $data.PhotoBackground }">
                                 <div class="photo-upload" data-bind="css: { hidden: $data.IsCompleted }">
                                     <span class="glyphicons plus"></span>
                                     <span class="photo-upload-label">@Strings.BuildStep__Upload_photo</span>
@@ -63,10 +63,47 @@
                     <h4 class="modal-title">@Strings.Modals__Choose_a_Photo</h4>
                 </div>
                 <div class="modal-body">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    <ul class="nav nav-tabs">
+                        <li><a href="#orgPhotos" data-toggle="tab">Company Photos</a></li>
+                        <li><a href="#custPhotos" data-toggle="tab">My Photos</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="orgPhotos" class="tab-pane fade active in">
+                            <div class="thumbcontainer clearfix" data-bind="foreach: OrganizationPhotos">
+                                @*                        <a style="display: none" href="#" class="photo-thumbnail"
+                                   data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
+                                    <div class="photo-preview" data-bind="style: { backgroundImage: $data.PhotoBackground }">
+                                        <span class="photo-title" data-bind="text: $data.Title"></span>
+                                    </div>
+                                </a>*@
+                                <a style="display: none" href="#" class="photo-thumbnail"
+                                    data-bind="visible: true">
+                                    <div class="photo-preview completed" data-bind="style: { backgroundImage: 'url(' + $data.LinkUrl() + ')' }">
+                                        <span class="photo-title" data-bind="text: $data.LinkFileName"></span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="custPhotos" class="tab-pane fade">
+                            <div class="thumbcontainer clearfix" data-bind="foreach: CustomerPhotos">
+                                @*                        <a style="display: none" href="#" class="photo-thumbnail"
+                                   data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
+                                    <div class="photo-preview" data-bind="style: { backgroundImage: $data.PhotoBackground }">
+                                        <span class="photo-title" data-bind="text: $data.Title"></span>
+                                    </div>
+                                </a>*@
+                                <a style="display: none" href="#" class="photo-thumbnail"
+                                    data-bind="visible: true">
+                                    <div class="photo-preview completed" data-bind="style: { backgroundImage: 'url(' + $data.LinkUrl() + ')' }">
+                                        <span class="photo-title" data-bind="text: $data.LinkFileName"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div>
+                                Upload a new photo
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-bind="click: Cancel">@Strings.Cancel</button>
