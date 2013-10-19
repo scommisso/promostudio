@@ -40,7 +40,7 @@ namespace PromoStudio.Web.Controllers
                     customer = new Customer()
                     {
                         FullName = name,
-                        fk_OrganizationId = null,
+                        fk_OrganizationId = 1, // TODO: Remove this after the demo
                         fk_VerticalId = null,
                         fk_CustomerStatusId = (sbyte)CustomerStatus.Active,
                         DateCreated = DateTime.Now
