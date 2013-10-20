@@ -387,6 +387,7 @@
     <Content Include="r.js" />
     <Content Include="Scripts\require.min.js" />
     <Content Include="Scripts\requireConfig.js" />
+    <Content Include="Scripts\viewModels\actorViewModel.js" />
     <Content Include="Scripts\viewModels\buildNavViewModel.js" />
     <Content Include="Scripts\viewModels\brandingViewModel.js" />
     <Content Include="Scripts\viewModels\brandingSectionViewModel.js" />

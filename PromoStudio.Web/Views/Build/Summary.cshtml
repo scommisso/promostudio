@@ -15,15 +15,28 @@
 }
 
 <div class="summaryWizard">
-    <p>
-        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-    </p>
-    
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">PromoStudio Demo Notice</h3>
+        </div>
+        <div class="panel-body">
+            Future home of a summary of the options you have chosen. For now, just give your video a name in the box below and generate your video!
+        </div>
+    </div>
+
     <div>
         <div>
-            Enter a name for your video
-            <input type="text" data-bind="value: VideoName" />
+            <div class="form-group">
+                <label for="videoNameInput">Video Title</label>
+                <input type="text" class="form-control" id="videoNameInput" placeholder="Give your video a memorable title"
+                    data-bind="value: VideoName, valueUpdate: 'afterkeydown'">
+            </div>
+            <div class="form-group">
+                <label for="videoDescriptionInput">Video Description</label>
+                <input type="text" class="form-control" id="videoDescriptionInput" placeholder="Describe the contents and purpose of your video"
+                    data-bind="value: VideoDescription, valueUpdate: 'afterkeydown'">
+            </div>
         </div>
-        <a href="#" style="display:none" data-bind="visible: IsCompleted, click: function () { $data.GenerateVideo(); }">Generate Video</a>
+        <button type="button" class="btn btn-success" style="display: none" data-bind="visible: IsCompleted, click: function () { $data.GenerateVideo(); }">Generate Video</button>
     </div>
 </div>

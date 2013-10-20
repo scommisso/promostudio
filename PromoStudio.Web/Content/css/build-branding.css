@@ -8,4 +8,16 @@
     More info at: http://lesselements.com
   ---------------------------------------------------*/
 /* white-label banner */
-/* rounded corner size */
+/* rounded corner size */.photo-selected {
+  background-color: #4a4a4a;
+  background-position: center;
+  background-repeat: no-repeat;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  -webkit-background-size: contain;
+  background-size: contain;
+  height: 300px;
+}
+#photoChooserModal .modal-dialog {
+  width: 800px;
+}

@@ -10,7 +10,7 @@ define(["knockout"], function (ko) {
         self.fk_VoiceActorStatusId = ko.observable(data.fk_VoiceActorStatusId || null);
         self.UserName = ko.observable(data.UserName || null);
         self.FullName = ko.observable(data.FullName || null);
-        self.Biography = ko.observable(data.Biography || null);
+        self.Description = ko.observable(data.Description || null);
         self.SampleFilePath = ko.observable(data.SampleFilePath || null);
         self.PhotoFilePath = ko.observable(data.PhotoFilePath || null);
         self.DateCreated = ko.observable(data.DateCreated || null);

@@ -1,7 +1,10 @@
 ﻿@import url('themevariables.less');
 
-.thumbcontainer {
+@mediabgcolor: darken(@bgbasecolor, 71%);
+@shadowcolor: lighten(@mediabgcolor, 30%);
 
+.thumbcontainer {
+    /* PHOTOS */
     > a.photo-thumbnail,
     > a.photo-thumbnail:link,
     > a.photo-thumbnail:hover,
@@ -27,7 +30,7 @@
             width: 228px;
             height: 130px;
             text-align: center;
-            .bgSize(contain);
+            .bgSize(cover);
 
             > .photo-select {
                 display: none;
@@ -37,12 +40,14 @@
                     font-size: 24px;
                     color: @completedcolor;
                 }
-                > span.glyphicons {                    
-                    float:left;
+
+                > span.glyphicons {
+                    float: left;
                 }
-                > span.glyphicons:before {                    
-                    margin: 8px 0 0 12px;
-                }
+
+                    > span.glyphicons:before {
+                        margin: 8px 0 0 12px;
+                    }
             }
 
             > .photo-upload {
@@ -158,6 +163,151 @@
 
             .photo-select {
                 display: block;
+            }
+        }
+    /* AUDIO */
+    > a.audio-thumbnail,
+    > a.audio-thumbnail:link,
+    > a.audio-thumbnail:hover,
+    > a.audio-thumbnail:active,
+    > a.audio-thumbnail:visited {
+        color: @basecolor;
+    }
+
+    > a.audio-thumbnail {
+        display: block;
+        float: left;
+        width: 400px;
+        margin: 0 8px 8px 0;
+        overflow: hidden;
+        text-decoration: none;
+        background-color: @bgbasecolor;
+        color: @basecolor;
+        .rounded(@cs);
+        .box-shadow(0 1px 2px @shadowcolor);
+
+        > .audio-preview {
+            background-color: @mediabgcolor;
+            background-position: left;
+            background-repeat: no-repeat;
+            float: left;
+            width: 80px;
+            height: 72px;
+            .bgSize(cover);
+
+            > .glyphicons {
+                float: left;
+            }
+
+                > .glyphicons:before {
+                    margin: 16px 0 0 20px;
+                    font-size: 36px;
+                    color: @contentmutedcolor;
+                }
+
+            > .audio-play {
+                display: none;
+                margin: 17px 0 0 22px;
+                height: 36px;
+                width: 36px;
+                .rounded(@cs);
+                background-color: @bgbasecolor;
+                opacity: 0.6;
+                .box-shadow(0 0 5px @mediabgcolor);
+
+                > span.glyphicons,
+                > span.glyphicons:before {
+                    font-size: 24px;
+                    color: @mediabgcolor;
+                }
+
+                    > span.glyphicons:before {
+                        margin: -6px 0 0 5px;
+                    }
+            }
+        }
+
+        > .audio-title {
+            float: left;
+            display: block;
+            width: 240px;
+            margin: 2px 0 0 6px;
+
+            > .audio-main-title {
+                display: block;
+                font-size: 16px;
+                color: @contentcolor;
+            }
+
+            > .audio-sub-title {
+                display: block;
+                font-size: 14px;
+                color: @contentmutedcolor;
+            }
+        }
+
+        .audio-select,
+        .audio-deselect {
+            float: left;
+
+            .glyphicons:before {
+                margin-top: 5px;
+                margin-left: 26px;
+                font-size: 30px;
+            }
+        }
+
+        .audio-select {
+            display: none;
+
+            .glyphicons:before {
+                color: @completedcolor;
+            }
+        }
+
+        .audio-deselect {
+            display: block;
+
+            .glyphicons:before {
+                color: lighten(@basecolor, 30%);
+            }
+        }
+    }
+
+        > a.audio-thumbnail:hover {
+            .box-shadow(0 1px 8px @shadowcolor);
+
+            .audio-play {
+                display: block;
+            }
+
+            .audio-select {
+                display: block;
+
+                .glyphicons:before {
+                    color: lighten(desaturate(@completedcolor, 10%), 26%);
+                }
+            }
+
+            .audio-deselect {
+                display: none;
+            }
+        }
+
+        > a.audio-thumbnail.selected,
+        > a.audio-thumbnail.selected:hover {
+            .box-shadow(0 1px 8px @completedcolor);
+
+            .audio-select {
+                display: block;
+
+                .glyphicons:before {
+                    color: @completedcolor;
+                }
+            }
+
+            .audio-deselect {
+                display: none;
             }
         }
 }

@@ -28,6 +28,7 @@ define(["models/customerVideo",
 
         self.IsAccepted = ko.observable(true); // HACK: Default this to false when UI is hooked up
         self.VideoName = ko.observable(null);
+        self.VideoDescription = ko.observable(null);
         
         self.Bind = function (selector, navSelector) {
             ko.applyBindings(self, $(selector)[0]);
@@ -61,7 +62,8 @@ define(["models/customerVideo",
 
         self.GenerateVideo = function () {
             var vid = video();
-            vid.Name(self.VideoName);
+            vid.Name(self.VideoName());
+            vid.Description(self.VideoDescription());
             $.ajax({
                 type: "POST",
                 url: "/Build/Submit",

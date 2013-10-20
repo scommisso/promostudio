@@ -2,9 +2,17 @@
 @import url('themevariables.less');
 
 @mediabgcolor: darken(@bgbasecolor, 71%);
-@shadowColor: lighten(@mediabgcolor, 30%);
 
-.inlineblock() {
-    display: inline-block;
-    *display: inline;
+.photo-selected {
+    background-color: @mediabgcolor;
+    background-position: center;
+    background-repeat: no-repeat;
+    .bgSize(contain);
+    height: 300px;
+}
+
+#photoChooserModal {
+    .modal-dialog {
+        width: 800px;
+    }
 }

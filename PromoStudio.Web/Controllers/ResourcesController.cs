@@ -104,7 +104,65 @@ namespace PromoStudio.Web.Controllers
         }
 
         //
+        // GET: /Resources/ActorPhoto?voiceActorId={voiceActorId}
+        [OutputCache(Duration = 604800)] // 1 week
+        public async Task<ActionResult> ActorPhoto(int? voiceActorId)
+        {
+            if (!voiceActorId.HasValue)
+            {
+                return new HttpNotFoundResult();
+            }
+            var actor = (await _dataService.VoiceActor_SelectAllAsync())
+                .FirstOrDefault(va => va.pk_VoiceActorId == voiceActorId.Value);
+            if (actor == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            return File(actor.PhotoFilePath, MimeMapping.GetMimeMapping(actor.PhotoFilePath));
+        }
+
+        //
+        // GET: /Resources/ActorSample?voiceActorId={voiceActorId}
+        [OutputCache(Duration = 604800)] // 1 week
+        public async Task<ActionResult> ActorSample(int? voiceActorId)
+        {
+            if (!voiceActorId.HasValue)
+            {
+                return new HttpNotFoundResult();
+            }
+            var actor = (await _dataService.VoiceActor_SelectAllAsync())
+                .FirstOrDefault(va => va.pk_VoiceActorId == voiceActorId.Value);
+            if (actor == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            return File(actor.SampleFilePath, MimeMapping.GetMimeMapping(actor.SampleFilePath));
+        }
+
+        //
+        // GET: /Resources/StockAudio?stockAudioId={stockAudioId}
+        [OutputCache(Duration = 604800)] // 1 week
+        public async Task<ActionResult> StockAudio(int? stockAudioId)
+        {
+            if (!stockAudioId.HasValue)
+            {
+                return new HttpNotFoundResult();
+            }
+            var audio = (await _dataService.StockAudio_SelectAllAsync())
+                .FirstOrDefault(sa => sa.pk_StockAudioId == stockAudioId.Value);
+            if (audio == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            return File(audio.FilePath, MimeMapping.GetMimeMapping(audio.FilePath));
+        }
+
+        //
         // GET: /Resources/Download?crid={crid}
+        [OutputCache(Duration = 604800)] // 1 week
         public async Task<ActionResult> Download(long crid)
         {
             long customerId = CurrentUser.CustomerId;
@@ -126,18 +184,11 @@ namespace PromoStudio.Web.Controllers
             string contentType;
             switch (type)
             {
-                case TemplateScriptItemType.Audio:
-                    contentType = "audio/mpeg3";
-                    break;
-                case TemplateScriptItemType.Image:
-                    contentType = "image/png";
-                    break;
-                case TemplateScriptItemType.Video:
-                    contentType = "video/mp4";
-                    break;
                 case TemplateScriptItemType.Text:
-                default:
                     contentType = "text/plain";
+                    break;
+                default:
+                    contentType = MimeMapping.GetMimeMapping(resource.Value);
                     break;
             }
 

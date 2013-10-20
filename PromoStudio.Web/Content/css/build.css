@@ -161,10 +161,10 @@
   background-color: #4a4a4a;
   background-position: center;
   background-repeat: no-repeat;
-  -moz-background-size: contain;
-  -o-background-size: contain;
-  -webkit-background-size: contain;
-  background-size: contain;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
   height: 140px;
 }
 .thumbcontainer > a.footage-thumbnail > .footage-preview > .footage-play {
@@ -209,7 +209,6 @@
 .thumbcontainer > a.footage-thumbnail > .footage-selection > .glyphicons.unchecked {
   display: inline-block;
   *display: inline;
-  color: #9c9c9c;
 }
 .thumbcontainer > a.footage-thumbnail > .footage-selection > .glyphicons.unchecked:before {
   display: inline-block;
@@ -263,4 +262,17 @@
 .thumbcontainer > a.footage-thumbnail.selected > .footage-selection > .glyphicons.unchecked:before,
 .thumbcontainer > a.footage-thumbnail.selected:hover > .footage-selection > .glyphicons.unchecked:before {
   display: none;
+}
+.photo-selected {
+  background-color: #4a4a4a;
+  background-position: center;
+  background-repeat: no-repeat;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  -webkit-background-size: contain;
+  background-size: contain;
+  height: 300px;
+}
+#photoChooserModal .modal-dialog {
+  width: 800px;
 }

@@ -9,7 +9,7 @@ namespace PromoStudio.Common.Models
         public sbyte fk_VoiceActorStatusId { get; set; }
         public string UserName { get; set; }
         public string FullName { get; set; }
-        public string Biography { get; set; }
+        public string Description { get; set; }
         public string SampleFilePath { get; set; }
         public string PhotoFilePath { get; set; }
         public DateTime DateCreated { get; set; }
@@ -29,7 +29,7 @@ namespace PromoStudio.Common.Models
                 fk_VoiceActorStatusId = fk_VoiceActorStatusId,
                 UserName = UserName,
                 FullName = FullName,
-                Biography = Biography,
+                Biography = Description,
                 SampleFilePath = SampleFilePath,
                 PhotoFilePath = PhotoFilePath,
                 DateCreated = DateCreated,

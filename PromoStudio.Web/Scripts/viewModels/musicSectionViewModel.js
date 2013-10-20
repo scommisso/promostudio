@@ -50,9 +50,23 @@ define(["models/stockAudio",
             self.StartOpen = ko.observable(false);
             
             function loadData(customerTemplateScriptData, stockAudioData, videoData) {
+                var id, songs, song, i;
+                
                 customerTemplateScripts = customerTemplateScriptData || [];
                 loadAudioData(stockAudioData);
                 loadVideoData(videoData);
+
+                id = musicItem.fk_CustomerVideoItemId();
+                if (id > 0) {
+                    songs = self.AvailableMusic();
+                    for (i = 0; i < songs.length; i++) {
+                        song = songs[i];
+                        if (song.pk_StockAudioId() === id) {
+                            self.SelectMusic(song);
+                            break;
+                        }
+                    }
+                }
             }
 
             function loadAudioData(stockAudioData) {

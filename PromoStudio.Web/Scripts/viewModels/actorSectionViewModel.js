@@ -9,6 +9,7 @@
 
 define(["models/customerVideoVoiceOver",
         "models/voiceActor",
+        "viewModels/actorViewModel",
         "jquery",
         "knockout",
         "strings",
@@ -20,6 +21,7 @@ define(["models/customerVideoVoiceOver",
     function (
         customerVideoVoiceOver,
         voiceActor,
+        actorViewModel,
         $,
         ko,
         strings,
@@ -51,9 +53,23 @@ define(["models/customerVideoVoiceOver",
             self.StartOpen = ko.observable(false);
 
             function loadData(customerTemplateScriptData, voiceActorData, videoData) {
+                var id, actors, actor, i;
+                
                 customerTemplateScripts = customerTemplateScriptData || [];
                 loadActorData(voiceActorData);
                 loadVideoData(videoData);
+
+                id = voiceOver.fk_VoiceActorId();
+                if (id > 0) {
+                    actors = self.AvailableActors();
+                    for (i = 0; i < actors.length; i++) {
+                        actor = actors[i];
+                        if (actor.pk_VoiceActorId() === id) {
+                            self.SelectActor(actor);
+                            break;
+                        }
+                    }
+                }
             }
 
             function loadActorData(voiceActorData) {
@@ -62,6 +78,7 @@ define(["models/customerVideoVoiceOver",
                 for (i = 0; i < voiceActorData.length; i++) {
                     item = voiceActorData[i];
                     item = new voiceActor(item);
+                    item = new actorViewModel(item);
                     actor.push(item);
                 }
                 self.AvailableActors(actor);

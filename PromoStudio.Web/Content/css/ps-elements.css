@@ -8,7 +8,13 @@
     More info at: http://lesselements.com
   ---------------------------------------------------*/
 /* white-label banner */
-/* rounded corner size */.thumbcontainer > a.photo-thumbnail,
+/* rounded corner size */.thumbcontainer {
+  /* PHOTOS */
+
+  /* AUDIO */
+
+}
+.thumbcontainer > a.photo-thumbnail,
 .thumbcontainer > a.photo-thumbnail:link,
 .thumbcontainer > a.photo-thumbnail:hover,
 .thumbcontainer > a.photo-thumbnail:active,
@@ -36,10 +42,10 @@
   width: 228px;
   height: 130px;
   text-align: center;
-  -moz-background-size: contain;
-  -o-background-size: contain;
-  -webkit-background-size: contain;
-  background-size: contain;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
 }
 .thumbcontainer > a.photo-thumbnail > .photo-preview > .photo-select {
   display: none;
@@ -145,4 +151,142 @@
 .thumbcontainer > a.photo-thumbnail.selected .photo-select,
 .thumbcontainer > a.photo-thumbnail.selected:hover .photo-select {
   display: block;
+}
+.thumbcontainer > a.audio-thumbnail,
+.thumbcontainer > a.audio-thumbnail:link,
+.thumbcontainer > a.audio-thumbnail:hover,
+.thumbcontainer > a.audio-thumbnail:active,
+.thumbcontainer > a.audio-thumbnail:visited {
+  color: #4f4f4f;
+}
+.thumbcontainer > a.audio-thumbnail {
+  display: block;
+  float: left;
+  width: 400px;
+  margin: 0 8px 8px 0;
+  overflow: hidden;
+  text-decoration: none;
+  background-color: #ffffff;
+  color: #4f4f4f;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 2px #969696;
+  -moz-box-shadow: 0 1px 2px #969696;
+  box-shadow: 0 1px 2px #969696;
+}
+.thumbcontainer > a.audio-thumbnail > .audio-preview {
+  background-color: #4a4a4a;
+  background-position: left;
+  background-repeat: no-repeat;
+  float: left;
+  width: 80px;
+  height: 72px;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.thumbcontainer > a.audio-thumbnail > .audio-preview > .glyphicons {
+  float: left;
+}
+.thumbcontainer > a.audio-thumbnail > .audio-preview > .glyphicons:before {
+  margin: 16px 0 0 20px;
+  font-size: 36px;
+  color: #a8a8a8;
+}
+.thumbcontainer > a.audio-thumbnail > .audio-preview > .audio-play {
+  display: none;
+  margin: 17px 0 0 22px;
+  height: 36px;
+  width: 36px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  opacity: 0.6;
+  -webkit-box-shadow: 0 0 5px #4a4a4a;
+  -moz-box-shadow: 0 0 5px #4a4a4a;
+  box-shadow: 0 0 5px #4a4a4a;
+}
+.thumbcontainer > a.audio-thumbnail > .audio-preview > .audio-play > span.glyphicons,
+.thumbcontainer > a.audio-thumbnail > .audio-preview > .audio-play > span.glyphicons:before {
+  font-size: 24px;
+  color: #4a4a4a;
+}
+.thumbcontainer > a.audio-thumbnail > .audio-preview > .audio-play > span.glyphicons:before {
+  margin: -6px 0 0 5px;
+}
+.thumbcontainer > a.audio-thumbnail > .audio-title {
+  float: left;
+  display: block;
+  width: 240px;
+  margin: 2px 0 0 6px;
+}
+.thumbcontainer > a.audio-thumbnail > .audio-title > .audio-main-title {
+  display: block;
+  font-size: 16px;
+  color: #4f4f4f;
+}
+.thumbcontainer > a.audio-thumbnail > .audio-title > .audio-sub-title {
+  display: block;
+  font-size: 14px;
+  color: #a8a8a8;
+}
+.thumbcontainer > a.audio-thumbnail .audio-select,
+.thumbcontainer > a.audio-thumbnail .audio-deselect {
+  float: left;
+}
+.thumbcontainer > a.audio-thumbnail .audio-select .glyphicons:before,
+.thumbcontainer > a.audio-thumbnail .audio-deselect .glyphicons:before {
+  margin-top: 5px;
+  margin-left: 26px;
+  font-size: 30px;
+}
+.thumbcontainer > a.audio-thumbnail .audio-select {
+  display: none;
+}
+.thumbcontainer > a.audio-thumbnail .audio-select .glyphicons:before {
+  color: #57c446;
+}
+.thumbcontainer > a.audio-thumbnail .audio-deselect {
+  display: block;
+}
+.thumbcontainer > a.audio-thumbnail .audio-deselect .glyphicons:before {
+  color: #9c9c9c;
+}
+.thumbcontainer > a.audio-thumbnail:hover {
+  -webkit-box-shadow: 0 1px 8px #969696;
+  -moz-box-shadow: 0 1px 8px #969696;
+  box-shadow: 0 1px 8px #969696;
+}
+.thumbcontainer > a.audio-thumbnail:hover .audio-play {
+  display: block;
+}
+.thumbcontainer > a.audio-thumbnail:hover .audio-select {
+  display: block;
+}
+.thumbcontainer > a.audio-thumbnail:hover .audio-select .glyphicons:before {
+  color: #b6deb0;
+}
+.thumbcontainer > a.audio-thumbnail:hover .audio-deselect {
+  display: none;
+}
+.thumbcontainer > a.audio-thumbnail.selected,
+.thumbcontainer > a.audio-thumbnail.selected:hover {
+  -webkit-box-shadow: 0 1px 8px #57c446;
+  -moz-box-shadow: 0 1px 8px #57c446;
+  box-shadow: 0 1px 8px #57c446;
+}
+.thumbcontainer > a.audio-thumbnail.selected .audio-select,
+.thumbcontainer > a.audio-thumbnail.selected:hover .audio-select {
+  display: block;
+}
+.thumbcontainer > a.audio-thumbnail.selected .audio-select .glyphicons:before,
+.thumbcontainer > a.audio-thumbnail.selected:hover .audio-select .glyphicons:before {
+  color: #57c446;
+}
+.thumbcontainer > a.audio-thumbnail.selected .audio-deselect,
+.thumbcontainer > a.audio-thumbnail.selected:hover .audio-deselect {
+  display: none;
 }

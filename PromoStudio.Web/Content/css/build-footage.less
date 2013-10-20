@@ -2,7 +2,7 @@
 @import url('themevariables.less');
 
 @mediabgcolor: darken(@bgbasecolor, 71%);
-@shadowColor: lighten(@mediabgcolor, 30%);
+@shadowcolor: lighten(@mediabgcolor, 30%);
 
 .inlineblock() {
     display: inline-block;
@@ -28,13 +28,13 @@
         text-decoration: none;
         color: @basecolor;
         .rounded(@cs);
-        .box-shadow(0 1px 2px @shadowColor);
+        .box-shadow(0 1px 2px @shadowcolor);
 
         > .footage-preview {
             background-color: @mediabgcolor;
             background-position: center;
             background-repeat: no-repeat;
-            .bgSize(contain);
+            .bgSize(cover);
             height: 140px;
 
             > .footage-play {
@@ -81,7 +81,6 @@
 
             > .glyphicons.unchecked {
                 .inlineblock();
-                color: lighten(@basecolor, 30%);
             }
 
                 > .glyphicons.unchecked:before {
@@ -92,7 +91,7 @@
     }
 
         > a.footage-thumbnail:hover {
-            .box-shadow(0 1px 8px @shadowColor);
+            .box-shadow(0 1px 8px @shadowcolor);
 
             > .footage-preview {
                 > .footage-play {
