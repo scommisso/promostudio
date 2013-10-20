@@ -1,5 +1,7 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="../models/customer.js" />
+/// <reference path="../models/customerVideo.js" />
 
 define(["models/customer",
         "models/customerVideo",
@@ -37,15 +39,14 @@ define(["models/customer",
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: "/Videos/Status",
-                success: function (data, textStatus, jqXHR) {
-                    loadItems(null, data);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    logger.log("Error retrieving video status: " + textStatus);
-                    logger.log(errorThrown);
-                }
+                url: "/Videos/Status"
+            }).done(function(vidData) {
+                loadItems(null, vidData);
+            }).error(function(jqXhr, textStatus, errorThrown) {
+                logger.log("Error retrieving video status: " + textStatus);
+                logger.log(errorThrown);
             });
+
         };
 
         self.pageLoaded = function () {
@@ -53,21 +54,21 @@ define(["models/customer",
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: "/Videos/Data",
-                success: function (data, textStatus, jqXHR) {
-                    loadItems(data.Customer, data.CustomerVideos);
-                    self.LoadingData(false);
-                    var interval = window.setInterval(function () {
-                        updateStatus();
-                    }, 5000);
-                    $.fn.pjaxScaffold.clearIntervals = function () {
+                url: "/Videos/Data"
+            }).done(function(vidData) {
+                loadItems(vidData.Customer, vidData.CustomerVideos);
+                self.LoadingData(false);
+                var interval = window.setInterval(function() {
+                    updateStatus();
+                }, 5000);
+                if ($.pjax) {
+                    $.fn.pjaxScaffold.clearIntervals = function() {
                         window.clearInterval(interval);
                     };
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    logger.log("Error retrieving data: " + textStatus);
-                    logger.log(errorThrown);
                 }
+            }).error(function(jqXhr, textStatus, errorThrown) {
+                logger.log("Error retrieving data: " + textStatus);
+                logger.log(errorThrown);
             });
         };
     };

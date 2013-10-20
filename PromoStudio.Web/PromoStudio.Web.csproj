@@ -405,7 +405,7 @@
     <Content Include="Scripts\viewModels\old.buildViewModel.js" />
     <Content Include="Scripts\viewModels\loginViewModel.js" />
     <Content Include="Scripts\viewModels\old.resourcesViewModel.js" />
-    <Content Include="Scripts\viewModels\old.videosViewModel.js" />
+    <Content Include="Scripts\viewModels\videosViewModel.js" />
     <Content Include="Scripts\ps\vidyardPlayer.js" />
     <Content Include="Scripts\models\customerVideo.js" />
     <Content Include="Scripts\vsdoc\knockout-2.3.0.debug.js" />

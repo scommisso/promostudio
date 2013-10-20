@@ -33,8 +33,6 @@
 
 <!-- Jumbotron -->
 <div class="jumbotron">
-    <img class="logo" src="@Url.Content("~/Content/img/promoStudio.jpg")" alt="PromoStudio Logo" />
-    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
     
     @if (user == null) {
         <div id="loginButtons">
@@ -54,23 +52,15 @@
 </div>
 
 <hr />
-
-<!-- Example row of columns -->
-<div class="row-fluid">
-    <div class="span4">
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn" href="#lbImg" data-toggle="lightbox">View details &raquo;</a></p>
+    
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">PromoStudio Demo Notice</h3>
     </div>
-    <div class="span4">
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn" href="#">View details &raquo;</a></p>
-    </div>
-    <div class="span4">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-        <p><a class="btn" href="#">View details &raquo;</a></p>
+    <div class="panel-body">
+        This is a special build of PromoStudio used only for demo purposes. It has a condensed workflow that will not require
+        voice actor input, and it will only generate standard-definition videos. In addition, the application is not completely
+        styled, and certain pieces of functionality may still be incomplete, or temporarily disabled.
     </div>
 </div>
 

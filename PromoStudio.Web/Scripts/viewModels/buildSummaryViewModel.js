@@ -29,6 +29,7 @@ define(["models/customerVideo",
         self.IsAccepted = ko.observable(true); // HACK: Default this to false when UI is hooked up
         self.VideoName = ko.observable(null);
         self.VideoDescription = ko.observable(null);
+        self.IsGenerated = ko.observable(false);
         
         self.Bind = function (selector, navSelector) {
             ko.applyBindings(self, $(selector)[0]);
@@ -44,14 +45,9 @@ define(["models/customerVideo",
         };
         
         self.IsCompleted = ko.computed(function () {
-            var isAccepted = self.IsAccepted(),
-                videoName = self.VideoName(),
-                hasName = (videoName && videoName.length > 0),
+            var isGenerated = self.IsGenerated(),
                 stepCompleted = true;
-            if (!isAccepted) {
-                stepCompleted = false;
-            }
-            if (!hasName) {
+            if (!isGenerated) {
                 stepCompleted = false;
             }
             if (ko.isObservable(isStepCompleted)) {
@@ -60,10 +56,19 @@ define(["models/customerVideo",
             return stepCompleted;
         });
 
+        self.CanGenerate = ko.computed(function() {
+            var isGenerated = self.IsGenerated(),
+                isAccepted = self.IsAccepted(),
+                videoName = self.VideoName(),
+                hasName = (videoName && videoName.length > 0);
+            return (!isGenerated && isAccepted && hasName);
+        });
+
         self.GenerateVideo = function () {
             var vid = video();
             vid.Name(self.VideoName());
             vid.Description(self.VideoDescription());
+            self.IsGenerated(false);
             $.ajax({
                 type: "POST",
                 url: "/Build/Submit",
@@ -75,13 +80,14 @@ define(["models/customerVideo",
                         alert("ERROR");
                         return;
                     }
-                    alert("Successfully generated.");
                     data = data.Model;
                     logger.log("Saved Video");
                     logger.log(data);
                     video(new customerVideo(data));
+                    self.IsGenerated(true);
 
-                    // TODO: "Your video is being generated" screen
+                    // TODO: Show "Your video is being generated" progress bar
+                    alert("Successfully generated.");
                 })
                 .error(function (jqXHR, textStatus, errorThrown) {
                     logger.log("ERROR generataing video");
@@ -89,14 +95,32 @@ define(["models/customerVideo",
                     alert("ERROR");
                 });
         };
+
+        self.GoToVideos = function () {
+            $.ajax({
+                type: "POST",
+                url: "/Build/StartOver"
+            })
+                .done(function () {
+                    logger.log("Video cleared");
+                })
+                .error(function () {
+                    logger.log("Error clearing video data");
+                })
+                .always(function () {
+                    document.location.href = "/Videos";
+                });
+        };
         
         function stepChanging(navVm, callback) {
             video().Name(self.VideoName);
+            video().Description(self.VideoDescription);
             callback();
         }
 
         function loadVideoData(videoData) {
             self.VideoName(videoData.Name());
+            self.VideoDescription(videoData.Description());
         }
         
         function loadData() {

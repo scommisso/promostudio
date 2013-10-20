@@ -15,16 +15,15 @@
 }
 
 <div class="summaryWizard">
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">PromoStudio Demo Notice</h3>
+    <div class="summary-input" style="display: none" data-bind="visible: !IsGenerated()">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">PromoStudio Demo Notice</h3>
+            </div>
+            <div class="panel-body">
+                Future home of a summary of the options you have chosen. For now, just give your video a name in the box below and generate your video!
+            </div>
         </div>
-        <div class="panel-body">
-            Future home of a summary of the options you have chosen. For now, just give your video a name in the box below and generate your video!
-        </div>
-    </div>
-
-    <div>
         <div>
             <div class="form-group">
                 <label for="videoNameInput">Video Title</label>
@@ -37,6 +36,20 @@
                     data-bind="value: VideoDescription, valueUpdate: 'afterkeydown'">
             </div>
         </div>
-        <button type="button" class="btn btn-success" style="display: none" data-bind="visible: IsCompleted, click: function () { $data.GenerateVideo(); }">Generate Video</button>
+    </div>
+
+    <div>
+
+        <div class="panel panel-info" style="display: none" data-bind="visible: IsGenerated">
+            <div class="panel-heading">
+                <h3 class="panel-title">Please wait</h3>
+            </div>
+            <div class="panel-body">
+                Your video is generating. You can see the status of your videos on the Videos page.
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-success" style="display: none" data-bind="visible: CanGenerate, click: function () { $data.GenerateVideo(); }">Generate Video</button>
+        <button type="button" class="btn btn-primary" style="display: none" data-bind="visible: IsGenerated, click: function () { $data.GoToVideos(); }">See My Videos</button>
     </div>
 </div>

@@ -312,6 +312,15 @@ namespace PromoStudio.Web.Controllers
         }
 
         //
+        // POST: /Build/StartOver
+        [HttpPost]
+        public ActionResult StartOver()
+        {
+            ClearBuildCookies();
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        //
         // POST: /Build/Submit
         [HttpPost]
         public async Task<ActionResult> Submit(CustomerVideo video)
