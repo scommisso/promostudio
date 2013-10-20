@@ -8,7 +8,7 @@
     <script type="text/javascript">
         require(["viewModels/videosViewModel", "jquery", "knockout"],
             function (videosVm, $, ko) {
-                $(function() {
+                $(function () {
                     var container = $("div.main-container div[data-pjax-container]")[0],
                         vm = new videosVm();
                     vm.pageLoaded();
@@ -34,23 +34,42 @@
     </div>
 </div>
 
-<!-- ko if: CustomerVideos().length > 0 -->
-<div data-bind="foreach: CustomerVideos()">
-    <div class="row-fluid">
-        <div class="span6">
-            <h3 data-bind="text: Name"></h3>
-            <p data-bind="text: Description"></p>
-        </div>
-        <div class="span3">
-            <h5 data-bind="text: CustomerVideoRenderStatus"></h5>
-        </div>
-        <div class="span3">
-            <a href="javascript:void(0);" target="_blank" data-bind="attr: { href: LinkUrl  }, text: LinkFileName"></a>
+<div style="display: none" data-bind="visible: !LoadingData()">
+    <!-- ko if: CustomerVideos().length > 0 -->
+    <div data-bind="foreach: CustomerVideos">
+        <div class="row-fluid">
+            <div class="span6">
+                <h3 data-bind="text: Name"></h3>
+                <p data-bind="text: Description"></p>
+            </div>
+            <div class="span3">
+                <h5 data-bind="text: CustomerVideoRenderStatus"></h5>
+            </div>
+            <div class="span3">
+                <a href="javascript:void(0);" target="_blank" data-bind="attr: { href: LinkUrl  }, text: LinkFileName"></a>
+            </div>
         </div>
     </div>
+    
+    <div class="thumbcontainer clearfix" data-bind="foreach: CustomerVideos">
+        <a href="#" class="footage-thumbnail">
+            <div class="footage-preview" data-bind="style: { backgroundImage: ThumbnailBackground }">
+                <div class="footage-play" data-bind="click: $data.PlayLightbox">
+                    <span class="glyphicons play"></span>
+                </div>
+            </div>
+            <div class="footage-description">
+                <span class="footage-title" data-bind="text: $data.Name"></span>
+            </div>
+        </a>
+    </div>
+
+    <!-- /ko -->
+    
+    
+
+    <!-- ko if: CustomerVideos().length === 0 -->
+    <h2>@Strings.Videos__You_have_no_videos</h2>
+    <h3><a href="@Url.Action("Index", "Build")">@Strings.Videos__Build_a_new_video</a></h3>
+    <!-- /ko -->
 </div>
-<!-- /ko -->
-<!-- ko if: CustomerVideos().length === 0 -->
-<h2>@Strings.Videos__You_have_no_videos</h2>
-<h3><a href="@Url.Action("Index", "Build")">@Strings.Videos__Build_a_new_video</a></h3>
-<!-- /ko -->

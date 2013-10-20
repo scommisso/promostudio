@@ -75,21 +75,15 @@ define(["models/customerVideo",
                 data: ko.toJSON(vid),
                 contentType: "application/json; charset=utf-8"
             })
-                .done(function (data, textStatus, jqXHR) {
-                    if (data.Success !== true) {
-                        alert("ERROR");
-                        return;
-                    }
-                    data = data.Model;
+                .done(function (data) {
                     logger.log("Saved Video");
                     logger.log(data);
-                    video(new customerVideo(data));
+                    vid.pk_CustomerVideoId(data.Model.pk_CustomerVideoId);
                     self.IsGenerated(true);
 
                     // TODO: Show "Your video is being generated" progress bar
-                    alert("Successfully generated.");
                 })
-                .error(function (jqXHR, textStatus, errorThrown) {
+                .error(function (jqXhr, textStatus, errorThrown) {
                     logger.log("ERROR generataing video");
                     logger.log(errorThrown);
                     alert("ERROR");

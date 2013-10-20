@@ -58,5 +58,41 @@ namespace PromoStudio.Storage.Properties {
                 return ((string)(this["BucketNamePrefix"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("aK4mXiU6zwpuRqqxi9in")]
+        public string VidyardApiKey {
+            get {
+                return ((string)(this["VidyardApiKey"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.vidyard.com/dashboard/v1/")]
+        public string VidyardApiUrl {
+            get {
+                return ((string)(this["VidyardApiUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("tim@promostudio.com")]
+        public string VidyardApiUserId {
+            get {
+                return ((string)(this["VidyardApiUserId"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("goldmine")]
+        public string VidyardApiSecret {
+            get {
+                return ((string)(this["VidyardApiSecret"]));
+            }
+        }
     }
 }

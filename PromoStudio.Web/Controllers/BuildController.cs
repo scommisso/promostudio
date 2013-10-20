@@ -390,7 +390,7 @@ namespace PromoStudio.Web.Controllers
                 newVideo.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Pending;
                 _dataService.CustomerVideo_Update(newVideo);
 
-                return Json(new { Success = true, Model = newVideo });
+                return Json(new { Model = newVideo });
             }
             catch (Exception ex)
             {

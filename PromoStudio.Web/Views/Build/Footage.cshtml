@@ -16,7 +16,7 @@
 <div class="thumbcontainer clearfix" data-bind="foreach: Storyboards">
     <a style="display: none" href="#" class="footage-thumbnail"
         data-bind="visible: true, css: { selected: $parent.IsSelected($data) }, click: function () { $parent.SelectStoryboard($data); }">
-        <div class="footage-preview" data-bind="style: { backgroundImage: 'url(' + $data.ThumbnailUrl() + ')' }">
+        <div class="footage-preview" data-bind="style: { backgroundImage: ThumbnailBackground }">
             <div class="footage-play" data-bind="click: $data.PlayLightbox">
                 <span class="glyphicons play"></span>
             </div>

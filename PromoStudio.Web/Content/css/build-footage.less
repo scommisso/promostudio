@@ -1,8 +1,6 @@
 ﻿@import url('elements.less');
 @import url('themevariables.less');
 
-@mediabgcolor: darken(@bgbasecolor, 71%);
-@shadowcolor: lighten(@mediabgcolor, 30%);
 
 .inlineblock() {
     display: inline-block;
@@ -10,51 +8,7 @@
 }
 
 .thumbcontainer {
-
-    > a.footage-thumbnail,
-    > a.footage-thumbnail:link,
-    > a.footage-thumbnail:hover,
-    > a.footage-thumbnail:active,
-    > a.footage-thumbnail:visited {
-        color: @basecolor;
-    }
-
     > a.footage-thumbnail {
-        display: block;
-        float: left;
-        width: 272px;
-        margin: 20px 0 0 20px;
-        overflow: hidden;
-        text-decoration: none;
-        color: @basecolor;
-        .rounded(@cs);
-        .box-shadow(0 1px 2px @shadowcolor);
-
-        > .footage-preview {
-            background-color: @mediabgcolor;
-            background-position: center;
-            background-repeat: no-repeat;
-            .bgSize(cover);
-            height: 140px;
-
-            > .footage-play {
-                display: none;
-                position: relative;
-                top: 48px;
-                left: 114px;
-                width: 43px;
-                height: 43px;
-                .rounded(@cs);
-                background-color: @bgbasecolor;
-                opacity: 0.6;
-                .box-shadow(0 0 5px @mediabgcolor);
-
-                > .glyphicons:before {
-                    margin: -2px 0 0 9px;
-                    color: @mediabgcolor;
-                }
-            }
-        }
 
         > .footage-selection {
             height: 52px;
@@ -91,13 +45,6 @@
     }
 
         > a.footage-thumbnail:hover {
-            .box-shadow(0 1px 8px @shadowcolor);
-
-            > .footage-preview {
-                > .footage-play {
-                    display: block;
-                }
-            }
 
             > .footage-selection {
                 > .glyphicons.check {

@@ -87,7 +87,11 @@
             'viewModels/loginViewModel',
             'viewModels/buildNavViewModel',
             'viewModels/footageViewModel',
-            'viewModels/brandingViewModel'
+            'viewModels/brandingViewModel',
+            'viewModels/audioScriptViewModel',
+            'viewModels/audioViewModel',
+            'viewModels/buildSummaryViewModel',
+            'viewModels/videosViewModel'
         ]
     }]
 }

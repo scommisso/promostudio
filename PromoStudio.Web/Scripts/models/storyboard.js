@@ -27,9 +27,19 @@ define(["models/storyboardItem",
         self.Name = ko.observable(data.Name || null);
         self.Description = ko.observable(data.Description || null);
         self.VidyardId = ko.observable(data.VidyardId || null);
-        self.ThumbnailUrl = ko.computed(function() {
+        self.ThumbnailUrl = ko.computed(function () {
             var vId = self.VidyardId();
+            if (vId === null) {
+                return null;
+            }
             return "//embed.vidyard.com/embed/{0}/thumbnail.jpg".format(vId);
+        });
+        self.ThumbnailBackground = ko.computed(function () {
+            var url = self.ThumbnailUrl();
+            if (url) {
+                return "url('{0}')".format(url);
+            }
+            return "none";
         });
 
         self.Items = ko.observableArray([]);
@@ -70,6 +80,7 @@ define(["models/storyboardItem",
         var copy = ko.toJS(this);
         // remove any unneeded properties
         delete copy.ThumbnailUrl;
+        delete copy.ThumbnailBackground;
         delete copy.AudioScriptTemplate;
         delete copy.Player;
 

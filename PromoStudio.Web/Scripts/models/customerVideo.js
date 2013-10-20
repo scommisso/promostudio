@@ -6,12 +6,14 @@
 define(["models/customerVideoItem",
         "models/storyboard",
         "models/customerVideoVoiceOver",
+        "ps/vidyardPlayer",
         "models/enums",
         "knockout"],
     function (
         customerVideoItem,
         storyboard,
         customerVideoVoiceOver,
+        vPlayer,
         enums,
         ko) {
     var ctor = function (data) {
@@ -30,6 +32,7 @@ define(["models/customerVideoItem",
         self.DateCompleted = ko.observable(data.DateCompleted || null);
         self.PreviewFilePath = ko.observable(data.PreviewFilePath || null);
         self.CompletedFilePath = ko.observable(data.CompletedFilePath || null);
+        self.VidyardId = ko.observable(data.VidyardId || null);
 
         self.Storyboard = ko.observable(null);
         self.VoiceOver = ko.observable(null);
@@ -60,6 +63,33 @@ define(["models/customerVideoItem",
             if (ix !== -1) { displayPath = displayPath.substring(0, ix); }
             return displayPath;
         });
+        
+        self.ThumbnailUrl = ko.computed(function () {
+            var vId = self.VidyardId();
+            if (vId === null) {
+                return null;
+            }
+            return "//embed.vidyard.com/embed/{0}/thumbnail.jpg".format(vId);
+        });
+        self.ThumbnailBackground = ko.computed(function() {
+            var url = self.ThumbnailUrl();
+            if (url) {
+                return "url('{0}')".format(url);
+            }
+            return "none";
+        });
+
+        self.Player = null;
+
+        self.LoadPlayer = function () {
+            self.Player = new vPlayer({ VideoId: self.VidyardId() });
+        };
+        self.PlayLightbox = function (d, e) {
+            if (self.Player) {
+                self.Player.ShowLightbox();
+            }
+            e.stopImmediatePropagation();
+        };
 
         self.LoadItems = function (storyboardData, voiceOverData, items) {
             var i, item;
@@ -96,6 +126,9 @@ define(["models/customerVideoItem",
         delete copy.CustomerVideoRenderStatus;
         delete copy.LinkUrl;
         delete copy.LinkFileName;
+        delete copy.ThumbnailUrl;
+        delete copy.ThumbnailBackground;
+        delete copy.Player;
 
         return copy;
     };

@@ -193,7 +193,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Content Include="app.build.js" />
+    <None Include="app.build.js" />
     <Compile Include="ViewModels\BuildCookieViewModel.cs" />
     <Compile Include="ViewModels\BuildViewModelBase.cs" />
     <Compile Include="ViewModels\BrandingViewModel.cs" />
@@ -274,6 +274,12 @@
     <Content Include="Content\css\themevariables.min.css">
       <DependentUpon>themevariables.less</DependentUpon>
     </Content>
+    <Content Include="Content\css\videos.css">
+      <DependentUpon>videos.less</DependentUpon>
+    </Content>
+    <Content Include="Content\css\videos.min.css">
+      <DependentUpon>videos.less</DependentUpon>
+    </Content>
     <Content Include="Content\css\vidyard.css">
       <DependentUpon>vidyard.less</DependentUpon>
     </Content>
@@ -346,6 +352,8 @@
     <Content Include="Content\css\build-branding.less" />
     <Content Include="Content\css\bootstrap-overrides.less" />
     <Content Include="Content\css\ps-elements.less" />
+    <Content Include="Content\css\videos.less" />
+    <None Include="Properties\PublishProfiles\Local File System.pubxml" />
     <None Include="Scripts\vsdoc\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\lib\bootstrap.js" />
     <Content Include="Scripts\lib\jquery-1.9.1.js" />
@@ -384,7 +392,7 @@
     <Content Include="Scripts\models\templateScriptItem.js" />
     <Content Include="Scripts\models\templateScript.js" />
     <Content Include="Scripts\ps\logger.js" />
-    <Content Include="r.js" />
+    <None Include="r.js" />
     <Content Include="Scripts\require.min.js" />
     <Content Include="Scripts\requireConfig.js" />
     <Content Include="Scripts\viewModels\actorViewModel.js" />

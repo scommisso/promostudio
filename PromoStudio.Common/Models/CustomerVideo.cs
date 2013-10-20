@@ -21,6 +21,7 @@ namespace PromoStudio.Common.Models
         public DateTime? DateCompleted { get; set; }
         public string PreviewFilePath { get; set; }
         public string CompletedFilePath { get; set; }
+        public string VidyardId { get; set; }
 
         public CustomerVideoRenderStatus RenderStatus
         {
@@ -77,7 +78,8 @@ namespace PromoStudio.Common.Models
                 DateUpdated = DateUpdated,
                 DateCompleted = DateCompleted,
                 PreviewFilePath = PreviewFilePath,
-                CompletedFilePath = CompletedFilePath
+                CompletedFilePath = CompletedFilePath,
+                VidyardId = VidyardId
             };
         }
     }

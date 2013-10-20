@@ -19,12 +19,14 @@ namespace PromoStudio.RenderQueue
     {
         private IDataService _dataService;
         private IStorageProvider _storageProvider;
+        private IStreamingProvider _streamingProvider;
         private ILog _log;
 
-        public QueueProcessor(IDataService dataService, IStorageProvider storageProvider, ILog log)
+        public QueueProcessor(IDataService dataService, IStorageProvider storageProvider, IStreamingProvider streamingProvider, ILog log)
         {
             _dataService = dataService;
             _storageProvider = storageProvider;
+            _streamingProvider = streamingProvider;
             _log = log;
         }
 
@@ -89,11 +91,23 @@ namespace PromoStudio.RenderQueue
                     _log.InfoFormat("CustomerVideo:{0} uploading file \"{1}\" to bucket \"{2}\", file \"{3}\".",
                         video.pk_CustomerVideoId, video.PreviewFilePath, bucketName, fileName);
                     outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.PreviewFilePath);
+                    video.PreviewFilePath = outputUrl;
+
+                    string cloudId = _streamingProvider.StoreFile(outputUrl, video.Name);
+                    video.VidyardId = cloudId;
 
                     CleanupTempFolder(Path.GetDirectoryName(video.PreviewFilePath));
 
-                    video.PreviewFilePath = outputUrl;
-                    video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.PendingVoiceTalent;
+                    if (video.Items.Any(cvi =>
+                        cvi.fk_CustomerVideoItemTypeId == (sbyte) CustomerVideoItemType.CustomerVideoVoiceOver))
+                    {
+                        // HACK: This must be demo mode, set status to completed as this is the final render
+                        video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Completed;
+                    }
+                    else
+                    {
+                        video.fk_CustomerVideoRenderStatusId = (sbyte) CustomerVideoRenderStatus.PendingVoiceTalent;
+                    }
                 }
                 else
                 {
@@ -215,7 +229,7 @@ namespace PromoStudio.RenderQueue
                 Directory.CreateDirectory(folder);
             }
 
-            string outPath = Path.Combine(folder, string.Format("{0}_{1}_{2}.mp4", video.pk_CustomerVideoId, video.Name, preview ? "preview" : "final").ToSafeFileName());
+            string outPath = Path.Combine(folder, string.Format("{0}_{1}_{2}.mov", video.pk_CustomerVideoId, video.Name, preview ? "preview" : "final").ToSafeFileName());
 
             if (File.Exists(outPath))
             {
@@ -288,7 +302,7 @@ namespace PromoStudio.RenderQueue
         {
             string folder = CreateTempFolder(video.fk_CustomerId, video.pk_CustomerVideoId);
 
-            string outPath = Path.Combine(folder, string.Format("{0}_{1}_{2}_{3}.mp4",
+            string outPath = Path.Combine(folder, string.Format("{0}_{1}_{2}_{3}.mov",
                 customerTemplateScript.pk_CustomerTemplateScriptId, video.Name,
                 customerTemplateScript.Template.Name, preview ? "preview" : "final").ToSafeFileName());
 

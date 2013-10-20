@@ -14,5 +14,17 @@
     <Setting Name="BucketNamePrefix" Type="System.String" Scope="Application">
       <Value Profile="(Default)">PromoStudio-</Value>
     </Setting>
+    <Setting Name="VidyardApiKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">aK4mXiU6zwpuRqqxi9in</Value>
+    </Setting>
+    <Setting Name="VidyardApiUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://api.vidyard.com/dashboard/v1/</Value>
+    </Setting>
+    <Setting Name="VidyardApiUserId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">tim@promostudio.com</Value>
+    </Setting>
+    <Setting Name="VidyardApiSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">goldmine</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
