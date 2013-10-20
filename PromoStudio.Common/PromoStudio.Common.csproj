@@ -87,6 +87,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\TemplateScriptItem.cs" />
     <Compile Include="Models\TemplateScript.cs" />
+    <Compile Include="Models\VoiceActor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ISerializationManager.cs" />
     <Compile Include="Serialization\SerializationManager.cs" />

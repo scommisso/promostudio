@@ -142,6 +142,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose your background music track.
+        /// </summary>
+        public static string BuildStep__Choose_your_background_music_track {
+            get {
+                return ResourceManager.GetString("BuildStep__Choose_your_background_music_track", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose your logo placements.
         /// </summary>
         public static string BuildStep__Choose_your_logo_placements {
@@ -160,6 +169,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose your voiceover talent.
+        /// </summary>
+        public static string BuildStep__Choose_your_voiceover_talent {
+            get {
+                return ResourceManager.GetString("BuildStep__Choose_your_voiceover_talent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customize the footage.
         /// </summary>
         public static string BuildStep__Customize_the_footage {
@@ -174,6 +192,15 @@ namespace PromoStudio.Resources {
         public static string BuildStep__Footage {
             get {
                 return ResourceManager.GetString("BuildStep__Footage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Music.
+        /// </summary>
+        public static string BuildStep__Music {
+            get {
+                return ResourceManager.GetString("BuildStep__Music", resourceCulture);
             }
         }
         
@@ -219,6 +246,15 @@ namespace PromoStudio.Resources {
         public static string BuildStep__Summary {
             get {
                 return ResourceManager.GetString("BuildStep__Summary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voice.
+        /// </summary>
+        public static string BuildStep__Voice {
+            get {
+                return ResourceManager.GetString("BuildStep__Voice", resourceCulture);
             }
         }
         

@@ -54,6 +54,8 @@ define(["models/storyboard",
                 navVm.BeforeStepChange = stepChanging;
 
                 loadVideoData(video());
+
+                self.IsCompleted(); // check completed status
             }, 1000);
         };
         

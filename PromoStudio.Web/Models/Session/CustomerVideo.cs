@@ -11,6 +11,8 @@ namespace PromoStudio.Web.Models.Session
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public CustomerVideoVoiceOver VoiceOver { get; set; }
+
         public CustomerVideo()
         {
         }
@@ -22,6 +24,10 @@ namespace PromoStudio.Web.Models.Session
             fk_StoryboardId = video.fk_StoryboardId;
             Name = video.Name;
             Description = video.Description;
+            if (video.VoiceOver != null)
+            {
+                VoiceOver = new CustomerVideoVoiceOver(video.VoiceOver);
+            }
         }
 
         public Common.Models.CustomerVideo ToModel()
@@ -32,7 +38,8 @@ namespace PromoStudio.Web.Models.Session
                 fk_CustomerId = fk_CustomerId,
                 fk_StoryboardId = fk_StoryboardId,
                 Name = Name,
-                Description = Description
+                Description = Description,
+                VoiceOver = VoiceOver == null ? null : VoiceOver.ToModel()
             };
         }
     }

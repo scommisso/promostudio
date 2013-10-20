@@ -43,7 +43,9 @@ namespace PromoStudio.Common.Models
                 fk_TemplateScriptItemTypeId = fk_TemplateScriptItemTypeId,
                 fk_TemplateScriptItemCategoryId = fk_TemplateScriptItemCategoryId,
                 fk_CustomerResourceStatusId = fk_CustomerResourceStatusId,
-                Value = Value
+                Value = Value,
+                DateCreated = DateCreated,
+                DateUpdated = DateUpdated
             };
         }
     }

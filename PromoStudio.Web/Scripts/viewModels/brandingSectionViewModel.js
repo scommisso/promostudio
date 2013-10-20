@@ -5,7 +5,7 @@
 /// <reference path="../models/enums.js" />
 /// <reference path="../ps/logger.js" />
 /// <reference path="../lib/ko.custom.js" />
-/// <reference path="../ps/extensions.js" />>
+/// <reference path="../ps/extensions.js" />
 
 define(["viewModels/photoTemplatesViewModel",
         "jquery",

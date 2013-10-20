@@ -1,8 +1,78 @@
-﻿@model PromoStudio.Web.ViewModels.AudioViewModel
+﻿@using Newtonsoft.Json
+@using PromoStudio.Resources
+@model PromoStudio.Web.ViewModels.AudioViewModel
 @{
     Layout = "~/Views/Build/_BuildLayout.cshtml";
 }
+@section scripts {
+    <script>
+        require(["viewModels/audioViewModel", "jquery", "bootstrap"], function (audio, $) {
+            $(function () {
+                var vm = new audio(@Html.Raw(JsonConvert.SerializeObject(Model)));
+                vm.Bind(".audioWizard", ".build-steps");
+            });
+        });
+    </script>
+}
 
-<p>
-    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-</p>
+<div class="audioWizard accordion">
+    <div class="panel-group" id="audioWizard">
+        <div id="musicCollapse" class="panel panel-default">
+            <div class="panel-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#audioWizard" href="#musicPanel">
+                    <h4 class="panel-title">
+                        <div class="step-title" data-bind="css: { 'opened': MusicSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(MusicSection().StartOpen) }">@Strings.BuildStep__Music</div>
+                        <div class="step-subtitle" data-bind="css: { 'opened': MusicSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(MusicSection().StartOpen) }">@Strings.BuildStep__Choose_your_background_music_track</div>
+                        <div class="step-completed">
+                            <span class="step-done glyphicons circle_ok" style="display: none" data-bind="visible: MusicSection().IsCompleted, css: { 'opened': MusicSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(MusicSection().StartOpen) }"></span>
+                        </div>
+                    </h4>
+                </a>
+            </div>
+            <div id="musicPanel" class="panel-collapse collapse" data-bind="css: { 'in': MusicSection().StartOpen }">
+                <div class="panel-body">
+                    <div class="thumbcontainer clearfix" data-bind="foreach: MusicSection().AvailableMusic">
+                        <a style="display: none" href="#" class="music-thumbnail"
+                           data-bind="visible: true, css: { selected: $root.MusicSection().IsSelected($data) }, click: function () { $root.MusicSection().SelectMusic($data); }">
+                            <div class="audio-preview clearfix">
+                                <div class="audio-select">
+                                    <span class="glyphicons circle_ok"></span>
+                                </div>
+                                <span class="audio-title" data-bind="text: $data.Name"></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="actorCollapse" class="panel panel-default">
+            <div class="panel-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#audioWizard" href="#actorPanel">
+                    <h4 class="panel-title">
+                        <div class="step-title" data-bind="css: { 'opened': ActorSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(ActorSection().StartOpen) }">@Strings.BuildStep__Voice</div>
+                        <div class="step-subtitle" data-bind="css: { 'opened': ActorSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(ActorSection().StartOpen) }">@Strings.BuildStep__Choose_your_voiceover_talent</div>
+                        <div class="step-completed">
+                            <span class="step-done glyphicons circle_ok" style="display: none" data-bind="visible: ActorSection().IsCompleted, css: { 'opened': ActorSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(ActorSection().StartOpen) }"></span>
+                        </div>
+                    </h4>
+                </a>
+            </div>
+            <div id="actorPanel" class="panel-collapse collapse" data-bind="css: { 'in': ActorSection().StartOpen }">
+                <div class="panel-body">
+                    <div class="thumbcontainer clearfix" data-bind="foreach: ActorSection().AvailableActors">
+                        <a style="display: none" href="#" class="music-thumbnail"
+                           data-bind="visible: true, css: { selected: $root.ActorSection().IsSelected($data) }, click: function () { $root.ActorSection().SelectActor($data); }">
+                            <div class="audio-preview clearfix">
+                                <div class="audio-select">
+                                    <span class="glyphicons circle_ok"></span>
+                                </div>
+                                <span class="audio-title" data-bind="text: $data.FullName"></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

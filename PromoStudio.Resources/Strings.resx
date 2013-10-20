@@ -339,4 +339,16 @@
   <data name="Log_out" xml:space="preserve">
     <value>Log out</value>
   </data>
+  <data name="BuildStep__Choose_your_background_music_track" xml:space="preserve">
+    <value>Choose your background music track</value>
+  </data>
+  <data name="BuildStep__Choose_your_voiceover_talent" xml:space="preserve">
+    <value>Choose your voiceover talent</value>
+  </data>
+  <data name="BuildStep__Music" xml:space="preserve">
+    <value>Music</value>
+  </data>
+  <data name="BuildStep__Voice" xml:space="preserve">
+    <value>Voice</value>
+  </data>
 </root>

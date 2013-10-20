@@ -95,6 +95,8 @@ namespace PromoStudio.Common
             public const string TemplateScriptItemSelectAll_sp = "promostudio.TemplateScriptItemSelectAll_sp";
             public const string TemplateScriptItemSelectByTemplateScriptId_sp = "promostudio.TemplateScriptItemSelectByTemplateScriptId_sp";
             public const string TemplateScriptItemSelectByStoryboardId_sp = "promostudio.TemplateScriptItemSelectByStoryboardId_sp";
+            
+            public const string VoiceActorSelectAll_sp = "promostudio.VoiceActorSelectAll_sp";
         }
     }
 }

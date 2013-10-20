@@ -80,5 +80,6 @@ namespace PromoStudio.Data
         Task<IEnumerable<TemplateScript>> TemplateScript_SelectByStoryboardIdAsync(int storyboardId);
         Task<IEnumerable<TemplateScript>> TemplateScript_SelectByStoryboardIdWithItemsAsync(int storyboardId);
         Task<IEnumerable<TemplateScriptItem>> TemplateScriptItem_SelectByTemplateScriptIdAsync(long templateScriptId);
+        Task<IEnumerable<VoiceActor>> VoiceActor_SelectAllAsync();
     }
 }

@@ -1,8 +1,29 @@
-﻿@model PromoStudio.Web.ViewModels.SummaryViewModel
+﻿@using Newtonsoft.Json
+@model PromoStudio.Web.ViewModels.SummaryViewModel
 @{
     Layout = "~/Views/Build/_BuildLayout.cshtml";
 }
+@section scripts {
+    <script>
+        require(["viewModels/buildSummaryViewModel", "jquery", "bootstrap"], function (summary, $) {
+            $(function () {
+                var vm = new summary(@Html.Raw(JsonConvert.SerializeObject(Model)));
+                vm.Bind(".summaryWizard", ".build-steps");
+            });
+        });
+    </script>
+}
 
-<p>
-    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-</p>
+<div class="summaryWizard">
+    <p>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+    </p>
+    
+    <div>
+        <div>
+            Enter a name for your video
+            <input type="text" data-bind="value: VideoName" />
+        </div>
+        <a href="#" style="display:none" data-bind="visible: IsCompleted, click: function () { $data.GenerateVideo(); }">Generate Video</a>
+    </div>
+</div>

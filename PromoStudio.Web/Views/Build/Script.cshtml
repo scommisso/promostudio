@@ -1,8 +1,21 @@
-﻿@model PromoStudio.Web.ViewModels.ScriptViewModel
+﻿@using Newtonsoft.Json
+@model PromoStudio.Web.ViewModels.ScriptViewModel
 @{
     Layout = "~/Views/Build/_BuildLayout.cshtml";
 }
+@section scripts {
+    <script>
+        require(["viewModels/audioScriptViewModel", "jquery", "bootstrap"], function (audioScript, $) {
+            $(function () {
+                var vm = new audioScript(@Html.Raw(JsonConvert.SerializeObject(Model)));
+                vm.Bind(".audioScriptWizard", ".build-steps");
+            });
+        });
+    </script>
+}
 
-<p>
-    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-</p>
+<div class="audioScriptWizard">
+    <p>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+    </p>
+</div>

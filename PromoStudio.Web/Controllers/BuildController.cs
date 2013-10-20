@@ -221,12 +221,22 @@ namespace PromoStudio.Web.Controllers
                 return new RedirectResult("~/Build");
             }
 
-
-
             var data = GetFromCookie();
+
+            var stockAudioTask = _dataService.StockAudio_SelectByOrganizationIdAndVerticalIdAsync(
+                CurrentUser.OrganizationId, CurrentUser.VerticalId);
+            var actorTask = _dataService.VoiceActor_SelectAllAsync();
+
+            await Task.WhenAll(stockAudioTask, actorTask);
+
+            var stockAudio = stockAudioTask.Result.ToList();
+            var voiceActors = actorTask.Result.ToList();
+
             var vm = new AudioViewModel()
             {
                 Video = data.Video,
+                StockAudio = stockAudio,
+                VoiceActors = voiceActors,
                 StepsCompleted = new List<int>(data.CompletedSteps)
             };
 
@@ -318,6 +328,31 @@ namespace PromoStudio.Web.Controllers
             {
                 video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Canceled; // store as canceled state until all children have populated
                 var newVideo = await _dataService.CustomerVideo_InsertAsync(video);
+
+                Common.Models.CustomerVideoVoiceOver newVoiceOver = null;
+                if (video.VoiceOver != null)
+                {
+                    video.VoiceOver.fk_CustomerVideoId = newVideo.pk_CustomerVideoId;
+                    newVoiceOver = await _dataService.CustomerVideoVoiceOver_InsertAsync(video.VoiceOver);
+                    video.VoiceOver = newVoiceOver;
+                    newVideo.VoiceOver = newVoiceOver;
+
+                    // DEMO HACK: Add voice over item - this will normally be set when the voice actor uploads the audio
+                    var actor = (await _dataService.VoiceActor_SelectAllAsync())
+                        .FirstOrDefault(va => va.pk_VoiceActorId == video.VoiceOver.fk_VoiceActorId);
+                    newVoiceOver.FilePath = actor.SampleFilePath;
+                    newVoiceOver.DateUploaded = DateTime.UtcNow;
+                    _dataService.CustomerVideoVoiceOver_Update(newVoiceOver);
+                    var voiceOverItem = new CustomerVideoItem()
+                    {
+                        fk_CustomerVideoItemTypeId = (sbyte)CustomerVideoItemType.CustomerVideoVoiceOver,
+                        fk_CustomerVideoItemId = newVoiceOver.pk_CustomerVideoVoiceOverId,
+                        VoiceOver = video.VoiceOver
+                    };
+                    video.Items.Add(voiceOverItem);
+                    // END DEMO HACK
+                }
+
                 foreach (var item in video.Items)
                 {
                     item.fk_CustomerVideoId = newVideo.pk_CustomerVideoId;
@@ -342,6 +377,7 @@ namespace PromoStudio.Web.Controllers
                 }
 
                 newVideo = await _dataService.CustomerVideo_SelectWithItemsAsync(newVideo.pk_CustomerVideoId);
+                newVideo.VoiceOver = newVoiceOver;
                 newVideo.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Pending;
                 _dataService.CustomerVideo_Update(newVideo);
 

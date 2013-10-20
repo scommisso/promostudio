@@ -180,6 +180,7 @@
     <Compile Include="Models\IPromoStudioIdentity.cs" />
     <Compile Include="Models\PromoStudioIdentity.cs" />
     <Compile Include="Models\PromoStudioPrincipal.cs" />
+    <Compile Include="Models\Session\CustomerVideoVoiceOver.cs" />
     <Compile Include="Models\Session\CustomerResource.cs" />
     <Compile Include="Models\Session\CustomerVideo.cs" />
     <Compile Include="Models\Session\CustomerTemplateScriptItem.cs" />
@@ -351,6 +352,8 @@
     <Content Include="Scripts\lib\bootstrap-lightbox.js" />
     <Content Include="Scripts\lib\css.js" />
     <Content Include="Scripts\lib\jquery-ui-effects-1.10.3.js" />
+    <Content Include="Scripts\models\customerVideoVoiceOver.js" />
+    <Content Include="Scripts\models\voiceActor.js" />
     <Content Include="Scripts\models\organization.js" />
     <Content Include="Scripts\ps\extensions.js" />
     <Content Include="Scripts\lib\history.js" />
@@ -387,6 +390,11 @@
     <Content Include="Scripts\viewModels\buildNavViewModel.js" />
     <Content Include="Scripts\viewModels\brandingViewModel.js" />
     <Content Include="Scripts\viewModels\brandingSectionViewModel.js" />
+    <Content Include="Scripts\viewModels\audioScriptViewModel.js" />
+    <Content Include="Scripts\viewModels\buildSummaryViewModel.js" />
+    <Content Include="Scripts\viewModels\audioViewModel.js" />
+    <Content Include="Scripts\viewModels\actorSectionViewModel.js" />
+    <Content Include="Scripts\viewModels\musicSectionViewModel.js" />
     <Content Include="Scripts\viewModels\photoChooserViewModel.js" />
     <Content Include="Scripts\viewModels\photoSlotViewModel.js" />
     <Content Include="Scripts\viewModels\photoTemplatesViewModel.js" />

@@ -54,6 +54,8 @@ define(["viewModels/photosSectionViewModel",
                 navVm.BeforeStepChange = stepChanging;
 
                 loadVideoData(video());
+
+                self.IsCompleted(); // check completed status
             }, 1000);
         };
         self.IsCompleted = ko.computed(function() {

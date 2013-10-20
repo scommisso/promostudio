@@ -6,13 +6,13 @@ define(["knockout"], function (ko) {
         var self = this;
         data = data || {};
 
-        self.pk_StockAudioId = ko.observable(data.pk_StockAudioId || null);
-        self.fk_StockItemStatusId = ko.observable(data.fk_StockItemStatusId || null);
-        self.fk_OrganizationId = ko.observable(data.fk_OrganizationId || null);
-        self.fk_VerticalId = ko.observable(data.fk_VerticalId || null);
-        self.Name = ko.observable(data.Name || null);
-        self.Description = ko.observable(data.Description || null);
-        self.FilePath = ko.observable(data.FilePath || null);
+        self.pk_VoiceActorId = ko.observable(data.pk_VoiceActorId || null);
+        self.fk_VoiceActorStatusId = ko.observable(data.fk_VoiceActorStatusId || null);
+        self.UserName = ko.observable(data.UserName || null);
+        self.FullName = ko.observable(data.FullName || null);
+        self.Biography = ko.observable(data.Biography || null);
+        self.SampleFilePath = ko.observable(data.SampleFilePath || null);
+        self.PhotoFilePath = ko.observable(data.PhotoFilePath || null);
         self.DateCreated = ko.observable(data.DateCreated || null);
         self.DateUpdated = ko.observable(data.DateUpdated || null);
     };
@@ -20,7 +20,8 @@ define(["knockout"], function (ko) {
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);
         // remove any unneeded properties
-        delete copy.FilePath;
+        delete copy.SampleFilePath;
+        delete copy.PhotoFilePath;
         delete copy.DateCreated;
         delete copy.DateUpdated;
 

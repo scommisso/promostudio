@@ -5,11 +5,13 @@
 
 define(["models/customerVideoItem",
         "models/storyboard",
+        "models/customerVideoVoiceOver",
         "models/enums",
         "knockout"],
     function (
         customerVideoItem,
         storyboard,
+        customerVideoVoiceOver,
         enums,
         ko) {
     var ctor = function (data) {
@@ -30,6 +32,7 @@ define(["models/customerVideoItem",
         self.CompletedFilePath = ko.observable(data.CompletedFilePath || null);
 
         self.Storyboard = ko.observable(null);
+        self.VoiceOver = ko.observable(null);
         self.Items = ko.observableArray([]);
 
         self.CustomerVideoRenderStatus = ko.computed(function () {
@@ -58,12 +61,16 @@ define(["models/customerVideoItem",
             return displayPath;
         });
 
-        self.LoadItems = function (storyboardData, items) {
+        self.LoadItems = function (storyboardData, voiceOverData, items) {
             var i, item;
             items = items || [];
 
             storyboardData = storyboardData || {};
             storyboardData = new storyboard(storyboardData);
+
+            if (voiceOverData) {
+                self.VoiceOver(new customerVideoVoiceOver(voiceOverData));
+            }
 
             for (i = 0; i < items.length; i++) {
                 item = items[i];
@@ -73,7 +80,7 @@ define(["models/customerVideoItem",
             self.Storyboard(storyboardData);
             self.Items(items);
         };
-        self.LoadItems(data.Storyboard, data.Items);
+        self.LoadItems(data.Storyboard, data.VoiceOver, data.Items);
     };
 
     ctor.prototype.toJSON = function () {
