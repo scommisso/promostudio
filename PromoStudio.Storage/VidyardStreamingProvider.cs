@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using PromoStudio.Storage.Properties;
 using PromoStudio.Storage.Vidyard;
 using RestSharp;
-using PromoStudio.Storage.Properties;
+using System.Collections.Generic;
 
 namespace PromoStudio.Storage
 {
@@ -10,6 +10,8 @@ namespace PromoStudio.Storage
     {
         private string apiUrl = Settings.Default.VidyardApiUrl;
         private string apiKey = Settings.Default.VidyardApiKey;
+        private string userName = Settings.Default.VidyardApiUserId;
+        private string password = Settings.Default.VidyardApiSecret;
 
         public string StoreFile(string downloadUrl, string videoName)
         {
@@ -57,7 +59,7 @@ namespace PromoStudio.Storage
         private IRestClient GetClient()
         {
             var client = new RestClient(apiUrl);
-            client.Authenticator = new HttpBasicAuthenticator("tim@promostudio.com", "goldmine");
+            client.Authenticator = new HttpBasicAuthenticator(userName, password);
             return client;
         }
     }
