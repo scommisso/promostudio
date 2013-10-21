@@ -27,6 +27,16 @@ namespace PromoStudio.Storage
                 player = new Player()
                 {
                     name = videoName,
+                    embed_button = false,
+                    hd_button = true,
+                    play_button = true,
+                    width = 640,
+                    height = 360,
+                    color = "aaaaaa",
+                    default_hd = true,
+                    autoplay = false,
+                    mute_onload = false,
+                    playlist_always_open = false,
                     chapters_attributes = new List<Chapter>()
                     {
                         new Chapter()
@@ -35,6 +45,7 @@ namespace PromoStudio.Storage
                             video_attributes = new Video()
                             {
                                 name = videoName,
+                                description = videoDescription,
                                 upload_url = downloadUrl
                             }
                         }
@@ -49,8 +60,7 @@ namespace PromoStudio.Storage
 
             var client = GetClient();
             var request = new RestRequest("players.json", Method.POST);
-            request.RequestFormat = DataFormat.Json;
-            request.AddBody(json);
+            request.AddParameter("application/json", json, ParameterType.RequestBody);
 
             IRestResponse<Player> response = client.Execute<Player>(request);
             return response.Data;

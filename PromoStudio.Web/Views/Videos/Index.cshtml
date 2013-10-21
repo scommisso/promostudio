@@ -52,18 +52,23 @@
     </div>
     
     <div class="thumbcontainer clearfix" data-bind="foreach: CustomerVideos">
-        <a href="#" class="footage-thumbnail">
+        <a href="#" class="footage-thumbnail"
+            data-bind="visible: true, css: { selected: $parent.IsSelected($data), incomplete: IsIncomplete }, click: function () { $parent.SelectVideo($data); }">
             <div class="footage-preview" data-bind="style: { backgroundImage: ThumbnailBackground }">
-                <div class="footage-play" data-bind="click: $data.PlayLightbox">
+                <div class="footage-play" data-bind="click: PlayLightbox">
                     <span class="glyphicons play"></span>
+                </div>
+                <div class="footage-loading">
+                    <span class="glyphicons roundabout"></span>
+                    <div class="footage-loading-msg">Processing...</div>
                 </div>
             </div>
             <div class="footage-description">
-                <span class="footage-title" data-bind="text: $data.Name"></span>
+                <span class="footage-title" data-bind="text: Name"></span>
+                <span class="footage-status" data-bind="text: CustomerVideoRenderStatus"></span>
             </div>
         </a>
     </div>
-
     <!-- /ko -->
     
     

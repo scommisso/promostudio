@@ -41,11 +41,16 @@ namespace PromoStudio.Web.Controllers
                     {
                         FullName = name,
                         fk_OrganizationId = 1, // TODO: Remove this after the demo
-                        fk_VerticalId = null,
+                        fk_VerticalId = 2, // TODO: Remove this after the demo
                         fk_CustomerStatusId = (sbyte)CustomerStatus.Active,
                         DateCreated = DateTime.Now
                     };
-                    customer = await _dataService.Customer_InsertAsync(customer);
+
+                    // TODO: Remove this after demo
+                    organization = await _dataService.Organization_SelectAsync(1);
+
+                    var cust = (await _dataService.Customer_InsertAsync(customer));
+                    customer.pk_CustomerId = cust.pk_CustomerId;
                     forcePrimary = true;
                 }
                 else

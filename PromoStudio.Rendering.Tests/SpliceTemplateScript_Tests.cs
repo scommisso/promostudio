@@ -1,8 +1,4 @@
-﻿using PromoStudio.Rendering;
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nito.AsyncEx;
-using PromoStudio.Data;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
 using System.Collections.Generic;
@@ -35,12 +31,12 @@ namespace PromoStudio.Rendering.Tests
                         },
                         new CustomerVideoItem() {
                             Type = CustomerVideoItemType.CustomerTemplateScript,
-                            CustomerScript = new CustomerTemplateScript() { PreviewFilePath = @"C:\Temp\Output\PreviewTemplate1.m4v" },
+                            CustomerScript = new CustomerTemplateScript() { PreviewFilePath = @"C:\Temp\Output\PreviewTemplate1.mov" },
                             SortOrder = 2
                         },
                         new CustomerVideoItem() {
                             Type = CustomerVideoItemType.CustomerTemplateScript,
-                            CustomerScript = new CustomerTemplateScript() { PreviewFilePath = @"C:\Temp\Output\PreviewTemplate2.m4v" },
+                            CustomerScript = new CustomerTemplateScript() { PreviewFilePath = @"C:\Temp\Output\PreviewTemplate2.mov" },
                             SortOrder = 4
                         },
                         new CustomerVideoItem() {
@@ -60,7 +56,7 @@ namespace PromoStudio.Rendering.Tests
                 };
 
                 // Act
-                var rts = new SpliceTemplateScript(spliceScript, @"C:\Temp\Output\preview.m4v", true);
+                var rts = new SpliceTemplateScript(spliceScript, @"C:\Temp\Output\preview.mov", true);
                 scriptPath = rts.GenerateScript();
 
                 // Assert
@@ -70,14 +66,14 @@ namespace PromoStudio.Rendering.Tests
                 Assert.IsTrue(scriptContents.StartsWith(
                     "var project = \"/C/Temp/AE TEST CS6.aep\",\r\n" +
                     "    video = [{ file: \"/C/Temp/InFile1.mov\", includeAudio: true }," +
-                        "{ file: \"/C/Temp/Output/PreviewTemplate1.m4v\", includeAudio: true }," +
+                        "{ file: \"/C/Temp/Output/PreviewTemplate1.mov\", includeAudio: true }," +
                         "{ file: \"/C/Temp/InFile2.mov\", includeAudio: true }," +
-                        "{ file: \"/C/Temp/Output/PreviewTemplate2.m4v\", includeAudio: true }],\r\n" +
+                        "{ file: \"/C/Temp/Output/PreviewTemplate2.mov\", includeAudio: true }],\r\n" +
                     "    audio = [{ file: \"/C/Temp/InAudio1.mp3\", gainAdjust: 0 }," +
                         "{ file: \"/C/Temp/InAudio2.mp3\", gainAdjust: 0 }," +
                         "{ file: \"/C/Temp/Uploads/VoiceActor1.mp3\", gainAdjust: 0 }],\r\n" +
                     "    renderComp = \"NTSC 24FPS\",\r\n" +
-                    "    outputPath = \"/C/Temp/Output/preview.m4v\",\r\n" +
+                    "    outputPath = \"/C/Temp/Output/preview.mov\",\r\n" +
                     "    renderItemTemplate = \"NTSC-H264\","));
             }
             finally
@@ -115,12 +111,12 @@ namespace PromoStudio.Rendering.Tests
                         },
                         new CustomerVideoItem() {
                             Type = CustomerVideoItemType.CustomerTemplateScript,
-                            CustomerScript = new CustomerTemplateScript() { CompletedFilePath = @"C:\Temp\Output\PreviewTemplate1.m4v" },
+                            CustomerScript = new CustomerTemplateScript() { CompletedFilePath = @"C:\Temp\Output\PreviewTemplate1.mov" },
                             SortOrder = 2
                         },
                         new CustomerVideoItem() {
                             Type = CustomerVideoItemType.CustomerTemplateScript,
-                            CustomerScript = new CustomerTemplateScript() { CompletedFilePath = @"C:\Temp\Output\PreviewTemplate2.m4v" },
+                            CustomerScript = new CustomerTemplateScript() { CompletedFilePath = @"C:\Temp\Output\PreviewTemplate2.mov" },
                             SortOrder = 4
                         },
                         new CustomerVideoItem() {
@@ -140,7 +136,7 @@ namespace PromoStudio.Rendering.Tests
                 };
 
                 // Act
-                var rts = new SpliceTemplateScript(spliceScript, @"C:\Temp\Output\final.m4v", false);
+                var rts = new SpliceTemplateScript(spliceScript, @"C:\Temp\Output\final.mov", false);
                 scriptPath = rts.GenerateScript();
 
                 // Assert
@@ -150,14 +146,14 @@ namespace PromoStudio.Rendering.Tests
                 Assert.IsTrue(scriptContents.StartsWith(
                     "var project = \"/C/Temp/AE TEST CS6.aep\",\r\n" +
                     "    video = [{ file: \"/C/Temp/InFile1.mov\", includeAudio: true }," +
-                        "{ file: \"/C/Temp/Output/PreviewTemplate1.m4v\", includeAudio: true }," +
+                        "{ file: \"/C/Temp/Output/PreviewTemplate1.mov\", includeAudio: true }," +
                         "{ file: \"/C/Temp/InFile2.mov\", includeAudio: true }," +
-                        "{ file: \"/C/Temp/Output/PreviewTemplate2.m4v\", includeAudio: true }],\r\n" +
+                        "{ file: \"/C/Temp/Output/PreviewTemplate2.mov\", includeAudio: true }],\r\n" +
                     "    audio = [{ file: \"/C/Temp/InAudio1.mp3\", gainAdjust: 0 }," +
                         "{ file: \"/C/Temp/InAudio2.mp3\", gainAdjust: 0 }," +
                         "{ file: \"/C/Temp/Uploads/VoiceActor1.mp3\", gainAdjust: 0 }],\r\n" +
                     "    renderComp = \"HDTV 24FPS\",\r\n" +
-                    "    outputPath = \"/C/Temp/Output/final.m4v\",\r\n" +
+                    "    outputPath = \"/C/Temp/Output/final.mov\",\r\n" +
                     "    renderItemTemplate = \"FullHD-H264\","));
             }
             finally

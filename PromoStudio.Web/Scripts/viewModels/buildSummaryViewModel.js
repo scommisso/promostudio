@@ -91,6 +91,12 @@ define(["models/customerVideo",
         };
 
         self.GoToVideos = function () {
+            clearCookie(function () {
+                document.location.href = "/Videos";
+            });
+        };
+        
+        function clearCookie(callback) {
             $.ajax({
                 type: "POST",
                 url: "/Build/StartOver"
@@ -102,14 +108,22 @@ define(["models/customerVideo",
                     logger.log("Error clearing video data");
                 })
                 .always(function () {
-                    document.location.href = "/Videos";
+                    if (typeof callback === "function") {
+                        callback();
+                    }
                 });
-        };
-        
+            
+        }
+
         function stepChanging(navVm, callback) {
-            video().Name(self.VideoName);
-            video().Description(self.VideoDescription);
-            callback();
+            if (self.IsGenerated()) {
+                navVm.Video(new customerVideo({}));
+                clearCookie(callback);
+            } else {
+                video().Name(self.VideoName);
+                video().Description(self.VideoDescription);
+                callback();
+            }
         }
 
         function loadVideoData(videoData) {

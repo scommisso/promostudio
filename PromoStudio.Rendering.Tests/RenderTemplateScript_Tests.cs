@@ -1,8 +1,4 @@
-﻿using PromoStudio.Rendering;
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nito.AsyncEx;
-using PromoStudio.Data;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
 using System.Collections.Generic;
@@ -73,7 +69,7 @@ namespace PromoStudio.Rendering.Tests
                 };
 
                 // Act
-                var rts = new RenderTemplateScript(templateScript, @"C:\Temp\Output\preview.m4v", true);
+                var rts = new RenderTemplateScript(templateScript, @"C:\Temp\Output\preview.mov", true);
                 scriptPath = rts.GenerateScript();
 
                 // Assert
@@ -84,7 +80,7 @@ namespace PromoStudio.Rendering.Tests
                     "var project = \"/C/Temp/Ensue Si CS6.aep\",\r\n" +
                     "    swapItems = [{ type: \"Footage\", comp: \"Pond5 Logo\", file: \"/C/Temp/MyLogo.jpg\" }," +
                         "{ type: \"Footage\", comp: \"Portfolio Image\", file: \"/C/Temp/Portfolio1.jpg\" }],\r\n" +
-                    "    outputPath = \"/C/Temp/Output/preview.m4v\",\r\n" +
+                    "    outputPath = \"/C/Temp/Output/preview.mov\",\r\n" +
                     "    renderComp = \"NTSC D1 Widescreen 864X486\",\r\n" +
                     "    renderStart = 0,\r\n" +
                     "    renderDuration = 5.74,\r\n" +
@@ -149,7 +145,7 @@ namespace PromoStudio.Rendering.Tests
                 };
 
                 // Act
-                var rts = new RenderTemplateScript(templateScript, @"C:\Temp\Output\final.m4v", false);
+                var rts = new RenderTemplateScript(templateScript, @"C:\Temp\Output\final.mov", false);
                 scriptPath = rts.GenerateScript();
 
                 // Assert
@@ -160,7 +156,7 @@ namespace PromoStudio.Rendering.Tests
                     "var project = \"/C/Temp/Ensue Si CS6.aep\",\r\n" +
                     "    swapItems = [{ type: \"Footage\", comp: \"Pond5 Logo\", file: \"/C/Temp/MyLogo.jpg\" }," +
                         "{ type: \"Footage\", comp: \"Portfolio Image\", file: \"/C/Temp/Portfolio1.jpg\" }],\r\n" +
-                    "    outputPath = \"/C/Temp/Output/final.m4v\",\r\n" +
+                    "    outputPath = \"/C/Temp/Output/final.mov\",\r\n" +
                     "    renderComp = \"Full HD1920X1080\",\r\n" +
                     "    renderStart = 0,\r\n" +
                     "    renderDuration = 5.74,\r\n" +

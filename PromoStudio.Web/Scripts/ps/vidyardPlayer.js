@@ -9,7 +9,7 @@ define(["jquery", "ps/extensions"], function ($) {
     }
     
     function getPlayerFunction(id) {
-        var playFn = "fn_vidyard_{0}".format(id);
+        var playFn = "fn_vidyard_{0}".format(id.replace(/-/g, "$"));
         if (typeof window[playFn] === "function") {
             return window[playFn];
         }

@@ -1,8 +1,11 @@
-﻿using log4net;
+﻿using System.Linq;
+using log4net;
+using PromoStudio.Common.Enumerations;
 using PromoStudio.Data;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using PromoStudio.Web.Helpers;
 
 namespace PromoStudio.Web.Controllers
 {
@@ -28,6 +31,7 @@ namespace PromoStudio.Web.Controllers
 
         //
         // GET: /Videos/Data
+        [NoCache]
         public async Task<ActionResult> Data()
         {
             if (CurrentUser == null)
@@ -42,8 +46,10 @@ namespace PromoStudio.Web.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var videos = (await _dataService.CustomerVideo_SelectByCustomerIdAsync(customerId));
-
+            var videos = (await _dataService.CustomerVideo_SelectByCustomerIdAsync(customerId))
+                .Where(v => v.fk_CustomerVideoRenderStatusId != (sbyte) CustomerVideoRenderStatus.Canceled)
+                .ToList();
+            
             return Json(new
             {
                 Customer = customerInfo,
@@ -53,6 +59,7 @@ namespace PromoStudio.Web.Controllers
 
         //
         // GET: /Videos/Status
+        [NoCache]
         public async Task<ActionResult> Status()
         {
             if (CurrentUser == null)

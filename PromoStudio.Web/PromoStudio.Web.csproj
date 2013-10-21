@@ -175,6 +175,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\MvcExtensions.cs" />
+    <Compile Include="Helpers\NoCacheAttribute.cs" />
     <Compile Include="Helpers\UrlHelperExtensions.cs" />
     <Compile Include="Models\AuthData.cs" />
     <Compile Include="Models\IPromoStudioIdentity.cs" />
@@ -353,6 +354,7 @@
     <Content Include="Content\css\bootstrap-overrides.less" />
     <Content Include="Content\css\ps-elements.less" />
     <Content Include="Content\css\videos.less" />
+    <Content Include="Content\css\animations.less" />
     <None Include="Properties\PublishProfiles\Local File System.pubxml" />
     <None Include="Scripts\vsdoc\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\lib\bootstrap.js" />

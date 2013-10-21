@@ -47,11 +47,14 @@ define(["models/storyboardItem",
         self.AudioScriptTemplate = ko.observable(null);
 
         self.Player = null;
-        
+
         self.LoadPlayer = function () {
             self.Player = new vPlayer({ VideoId: self.VidyardId() });
         };
-        self.PlayLightbox = function(d, e) {
+        self.PlayLightbox = function (d, e) {
+            if (!self.Player && self.VidyardId()) {
+                self.LoadPlayer();
+            }
             if (self.Player) {
                 self.Player.ShowLightbox();
             }

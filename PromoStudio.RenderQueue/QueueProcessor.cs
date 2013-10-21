@@ -87,7 +87,7 @@ namespace PromoStudio.RenderQueue
                     video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.UploadingPreview;
                     _dataService.CustomerVideo_Update(video);
 
-                    fileName = string.Format("{0}-preview.m4v", video.pk_CustomerVideoId);
+                    fileName = string.Format("{0}-preview.mov", video.pk_CustomerVideoId);
                     _log.InfoFormat("CustomerVideo:{0} uploading file \"{1}\" to bucket \"{2}\", file \"{3}\".",
                         video.pk_CustomerVideoId, video.PreviewFilePath, bucketName, fileName);
                     outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.PreviewFilePath);
@@ -114,7 +114,7 @@ namespace PromoStudio.RenderQueue
                     video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.UploadingFinalRender;
                     _dataService.CustomerVideo_Update(video);
 
-                    fileName = string.Format("{0}.m4v", video.pk_CustomerVideoId);
+                    fileName = string.Format("{0}.mov", video.pk_CustomerVideoId);
                     _log.InfoFormat("CustomerVideo:{0} uploading file \"{1}\" to bucket \"{2}\", file \"{3}\".",
                         video.pk_CustomerVideoId, video.PreviewFilePath, fileName, bucketName);
                     outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.CompletedFilePath);

@@ -6,16 +6,20 @@
 define(["models/customerVideoItem",
         "models/storyboard",
         "models/customerVideoVoiceOver",
+        "knockout",
         "ps/vidyardPlayer",
         "models/enums",
-        "knockout"],
+        "strings",
+        "ps/extensions"
+],
     function (
         customerVideoItem,
         storyboard,
         customerVideoVoiceOver,
+        ko,
         vPlayer,
         enums,
-        ko) {
+        strings) {
     var ctor = function (data) {
         var self = this;
         data = data || {};
@@ -42,6 +46,10 @@ define(["models/customerVideoItem",
             var id = self.fk_CustomerVideoRenderStatusId();
             return enums.customerVideoRenderStatus(id);
         });
+        self.IsIncomplete = ko.computed(function () {
+            var id = self.fk_CustomerVideoRenderStatusId();
+            return id !== 14;
+        });
         self.LinkUrl = ko.computed(function () {
             var previewPath = self.PreviewFilePath(),
                 completedPath = self.CompletedFilePath(),
@@ -54,7 +62,7 @@ define(["models/customerVideoItem",
                 completedPath = self.CompletedFilePath(),
                 displayPath = completedPath || previewPath,
                 ix;
-            if (displayPath === null) { return "Video Not Available"; }
+            if (displayPath === null) { return null; }
             ix = displayPath.lastIndexOf("\\");
             if (ix === -1) { ix = displayPath.lastIndexOf("/"); }
             if (ix === -1) { return displayPath; }
@@ -66,17 +74,35 @@ define(["models/customerVideoItem",
         
         self.ThumbnailUrl = ko.computed(function () {
             var vId = self.VidyardId();
-            if (vId === null) {
-                return null;
-            }
-            return "//embed.vidyard.com/embed/{0}/thumbnail.jpg".format(vId);
+            if (!vId) { return null; }
+            return strings.getResource("Vidyard__ThumbnailUrl").format(vId);
         });
-        self.ThumbnailBackground = ko.computed(function() {
+
+        self.ThumbnailBackground = ko.computed(function () {
             var url = self.ThumbnailUrl();
             if (url) {
                 return "url('{0}')".format(url);
             }
             return "none";
+        });
+
+        self.PlayerUrl = ko.computed(function () {
+            var vId = self.VidyardId();
+            if (!vId) { return null; }
+            return strings.getResource("Vidyard__PlayerUrl").format(vId);
+        });
+
+        self.InlineEmbedCode = ko.computed(function () {
+            var vId = self.VidyardId();
+            if (!vId) { return null; }
+            return strings.getResource("Vidyard__InlineEmbed").format(vId);
+        });
+
+        self.LightboxEmbedCode = ko.computed(function () {
+            var vId = self.VidyardId();
+            if (!vId) { return null; }
+            return strings.getResource("Vidyard__LightboxEmbed").format(
+                vId, vId.replace(/-/g, "$"), self.Name());
         });
 
         self.Player = null;
@@ -85,6 +111,9 @@ define(["models/customerVideoItem",
             self.Player = new vPlayer({ VideoId: self.VidyardId() });
         };
         self.PlayLightbox = function (d, e) {
+            if (!self.Player && self.VidyardId()) {
+                self.LoadPlayer();
+            }
             if (self.Player) {
                 self.Player.ShowLightbox();
             }
@@ -128,6 +157,9 @@ define(["models/customerVideoItem",
         delete copy.LinkFileName;
         delete copy.ThumbnailUrl;
         delete copy.ThumbnailBackground;
+        delete copy.PlayerUrl;
+        delete copy.InlineEmbedCode;
+        delete copy.LightboxEmbedCode;
         delete copy.Player;
 
         return copy;
