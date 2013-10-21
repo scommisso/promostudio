@@ -12,6 +12,7 @@
 
 define(["viewModels/photosSectionViewModel",
         "viewModels/brandingSectionViewModel",
+        "viewModels/textSectionViewModel",
         "models/customerTemplateScript",
         "models/customerVideoItem",
         "models/customerResource",
@@ -26,6 +27,7 @@ define(["viewModels/photosSectionViewModel",
     function (
         photosSectionViewModel,
         brandingSectionViewModel,
+        textSectionViewModel,
         customerTemplateScript,
         customerVideoItem,
         customerResource,
@@ -45,6 +47,7 @@ define(["viewModels/photosSectionViewModel",
 
         self.PhotoSection = ko.observable({});
         self.BrandingSection = ko.observable({});
+        self.TextSection = ko.observable({});
         
         self.Bind = function (selector, navSelector) {
             ko.applyBindings(self, $(selector)[0]);
@@ -176,12 +179,16 @@ define(["viewModels/photosSectionViewModel",
             
             self.PhotoSection(new photosSectionViewModel(data, videoData));
             self.BrandingSection(new brandingSectionViewModel(data, videoData));
+            self.TextSection(new textSectionViewModel(data, videoData));
             
             if (!self.PhotoSection().IsCompleted()) {
                 self.PhotoSection().StartOpen(true);
             }
             else if (!self.BrandingSection().IsCompleted()) {
                 self.BrandingSection().StartOpen(true);
+            }
+            else if (!self.TextSection().IsCompleted()) {
+                self.TextSection().StartOpen(true);
             }
         }
         

@@ -405,6 +405,7 @@
     <Content Include="Scripts\viewModels\buildSummaryViewModel.js" />
     <Content Include="Scripts\viewModels\audioViewModel.js" />
     <Content Include="Scripts\viewModels\actorSectionViewModel.js" />
+    <Content Include="Scripts\viewModels\textSectionViewModel.js" />
     <Content Include="Scripts\viewModels\musicSectionViewModel.js" />
     <Content Include="Scripts\viewModels\photoChooserViewModel.js" />
     <Content Include="Scripts\viewModels\photoSlotViewModel.js" />
@@ -412,9 +413,7 @@
     <Content Include="Scripts\viewModels\photosSectionViewModel.js" />
     <Content Include="Scripts\viewModels\footageViewModel.js" />
     <Content Include="Scripts\viewModels\scaffold.js" />
-    <Content Include="Scripts\viewModels\old.buildViewModel.js" />
     <Content Include="Scripts\viewModels\loginViewModel.js" />
-    <Content Include="Scripts\viewModels\old.resourcesViewModel.js" />
     <Content Include="Scripts\viewModels\videosViewModel.js" />
     <Content Include="Scripts\ps\vidyardPlayer.js" />
     <Content Include="Scripts\models\customerVideo.js" />

@@ -290,6 +290,9 @@
   </data>
   <data name="BuildStep__Num_spots_need_your_own_photos" xml:space="preserve">
     <value>{0} spot{1} need{2} your own photo{1}</value>
+    <comment>0: # items
+1: 's' if # &gt; 0, plural, '' otherwise
+2: '' if # &gt; 0, plural, 's' otherwise</comment>
   </data>
   <data name="BuildStep__Your_potential_clients_want_to_see_you" xml:space="preserve">
     <value>Your potential clients want to see you, so show us that big smile!</value>
@@ -311,6 +314,9 @@
   </data>
   <data name="BuildStep__Section_num_timing" xml:space="preserve">
     <value>Sect. {0} - appx. {1} into video, slot {2}</value>
+    <comment>0: section #
+1: time into video templateItem appears
+2: the slot # that the specific item appears in</comment>
   </data>
   <data name="BuildStep__Choose_photo" xml:space="preserve">
     <value>Choose photo</value>
@@ -368,5 +374,13 @@
   <data name="Vidyard__ThumbnailUrl" xml:space="preserve">
     <value>//embed.vidyard.com/embed/{0}/thumbnail.jpg</value>
     <comment>0: UUID</comment>
+  </data>
+  <data name="BuildStep__Num_spots_can_be_customized" xml:space="preserve">
+    <value>{0} spot{1} can be customized with your own text</value>
+    <comment>0: # items
+1: 's' if # &gt; 0, plural, '' otherwise</comment>
+  </data>
+  <data name="BuildStep__Text" xml:space="preserve">
+    <value>Text</value>
   </data>
 </root>

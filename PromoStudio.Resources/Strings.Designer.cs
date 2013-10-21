@@ -205,6 +205,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} spot{1} can be customized with your own text.
+        /// </summary>
+        public static string BuildStep__Num_spots_can_be_customized {
+            get {
+                return ResourceManager.GetString("BuildStep__Num_spots_can_be_customized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} spot{1} need{2} your own photo{1}.
         /// </summary>
         public static string BuildStep__Num_spots_need_your_own_photos {
@@ -246,6 +255,15 @@ namespace PromoStudio.Resources {
         public static string BuildStep__Summary {
             get {
                 return ResourceManager.GetString("BuildStep__Summary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        public static string BuildStep__Text {
+            get {
+                return ResourceManager.GetString("BuildStep__Text", resourceCulture);
             }
         }
         

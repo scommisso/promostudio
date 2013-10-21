@@ -21,7 +21,8 @@ define(["models/customer",
         self.LoadingData = ko.observable(false);
         
         function isVideoPlaying() {
-            return ($(".vidyard_tmask").css("display") !== "none");
+            var vpDisplay = $(".vidyard_tmask").css("display");
+            return (vpDisplay === undefined || vpDisplay === "none");
         }
         
         self.SelectedVideo = ko.observable(null);
@@ -101,7 +102,7 @@ define(["models/customer",
                 logger.log(errorThrown);
             });
 
-        };
+        }
 
         self.pageLoaded = function () {
             self.LoadingData(true);

@@ -93,6 +93,35 @@
                 </div>
             </div>
         </div>
+        
+        
+        <div id="textCollapse" class="panel panel-default" style="display: none" data-bind="visible: TextSection().IsVisible">
+            <div class="panel-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#brandingWizard" href="#textPanel">
+                    <h4 class="panel-title">
+                        <div class="step-title" data-bind="css: { 'opened': TextSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(TextSection().StartOpen) }">@Strings.BuildStep__Text</div>
+                        <div class="step-subtitle" data-bind="text: TextSection().TitleText, css: { 'opened': TextSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(TextSection().StartOpen) }"></div>
+                        <div class="step-completed">
+                            <span class="step-done glyphicons circle_ok" style="display: none" data-bind="visible: TextSection().IsCompleted, css: { 'opened': TextSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(TextSection().StartOpen) }"></span>
+                        </div>
+                    </h4>
+                </a>
+            </div>
+            <div id="textPanel" class="panel-collapse collapse" data-bind="css: { 'in': TextSection().StartOpen }">
+                <div class="panel-body">
+                    <div class="thumbcontainer clearfix" data-bind="foreach: TextSection().TextTemplateItems">
+                        <div class="text-item">
+                            <label class="control-label" data-bind="text: Name"></label>
+                            <input type="text" class="form-control" data-bind="value: TextValue, valueUpdate: 'afterkeydown'" />
+                            <div>
+                                <span class="text-description" data-bind="text: Description"></span>:
+                                <span class="text-timing" data-bind="text: TimingText"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
