@@ -93,7 +93,7 @@ namespace PromoStudio.RenderQueue
                     outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.PreviewFilePath);
                     video.PreviewFilePath = outputUrl;
 
-                    string cloudId = _streamingProvider.StoreFile(outputUrl, video.Name);
+                    string cloudId = _streamingProvider.StoreFile(outputUrl, video.Name, video.Description);
                     video.VidyardId = cloudId;
 
                     CleanupTempFolder(Path.GetDirectoryName(video.PreviewFilePath));

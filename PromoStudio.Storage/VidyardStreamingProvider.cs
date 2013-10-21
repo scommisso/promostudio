@@ -13,13 +13,13 @@ namespace PromoStudio.Storage
         private string userName = Settings.Default.VidyardApiUserId;
         private string password = Settings.Default.VidyardApiSecret;
 
-        public string StoreFile(string downloadUrl, string videoName)
+        public string StoreFile(string downloadUrl, string videoName, string videoDescription)
         {
-            var player = CreateVideo(downloadUrl, videoName);
+            var player = CreateVideo(downloadUrl, videoName, videoDescription);
             return player.uuid;
         }
 
-        private Player CreateVideo(string downloadUrl, string videoName)
+        private Player CreateVideo(string downloadUrl, string videoName, string videoDescription)
         {
             var dataObj = new PlayerRequest()
             {
