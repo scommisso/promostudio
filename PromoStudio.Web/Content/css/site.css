@@ -54,7 +54,7 @@ div.color-band h1 {
   font-family: 'Josefin Sans', sans-serif;
   text-transform: uppercase;
   padding: 0;
-  margin: -12px 0 0 0;
+  margin: 0;
   font-size: 32pt;
 }
 div.color-band h1.strong {
@@ -811,10 +811,11 @@ a.twitterSignin {
 }
 .build-steps .build-previous-step > .glyphicons,
 .build-steps .build-previous-step > .glyphicons:before {
-  margin: -2px 0 0 0;
+  float: left;
+  margin: 5px 0 0 0;
 }
 .build-steps .build-previous-step label {
-  margin: -14px 0 2px 80px;
+  margin: 0 0 2px 80px;
 }
 .build-steps .build-next-step {
   float: right;
@@ -826,7 +827,8 @@ a.twitterSignin {
   margin: -2px -20px 0 0;
 }
 .build-steps .build-next-step label {
-  margin: -14px 56px 2px 0;
+  margin-right: 56px;
+  display: block;
 }
 .build-steps a,
 .build-steps a:link,

@@ -195,6 +195,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <None Include="app.build.js" />
+    <Content Include="Scripts\viewModels\textItemViewModel.js" />
     <Compile Include="ViewModels\BuildCookieViewModel.cs" />
     <Compile Include="ViewModels\BuildViewModelBase.cs" />
     <Compile Include="ViewModels\BrandingViewModel.cs" />
