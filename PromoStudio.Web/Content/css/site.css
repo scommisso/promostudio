@@ -720,6 +720,9 @@ a.googleSignin {
 a.twitterSignin {
   background: url(../img/signin-twitter-sprite.png) 0 0 no-repeat transparent;
 }
+.video-preview {
+  margin-top: 20px;
+}
 .thumbcontainer > a.footage-thumbnail .footage-loading {
   display: none;
 }

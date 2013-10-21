@@ -42,8 +42,12 @@ define(["models/storyboard",
             return self.SelectedStoryboard() === sb;
         };
 
-        self.SelectStoryboard = function(sb) {
-            self.SelectedStoryboard(sb);
+        self.SelectStoryboard = function (sb) {
+            if (self.IsSelected(sb)) {
+                self.SelectedStoryboard(null);
+            } else {
+                self.SelectedStoryboard(sb);
+            }
         };
 
         self.Bind = function (selector, navSelector) {

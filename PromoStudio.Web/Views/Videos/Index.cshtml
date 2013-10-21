@@ -30,30 +30,15 @@
         <h3 class="panel-title">PromoStudio Demo Notice</h3>
     </div>
     <div class="panel-body">
-        This page is currently unstyled. It will be a grid of video thumbnails and will launch the Vidyard lightbox.
+        This page is currently unstyled.
     </div>
 </div>
 
 <div style="display: none" data-bind="visible: !LoadingData()">
     <!-- ko if: CustomerVideos().length > 0 -->
-    <div data-bind="foreach: CustomerVideos">
-        <div class="row-fluid">
-            <div class="span6">
-                <h3 data-bind="text: Name"></h3>
-                <p data-bind="text: Description"></p>
-            </div>
-            <div class="span3">
-                <h5 data-bind="text: CustomerVideoRenderStatus"></h5>
-            </div>
-            <div class="span3">
-                <a href="javascript:void(0);" target="_blank" data-bind="attr: { href: LinkUrl  }, text: LinkFileName"></a>
-            </div>
-        </div>
-    </div>
-    
     <div class="thumbcontainer clearfix" data-bind="foreach: CustomerVideos">
         <a href="#" class="footage-thumbnail"
-            data-bind="visible: true, css: { selected: $parent.IsSelected($data), incomplete: IsIncomplete }, click: function () { $parent.SelectVideo($data); }">
+           data-bind="visible: true, css: { selected: $parent.IsSelected($data), incomplete: IsIncomplete }, click: function () { $parent.SelectVideo($data); }">
             <div class="footage-preview" data-bind="style: { backgroundImage: ThumbnailBackground }">
                 <div class="footage-play" data-bind="click: PlayLightbox">
                     <span class="glyphicons play"></span>
@@ -68,6 +53,15 @@
                 <span class="footage-status" data-bind="text: CustomerVideoRenderStatus"></span>
             </div>
         </a>
+    </div>
+    <div class="video-preview" data-bind="with: SelectedVideo">
+        <div data-bind="ifnot: IsIncomplete">
+            <div>Name: <span data-bind="text: Name"></span></div>
+            <div>Description: <span data-bind="text: Description"></span></div>
+            <div>Direct Link: <a href="#" target="_blank" data-bind="text: PlayerUrl, attr: { href: PlayerUrl }"></a></div>
+            <div>Inline Embed: <pre data-bind="text: InlineEmbedCode"></pre></div>
+            <div>Lightbox Embed: <pre data-bind="text: LightboxEmbedCode"></pre></div>
+        </div>
     </div>
     <!-- /ko -->
     

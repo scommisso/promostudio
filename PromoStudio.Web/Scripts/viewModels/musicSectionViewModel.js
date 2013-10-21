@@ -38,8 +38,13 @@ define(["models/stockAudio",
                 return self.SelectedMusic() === music;
             };
             self.SelectMusic = function (music) {
-                self.SelectedMusic(music);
-                musicItem.fk_CustomerVideoItemId(music.pk_StockAudioId());
+                if (self.IsSelected(music)) {
+                    self.SelectedMusic(null);
+                    musicItem.fk_CustomerVideoItemId(null);
+                } else {
+                    self.SelectedMusic(music);
+                    musicItem.fk_CustomerVideoItemId(music.pk_StockAudioId());
+                }
             };
             
             self.IsCompleted = ko.computed(function () {

@@ -41,7 +41,11 @@ define(["models/customerResource",
                 return self.SelectedPhoto() === photo;
             };
             self.SelectPhoto = function (photo) {
-                self.SelectedPhoto(photo);
+                if (self.IsSelected(photo)) {
+                    self.SelectedPhoto(null);
+                } else {
+                    self.SelectedPhoto(photo);
+                }
             };
 
             self.Show = function (selectedId) {

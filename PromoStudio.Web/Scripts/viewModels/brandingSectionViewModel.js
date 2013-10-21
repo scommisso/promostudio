@@ -54,7 +54,11 @@ define(["viewModels/photoTemplatesViewModel",
                 if (!slot.IsCompleted()) {
                     self.ChangeSlot(slot);
                 } else {
-                    self.SelectedSlot(slot);
+                    if (self.IsSelected(slot)) {
+                        self.SelectedSlot(null);
+                    } else {
+                        self.SelectedSlot(slot);
+                    }
                 }
             };
             self.ChangeSlot = function (slot) {

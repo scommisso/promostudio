@@ -772,7 +772,7 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;script type=&quot;text/javascript&quot; id=&quot;vidyard_embed_code_{0}&quot; src=&quot;//play.vidyard.com/{0}.js?v=3.1&amp;type=lightbox&quot;&gt;&lt;/script&gt;&lt;div&gt;&lt;div class=&quot;vidyard_wrapper&quot; onclick=&quot;fn_vidyard_{1}();&quot;&gt;&lt;img alt=&quot;{2}&quot; src=&quot;//play.vidyard.com/{0}.jpg&quot; width=&quot;360&quot; /&gt;&lt;div class = &quot;vidyard_play_button&quot;&gt;&lt;a href=&quot;javascript:void(0);&quot;&gt;&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;.
+        ///   Looks up a localized string similar to &lt;script type=&quot;text/javascript&quot; id=&quot;vidyard_embed_code_{0}&quot; src=&quot;//play.vidyard.com/{0}.js?v=3.1&amp;type=lightbox&quot;&gt;&lt;/script&gt;&lt;div&gt;&lt;div class=&quot;vidyard_wrapper&quot; onclick=&quot;fn_vidyard_{1}();&quot;&gt;&lt;img alt=&quot;{2}&quot; src=&quot;//play.vidyard.com/{0}.jpg&quot; width=&quot;360&quot; /&gt;&lt;div class=&quot;vidyard_play_button&quot;&gt;&lt;a href=&quot;javascript:void(0);&quot;&gt;&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;.
         /// </summary>
         public static string Vidyard__LightboxEmbed {
             get {

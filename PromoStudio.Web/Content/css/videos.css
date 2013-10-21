@@ -8,7 +8,10 @@
     More info at: http://lesselements.com
   ---------------------------------------------------*/
 /* white-label banner */
-/* rounded corner size */.thumbcontainer > a.footage-thumbnail .footage-loading {
+/* rounded corner size */.video-preview {
+  margin-top: 20px;
+}
+.thumbcontainer > a.footage-thumbnail .footage-loading {
   display: none;
 }
 .thumbcontainer > a.footage-thumbnail .footage-loading .glyphicons:before {

@@ -29,7 +29,11 @@ define(["models/customer",
             return self.SelectedVideo() === video;
         };
         self.SelectVideo = function (video) {
-            self.SelectedVideo(video);
+            if (self.IsSelected(video)) {
+                self.SelectedVideo(null);
+            } else {
+                self.SelectedVideo(video);
+            }
         };
         
         function loadItems(customerData, videos) {

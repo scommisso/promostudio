@@ -41,8 +41,13 @@ define(["models/customerVideoVoiceOver",
                 return self.SelectedActor() === actor;
             };
             self.SelectActor = function (actor) {
-                self.SelectedActor(actor);
-                voiceOver.fk_VoiceActorId(actor.pk_VoiceActorId());
+                if (self.IsSelected(actor)) {
+                    self.SelectedActor(null);
+                    voiceOver.fk_VoiceActorId(null);
+                } else {
+                    self.SelectedActor(actor);
+                    voiceOver.fk_VoiceActorId(actor.pk_VoiceActorId());
+                }
             };
 
             self.IsCompleted = ko.computed(function () {
