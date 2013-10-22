@@ -228,7 +228,7 @@
     > div.audioContainer {
         display: block;
         float: left;
-        width: 420px;
+        width: 400px;
         margin: 0 8px 8px 0;
         overflow: hidden;
         background-color: @bgbasecolor;
@@ -236,17 +236,44 @@
         .box-shadow(0 1px 2px @shadowcolor);
 
         > .audio-player {
-            width:100%;
+            width: 100%;
             .border-radius(0, @cs, @cs, 0);
-            .jp-title {
-                display:none;
+
+            .jp-interface {
+                height: 56px;
             }
+
+            .jp-title {
+                display: none;
+            }
+
             .jp-audio {
                 border: 1px solid transparent;
             }
+
             .jp-controls {
-                width:400px;
-                padding:20px 0 0 20px;
+                width: 400px;
+                padding: 8px 0 0 8px;
+            }
+
+            .jp-progress {
+                left: 100px;
+                top: 20px;
+            }
+
+            .jp-time-holder {
+                left: 100px;
+                top: 36px;
+            }
+
+            .jp-volume-bar {
+                top: 26px;
+                left: 308px;
+                width: 70px;
+            }
+
+            .jp-mute, .jp-unmute, .jp-volume-max {
+                margin-top: 0;
             }
         }
 

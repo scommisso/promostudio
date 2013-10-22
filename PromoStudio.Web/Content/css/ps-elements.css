@@ -219,7 +219,7 @@
 .thumbcontainer > div.audioContainer {
   display: block;
   float: left;
-  width: 420px;
+  width: 400px;
   margin: 0 8px 8px 0;
   overflow: hidden;
   background-color: #ffffff;
@@ -248,6 +248,9 @@
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
+.thumbcontainer > div.audioContainer > .audio-player .jp-interface {
+  height: 56px;
+}
 .thumbcontainer > div.audioContainer > .audio-player .jp-title {
   display: none;
 }
@@ -256,7 +259,25 @@
 }
 .thumbcontainer > div.audioContainer > .audio-player .jp-controls {
   width: 400px;
-  padding: 20px 0 0 20px;
+  padding: 8px 0 0 8px;
+}
+.thumbcontainer > div.audioContainer > .audio-player .jp-progress {
+  left: 100px;
+  top: 20px;
+}
+.thumbcontainer > div.audioContainer > .audio-player .jp-time-holder {
+  left: 100px;
+  top: 36px;
+}
+.thumbcontainer > div.audioContainer > .audio-player .jp-volume-bar {
+  top: 26px;
+  left: 308px;
+  width: 70px;
+}
+.thumbcontainer > div.audioContainer > .audio-player .jp-mute,
+.thumbcontainer > div.audioContainer > .audio-player .jp-unmute,
+.thumbcontainer > div.audioContainer > .audio-player .jp-volume-max {
+  margin-top: 0;
 }
 .thumbcontainer > div.audioContainer > a.audio-thumbnail,
 .thumbcontainer > div.audioContainer > a.audio-thumbnail:link,
