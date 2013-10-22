@@ -106,6 +106,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Build.
+        /// </summary>
+        public static string BuildStep__Build {
+            get {
+                return ResourceManager.GetString("BuildStep__Build", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change logo.
         /// </summary>
         public static string BuildStep__Change_logo {

@@ -383,4 +383,7 @@
   <data name="BuildStep__Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="BuildStep__Build" xml:space="preserve">
+    <value>Build</value>
+  </data>
 </root>

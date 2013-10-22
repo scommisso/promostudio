@@ -2,6 +2,7 @@
 @using PromoStudio.Resources
 @model PromoStudio.Web.ViewModels.AudioViewModel
 @{
+    ViewBag.Title = string.Format("{0} - {1}", Strings.BuildStep__Build, Strings.BuildStep__Audio);
     Layout = "~/Views/Build/_BuildLayout.cshtml";
 }
 @section scripts {

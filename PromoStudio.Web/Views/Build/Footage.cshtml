@@ -1,6 +1,8 @@
 ﻿@using Newtonsoft.Json
+@using PromoStudio.Resources
 @model PromoStudio.Web.ViewModels.FootageViewModel
 @{
+    ViewBag.Title = string.Format("{0} - {1}", Strings.BuildStep__Build, Strings.BuildStep__Footage);
     Layout = "~/Views/Build/_BuildLayout.cshtml";
 }
 @section scripts {

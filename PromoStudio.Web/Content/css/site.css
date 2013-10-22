@@ -651,7 +651,7 @@ div.navbar li .arrow:after {
 .thumbcontainer > div.audioContainer > a.audio-thumbnail > .audio-title {
   float: left;
   display: block;
-  width: 260px;
+  width: 240px;
   margin: 2px 0 0 6px;
 }
 .thumbcontainer > div.audioContainer > a.audio-thumbnail > .audio-title > .audio-main-title {
