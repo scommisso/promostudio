@@ -16,7 +16,7 @@
 }
 .thumbcontainer > a.footage-thumbnail .footage-loading .glyphicons:before {
   font-size: 48px;
-  color: #3d7395;
+  color: transparent;
 }
 .thumbcontainer > a.footage-thumbnail .footage-loading .footage-loading-msg {
   width: 272px;

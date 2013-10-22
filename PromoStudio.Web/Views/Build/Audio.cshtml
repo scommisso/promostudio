@@ -32,25 +32,26 @@
             <div id="musicPanel" class="panel-collapse collapse" data-bind="css: { 'in': MusicSection().StartOpen }">
                 <div class="panel-body">
                     <div class="thumbcontainer clearfix" data-bind="foreach: MusicSection().AvailableMusic">
-                        <a style="display: none" href="#" class="audio-thumbnail clearfix"
-                           data-bind="visible: true, css: { selected: $root.MusicSection().IsSelected($data) }, click: function () { $root.MusicSection().SelectMusic($data); }">
-                            <div class="audio-preview clearfix">
-                                <span class="glyphicons playlist"></span>
-                                <div class="audio-play">
-                                    <span class="glyphicons play"></span>
+                        <div class="audioContainer">
+                            <a style="display: none" href="#" class="audio-thumbnail clearfix"
+                               data-bind="visible: true, css: { selected: $root.MusicSection().IsSelected($data) }, click: function () { $root.MusicSection().SelectMusic($data); }">
+                                <div class="audio-preview clearfix">
+                                    <span class="glyphicons playlist"></span>
                                 </div>
+                                <div class="audio-title">
+                                    <span class="audio-main-title" data-bind="text: $data.Name"></span>
+                                    <span class="audio-sub-title" data-bind="text: $data.Description"></span>
+                                </div>
+                                <div class="audio-select">
+                                    <span class="glyphicons check"></span>
+                                </div>
+                                <div class="audio-deselect">
+                                    <span class="glyphicons unchecked"></span>
+                                </div>
+                            </a>
+                            <div class="audio-player" data-bind="jplayer: { media: { mp3: '/Resources/StockAudio?stockAudioId=' + $data.pk_StockAudioId() } }"> 
                             </div>
-                            <div class="audio-title">
-                                <span class="audio-main-title" data-bind="text: $data.Name"></span>
-                                <span class="audio-sub-title" data-bind="text: $data.Description"></span>
-                            </div>
-                            <div class="audio-select">
-                                <span class="glyphicons check"></span>
-                            </div>
-                            <div class="audio-deselect">
-                                <span class="glyphicons unchecked"></span>
-                            </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,24 +71,25 @@
             <div id="actorPanel" class="panel-collapse collapse" data-bind="css: { 'in': ActorSection().StartOpen }">
                 <div class="panel-body">
                     <div class="thumbcontainer clearfix" data-bind="foreach: ActorSection().AvailableActors">
-                        <a style="display: none" href="#" class="audio-thumbnail clearfix"
-                           data-bind="visible: true, css: { selected: $root.ActorSection().IsSelected($data) }, click: function () { $root.ActorSection().SelectActor($data); }">
-                            <div class="audio-preview" data-bind="style: { backgroundImage: $data.PhotoBackground }">
-                                <div class="audio-play">
-                                    <span class="glyphicons play"></span>
+                        <div class="audioContainer">
+                            <a style="display: none" href="#" class="audio-thumbnail clearfix"
+                               data-bind="visible: true, css: { selected: $root.ActorSection().IsSelected($data) }, click: function () { $root.ActorSection().SelectActor($data); }">
+                                <div class="audio-preview" data-bind="style: { backgroundImage: $data.PhotoBackground }">
                                 </div>
+                                <div class="audio-title">
+                                    <span class="audio-main-title" data-bind="text: $data.FullName"></span>
+                                    <span class="audio-sub-title" data-bind="text: $data.Description"></span>
+                                </div>
+                                <div class="audio-select">
+                                    <span class="glyphicons check"></span>
+                                </div>
+                                <div class="audio-deselect">
+                                    <span class="glyphicons unchecked"></span>
+                                </div>
+                            </a>
+                            <div class="audio-player" data-bind="jplayer: { media: { mp3: '/Resources/ActorSample?voiceActorId=' + $data.pk_VoiceActorId() } }">
                             </div>
-                            <div class="audio-title">
-                                <span class="audio-main-title" data-bind="text: $data.FullName"></span>
-                                <span class="audio-sub-title" data-bind="text: $data.Description"></span>
-                            </div>
-                            <div class="audio-select">
-                                <span class="glyphicons check"></span>
-                            </div>
-                            <div class="audio-deselect">
-                                <span class="glyphicons unchecked"></span>
-                            </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>

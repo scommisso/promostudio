@@ -68,6 +68,7 @@
         'knockout': 'empty:',
         'bootstrap': 'empty:',
         'bootstrap-lightbox': 'lib/bootstrap-lightbox',
+        'jplayer': 'lib/jquery.jplayer',
         'jqueryui': 'lib/jquery-ui-effects-1.10.3',
         'form': 'empty:',
         'strings': 'empty:',

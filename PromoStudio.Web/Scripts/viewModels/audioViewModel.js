@@ -15,7 +15,10 @@ define(["models/customerVideoItem",
         "strings",
         "models/enums",
         "ps/logger",
-        "lib/ko.custom"],
+        "bootstrap",
+        "lib/ko.custom",
+        "lib/ko.jplayer"
+    ],
     function (
         customerVideoItem,
         customerVideoVoiceOver,

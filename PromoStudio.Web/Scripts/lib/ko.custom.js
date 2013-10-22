@@ -14,17 +14,19 @@
         }
     };
     ko.callbackOnBind = function(element, callback, timeout) {
-        var vm = null,
+        var ctx = null,
+            vm = null,
             interval = null,
             start = new Date().getTime(),
             now;
         interval = setInterval(function() {
             try {
-                vm = ko.dataFor(element);
+                ctx = ko.contextFor(element);
             } catch(e) {
                 // not bound
             }
-            if (vm !== undefined && vm !== null) {
+            if (ctx !== undefined && ctx !== null) {
+                vm = ctx.$data;
                 clearInterval(interval);
                 callback(vm);
                 return;
@@ -32,6 +34,7 @@
             now = new Date().getTime();
             if ((now - start) > timeout) {
                 clearInterval(interval);
+                callback(null);
             }
         }, 10);
     };
