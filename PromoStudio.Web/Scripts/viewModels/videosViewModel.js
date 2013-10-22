@@ -22,7 +22,7 @@ define(["models/customer",
         
         function isVideoPlaying() {
             var vpDisplay = $(".vidyard_tmask").css("display");
-            return (vpDisplay === undefined || vpDisplay === "none");
+            return (vpDisplay !== undefined && vpDisplay === "none");
         }
         
         self.SelectedVideo = ko.observable(null);
@@ -72,7 +72,7 @@ define(["models/customer",
         };
         
         function updateField(video, newVideo, fieldName) {
-            if (video[fieldName]() !== match[fieldName]) {
+            if (video[fieldName]() !== newVideo[fieldName]) {
                 video[fieldName](newVideo[fieldName]);
             }
         }
@@ -81,7 +81,7 @@ define(["models/customer",
             var videos = self.CustomerVideos(),
                 match = null;
             match = $.grep(videos, function(video) {
-                return video.pk_CustomerVideoItemId() === videoData.pk_CustomerVideoItemId;
+                return video.pk_CustomerVideoId() === videoData.pk_CustomerVideoId;
             });
             if (match && match.length) {
                 return match[0];
