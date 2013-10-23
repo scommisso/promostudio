@@ -102,7 +102,6 @@ define(["viewModels/textItemViewModel",
                 }
 
                 textTemplates.sort(function (a, b) {
-                    // TODO: Sort by storyboard item, then by templatescript item
                     if (a.SortOrder() < b.SortOrder()) {
                         return -1;
                     }

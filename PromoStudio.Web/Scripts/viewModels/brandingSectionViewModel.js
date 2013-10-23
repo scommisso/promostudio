@@ -41,6 +41,15 @@ define(["viewModels/photoTemplatesViewModel",
                         slots.push(templateSlots[j]);
                     }
                 }
+                slots.sort(function (a, b) {
+                    if (a.SortOrder() < b.SortOrder()) {
+                        return -1;
+                    }
+                    if (a.SortOrder() > b.SortOrder()) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 return slots;
             });
             self.SelectedSlot = ko.observable(null);

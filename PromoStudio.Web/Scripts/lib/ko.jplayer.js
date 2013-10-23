@@ -1,12 +1,17 @@
-﻿define(["knockout", "jquery", "jplayer", "ps/extensions"], function (ko, $) {
+﻿define(["knockout", "jquery", "jplayer"], function (ko, $) {
     var supportedUpdates = [
         "size", "sizeFull", "smoothPlayBar", "fullScreen", "fullWindow",
         "audioFullScreen", "autohide", "volume", "muted", "cssSelectorAncestor", "cssSelector", "loop",
         "repeat", "emulateHtml", "nativeVideoControls", "noFullWindow", "noVolume", "timeFormat",
         "keyEnabled", "keyBindings"],
-        playerHtml =
-            '<div class="jp-jplayer" id="{0}"></div>' +
-                '<div class="jp-audio" id="{1}">' +
+        playerClass = ".jp-jplayer",
+        containerClass = '.jp-audio',
+        lastId = 0;
+    
+    function buildPlayerHtml(playerId, containerId) {
+        var playerHtml =
+            '<div class="jp-jplayer" id="' + playerId + '"></div>' +
+                '<div class="jp-audio" id="' + containerId + '">' +
                 '<div class="jp-type-single">' +
                 '<div class="jp-gui jp-interface">' +
                 '<ul class="jp-controls">' +
@@ -36,7 +41,7 @@
                 '</div>' +
                 '<div class="jp-title">' +
                 '<ul>' +
-                '<li>Title</li>' +
+                '<li data-bind="text: title"></li>' +
                 '</ul>' +
                 '</div>' +
                 '<div class="jp-no-solution">' +
@@ -44,9 +49,10 @@
                 'To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.' +
                 '</div>' +
                 '</div>' +
-                '</div>',
-        playerClass = ".jp-jplayer",
-        lastId = 0;
+                '</div>';
+        return playerHtml;
+    }
+
     ko.bindingHandlers.jplayer = {        
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var vals = valueAccessor(),
@@ -63,7 +69,7 @@
                 playerVm = {
                     title: ko.observable(title)
                 },
-                playerId, i, prop;
+                playerId, prop;
             if (!opts.swfPath) {
                 opts.swfPath = "/Scripts/lib";
             }
@@ -80,7 +86,7 @@
                 lastId += 1;
                 containerId = newContainerIdBase + lastId;
                 playerId = newPlayerIdBase + lastId;
-                $element.append(playerHtml.format(playerId, containerId));
+                $element.append(buildPlayerHtml(playerId, containerId));
             }
             else if (!containerId) {
                 // if container is present but missing an id, add it
@@ -113,18 +119,21 @@
                 // give DOM time to update before binding since we created an ID for the container
 
                 var $player = $(element).children(playerClass),
-                    ctr = $player[0],
+                    $ctr = $element.children(containerClass),
+                    player = $player[0],
+                    container = $ctr[0],
                     ctx = bindingContext.createChildContext(playerVm);
                 
-                ko.utils.domNodeDisposal.addDisposeCallback(ctr, function () {
+                ko.utils.domNodeDisposal.addDisposeCallback(player, function () {
                     $(element).children(playerClass).jPlayer("destroy");
                 });
                 
-                // TODO: Figure out how to bind the title
-                //ko.applyBindingsToDescendants(ctx, ctr);
+                ko.applyBindingsToDescendants(ctx, container);
                 
                 $player.jPlayer(opts);
-            }, 10);
+            }, 1);
+            
+            return { controlsDescendantBindings: true };
         },
         update: function (element, valueAccessor) {
             var vals = valueAccessor(),

@@ -54,6 +54,12 @@ define([
                 var res = customerTemplateScriptItem.Resource();
                 return res !== null;
             });
+            self.SortOrder = ko.computed(function() {
+                var sortValue =
+                    storyboardItem.SortOrder() * 10000
+                        + customerTemplateScriptItem.ScriptItem().SortOrder();
+                return sortValue;
+            });
             
             function calculateStoryboardTiming() {
                 var prevSeconds = 0,

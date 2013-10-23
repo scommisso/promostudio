@@ -29,7 +29,12 @@ define([
             self.Name = customerTemplateScriptItem.ScriptItem().Name;
             self.Description = customerTemplateScriptItem.ScriptItem().Description;
             self.TextValue = customerTemplateScriptItem.Resource().Value;
-            self.SortOrder = customerTemplateScriptItem.ScriptItem().SortOrder;
+            self.SortOrder = ko.computed(function () {
+                var sortValue =
+                    storyboardItem.SortOrder() * 10000
+                        + customerTemplateScriptItem.ScriptItem().SortOrder();
+                return sortValue;
+            });
 
             self.TimingText = ko.computed(function () {
                 var storyboardSort = storyboardItem.SortOrder(),
