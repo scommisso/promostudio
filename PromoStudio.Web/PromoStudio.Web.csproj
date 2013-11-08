@@ -195,10 +195,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <None Include="app.build.js" />
+    <Content Include="Content\css\qsciences2.min.css" />
     <Content Include="Content\css\jplayer.blue.monday.css" />
+    <Content Include="Content\css\qsciences.min.css" />
     <Content Include="Content\img\jplayer.blue.monday.jpg" />
     <Content Include="Content\img\jplayer.blue.monday.seeking.gif" />
     <Content Include="Content\img\jplayer.blue.monday.video.play.png" />
+    <Content Include="Content\img\qsciences_logo2.png" />
     <Content Include="Scripts\lib\ko.jplayer.js" />
     <Content Include="Scripts\lib\Jplayer.swf" />
     <Content Include="Scripts\lib\jquery.jplayer.js" />
