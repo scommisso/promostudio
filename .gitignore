@@ -156,7 +156,7 @@ $RECYCLE.BIN/
 .DS_Store
 
 # MySql Backups
-*.mwb.bak
+*.mwb.*
 
 # r.js optimized folder
 optimizedScripts/

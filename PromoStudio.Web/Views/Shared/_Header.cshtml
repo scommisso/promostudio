@@ -1,1 +1,19 @@
-﻿<h1><strong>White</strong>Label</h1>
+﻿@{
+    bool useAlternateHeader = false;
+    var user = (PromoStudio.Web.PromoStudioIdentity) Context.User.Identity;
+    if (user != null && user.OrganizationId == 2)
+    {
+        useAlternateHeader = true;
+    }
+}
+
+@if (useAlternateHeader)
+{
+<span style="width:210px;height:60px;display:inline-block;margin-top:-14px;">
+    <img src="~/Content/img/qsciences_logo.png" alt="Q Sciences" />
+</span>
+}
+else
+{
+<h1><strong>White</strong>Label</h1>
+}

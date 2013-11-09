@@ -76,6 +76,7 @@ define(["strings"], function (strings) {
                 strings.getResource("VideoRenderStatus__Rendering"),
                 strings.getResource("VideoRenderStatus__Rendering_Completed"),
                 strings.getResource("VideoRenderStatus__Uploading"),
+                strings.getResource("VideoRenderStatus__InProgressHostProcessing"),
                 strings.getResource("VideoRenderStatus__Completed"),
                 strings.getResource("VideoRenderStatus__Canceled")
             ];

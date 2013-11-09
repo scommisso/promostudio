@@ -18,6 +18,15 @@
             : null;
 
     var useOptimizedScripts = PromoStudio.Web.Properties.Settings.Default.UseOptimizedScripts;
+
+
+
+
+    bool useAlternateHeader = false;
+    if (user != null && user.OrganizationId == 2)
+    {
+        useAlternateHeader = true;
+    }
 }
 <!DOCTYPE html>
 <html>
@@ -27,7 +36,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow">
     <link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    @if (useAlternateHeader)
+    {
+    <link href="~/Content/css/qsciences.min.css" rel="stylesheet" />
+    }
+    else
+    {
     <link href="~/Content/css/site.min.css" rel="stylesheet" />
+    }
     <script type="text/javascript">if(navigator.userAgent.match(/IEMobile\/10\.0/)){var msViewportStyle=document.createElement("style");msViewportStyle.appendChild(document.createTextNode("@@-ms-viewport{width:auto!important}"));document.getElementsByTagName("head")[0].appendChild(msViewportStyle)};</script>
     <script src="@Url.Content("~/Scripts/lib/modernizr.min.js")"></script>
 </head>

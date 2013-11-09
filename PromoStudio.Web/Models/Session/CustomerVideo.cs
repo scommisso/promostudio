@@ -10,7 +10,7 @@ namespace PromoStudio.Web.Models.Session
         public int fk_StoryboardId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string VidyardId { get; set; }
+        public string VidyardPlayerUuid { get; set; }
 
         public CustomerVideoVoiceOver VoiceOver { get; set; }
 
@@ -40,7 +40,7 @@ namespace PromoStudio.Web.Models.Session
                 fk_StoryboardId = fk_StoryboardId,
                 Name = Name,
                 Description = Description,
-                VidyardId = VidyardId,
+                VidyardPlayerUuid = VidyardPlayerUuid,
                 VoiceOver = VoiceOver == null ? null : VoiceOver.ToModel()
             };
         }

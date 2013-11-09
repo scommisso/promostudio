@@ -22,6 +22,7 @@ namespace PromoStudio.Data
         Task<CustomerVideo> CustomerVideo_SelectAsync(long customerVideoId);
         Task<IEnumerable<CustomerVideo>> CustomerVideo_SelectByCustomerIdAsync(long customerId);
         Task<IEnumerable<CustomerVideo>> CustomerVideo_SelectForProcessingAsync(int errorProcessingDelayInSeconds);
+        Task<IEnumerable<CustomerVideo>> CustomerVideo_SelectForCloudStatusCheckAsync();
         Task<CustomerVideo> CustomerVideo_SelectWithItemsAsync(long customerVideoId);
         Task<CustomerVideo> CustomerVideo_InsertAsync(CustomerVideo customerVideo);
         void CustomerVideo_Update(CustomerVideo customerVideo);

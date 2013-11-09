@@ -54,6 +54,7 @@
     <Compile Include="Encryption\CryptoManager.cs" />
     <Compile Include="Encryption\ICryptoManager.cs" />
     <Compile Include="Enumerations\AudioScriptTemplateStatus.cs" />
+    <Compile Include="Enumerations\CloudStorageStatus.cs" />
     <Compile Include="Enumerations\StockItemStatus.cs" />
     <Compile Include="Enumerations\StoryboardStatus.cs" />
     <Compile Include="Enumerations\StoryboardItemType.cs" />

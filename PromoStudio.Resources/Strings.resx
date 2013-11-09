@@ -386,4 +386,7 @@
   <data name="BuildStep__Build" xml:space="preserve">
     <value>Build</value>
   </data>
+  <data name="VideoRenderStatus__InProgressHostProcessing" xml:space="preserve">
+    <value>Generating Player</value>
+  </data>
 </root>

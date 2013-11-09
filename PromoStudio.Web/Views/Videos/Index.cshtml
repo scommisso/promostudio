@@ -38,7 +38,7 @@
     <!-- ko if: CustomerVideos().length > 0 -->
     <div class="thumbcontainer clearfix" data-bind="foreach: CustomerVideos">
         <a href="#" class="footage-thumbnail"
-           data-bind="visible: true, css: { selected: $parent.IsSelected($data), incomplete: IsIncomplete }, click: function () { $parent.SelectVideo($data); }">
+           data-bind="visible: true, css: { selected: $parent.IsSelected($data), incomplete: !$data.IsHosted() }, click: function () { $parent.SelectVideo($data); }">
             <div class="footage-preview" data-bind="style: { backgroundImage: ThumbnailBackground }">
                 <div class="footage-play" data-bind="click: PlayLightbox">
                     <span class="glyphicons play"></span>

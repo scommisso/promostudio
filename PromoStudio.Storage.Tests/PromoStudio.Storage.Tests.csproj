@@ -55,6 +55,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PromoStudio.Common\PromoStudio.Common.csproj">
+      <Project>{6e9aafa0-e570-46a1-a5a1-6e4484e3555b}</Project>
+      <Name>PromoStudio.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PromoStudio.Storage\PromoStudio.Storage.csproj">
       <Project>{e69f0944-a8a8-4ca5-92e9-91a3259c5bea}</Project>
       <Name>PromoStudio.Storage</Name>

@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using PromoStudio.Common.Enumerations;
 using PromoStudio.Storage.Properties;
 using PromoStudio.Storage.Vidyard;
 using RestSharp;
+using System;
 using System.Collections.Generic;
 
 namespace PromoStudio.Storage
@@ -13,10 +15,10 @@ namespace PromoStudio.Storage
         private string userName = Settings.Default.VidyardApiUserId;
         private string password = Settings.Default.VidyardApiSecret;
 
-        public string StoreFile(string downloadUrl, string videoName, string videoDescription)
+        public Player StoreFile(string downloadUrl, string videoName, string videoDescription)
         {
             var player = CreateVideo(downloadUrl, videoName, videoDescription);
-            return player.uuid;
+            return player;
         }
 
         private Player CreateVideo(string downloadUrl, string videoName, string videoDescription)
@@ -64,6 +66,26 @@ namespace PromoStudio.Storage
 
             IRestResponse<Player> response = client.Execute<Player>(request);
             return response.Data;
+        }
+
+        public CloudStorageStatus GetFileStatus(long videoId)
+        {
+            var client = GetClient();
+            var request = new RestRequest(string.Format("videos/{0}?auth_token={1}", videoId, apiKey), Method.GET);
+            IRestResponse<Video> response = client.Execute<Video>(request);
+            
+            if (response.Data != null)
+            {
+                if (!string.IsNullOrEmpty(response.Data.error_message))
+                {
+                    return CloudStorageStatus.Errored;
+                }
+                if (string.Compare(response.Data.status, "ready", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    return CloudStorageStatus.Completed;
+                }
+            }
+            return CloudStorageStatus.InProgress;
         }
 
         private IRestClient GetClient()

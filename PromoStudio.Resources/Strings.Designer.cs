@@ -673,6 +673,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generating Player.
+        /// </summary>
+        public static string VideoRenderStatus__InProgressHostProcessing {
+            get {
+                return ResourceManager.GetString("VideoRenderStatus__InProgressHostProcessing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pending.
         /// </summary>
         public static string VideoRenderStatus__Pending {

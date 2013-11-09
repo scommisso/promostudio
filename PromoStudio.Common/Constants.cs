@@ -29,6 +29,7 @@ namespace PromoStudio.Common
             public const string CustomerVideoSelectById_sp = "promostudio.CustomerVideoSelectById_sp";
             public const string CustomerVideoSelectByCustomerId_sp = "promostudio.CustomerVideoSelectByCustomerId_sp";
             public const string CustomerVideoSelectForProcessing_sp = "promostudio.CustomerVideoSelectForProcessing_sp";
+            public const string CustomerVideoSelectForCloudStatusCheck_sp = "promostudio.CustomerVideoSelectForCloudStatusCheck_sp";
             public const string CustomerVideoUpdate_sp = "promostudio.CustomerVideoUpdate_sp";
             public const string CustomerVideoDelete_sp = "promostudio.CustomerVideoDelete_sp";
 

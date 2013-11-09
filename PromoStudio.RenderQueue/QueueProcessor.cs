@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using log4net;
+﻿using log4net;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Extensions;
 using PromoStudio.Common.Models;
@@ -12,6 +6,12 @@ using PromoStudio.Data;
 using PromoStudio.Rendering;
 using PromoStudio.RenderQueue.Properties;
 using PromoStudio.Storage;
+using PromoStudio.Storage.Vidyard;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PromoStudio.RenderQueue
 {
@@ -36,7 +36,9 @@ namespace PromoStudio.RenderQueue
             video.RenderFailureMessage = null;
 
             ProcessVideo(video);
-            UploadVideo(video);
+
+            // TODO: Create an upload queue service
+            ThreadPool.QueueUserWorkItem(state => UploadVideo(video));
         }
 
         private async Task<CustomerVideo> RetrieveVideoForProcessing()
@@ -93,8 +95,10 @@ namespace PromoStudio.RenderQueue
                     outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.PreviewFilePath);
                     video.PreviewFilePath = outputUrl;
 
-                    string cloudId = _streamingProvider.StoreFile(outputUrl, video.Name, video.Description);
-                    video.VidyardId = cloudId;
+                    Player player = _streamingProvider.StoreFile(outputUrl, video.Name, video.Description);
+                    video.VidyardVideoId = player.chapters_attributes[0].video_id;
+                    video.VidyardPlayerId = player.id;
+                    video.VidyardPlayerUuid = player.uuid;
 
                     CleanupTempFolder(Path.GetDirectoryName(video.PreviewFilePath));
 
@@ -102,7 +106,7 @@ namespace PromoStudio.RenderQueue
                         cvi.fk_CustomerVideoItemTypeId == (sbyte) CustomerVideoItemType.CustomerVideoVoiceOver))
                     {
                         // HACK: This must be demo mode, set status to completed as this is the final render
-                        video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Completed;
+                        video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.InProgressHostProcessing;
                     }
                     else
                     {
@@ -122,7 +126,7 @@ namespace PromoStudio.RenderQueue
                     CleanupTempFolder(Path.GetDirectoryName(video.CompletedFilePath));
 
                     video.CompletedFilePath = outputUrl;
-                    video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Completed;
+                    video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.InProgressHostProcessing;
                 }
 
                 _dataService.CustomerVideo_Update(video);

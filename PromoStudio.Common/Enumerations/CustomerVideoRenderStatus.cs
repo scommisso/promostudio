@@ -15,6 +15,7 @@
         InProgressFinalRender,
         CompletedFinalRender,
         UploadingFinalRender,
+        InProgressHostProcessing,
         Completed,
         Canceled
     }

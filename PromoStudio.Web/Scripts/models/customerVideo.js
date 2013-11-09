@@ -36,7 +36,9 @@ define(["models/customerVideoItem",
         self.DateCompleted = ko.observable(data.DateCompleted || null);
         self.PreviewFilePath = ko.observable(data.PreviewFilePath || null);
         self.CompletedFilePath = ko.observable(data.CompletedFilePath || null);
-        self.VidyardId = ko.observable(data.VidyardId || null);
+        self.VidyardVideoId = ko.observable(data.VidyardVideoId || null);
+        self.VidyardPlayerId = ko.observable(data.VidyardPlayerId || null);
+        self.VidyardPlayerUuid = ko.observable(data.VidyardPlayerUuid || null);
 
         self.Storyboard = ko.observable(null);
         self.VoiceOver = ko.observable(null);
@@ -46,9 +48,13 @@ define(["models/customerVideoItem",
             var id = self.fk_CustomerVideoRenderStatusId();
             return enums.customerVideoRenderStatus(id);
         });
+        self.IsHosted = ko.computed(function () {
+            var vId = self.VidyardPlayerUuid();
+            return (!!vId);
+        });
         self.IsIncomplete = ko.computed(function () {
             var id = self.fk_CustomerVideoRenderStatusId();
-            return id !== 14;
+            return id !== 15;
         });
         self.LinkUrl = ko.computed(function () {
             var previewPath = self.PreviewFilePath(),
@@ -73,7 +79,7 @@ define(["models/customerVideoItem",
         });
         
         self.ThumbnailUrl = ko.computed(function () {
-            var vId = self.VidyardId();
+            var vId = self.VidyardPlayerUuid();
             if (!vId) { return null; }
             return strings.getResource("Vidyard__ThumbnailUrl").format(vId);
         });
@@ -87,19 +93,22 @@ define(["models/customerVideoItem",
         });
 
         self.PlayerUrl = ko.computed(function () {
-            var vId = self.VidyardId();
+            var vId = self.VidyardPlayerUuid(),
+                statusId = self.fk_CustomerVideoRenderStatusId(),
+                url;
             if (!vId) { return null; }
-            return strings.getResource("Vidyard__PlayerUrl").format(vId);
+            url = strings.getResource("Vidyard__PlayerUrl").format(vId);
+            return url;
         });
 
         self.InlineEmbedCode = ko.computed(function () {
-            var vId = self.VidyardId();
+            var vId = self.VidyardPlayerUuid();
             if (!vId) { return null; }
             return strings.getResource("Vidyard__InlineEmbed").format(vId);
         });
 
         self.LightboxEmbedCode = ko.computed(function () {
-            var vId = self.VidyardId();
+            var vId = self.VidyardPlayerUuid();
             if (!vId) { return null; }
             return strings.getResource("Vidyard__LightboxEmbed").format(
                 vId, vId.replace(/-/g, "$"), self.Name());
@@ -108,10 +117,10 @@ define(["models/customerVideoItem",
         self.Player = null;
 
         self.LoadPlayer = function () {
-            self.Player = new vPlayer({ VideoId: self.VidyardId() });
+            self.Player = new vPlayer({ VideoId: self.VidyardPlayerUuid() });
         };
         self.PlayLightbox = function (d, e) {
-            if (!self.Player && self.VidyardId()) {
+            if (!self.Player && self.VidyardPlayerUuid()) {
                 self.LoadPlayer();
             }
             if (self.Player) {
@@ -153,6 +162,8 @@ define(["models/customerVideoItem",
         delete copy.CompletedFilePath;
         delete copy.Storyboard;
         delete copy.CustomerVideoRenderStatus;
+        delete copy.IsHosted;
+        delete copy.IsIncomplete;
         delete copy.LinkUrl;
         delete copy.LinkFileName;
         delete copy.ThumbnailUrl;

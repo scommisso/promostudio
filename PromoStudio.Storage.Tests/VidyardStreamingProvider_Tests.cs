@@ -15,5 +15,12 @@ namespace PromoStudio.Storage.Tests
                 "Public Test",
                 "Testing Public S3 URL");
         }
+
+        [TestMethod]
+        public void TestStatus()
+        {
+            var provider = new VidyardStreamingProvider();
+            var status = provider.GetFileStatus(48144);
+        }
     }
 }

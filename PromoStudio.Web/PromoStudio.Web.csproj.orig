@@ -201,7 +201,11 @@
     <Content Include="Content\img\jplayer.blue.monday.jpg" />
     <Content Include="Content\img\jplayer.blue.monday.seeking.gif" />
     <Content Include="Content\img\jplayer.blue.monday.video.play.png" />
+<<<<<<< Updated upstream
     <Content Include="Content\img\qsciences_logo2.png" />
+=======
+    <Content Include="Content\img\qsciences_logo.png" />
+>>>>>>> Stashed changes
     <Content Include="Scripts\lib\ko.jplayer.js" />
     <Content Include="Scripts\lib\Jplayer.swf" />
     <Content Include="Scripts\lib\jquery.jplayer.js" />
@@ -366,7 +370,6 @@
     <Content Include="Content\css\ps-elements.less" />
     <Content Include="Content\css\videos.less" />
     <Content Include="Content\css\animations.less" />
-    <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Properties\PublishProfiles\Local File System.pubxml" />
     <None Include="Scripts\vsdoc\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\lib\bootstrap.js" />

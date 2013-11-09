@@ -13,7 +13,7 @@ namespace PromoStudio.Data
     {
         #region Properties
 
-        public IDataWrapper DataWrapper { get; set; }
+        protected IDataWrapper DataWrapper { get; set; }
 
         #endregion
 
@@ -159,6 +159,14 @@ namespace PromoStudio.Data
         {
             var customerVideos = (await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoSelectForProcessing_sp,
                     dbParams: new { ErrorDelaySeconds = errorProcessingDelayInSeconds }))
+                .ToList();
+
+            return customerVideos;
+        }
+
+        public async Task<IEnumerable<CustomerVideo>> CustomerVideo_SelectForCloudStatusCheckAsync()
+        {
+            var customerVideos = (await DataWrapper.QueryStoredProcAsync<CustomerVideo>(Constants.StoredProcedures.CustomerVideoSelectForCloudStatusCheck_sp))
                 .ToList();
 
             return customerVideos;

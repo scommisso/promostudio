@@ -23,7 +23,7 @@
   text-align: center;
   margin: 44px 0 0 0;
   font-size: 22px;
-  color: #3d7395;
+  color: #0076be;
 }
 .thumbcontainer > a.footage-thumbnail > .footage-description {
   height: 52px;
@@ -54,7 +54,7 @@
 .thumbcontainer > a.footage-thumbnail.incomplete .footage-title,
 .thumbcontainer > a.footage-thumbnail.incomplete:hover .footage-title {
   top: 8px;
-  color: #3d7395;
+  color: #0076be;
 }
 .thumbcontainer > a.footage-thumbnail.incomplete .footage-status,
 .thumbcontainer > a.footage-thumbnail.incomplete:hover .footage-status {

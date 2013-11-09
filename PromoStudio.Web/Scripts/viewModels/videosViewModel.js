@@ -59,7 +59,9 @@ define(["models/customer",
                     updateField(match, item, "DateCompleted");
                     updateField(match, item, "PreviewFilePath");
                     updateField(match, item, "CompletedFilePath");
-                    updateField(match, item, "VidyardId");
+                    updateField(match, item, "VidyardVideoId");
+                    updateField(match, item, "VidyardPlayerId");
+                    updateField(match, item, "VidyardPlayerUuid");
                 }
             }
             for (i = 0; i < newVideos.length; i++) {

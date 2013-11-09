@@ -84,6 +84,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PromoStudio.Common\PromoStudio.Common.csproj">
+      <Project>{6e9aafa0-e570-46a1-a5a1-6e4484e3555b}</Project>
+      <Name>PromoStudio.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
