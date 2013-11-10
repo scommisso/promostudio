@@ -1,4 +1,6 @@
-﻿define(["knockout"], function (ko) {
+﻿"use strict";
+
+define(["knockout"], function (ko) {
     ko.bindingHandlers.fadeVisible = {
         init: function (element, valueAccessor) {
             // Initially set the element to be instantly visible/hidden depending on the value

@@ -5,17 +5,20 @@
 /// <reference path="../ps/extensions.js" />
 /// <reference path="../ps/vidyardPlayer.js" />
 
-define(["models/storyboardItem",
-        "models/audioScriptTemplate",
-        "ps/vidyardPlayer",
-        "knockout",
-        "ps/extensions"],
-    function (
+"use strict";
+
+define([
+    "models/storyboardItem",
+    "models/audioScriptTemplate",
+    "ps/vidyardPlayer",
+    "knockout",
+    "ps/extensions"
+    ], function (
         storyboardItem,
         audioScriptTemplate,
         vPlayer,
         ko) {
-    var ctor = function (data) {
+    function ctor (data) {
         var self = this;
         data = data || {};
 
@@ -77,7 +80,7 @@ define(["models/storyboardItem",
             }
         };
         self.LoadItems(data.AudioScriptTemplate, data.Items);
-    };
+    }
 
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);

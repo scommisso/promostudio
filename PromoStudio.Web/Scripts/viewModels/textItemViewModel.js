@@ -9,6 +9,8 @@
 /// <reference path="../models/templateScriptItem.js" />
 /// <reference path="photoSlotViewModel.js" />
 
+"use strict";
+
 define([
         "knockout",
         "strings",
@@ -20,10 +22,10 @@ define([
         strings,
         enums,
         logger) {
-        return function (storyboardItem, customerTemplateScriptItem) {
+        function ctor(storyboardItem, customerTemplateScriptItem) {
             var self = this,
                 textTimingFormatString = strings.getResource("BuildStep__Section_num_timing"); //Sect. {0} - appx. {1} into video, slot {2}
-            
+
             customerTemplateScriptItem = ko.utils.unwrapObservable(customerTemplateScriptItem || {});
 
             self.Name = customerTemplateScriptItem.ScriptItem().Name;
@@ -44,7 +46,7 @@ define([
                 return textTimingFormatString
                     .format(storyboardSort, storyboardTiming, scriptItemSort);
             });
-            
+
             self.IsCompleted = ko.computed(function () {
                 var val = self.TextValue();
                 return (val && val.length > 0);
@@ -55,7 +57,7 @@ define([
                     sortOrder = storyboardItem.SortOrder(),
                     storyboard = storyboardItem.Storyboard(),
                     i, sbItems, sbItem;
-                if (storyboard === null) {
+                if (!storyboard) {
                     return prevSeconds;
                 }
                 sbItems = storyboard.Items();
@@ -67,5 +69,7 @@ define([
                 }
                 return prevSeconds.toString().toMMSS(false);
             }
-        };
+        }
+
+        return ctor;
     });

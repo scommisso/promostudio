@@ -1,6 +1,8 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
+"use strict";
+
 define(["strings"], function (strings) {
     return {
         storyboardItemType: function (id) {

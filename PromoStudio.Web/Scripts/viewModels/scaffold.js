@@ -1,26 +1,21 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/jquery-1.9.1.intellisense.js" />
 /// <reference path="../lib/jquery-scrolltofixed.js" />
-/// /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 /// <reference path="../ps/logger.js" />
+
+"use strict";
 
 define(["ps/logger",
     "jquery",
     "knockout",
     "lib/jquery-scrolltofixed"],
     function (logger, $, ko) {
-        return function() {
-
-            $.fn.pjaxScaffold = {
-                containerSelector: "div.main-container div[data-pjax-container]",
-                getContainer: function() {
-                    return $($.fn.pjaxScaffold.containerSelector);
-                }
-            };
+        function ctor() {
 
             function bindModel(key) {
                 require(["viewModels/" + key + "ViewModel"],
-                    function(viewModel) {
+                    function (viewModel) {
                         if (typeof viewModel === "function") {
                             var vm = new viewModel(),
                                 container = $.fn.pjaxScaffold.getContainer()[0];
@@ -37,7 +32,7 @@ define(["ps/logger",
                 $.ajax({
                     type: "POST",
                     url: "/OAuth/Logout",
-                    success: function(data, textStatus, jqXHR) {
+                    success: function (data, textStatus, jqXHR) {
                         initContainer("", "login");
                         $("div.navbar").hide();
                         if ($.pjax) {
@@ -46,7 +41,7 @@ define(["ps/logger",
                             document.location.reload();
                         }
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus, errorThrown) {
                         logger.log("Error logging in ");
                         logger.log(errorThrown);
                         alert("error logging in");
@@ -56,7 +51,7 @@ define(["ps/logger",
 
             function initContainer(link, target) {
                 var container = $.fn.pjaxScaffold.containerSelector,
-                    determineActiveNav = function(url) {
+                    determineActiveNav = function (url) {
                         var loc = url.toLowerCase();
                         if (loc.indexOf("videos") === 0) {
                             return "#navVideos";
@@ -83,7 +78,7 @@ define(["ps/logger",
                 }
 
                 // Bind href-specific asynchronous initialization$(document)
-                $(document).on('ready pjax:success', container, function() {
+                $(document).on('ready pjax:success', container, function () {
                     bindModel(target); // Call initializers
                     $(document).off('ready pjax:success', container); // Unbind initialization
                 });
@@ -92,9 +87,9 @@ define(["ps/logger",
             function wireupPjaxEvents() {
                 var container = $.fn.pjaxScaffold.getContainer();
                 $(document)
-                    .on("pjax:start", function() { container.stop(true, true).fadeOut(300); })
-                    .on("pjax:end", function() { container.stop(true, true).fadeIn(300); });
-                $('a[data-pjax]').on('click', function(event) {
+                    .on("pjax:start", function () { container.stop(true, true).fadeOut(300); })
+                    .on("pjax:end", function () { container.stop(true, true).fadeIn(300); });
+                $('a[data-pjax]').on('click', function (event) {
                     var cs = $.fn.pjaxScaffold.containerSelector,
                         emptyRoute = 'login', // The function that will be called on domain's root
                         link = event.currentTarget.href.replace(/^.*\/\/[^\/]+\//, ''),
@@ -108,12 +103,19 @@ define(["ps/logger",
                 });
             }
 
-            $(document).ready(function() {
+            $.fn.pjaxScaffold = {
+                containerSelector: "div.main-container div[data-pjax-container]",
+                getContainer: function () {
+                    return $($.fn.pjaxScaffold.containerSelector);
+                }
+            };
+
+            $(document).ready(function () {
                 $("div.navbar").scrollToFixed();
 
 
                 // Wire logout button
-                $("#logout").click(function() {
+                $("#logout").click(function () {
                     // TODO: When user name is in header, show/hide this as necessary
                     performLogout();
                 });
@@ -123,5 +125,7 @@ define(["ps/logger",
                 //    wireupPjaxEvents();
                 //}
             });
-        };
+        }
+
+        return ctor;
     });

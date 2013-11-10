@@ -3,28 +3,33 @@
 /// <reference path="../models/customer.js" />
 /// <reference path="../models/customerVideo.js" />
 
-define(["models/customer",
+"use strict";
+
+define([
+        "models/customer",
         "models/customerVideo",
         "ps/logger",
         "jquery",
-        "knockout"], function (
+        "knockout"
+], function (
             customer,
             customerVideo,
             logger,
             $,
-            ko) {
-    return function (data) {
+            ko
+    ) {
+    function ctor(data) {
         var self = this;
 
         self.Customer = ko.observable(null);
         self.CustomerVideos = ko.observableArray([]);
         self.LoadingData = ko.observable(false);
-        
+
         function isVideoPlaying() {
             var vpDisplay = $(".vidyard_tmask").css("display");
             return (vpDisplay !== undefined && vpDisplay === "none");
         }
-        
+
         self.SelectedVideo = ko.observable(null);
         self.IsSelected = function (video) {
             return self.SelectedVideo() === video;
@@ -36,12 +41,12 @@ define(["models/customer",
                 self.SelectedVideo(video);
             }
         };
-        
+
         function loadItems(customerData, videos) {
             var newVideos = [],
                 i, item, match;
             videos = videos || [];
-            
+
             for (i = 0; i < videos.length; i++) {
                 item = videos[i];
                 match = findMatchingVideo(item);
@@ -72,17 +77,17 @@ define(["models/customer",
                 self.Customer(new customer(customerData));
             }
         };
-        
+
         function updateField(video, newVideo, fieldName) {
             if (video[fieldName]() !== newVideo[fieldName]) {
                 video[fieldName](newVideo[fieldName]);
             }
         }
-        
+
         function findMatchingVideo(videoData) {
             var videos = self.CustomerVideos(),
                 match = null;
-            match = $.grep(videos, function(video) {
+            match = $.grep(videos, function (video) {
                 return video.pk_CustomerVideoId() === videoData.pk_CustomerVideoId;
             });
             if (match && match.length) {
@@ -97,9 +102,9 @@ define(["models/customer",
                 dataType: "json",
                 url: "/Videos/Status",
                 cache: false
-            }).done(function(vidData) {
+            }).done(function (vidData) {
                 loadItems(null, vidData);
-            }).error(function(jqXhr, textStatus, errorThrown) {
+            }).error(function (jqXhr, textStatus, errorThrown) {
                 logger.log("Error retrieving video status: " + textStatus);
                 logger.log(errorThrown);
             });
@@ -113,7 +118,7 @@ define(["models/customer",
                 dataType: "json",
                 url: "/Videos/Data",
                 cache: false
-            }).done(function(vidData) {
+            }).done(function (vidData) {
                 loadItems(vidData.Customer, vidData.CustomerVideos);
                 self.LoadingData(false);
                 var interval = window.setInterval(function () {
@@ -122,14 +127,16 @@ define(["models/customer",
                     }
                 }, 5000);
                 if ($.pjax) {
-                    $.fn.pjaxScaffold.clearIntervals = function() {
+                    $.fn.pjaxScaffold.clearIntervals = function () {
                         window.clearInterval(interval);
                     };
                 }
-            }).error(function(jqXhr, textStatus, errorThrown) {
+            }).error(function (jqXhr, textStatus, errorThrown) {
                 logger.log("Error retrieving data: " + textStatus);
                 logger.log(errorThrown);
             });
         };
-    };
+    }
+
+    return ctor;
 });

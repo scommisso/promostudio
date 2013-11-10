@@ -2,6 +2,8 @@
 /// <reference path="../vsdoc/jquery-1.9.1.intellisense.js" />
 /// <reference path="extensions.js" />
 
+"use strict";
+
 define(["jquery", "ps/extensions"], function ($) {
     function checkPlayerExists(id) {
         var selector = "#vidyard_wrapper_{0}".format(id);
@@ -50,7 +52,7 @@ define(["jquery", "ps/extensions"], function ($) {
         if (fn) { fn(); }
     }
 
-    return function (data) {
+    function ctor (data) {
         var self = this;
         data = data || {};
 
@@ -77,5 +79,7 @@ define(["jquery", "ps/extensions"], function ($) {
             });
         };
 
-    };
+    }
+
+    return ctor;
 });

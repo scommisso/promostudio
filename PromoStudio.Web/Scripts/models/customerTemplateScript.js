@@ -4,8 +4,10 @@
 /// <reference path="templateScript.js" />
 /// <reference path="templateScriptItem.js" />
 
+"use strict";
+
 define(["models/customerTemplateScriptItem", "knockout"], function (customerTemplateScriptItem, ko) {
-    var ctor = function(data) {
+    function ctor (data) {
         var self = this;
         data = data || {};
 
@@ -78,7 +80,7 @@ define(["models/customerTemplateScriptItem", "knockout"], function (customerTemp
         };
 
         self.LoadItems(data.Items);
-    };
+    }
 
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);

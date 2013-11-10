@@ -3,13 +3,17 @@
 /// <reference path="templateScript.js" />
 /// <reference path="stockVideo.js" />
 
-define(["models/templateScript",
-        "models/stockVideo",
-        "knockout"],
-    function (templateScript,
-        stockVideo,
-        ko) {
-    var ctor = function (storyboard, data) {
+"use strict";
+
+define([
+    "models/templateScript",
+    "models/stockVideo",
+    "knockout"
+], function (
+    templateScript,
+    stockVideo,
+    ko) {
+    function ctor (storyboard, data) {
         var self = this;
         data = data || {};
 
@@ -35,7 +39,7 @@ define(["models/templateScript",
             }
         };
         self.LoadScript(data.TemplateScript, data.StockVideo);
-    };
+    }
 
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);

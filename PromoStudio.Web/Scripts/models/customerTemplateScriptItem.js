@@ -1,34 +1,20 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
+"use strict";
+
 define([
-        "models/customerResource",
-        "models/customerTemplateScript",
-        "models/templateScriptItem",
-        "knockout"
+    "models/customerResource",
+    "models/customerTemplateScript",
+    "models/templateScriptItem",
+    "knockout"
 ], function (
     customerResource,
     customerTemplateScript,
     templateScriptItem,
     ko) {
-    var ctor = function (data) {
-        var self = this;
-        data = data || {};
+    function ctor (data) {
 
-        self.pk_CustomerTemplateScriptItemId = ko.observable(data.pk_CustomerTemplateScriptItemId || null);
-        self.fk_CustomerTemplateScriptId = ko.observable(data.fk_CustomerTemplateScriptId || null);
-        self.fk_TemplateScriptItemId = ko.observable(data.fk_TemplateScriptItemId || null);
-        self.fk_CustomerResourceId = ko.observable(data.fk_CustomerResourceId || null);
-        
-        self.CustomerScript = ko.observable(null);
-        self.ScriptItem = ko.observable(null);
-        self.Resource = ko.observable(null);
-
-        self.LoadTemplateData = function (csi) {
-            self.ScriptItem(csi);
-            self.fk_TemplateScriptItemId(ko.utils.unwrapObservable(csi.pk_TemplateScriptItemId));
-        };
-        
         function loadData(customerScriptData, scriptItemData, resourceData) {
             if (customerScriptData) {
                 if (ko.isObservable(customerScriptData.pk_CustomerTemplateScriptId)) {
@@ -52,9 +38,26 @@ define([
                 }
             }
         }
+        
+        var self = this;
+        data = data || {};
+
+        self.pk_CustomerTemplateScriptItemId = ko.observable(data.pk_CustomerTemplateScriptItemId || null);
+        self.fk_CustomerTemplateScriptId = ko.observable(data.fk_CustomerTemplateScriptId || null);
+        self.fk_TemplateScriptItemId = ko.observable(data.fk_TemplateScriptItemId || null);
+        self.fk_CustomerResourceId = ko.observable(data.fk_CustomerResourceId || null);
+        
+        self.CustomerScript = ko.observable(null);
+        self.ScriptItem = ko.observable(null);
+        self.Resource = ko.observable(null);
+
+        self.LoadTemplateData = function (csi) {
+            self.ScriptItem(csi);
+            self.fk_TemplateScriptItemId(ko.utils.unwrapObservable(csi.pk_TemplateScriptItemId));
+        };
 
         loadData(data.CustomerScript, data.ScriptItem, data.Resource);
-    };
+    }
 
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);

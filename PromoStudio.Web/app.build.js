@@ -63,14 +63,10 @@
     //done. If that module or any of its dependencies includes i18n bundles,
     //only the root bundles will be included unless the locale: section is set above.
     paths: {
-        'modernizr': 'empty:',
         'jquery': 'empty:',
         'knockout': 'empty:',
         'bootstrap': 'empty:',
-        'bootstrap-lightbox': 'lib/bootstrap-lightbox',
-        'jplayer': 'lib/jquery.jplayer',
         'jqueryui': 'lib/jquery-ui-effects-1.10.3',
-        'form': 'empty:',
         'strings': 'empty:',
         'facebookOAuth': 'empty:',
         'googleOAuth': 'empty:',

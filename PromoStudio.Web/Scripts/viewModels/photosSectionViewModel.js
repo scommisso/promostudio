@@ -7,6 +7,8 @@
 /// <reference path="../lib/ko.custom.js" />
 /// <reference path="../ps/extensions.js" />
 
+"use strict";
+
 define(["viewModels/photoTemplatesViewModel",
         "jquery",
         "knockout",
@@ -16,7 +18,7 @@ define(["viewModels/photoTemplatesViewModel",
         "ps/extensions",
         "bootstrap",
         "jqueryui"
-    ],
+],
     function (
         photoTemplatesViewModel,
         $,
@@ -24,7 +26,65 @@ define(["viewModels/photoTemplatesViewModel",
         strings,
         enums,
         logger) {
-        return function (data, video) {
+        function ctor(data, video) {
+
+            function loadData(customerTemplateScriptData, videoData) {
+                customerTemplateScripts = customerTemplateScriptData || [];
+                loadVideoData(videoData);
+            }
+
+            function loadVideoData(videoData) {
+                var storyboardData = videoData.Storyboard(),
+                    items = videoData.Items(),
+                    photoTemplates = [],
+                    storyboardItems, i, item, sbItem, sbItemType;
+
+                storyboardItems = storyboardData.Items();
+
+                for (i = 0; i < storyboardItems.length; i++) {
+                    sbItem = storyboardItems[i];
+                    sbItemType = sbItem.fk_StoryboardItemTypeId();
+
+                    // Create template items
+                    if (sbItemType === 1 || sbItemType === 3 || sbItemType === 4 || sbItemType === 5) {
+                        // Look for any photo matches in videoItems
+                        item = $.grep(items, function (cvi) {
+                            var itemType = cvi.fk_CustomerVideoItemTypeId(),
+                                custScript;
+                            if (itemType !== 3) { return false; }
+                            custScript = cvi.CustomerScript();
+                            if (!custScript) { return false; }
+                            return custScript.fk_TemplateScriptId() === sbItem.fk_TemplateScriptId();
+                        });
+                        if (item && item.length > 0) {
+                            item = item[0];
+                            photoTemplates.push(new photoTemplatesViewModel(sbItem, item, 2));
+                        }
+                    }
+                }
+
+                self.PhotoTemplates(photoTemplates);
+            }
+
+            function registerEvents() {
+                $(function () {
+                    var $elems = $("#photoCollapse .panel-heading .step-title,#photoCollapse .panel-heading .step-subtitle,#photoCollapse .panel-heading .step-done"),
+                        $panel = $("#photoPanel .photo-selected");
+                    self.PhotoPreviewShown.subscribe(function (newVal) {
+                        if (newVal) {
+                            $panel.slideDown(transitionTime);
+                        }
+                    });
+                    $('#photoPanel')
+                        .on('show.bs.collapse', function () {
+                            $elems.switchClass("collapsed", "opened", transitionTime);
+                        })
+                        .on('hide.bs.collapse', function () {
+                            $elems.switchClass("opened", "collapsed", transitionTime);
+                        });
+                });
+            }
+
             var self = this,
                 transitionTime = 350, /* from bootstrap-transitions */
                 photoTitle = strings.getResource("BuildStep__Num_spots_need_your_own_photos"),
@@ -33,7 +93,7 @@ define(["viewModels/photoTemplatesViewModel",
             video = video || {};
 
             self.PhotoTemplates = ko.observableArray([]);
-            self.PhotoSlots = ko.computed(function() {
+            self.PhotoSlots = ko.computed(function () {
                 var templates = self.PhotoTemplates(),
                     slots = [],
                     templateSlots, i, j;
@@ -73,7 +133,7 @@ define(["viewModels/photoTemplatesViewModel",
                     self.SelectedSlot(slot);
                 });
             };
-            
+
             self.IsVisible = ko.computed(function () {
                 var length = self.PhotoSlots().length;
                 return length > 0;
@@ -88,7 +148,7 @@ define(["viewModels/photoTemplatesViewModel",
                 }
                 return true;
             });
-            
+
             self.StartOpen = ko.observable(false);
             self.TitleText = ko.computed(function () {
                 var length = self.PhotoSlots().length;
@@ -99,65 +159,10 @@ define(["viewModels/photoTemplatesViewModel",
                     length === 1 ? "" : "s",
                     length === 1 ? "s" : "");
             });
-            
-            function loadData(customerTemplateScriptData, videoData) {
-                customerTemplateScripts = customerTemplateScriptData || [];
-                loadVideoData(videoData);
-            }
-
-            function loadVideoData(videoData) {
-                var storyboardData = videoData.Storyboard(),
-                    items = videoData.Items(),
-                    photoTemplates = [],
-                    storyboardItems, i, item, sbItem, sbItemType;
-
-                storyboardItems = storyboardData.Items();
-
-                for (i = 0; i < storyboardItems.length; i++) {
-                    sbItem = storyboardItems[i];
-                    sbItemType = sbItem.fk_StoryboardItemTypeId();
-                    
-                    // Create template items
-                    if (sbItemType === 1 || sbItemType === 3 || sbItemType === 4 || sbItemType === 5) {
-                        // Look for any photo matches in videoItems
-                        item = $.grep(items, function(cvi) {
-                            var itemType = cvi.fk_CustomerVideoItemTypeId(),
-                                custScript;
-                            if (itemType !== 3) { return false; }
-                            custScript = cvi.CustomerScript();
-                            if (!custScript) { return false; }
-                            return custScript.fk_TemplateScriptId() === sbItem.fk_TemplateScriptId();
-                        });
-                        if (item && item.length > 0) {
-                            item = item[0];
-                            photoTemplates.push(new photoTemplatesViewModel(sbItem, item, 2));
-                        }
-                    }
-                }
-
-                self.PhotoTemplates(photoTemplates);
-            }
-            
-            function registerEvents() {
-                $(function () {
-                    var $elems = $("#photoCollapse .panel-heading .step-title,#photoCollapse .panel-heading .step-subtitle,#photoCollapse .panel-heading .step-done"),
-                        $panel = $("#photoPanel .photo-selected");
-                    self.PhotoPreviewShown.subscribe(function(newVal) {
-                        if (newVal) {
-                            $panel.slideDown(transitionTime);
-                        }
-                    });
-                    $('#photoPanel')
-                        .on('show.bs.collapse', function() {
-                            $elems.switchClass("collapsed", "opened", transitionTime);
-                        })
-                        .on('hide.bs.collapse', function () {
-                            $elems.switchClass("opened", "collapsed", transitionTime);
-                        });
-                });
-            }
 
             loadData(data.CustomerTemplateScripts, video);
             registerEvents();
-        };
+        }
+
+        return ctor;
     });

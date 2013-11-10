@@ -2,8 +2,10 @@
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 /// <reference path="enums.js" />
 
+"use strict";
+
 define(["models/enums", "knockout"], function (enums, ko) {
-    var ctor = function (data) {
+    function ctor (data) {
         var self = this;
         data = data || {};
 
@@ -50,7 +52,7 @@ define(["models/enums", "knockout"], function (enums, ko) {
             displayPath = displayPath.substring(ix + 1);
             return displayPath;
         });
-    };
+    }
 
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);

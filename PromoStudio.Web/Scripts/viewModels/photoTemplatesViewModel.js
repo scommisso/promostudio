@@ -9,27 +9,29 @@
 /// <reference path="../models/templateScriptItem.js" />
 /// <reference path="photoSlotViewModel.js" />
 
+"use strict";
+
 define([
         "viewModels/photoSlotViewModel",
         "knockout",
         "strings",
         "models/enums",
         "ps/logger"
-    ],
+],
     function (
         photoSlotViewModel,
         ko,
         strings,
         enums,
         logger) {
-        return function (storyboardItem, customerVideoItem, categoryId) {
+        function ctor(storyboardItem, customerVideoItem, categoryId) {
             var self = this;
             storyboardItem = ko.utils.unwrapObservable(storyboardItem || {});
             customerVideoItem = ko.utils.unwrapObservable(customerVideoItem || {});
 
             self.Title = ko.observable(storyboardItem.Name());
             self.PhotoSlots = ko.observableArray([]);
-            self.IsCompleted = ko.computed(function() {
+            self.IsCompleted = ko.computed(function () {
                 var slots = self.PhotoSlots(),
                     i;
                 for (i = 0; i < slots.length; i++) {
@@ -63,5 +65,7 @@ define([
             }
 
             loadPhotoSlots();
-        };
+        }
+
+        return ctor;
     });

@@ -1,5 +1,7 @@
-﻿define([], function () {
-    var logger = (function() {
+﻿"use strict";
+
+define([], function () {
+    function ctor() {
         var self = this;
 
         self.log = function (message) {
@@ -9,6 +11,9 @@
         };
 
         return self;
-    })();
+    }
+
+    var logger = new ctor();
+
     return logger;
 });

@@ -3,16 +3,18 @@
 /// <reference path="customerVideoItem.js" />
 /// <reference path="enums.js" />
 
-define(["models/customerVideoItem",
-        "models/storyboard",
-        "models/customerVideoVoiceOver",
-        "knockout",
-        "ps/vidyardPlayer",
-        "models/enums",
-        "strings",
-        "ps/extensions"
-],
-    function (
+"use strict";
+
+define([
+    "models/customerVideoItem",
+    "models/storyboard",
+    "models/customerVideoVoiceOver",
+    "knockout",
+    "ps/vidyardPlayer",
+    "models/enums",
+    "strings",
+    "ps/extensions"
+], function (
         customerVideoItem,
         storyboard,
         customerVideoVoiceOver,
@@ -20,7 +22,7 @@ define(["models/customerVideoItem",
         vPlayer,
         enums,
         strings) {
-    var ctor = function (data) {
+    function ctor (data) {
         var self = this;
         data = data || {};
 
@@ -68,7 +70,7 @@ define(["models/customerVideoItem",
                 completedPath = self.CompletedFilePath(),
                 displayPath = completedPath || previewPath,
                 ix;
-            if (displayPath === null) { return null; }
+            if (!displayPath) { return null; }
             ix = displayPath.lastIndexOf("\\");
             if (ix === -1) { ix = displayPath.lastIndexOf("/"); }
             if (ix === -1) { return displayPath; }
@@ -149,7 +151,7 @@ define(["models/customerVideoItem",
             self.Items(items);
         };
         self.LoadItems(data.Storyboard, data.VoiceOver, data.Items);
-    };
+    }
 
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);

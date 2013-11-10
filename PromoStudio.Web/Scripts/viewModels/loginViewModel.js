@@ -3,6 +3,7 @@
 /// <reference path="../ps/logger.js" />
 /// <reference path="../ps/extensions.js" />
 
+"use strict";
 
 define(["jquery",
         "googleOAuth",
@@ -15,9 +16,7 @@ define(["jquery",
         facebookOAuth,
         strings,
         logger) {
-        return function () {
-            var self = this,
-                welcomeText = strings.getResource("Login__Welcome");
+        function ctor() {
 
             function performLogin(platformId, loginKey, userName, userEmail) {
                 $.ajax({
@@ -28,7 +27,7 @@ define(["jquery",
                         "&name=" + encodeURIComponent(userName) +
                         "&email=" + encodeURIComponent(userEmail)
                 })
-                    .done(function() {
+                    .done(function () {
                         if ($.pjax) {
                             $.pjax({ url: "/", container: $.fn.pjaxScaffold.getContainer() });
                         } else {
@@ -41,6 +40,9 @@ define(["jquery",
                         alert("error logging in");
                     });
             }
+
+            var self = this,
+                welcomeText = strings.getResource("Login__Welcome");
 
             self.pageLoaded = function () {
                 if ($("#loginButtons").size() > 0) {
@@ -67,7 +69,9 @@ define(["jquery",
                         $("#gLogin").hide();
                         foa.login();
                     });
-                }             
+                }
             };
-        };
-});
+        }
+
+        return ctor;
+    });

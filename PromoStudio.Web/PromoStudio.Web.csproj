@@ -195,9 +195,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <None Include="app.build.js" />
+    <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\qsciences2.min.css" />
     <Content Include="Content\css\jplayer.blue.monday.css" />
     <Content Include="Content\css\qsciences.min.css" />
+    <Content Include="Content\css\site.min.css" />
     <Content Include="Content\img\jplayer.blue.monday.jpg" />
     <Content Include="Content\img\jplayer.blue.monday.seeking.gif" />
     <Content Include="Content\img\jplayer.blue.monday.video.play.png" />
@@ -215,89 +217,7 @@
     <Compile Include="ViewModels\FootageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap\bootstrap.css">
-      <DependentUpon>bootstrap.less</DependentUpon>
-    </Content>
-    <Content Include="Content\bootstrap\bootstrap.min.css">
-      <DependentUpon>bootstrap.less</DependentUpon>
-    </Content>
     <Content Include="Content\css\bootstrap-lightbox.css" />
-    <Content Include="Content\css\bootstrap-lightbox.min.css">
-      <DependentUpon>bootstrap-lightbox.css</DependentUpon>
-    </Content>
-    <Content Include="Content\css\bootstrap-overrides.css">
-      <DependentUpon>bootstrap-overrides.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\bootstrap-overrides.min.css">
-      <DependentUpon>bootstrap-overrides.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\build-branding.css">
-      <DependentUpon>build-branding.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\build-branding.min.css">
-      <DependentUpon>build-branding.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\build-footage.css">
-      <DependentUpon>build-footage.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\build-footage.min.css">
-      <DependentUpon>build-footage.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\build.css">
-      <DependentUpon>build.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\build.min.css">
-      <DependentUpon>build.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\elements.css">
-      <DependentUpon>elements.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\elements.min.css">
-      <DependentUpon>elements.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\glyphicons.css" />
-    <Content Include="Content\css\login.css">
-      <DependentUpon>login.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\login.min.css">
-      <DependentUpon>login.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\navigation.css">
-      <DependentUpon>navigation.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\navigation.min.css">
-      <DependentUpon>navigation.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\ps-elements.css">
-      <DependentUpon>ps-elements.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\ps-elements.min.css">
-      <DependentUpon>ps-elements.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\site.css">
-      <DependentUpon>site.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\site.min.css">
-      <DependentUpon>site.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\themevariables.css">
-      <DependentUpon>themevariables.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\themevariables.min.css">
-      <DependentUpon>themevariables.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\videos.css">
-      <DependentUpon>videos.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\videos.min.css">
-      <DependentUpon>videos.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\vidyard.css">
-      <DependentUpon>vidyard.less</DependentUpon>
-    </Content>
-    <Content Include="Content\css\vidyard.min.css">
-      <DependentUpon>vidyard.less</DependentUpon>
-    </Content>
     <Content Include="Content\fonts\glyphicons-regular.svg" />
     <Content Include="Content\img\glyphicons-white.png" />
     <Content Include="Content\img\glyphicons-white.svg" />
@@ -350,22 +270,25 @@
     <Content Include="Content\bootstrap\bootstrap.less" />
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
-    <Content Include="Content\css\themevariables.less" />
-    <Content Include="Content\css\site.less" />
-    <Content Include="Content\css\elements.less" />
+    <Content Include="Content\less\themevariables.less" />
+    <Content Include="Content\less\site.less" />
+    <Content Include="Content\less\elements.less" />
     <Content Include="Content\fonts\glyphicons-regular.eot" />
     <Content Include="Content\fonts\glyphicons-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-regular.woff" />
-    <Content Include="Content\css\login.less" />
-    <Content Include="Content\css\navigation.less" />
-    <Content Include="Content\css\build.less" />
-    <Content Include="Content\css\vidyard.less" />
-    <Content Include="Content\css\build-footage.less" />
-    <Content Include="Content\css\build-branding.less" />
-    <Content Include="Content\css\bootstrap-overrides.less" />
-    <Content Include="Content\css\ps-elements.less" />
-    <Content Include="Content\css\videos.less" />
-    <Content Include="Content\css\animations.less" />
+    <Content Include="Content\less\login.less" />
+    <Content Include="Content\less\navigation.less" />
+    <Content Include="Content\less\build.less" />
+    <Content Include="Content\less\vidyard.less" />
+    <Content Include="Content\less\build-footage.less" />
+    <Content Include="Content\less\build-branding.less" />
+    <Content Include="Content\less\bootstrap-overrides.less" />
+    <Content Include="Content\less\ps-elements.less" />
+    <Content Include="Content\less\videos.less" />
+    <Content Include="Content\less\animations.less" />
+    <Content Include="Content\less\glyphicons.less" />
+    <Content Include="buildScripts.bat" />
+    <Content Include="buildCss.bat" />
     <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Properties\PublishProfiles\Local File System.pubxml" />
     <None Include="Scripts\vsdoc\jquery-1.9.1.intellisense.js" />
@@ -386,9 +309,6 @@
     <Content Include="Scripts\lib\knockout-2.3.0.js" />
     <Content Include="Scripts\lib\ko.custom.js" />
     <Content Include="Scripts\lib\modernizr.js" />
-    <Content Include="Scripts\lib\modernizr.min.js">
-      <DependentUpon>modernizr.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\lib\normalize.js" />
     <Content Include="Scripts\lib\bs-lightbox.js" />
     <Content Include="Scripts\models\audioScriptTemplate.js" />
@@ -442,9 +362,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Scripts\lib\modernizr.min.js.map">
-      <DependentUpon>modernizr.js</DependentUpon>
-    </Content>
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Build\_BuildNavigation.cshtml" />
     <Content Include="Views\Build\_BuildLayout.cshtml" />

@@ -7,6 +7,8 @@
 /// <reference path="../lib/ko.custom.js" />
 /// <reference path="../ps/extensions.js" />
 
+"use strict";
+
 define(["models/customerVideoVoiceOver",
         "models/voiceActor",
         "viewModels/actorViewModel",
@@ -17,7 +19,7 @@ define(["models/customerVideoVoiceOver",
         "ps/logger",
         "bootstrap",
         "jqueryui"
-    ],
+],
     function (
         customerVideoVoiceOver,
         voiceActor,
@@ -27,39 +29,11 @@ define(["models/customerVideoVoiceOver",
         strings,
         enums,
         logger) {
-        return function (data, video) {
-            var self = this,
-                transitionTime = 350, /* from bootstrap-transitions */
-                voiceOver = null,
-                customerTemplateScripts;
-            data = data || {};
-            video = video || {};
-
-            self.AvailableActors = ko.observableArray([]);
-            self.SelectedActor = ko.observable(null);
-            self.IsSelected = function (actor) {
-                return self.SelectedActor() === actor;
-            };
-            self.SelectActor = function (actor) {
-                if (self.IsSelected(actor)) {
-                    self.SelectedActor(null);
-                    voiceOver.fk_VoiceActorId(null);
-                } else {
-                    self.SelectedActor(actor);
-                    voiceOver.fk_VoiceActorId(actor.pk_VoiceActorId());
-                }
-            };
-
-            self.IsCompleted = ko.computed(function () {
-                var selectedActor = self.SelectedActor();
-                return !!selectedActor;
-            });
-
-            self.StartOpen = ko.observable(false);
+        function ctor(data, video) {
 
             function loadData(customerTemplateScriptData, voiceActorData, videoData) {
                 var id, actors, actor, i;
-                
+
                 customerTemplateScripts = customerTemplateScriptData || [];
                 loadActorData(voiceActorData);
                 loadVideoData(videoData);
@@ -107,7 +81,38 @@ define(["models/customerVideoVoiceOver",
                 });
             }
 
+            var self = this,
+                transitionTime = 350, /* from bootstrap-transitions */
+                voiceOver = null,
+                customerTemplateScripts;
+            data = data || {};
+            video = video || {};
+
+            self.AvailableActors = ko.observableArray([]);
+            self.SelectedActor = ko.observable(null);
+            self.IsSelected = function (actor) {
+                return self.SelectedActor() === actor;
+            };
+            self.SelectActor = function (actor) {
+                if (self.IsSelected(actor)) {
+                    self.SelectedActor(null);
+                    voiceOver.fk_VoiceActorId(null);
+                } else {
+                    self.SelectedActor(actor);
+                    voiceOver.fk_VoiceActorId(actor.pk_VoiceActorId());
+                }
+            };
+
+            self.IsCompleted = ko.computed(function () {
+                var selectedActor = self.SelectedActor();
+                return !!selectedActor;
+            });
+
+            self.StartOpen = ko.observable(false);
+
             loadData(data.CustomerTemplateScripts, data.VoiceActors, video);
             registerEvents();
-        };
+        }
+
+        return ctor;
     });

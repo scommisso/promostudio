@@ -1,8 +1,10 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
+"use strict";
+
 define(["models/templateScriptItem", "knockout"], function (templateScriptItem, ko) {
-    return function (data) {
+    function ctor (data) {
         var self = this;
         data = data || {};
 
@@ -33,5 +35,7 @@ define(["models/templateScriptItem", "knockout"], function (templateScriptItem, 
             self.Items(items);
         };
         self.LoadItems(data.Items);
-    };
+    }
+
+    return ctor;
 });

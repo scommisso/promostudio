@@ -4,25 +4,42 @@
 /// <reference path="../models/enums.js" />
 /// <reference path="../ps/logger.js" />
 
-define(["jquery",
-        "knockout",
-        "strings",
-        "models/enums",
-        "ps/logger",
-        "lib/ko.custom"],
-    function (
+"use strict";
+
+define([
+    "jquery",
+    "knockout",
+    "strings",
+    "models/enums",
+    "ps/logger",
+    "lib/ko.custom"
+], function (
         $,
         ko,
         strings,
         enums,
         logger) {
-    return function (data) {
+    function ctor(data) {
+
+        function stepChanging(navVm, callback) {
+            // TODO: Add any necessary items into the video
+            callback();
+        }
+
+        function loadVideoData(videoData) {
+            // TODO: load any script items from the video data
+        }
+
+        function loadData() {
+            // TODO: Load audio script template from data object
+        }
+
         var self = this;
         data = data || {};
 
         var isStepCompleted = null,
             video = null;
-        
+
         self.Bind = function (selector, navSelector) {
             ko.applyBindings(self, $(selector)[0]);
             ko.callbackOnBind($(navSelector)[0], function (navVm) {
@@ -44,20 +61,9 @@ define(["jquery",
             }
             return true;
         });
-        
-        function stepChanging(navVm, callback) {
-            // TODO: Add any necessary items into the video
-            callback();
-        }
-
-        function loadVideoData(videoData) {
-            // TODO: load any script items from the video data
-        }
-        
-        function loadData() {
-            // TODO: Load audio script template from data object
-        }
 
         loadData();
-    };
+    }
+
+    return ctor;
 });

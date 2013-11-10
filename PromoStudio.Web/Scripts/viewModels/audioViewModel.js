@@ -6,7 +6,10 @@
 /// <reference path="musicSectionViewModel.js" />
 /// <reference path="actorSectionViewModel.js" />
 
-define(["models/customerVideoItem",
+"use strict";
+
+define([
+        "models/customerVideoItem",
         "models/customerVideoVoiceOver",
         "viewModels/musicSectionViewModel",
         "viewModels/actorSectionViewModel",
@@ -18,8 +21,7 @@ define(["models/customerVideoItem",
         "bootstrap",
         "lib/ko.custom",
         "lib/ko.jplayer"
-    ],
-    function (
+], function (
         customerVideoItem,
         customerVideoVoiceOver,
         musicSectionViewModel,
@@ -29,44 +31,8 @@ define(["models/customerVideoItem",
         strings,
         enums,
         logger) {
-    return function (data) {
-        var self = this;
-        data = data || {};
+    function ctor(data) {
 
-        var isStepCompleted = null,
-            video = null;
-
-        self.MusicSection = ko.observable({});
-        self.ActorSection = ko.observable({});
-        
-        self.Bind = function (selector, navSelector) {
-            ko.applyBindings(self, $(selector)[0]);
-            ko.callbackOnBind($(navSelector)[0], function (navVm) {
-                isStepCompleted = navVm.IsStepCompleted;
-                video = navVm.Video;
-                navVm.BeforeStepChange = stepChanging;
-
-                loadVideoData(video());
-
-                self.IsCompleted(); // check completed status
-            }, 1000);
-        };
-        self.IsCompleted = ko.computed(function () {
-            var ms = ko.toJS(self.MusicSection()),
-                as = ko.toJS(self.ActorSection()),
-                stepCompleted = true;
-            if (!ms || !ms.IsCompleted) {
-                stepCompleted = false;
-            }
-            if (!as || !as.IsCompleted) {
-                stepCompleted = false;
-            }
-            if (ko.isObservable(isStepCompleted)) {
-                isStepCompleted(stepCompleted);
-            }
-            return stepCompleted;
-        });
-        
         function stepChanging(navVm, callback) {
             callback();
         }
@@ -75,7 +41,7 @@ define(["models/customerVideoItem",
             var items = videoData.Items(),
                 item = null,
                 musicItems, voiceData;
-            
+
             // Check for existing music item, and add it if missing
             musicItems = $.grep(items, function (musicItem) {
                 return musicItem.fk_CustomerVideoItemTypeId() === 2;
@@ -107,5 +73,44 @@ define(["models/customerVideoItem",
                 self.ActorSection().StartOpen(true);
             }
         }
-    };
+
+        var self = this;
+        data = data || {};
+
+        var isStepCompleted = null,
+            video = null;
+
+        self.MusicSection = ko.observable({});
+        self.ActorSection = ko.observable({});
+
+        self.Bind = function (selector, navSelector) {
+            ko.applyBindings(self, $(selector)[0]);
+            ko.callbackOnBind($(navSelector)[0], function (navVm) {
+                isStepCompleted = navVm.IsStepCompleted;
+                video = navVm.Video;
+                navVm.BeforeStepChange = stepChanging;
+
+                loadVideoData(video());
+
+                self.IsCompleted(); // check completed status
+            }, 1000);
+        };
+        self.IsCompleted = ko.computed(function () {
+            var ms = ko.toJS(self.MusicSection()),
+                as = ko.toJS(self.ActorSection()),
+                stepCompleted = true;
+            if (!ms || !ms.IsCompleted) {
+                stepCompleted = false;
+            }
+            if (!as || !as.IsCompleted) {
+                stepCompleted = false;
+            }
+            if (ko.isObservable(isStepCompleted)) {
+                isStepCompleted(stepCompleted);
+            }
+            return stepCompleted;
+        });
+    }
+
+    return ctor;
 });

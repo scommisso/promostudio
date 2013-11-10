@@ -7,75 +7,25 @@
 /// <reference path="../models/customerResource.js" />
 /// <reference path="photoSlotViewModel.js" />
 
+"use strict";
+
 define(["models/customerResource",
+        "jquery",
         "knockout",
         "strings",
         "models/enums",
         "ps/logger",
         "bootstrap"
-    ],
+],
     function (
         customerResource,
+        $,
         ko,
         strings,
         enums,
         logger) {
-        return function (data) {
-            var self = this,
-                photoSlot = data.Slot,
-                categoryId = data.CategoryId,
-                $elem = data.Element,
-                saveCallback = data.OnSave,
-                cancelCallback = data.OnCancel,
-                selectedResourceId = null;
+        function ctor(data) {
 
-            self.IsLoading = ko.observable(true);
-            self.CustomerPhotos = ko.observableArray([]);
-            self.OrganizationPhotos = ko.observableArray([]);
-            
-            self.SelectedPhoto = ko.observable(null);
-            self.PhotoPreviewShown = ko.computed(function () {
-                return self.SelectedPhoto() !== null;
-            });
-            self.IsSelected = function (photo) {
-                return self.SelectedPhoto() === photo;
-            };
-            self.SelectPhoto = function (photo) {
-                if (self.IsSelected(photo)) {
-                    self.SelectedPhoto(null);
-                } else {
-                    self.SelectedPhoto(photo);
-                }
-            };
-
-            self.Show = function (selectedId) {
-                selectedResourceId = selectedId;
-                ko.cleanNode($elem[0]);
-                $elem.find(".modal-dialog").empty();
-                ko.applyBindings(self, $elem[0]);
-                $elem.modal("show");
-                getPhotos();
-            };
-
-            self.Hide = function() {
-                $elem.modal("hide");
-            };
-
-            self.Cancel = function () {
-                logger.log("Canceling");
-                self.Hide();
-                cancelCallback();
-            };
-
-            self.Save = function () {
-                logger.log("Saving");
-
-                var selected = self.SelectedPhoto();
-
-                self.Hide();
-                saveCallback(selected);
-            };
-            
             function loadPhotos(photoResources) {
                 var custPhotos = [],
                     orgPhotos = [],
@@ -104,7 +54,7 @@ define(["models/customerResource",
                 self.CustomerPhotos(custPhotos);
                 self.OrganizationPhotos(orgPhotos);
             }
-            
+
             function getPhotos() {
                 self.IsLoading(true);
                 $.ajax({
@@ -125,5 +75,62 @@ define(["models/customerResource",
                         self.LoadingData(false);
                     });
             }
-        };
+
+            var self = this,
+                photoSlot = data.Slot,
+                categoryId = data.CategoryId,
+                $elem = data.Element,
+                saveCallback = data.OnSave,
+                cancelCallback = data.OnCancel,
+                selectedResourceId = null;
+
+            self.IsLoading = ko.observable(true);
+            self.CustomerPhotos = ko.observableArray([]);
+            self.OrganizationPhotos = ko.observableArray([]);
+
+            self.SelectedPhoto = ko.observable(null);
+            self.PhotoPreviewShown = ko.computed(function () {
+                return self.SelectedPhoto() !== null;
+            });
+            self.IsSelected = function (photo) {
+                return self.SelectedPhoto() === photo;
+            };
+            self.SelectPhoto = function (photo) {
+                if (self.IsSelected(photo)) {
+                    self.SelectedPhoto(null);
+                } else {
+                    self.SelectedPhoto(photo);
+                }
+            };
+
+            self.Show = function (selectedId) {
+                selectedResourceId = selectedId;
+                ko.cleanNode($elem[0]);
+                $elem.find(".modal-dialog").empty();
+                ko.applyBindings(self, $elem[0]);
+                $elem.modal("show");
+                getPhotos();
+            };
+
+            self.Hide = function () {
+                $elem.modal("hide");
+            };
+
+            self.Cancel = function () {
+                logger.log("Canceling");
+                self.Hide();
+                cancelCallback();
+            };
+
+            self.Save = function () {
+                logger.log("Saving");
+
+                var selected = self.SelectedPhoto();
+
+                self.Hide();
+                saveCallback(selected);
+            };
+        }
+
+        return ctor;
     });

@@ -7,6 +7,8 @@
 /// <reference path="../lib/ko.custom.js" />
 /// <reference path="../ps/extensions.js" />
 
+"use strict";
+
 define(["viewModels/photoTemplatesViewModel",
         "jquery",
         "knockout",
@@ -15,7 +17,7 @@ define(["viewModels/photoTemplatesViewModel",
         "ps/logger",
         "bootstrap",
         "jqueryui"
-    ],
+],
     function (
         photoTemplatesViewModel,
         $,
@@ -23,7 +25,59 @@ define(["viewModels/photoTemplatesViewModel",
         strings,
         enums,
         logger) {
-        return function (data, video) {
+        function ctor(data, video) {
+
+            function loadData(customerTemplateScriptData, videoData) {
+                customerTemplateScripts = customerTemplateScriptData || [];
+                loadVideoData(videoData);
+            }
+
+            function loadVideoData(videoData) {
+                var storyboardData = videoData.Storyboard(),
+                    items = videoData.Items(),
+                    logoTemplates = [],
+                    storyboardItems, i, item, sbItem, sbItemType;
+
+                storyboardItems = storyboardData.Items();
+
+                for (i = 0; i < storyboardItems.length; i++) {
+                    sbItem = storyboardItems[i];
+                    sbItemType = sbItem.fk_StoryboardItemTypeId();
+
+                    // Create template items
+                    if (sbItemType === 1 || sbItemType === 3 || sbItemType === 4 || sbItemType === 5) {
+                        // Look for any photo matches in videoItems
+                        item = $.grep(items, function (cvi) {
+                            var itemType = cvi.fk_CustomerVideoItemTypeId(),
+                                custScript;
+                            if (itemType !== 3) { return false; }
+                            custScript = cvi.CustomerScript();
+                            if (!custScript) { return false; }
+                            return custScript.fk_TemplateScriptId() === sbItem.fk_TemplateScriptId();
+                        });
+                        if (item && item.length > 0) {
+                            item = item[0];
+                            logoTemplates.push(new photoTemplatesViewModel(sbItem, item, 1));
+                        }
+                    }
+                }
+
+                self.LogoTemplates(logoTemplates);
+            }
+
+            function registerEvents() {
+                $(function () {
+                    var $elems = $("#brandingCollapse .panel-heading .step-title,#brandingCollapse .panel-heading .step-subtitle,#brandingCollapse .panel-heading .step-done");
+                    $('#brandingPanel')
+                        .on('show.bs.collapse', function () {
+                            $elems.switchClass("collapsed", "opened", transitionTime);
+                        })
+                        .on('hide.bs.collapse', function () {
+                            $elems.switchClass("opened", "collapsed", transitionTime);
+                        });
+                });
+            }
+
             var self = this,
                 transitionTime = 350, /* from bootstrap-transitions */
                 customerTemplateScripts;
@@ -75,7 +129,7 @@ define(["viewModels/photoTemplatesViewModel",
                     self.SelectedSlot(slot);
                 });
             };
-            
+
             self.IsVisible = ko.computed(function () {
                 var length = self.LogoSlots().length;
                 return length > 0;
@@ -90,61 +144,12 @@ define(["viewModels/photoTemplatesViewModel",
                 }
                 return true;
             });
-            
+
             self.StartOpen = ko.observable(false);
-            
-            function loadData(customerTemplateScriptData, videoData) {
-                customerTemplateScripts = customerTemplateScriptData || [];
-                loadVideoData(videoData);
-            }
-
-            function loadVideoData(videoData) {
-                var storyboardData = videoData.Storyboard(),
-                    items = videoData.Items(),
-                    logoTemplates = [],
-                    storyboardItems, i, item, sbItem, sbItemType;
-
-                storyboardItems = storyboardData.Items();
-
-                for (i = 0; i < storyboardItems.length; i++) {
-                    sbItem = storyboardItems[i];
-                    sbItemType = sbItem.fk_StoryboardItemTypeId();
-
-                    // Create template items
-                    if (sbItemType === 1 || sbItemType === 3 || sbItemType === 4 || sbItemType === 5) {
-                        // Look for any photo matches in videoItems
-                        item = $.grep(items, function (cvi) {
-                            var itemType = cvi.fk_CustomerVideoItemTypeId(),
-                                custScript;
-                            if (itemType !== 3) { return false; }
-                            custScript = cvi.CustomerScript();
-                            if (!custScript) { return false; }
-                            return custScript.fk_TemplateScriptId() === sbItem.fk_TemplateScriptId();
-                        });
-                        if (item && item.length > 0) {
-                            item = item[0];
-                            logoTemplates.push(new photoTemplatesViewModel(sbItem, item, 1));
-                        }
-                    }
-                }
-
-                self.LogoTemplates(logoTemplates);
-            }
-            
-            function registerEvents() {
-                $(function () {
-                    var $elems = $("#brandingCollapse .panel-heading .step-title,#brandingCollapse .panel-heading .step-subtitle,#brandingCollapse .panel-heading .step-done");
-                    $('#brandingPanel')
-                        .on('show.bs.collapse', function() {
-                            $elems.switchClass("collapsed", "opened", transitionTime);
-                        })
-                        .on('hide.bs.collapse', function () {
-                            $elems.switchClass("opened", "collapsed", transitionTime);
-                        });
-                });
-            }
 
             loadData(data.CustomerTemplateScripts, video);
             registerEvents();
-        };
+        }
+
+        return ctor;
     });

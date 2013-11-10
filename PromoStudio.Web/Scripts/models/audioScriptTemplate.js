@@ -1,21 +1,10 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
-define(["knockout"], function (ko) {
-    var ctor = function (data) {
-        var self = this,
-            replacementRegex = /\[\[([^\]]+)\]\]/g;
-        data = data || {};
+"use strict";
 
-        self.pk_AudioScriptTemplateId = ko.observable(data.pk_AudioScriptTemplateId || null);
-        self.fk_AudioScriptTemplateStatusId = ko.observable(data.fk_AudioScriptTemplateStatusId || null);
-        self.fk_OrganizationId = ko.observable(data.fk_OrganizationId || null);
-        self.fk_VerticalId = ko.observable(data.fk_VerticalId || null);
-        self.Name = ko.observable(data.Name || null);
-        self.Description = ko.observable(data.Description || null);
-        self.ScriptText = ko.observable(data.ScriptText || null);
-        self.DateCreated = ko.observable(data.DateCreated || null);
-        self.DateUpdated = ko.observable(data.DateUpdated || null);
+define(["knockout"], function (ko) {
+    function ctor (data) {
 
         function getMatches(val, re, i) {
             i = (i || 1);
@@ -32,11 +21,25 @@ define(["knockout"], function (ko) {
 
             return matches;
         }
+        
+        var self = this,
+            replacementRegex = /\[\[([^\]]+)\]\]/g;
+        data = data || {};
+
+        self.pk_AudioScriptTemplateId = ko.observable(data.pk_AudioScriptTemplateId || null);
+        self.fk_AudioScriptTemplateStatusId = ko.observable(data.fk_AudioScriptTemplateStatusId || null);
+        self.fk_OrganizationId = ko.observable(data.fk_OrganizationId || null);
+        self.fk_VerticalId = ko.observable(data.fk_VerticalId || null);
+        self.Name = ko.observable(data.Name || null);
+        self.Description = ko.observable(data.Description || null);
+        self.ScriptText = ko.observable(data.ScriptText || null);
+        self.DateCreated = ko.observable(data.DateCreated || null);
+        self.DateUpdated = ko.observable(data.DateUpdated || null);
 
         self.getScriptVariables = function () {
             return getReplacementItems();
         };
-    };
+    }
 
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);

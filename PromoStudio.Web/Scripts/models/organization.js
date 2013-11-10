@@ -1,8 +1,10 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
+"use strict";
+
 define(["knockout"], function (ko) {
-    var ctor = function (data) {
+    function ctor (data) {
         var self = this;
         data = data || {};
 
@@ -15,7 +17,7 @@ define(["knockout"], function (ko) {
         self.Website = ko.observable(data.Website || null);
         self.DateCreated = ko.observable(data.DateCreated || null);
         self.DateUpdated = ko.observable(data.DateUpdated || null);
-    };
+    }
 
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);

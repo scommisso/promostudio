@@ -7,6 +7,8 @@
 /// <reference path="../lib/ko.custom.js" />
 /// <reference path="../ps/extensions.js" />
 
+"use strict";
+
 define(["viewModels/textItemViewModel",
         "jquery",
         "knockout",
@@ -15,7 +17,7 @@ define(["viewModels/textItemViewModel",
         "ps/logger",
         "bootstrap",
         "jqueryui"
-    ],
+],
     function (
         textItemViewModel,
         $,
@@ -23,41 +25,8 @@ define(["viewModels/textItemViewModel",
         strings,
         enums,
         logger) {
-        return function (data, video) {
-            var self = this,
-                transitionTime = 350, /* from bootstrap-transitions */
-                textTitle = strings.getResource("BuildStep__Num_spots_can_be_customized"),
-                customerTemplateScripts;
-            data = data || {};
-            video = video || {};
+        function ctor(data, video) {
 
-            self.TextTemplateItems = ko.observableArray([]);
-            
-            self.IsVisible = ko.computed(function () {
-                var length = self.TextTemplateItems().length;
-                return length > 0;
-            });
-            self.IsCompleted = ko.computed(function () {
-                var items = self.TextTemplateItems(),
-                    i;
-                for (i = 0; i < items.length; i++) {
-                    if (!items[i].IsCompleted()) {
-                        return false;
-                    }
-                }
-                return true;
-            });
-            
-            self.StartOpen = ko.observable(false);
-            self.TitleText = ko.computed(function () {
-                var length = self.TextTemplateItems().length;
-                if (length === 0) {
-                    length = "no";
-                }
-                return textTitle.format(length,
-                    length === 1 ? "" : "s");
-            });
-            
             function loadData(customerTemplateScriptData, videoData) {
                 customerTemplateScripts = customerTemplateScriptData || [];
                 loadVideoData(videoData);
@@ -112,12 +81,12 @@ define(["viewModels/textItemViewModel",
                 });
                 self.TextTemplateItems(textTemplates);
             }
-            
+
             function registerEvents() {
                 $(function () {
                     var $elems = $("#textCollapse .panel-heading .step-title,#textCollapse .panel-heading .step-subtitle,#textCollapse .panel-heading .step-done");
                     $('#textPanel')
-                        .on('show.bs.collapse', function() {
+                        .on('show.bs.collapse', function () {
                             $elems.switchClass("collapsed", "opened", transitionTime);
                         })
                         .on('hide.bs.collapse', function () {
@@ -126,7 +95,43 @@ define(["viewModels/textItemViewModel",
                 });
             }
 
+            var self = this,
+                transitionTime = 350, /* from bootstrap-transitions */
+                textTitle = strings.getResource("BuildStep__Num_spots_can_be_customized"),
+                customerTemplateScripts;
+            data = data || {};
+            video = video || {};
+
+            self.TextTemplateItems = ko.observableArray([]);
+
+            self.IsVisible = ko.computed(function () {
+                var length = self.TextTemplateItems().length;
+                return length > 0;
+            });
+            self.IsCompleted = ko.computed(function () {
+                var items = self.TextTemplateItems(),
+                    i;
+                for (i = 0; i < items.length; i++) {
+                    if (!items[i].IsCompleted()) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            self.StartOpen = ko.observable(false);
+            self.TitleText = ko.computed(function () {
+                var length = self.TextTemplateItems().length;
+                if (length === 0) {
+                    length = "no";
+                }
+                return textTitle.format(length,
+                    length === 1 ? "" : "s");
+            });
+
             loadData(data.CustomerTemplateScripts, video);
             registerEvents();
-        };
+        }
+
+        return ctor;
     });

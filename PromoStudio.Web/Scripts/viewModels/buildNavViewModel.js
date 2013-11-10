@@ -1,13 +1,16 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
+"use strict";
+
 define(["models/customerVideo",
         "ps/logger",
-        "knockout"], function (
+        "knockout"
+], function (
         customerVideo,
         logger,
         ko) {
-    return function (data) {
+    function ctor(data) {
         var self = this;
         data = data || {};
 
@@ -16,7 +19,7 @@ define(["models/customerVideo",
         self.IsStepCompleted = ko.observable(data.IsStepCompleted || false);
         self.Video = ko.observable(new customerVideo(data.Video || {}));
 
-        self.BeforeStepChange = function(navVm, callback) {
+        self.BeforeStepChange = function (navVm, callback) {
             callback();
         };
         self.StepChange = function (navVm, e) {
@@ -42,7 +45,7 @@ define(["models/customerVideo",
                 }
             });
         };
-        
+
         self.UpdateBuildCookie = function (callback) {
             var ix = self.StepsCompleted.indexOf(self.CurrentStep),
                 cookieData;
@@ -63,10 +66,10 @@ define(["models/customerVideo",
                 data: ko.toJSON(cookieData),
                 contentType: "application/json; charset=utf-8"
             })
-                .done(function() {
+                .done(function () {
                     logger.log("Video checkpoint");
                 })
-                .error(function() {
+                .error(function () {
                     logger.log("Error setting video checkpoint");
                 })
                 .always(function () {
@@ -75,5 +78,7 @@ define(["models/customerVideo",
                     }
                 });
         };
-    };
+    }
+
+    return ctor;
 });

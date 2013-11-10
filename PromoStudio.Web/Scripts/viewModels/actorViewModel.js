@@ -5,6 +5,8 @@
 /// <reference path="../ps/extensions.js" />
 /// <reference path="../models/voiceActor.js" />
 
+"use strict";
+
 define([
         "knockout",
         "strings",
@@ -17,7 +19,7 @@ define([
         strings,
         enums,
         logger) {
-        return function (voiceActor) {
+        function ctor(voiceActor) {
             var self = this;
 
             self.pk_VoiceActorId = voiceActor.pk_VoiceActorId;
@@ -32,5 +34,7 @@ define([
                 if (url === null) { return "none"; }
                 return "url({0})".format(url);
             });
-        };
+        }
+
+        return ctor;
     });

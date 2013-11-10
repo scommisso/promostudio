@@ -8,6 +8,8 @@
 /// <reference path="../ps/extensions.js" />
 /// <reference path="../models/stockAudio.js" />
 
+"use strict";
+
 define(["models/stockAudio",
         "jquery",
         "knockout",
@@ -16,7 +18,7 @@ define(["models/stockAudio",
         "ps/logger",
         "bootstrap",
         "jqueryui"
-    ],
+],
     function (
         stockAudio,
         $,
@@ -24,39 +26,11 @@ define(["models/stockAudio",
         strings,
         enums,
         logger) {
-        return function (data, video) {
-            var self = this,
-                transitionTime = 350, /* from bootstrap-transitions */
-                musicItem = null,
-                customerTemplateScripts;
-            data = data || {};
-            video = video || {};
+        function ctor(data, video) {
 
-            self.AvailableMusic = ko.observableArray([]);
-            self.SelectedMusic = ko.observable(null);
-            self.IsSelected = function (music) {
-                return self.SelectedMusic() === music;
-            };
-            self.SelectMusic = function (music) {
-                if (self.IsSelected(music)) {
-                    self.SelectedMusic(null);
-                    musicItem.fk_CustomerVideoItemId(null);
-                } else {
-                    self.SelectedMusic(music);
-                    musicItem.fk_CustomerVideoItemId(music.pk_StockAudioId());
-                }
-            };
-            
-            self.IsCompleted = ko.computed(function () {
-                var selectedMusic = self.SelectedMusic();
-                return !!selectedMusic;
-            });
-            
-            self.StartOpen = ko.observable(false);
-            
             function loadData(customerTemplateScriptData, stockAudioData, videoData) {
                 var id, songs, song, i;
-                
+
                 customerTemplateScripts = customerTemplateScriptData || [];
                 loadAudioData(stockAudioData);
                 loadVideoData(videoData);
@@ -95,12 +69,12 @@ define(["models/stockAudio",
                     musicItem = musicItems[0];
                 }
             }
-            
+
             function registerEvents() {
                 $(function () {
                     var $elems = $("#musicCollapse .panel-heading .step-title,#musicCollapse .panel-heading .step-subtitle,#musicCollapse .panel-heading .step-done");
                     $('#musicPanel')
-                        .on('show.bs.collapse', function() {
+                        .on('show.bs.collapse', function () {
                             $elems.switchClass("collapsed", "opened", transitionTime);
                         })
                         .on('hide.bs.collapse', function () {
@@ -109,7 +83,38 @@ define(["models/stockAudio",
                 });
             }
 
+            var self = this,
+                transitionTime = 350, /* from bootstrap-transitions */
+                musicItem = null,
+                customerTemplateScripts;
+            data = data || {};
+            video = video || {};
+
+            self.AvailableMusic = ko.observableArray([]);
+            self.SelectedMusic = ko.observable(null);
+            self.IsSelected = function (music) {
+                return self.SelectedMusic() === music;
+            };
+            self.SelectMusic = function (music) {
+                if (self.IsSelected(music)) {
+                    self.SelectedMusic(null);
+                    musicItem.fk_CustomerVideoItemId(null);
+                } else {
+                    self.SelectedMusic(music);
+                    musicItem.fk_CustomerVideoItemId(music.pk_StockAudioId());
+                }
+            };
+
+            self.IsCompleted = ko.computed(function () {
+                var selectedMusic = self.SelectedMusic();
+                return !!selectedMusic;
+            });
+
+            self.StartOpen = ko.observable(false);
+
             loadData(data.CustomerTemplateScripts, data.StockAudio, video);
             registerEvents();
-        };
+        }
+
+        return ctor;
     });

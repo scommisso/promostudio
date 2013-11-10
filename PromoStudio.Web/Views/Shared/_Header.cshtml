@@ -1,6 +1,10 @@
 ﻿@{
     bool useAlternateHeader = false;
-    var user = (PromoStudio.Web.PromoStudioIdentity) Context.User.Identity;
+    var user = Context.User != null
+        && Context.User.Identity != null
+        && Context.User.Identity.IsAuthenticated
+            ? (PromoStudio.Web.PromoStudioIdentity)Context.User.Identity
+            : null;
     if (user != null && user.OrganizationId == 2)
     {
         useAlternateHeader = true;

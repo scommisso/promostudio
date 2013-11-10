@@ -1,8 +1,10 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 
+"use strict";
+
 define(["knockout"], function (ko) {
-    var ctor = function (data) {
+    function ctor (data) {
         var self = this;
         data = data || {};
 
@@ -16,7 +18,7 @@ define(["knockout"], function (ko) {
         self.AudioScriptTemplate.subscribe(function (newValue) {
             var template = self.AudioScriptTemplate(),
                 variables, i;
-            if (template === null) {
+            if (template) {
                 self.ReplacementItems([]);
             }
             else {
@@ -30,7 +32,7 @@ define(["knockout"], function (ko) {
                 self.ReplacementItems(variables);
             }
         });
-    };
+    }
 
     ctor.prototype.toJSON = function () {
         var copy = ko.toJS(this);
