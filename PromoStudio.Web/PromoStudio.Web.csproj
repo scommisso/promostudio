@@ -219,10 +219,10 @@
   <ItemGroup>
     <Content Include="Content\css\bootstrap-lightbox.css" />
     <Content Include="Content\fonts\glyphicons-regular.svg" />
-    <Content Include="Content\img\glyphicons-white.png" />
-    <Content Include="Content\img\glyphicons-white.svg" />
-    <Content Include="Content\img\glyphicons.png" />
-    <Content Include="Content\img\glyphicons.svg" />
+    <Content Include="Content\fonts\glyphicons-white.png" />
+    <Content Include="Content\fonts\glyphicons-white.svg" />
+    <Content Include="Content\fonts\glyphicons.png" />
+    <Content Include="Content\fonts\glyphicons.svg" />
     <Content Include="Content\img\loader-large.gif" />
     <Content Include="Content\img\promoStudio.jpg" />
     <Content Include="Content\img\ps_logo.png" />
