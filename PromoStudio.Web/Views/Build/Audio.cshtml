@@ -7,10 +7,12 @@
 }
 @section scripts {
     <script>
-        require(["viewModels/audioViewModel", "jquery", "bootstrap"], function (audio, $) {
-            $(function () {
-                var vm = new audio(@Html.Raw(JsonConvert.SerializeObject(Model)));
-                vm.Bind(".audioWizard", ".build-steps");
+        require(["viewModels/scaffold"], function () {
+            require(["viewModels/audioViewModel", "jquery", "bootstrap"], function(audio, $) {
+                $(function() {
+                    var vm = new audio(@Html.Raw(JsonConvert.SerializeObject(Model)));
+                    vm.Bind(".audioWizard", ".build-steps");
+                });
             });
         });
     </script>

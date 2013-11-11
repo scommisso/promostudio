@@ -21,11 +21,13 @@
 @section scripts
 {
     <script type="text/javascript">
-        require(["viewModels/loginViewModel"],
-            function (loginViewModel) {
-                var vm = new loginViewModel();
-                vm.pageLoaded();
-            });
+        require(["viewModels/scaffold"], function () {
+            require(["viewModels/loginViewModel"],
+                function(loginViewModel) {
+                    var vm = new loginViewModel();
+                    vm.pageLoaded();
+                });
+        });
     </script>
 }
 <h1>@ViewBag.Title</h1>

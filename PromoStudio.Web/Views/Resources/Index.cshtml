@@ -5,15 +5,17 @@
 @section scripts
 {
     <script type="text/javascript">
-        require(["viewModels/resourcesViewModel", "jquery", "knockout"],
-            function (resourcesViewModel, $, ko) {
-                $(function () {
-                    var container = $("div.main-container div[data-pjax-container]")[0],
-                        vm = new resourcesViewModel();
-                    vm.pageLoaded();
-                    ko.applyBindings(vm, container);
+        require(["viewModels/scaffold"], function () {
+            require(["viewModels/resourcesViewModel", "jquery", "knockout"],
+                function(resourcesViewModel, $, ko) {
+                    $(function() {
+                        var container = $("div.main-container div[data-pjax-container]")[0],
+                            vm = new resourcesViewModel();
+                        vm.pageLoaded();
+                        ko.applyBindings(vm, container);
+                    });
                 });
-            });
+        });
     </script>
 }
 <h1>@ViewBag.Title</h1>

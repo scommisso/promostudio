@@ -2,21 +2,24 @@
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 /// <reference path="../models/customer.js" />
 /// <reference path="../models/customerVideo.js" />
+/// <reference path="../viewModels/customerVideoViewModel.js" />
 
 "use strict";
 
 define([
-        "models/customer",
-        "models/customerVideo",
-        "ps/logger",
-        "jquery",
-        "knockout"
+    "models/customer",
+    "models/customerVideo",
+    "viewModels/customerVideoViewModel",
+    "ps/logger",
+    "jquery",
+    "knockout"
 ], function (
-            customer,
-            customerVideo,
-            logger,
-            $,
-            ko
+    customer,
+    customerVideo,
+    customerVideoViewModel,
+    logger,
+    $,
+    ko
     ) {
     function ctor(data) {
         var self = this;
@@ -51,19 +54,17 @@ define([
                 item = videos[i];
                 match = findMatchingVideo(item);
                 if (match === null) {
-                    newVideos.push(new customerVideo(item));
+                    newVideos.push(
+                        new customerVideoViewModel(
+                        new customerVideo(item)));
                 } else {
-                    updateField(match, item, "fk_CustomerId");
                     updateField(match, item, "fk_CustomerVideoRenderStatusId");
                     updateField(match, item, "fk_StoryboardId");
                     updateField(match, item, "Name");
                     updateField(match, item, "Description");
                     updateField(match, item, "RenderFailureMessage");
-                    updateField(match, item, "DateCreated");
                     updateField(match, item, "DateUpdated");
                     updateField(match, item, "DateCompleted");
-                    updateField(match, item, "PreviewFilePath");
-                    updateField(match, item, "CompletedFilePath");
                     updateField(match, item, "VidyardVideoId");
                     updateField(match, item, "VidyardPlayerId");
                     updateField(match, item, "VidyardPlayerUuid");

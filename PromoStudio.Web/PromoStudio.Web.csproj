@@ -204,9 +204,11 @@
     <Content Include="Content\img\jplayer.blue.monday.seeking.gif" />
     <Content Include="Content\img\jplayer.blue.monday.video.play.png" />
     <Content Include="Content\img\qsciences_logo2.png" />
+    <Content Include="Scripts\optimizedRequireConfig.js" />
     <Content Include="Scripts\lib\ko.jplayer.js" />
     <Content Include="Scripts\lib\Jplayer.swf" />
     <Content Include="Scripts\lib\jquery.jplayer.js" />
+    <Content Include="Scripts\viewModels\customerVideoViewModel.js" />
     <Content Include="Scripts\viewModels\textItemViewModel.js" />
     <Compile Include="ViewModels\BuildCookieViewModel.cs" />
     <Compile Include="ViewModels\BuildViewModelBase.cs" />

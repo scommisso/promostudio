@@ -105,10 +105,13 @@
 
     @RenderSection("modals", required: false)
     <script src="@Url.Content("~/Scripts/require.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/requireConfig.js")"></script>
     @if (useOptimizedScripts)
     {
-    <script src="@Url.Content("~/optimizedScripts/viewModels/scaffold.js")"></script>
+    <script src="@Url.Content("~/Scripts/optimizedrequireConfig.js")"></script>
+    }
+    else
+    {
+    <script src="@Url.Content("~/Scripts/requireConfig.js")"></script>
     }
     <script type="text/javascript">
         require(["viewModels/scaffold"], function (scaffold) {

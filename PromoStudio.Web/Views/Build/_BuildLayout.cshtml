@@ -13,18 +13,20 @@
 }
 @section scripts {
     <script>
-        require(["viewModels/buildNavViewModel", "jquery", "knockout"], function(buildNavViewModel, $, ko) {
-            $(function () {
-                var navVm = new buildNavViewModel({
-                    Video: @Html.Raw(JsonConvert.SerializeObject(Model.Video)),
-                    CurrentStep: @Html.Raw(@Model.CurrentStep),
-                    StepsCompleted: @Html.Raw(JsonConvert.SerializeObject(Model.StepsCompleted)),
-                    IsStepCompleted: @Html.Raw(Model.IsStepCompleted(Model.CurrentStep).ToString().ToLower()),
+        require(["viewModels/scaffold"], function() {
+            require(["viewModels/buildNavViewModel", "jquery", "knockout"], function(buildNavViewModel, $, ko) {
+                $(function() {
+                    var navVm = new buildNavViewModel({
+                        Video: @Html.Raw(JsonConvert.SerializeObject(Model.Video)),
+                        CurrentStep: @Html.Raw(@Model.CurrentStep),
+                        StepsCompleted: @Html.Raw(JsonConvert.SerializeObject(Model.StepsCompleted)),
+                        IsStepCompleted: @Html.Raw(Model.IsStepCompleted(Model.CurrentStep).ToString().ToLower()),
+                    });
+                    ko.applyBindings(navVm, $(".build-steps")[0]);
+                    ko.applyBindings(navVm, $(".nav.navbar-nav")[0]);
                 });
-                ko.applyBindings(navVm, $(".build-steps")[0]);
-                ko.applyBindings(navVm, $(".nav.navbar-nav")[0]);
             });
-        })
+        });
     </script>
     @RenderSection("scripts", required: false)
 }

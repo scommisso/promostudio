@@ -7,10 +7,12 @@
 }
 @section scripts {
     <script>
-        require(["viewModels/footageViewModel", "jquery"], function (footage, $) {
-            $(function () {
-                var vm = new footage(@Html.Raw(JsonConvert.SerializeObject(Model)));
-                vm.Bind(".thumbcontainer", ".build-steps");
+        require(["viewModels/scaffold"], function () {
+            require(["viewModels/footageViewModel", "jquery"], function(footage, $) {
+                $(function() {
+                    var vm = new footage(@Html.Raw(JsonConvert.SerializeObject(Model)));
+                    vm.Bind(".thumbcontainer", ".build-steps");
+                });
             });
         });
     </script>

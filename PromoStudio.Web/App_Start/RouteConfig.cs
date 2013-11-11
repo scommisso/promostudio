@@ -12,6 +12,12 @@ namespace PromoStudio.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                name: "OptimizedScripts",
+                url: "optimizedScripts/{action}/{id}",
+                defaults: new { controller = "Scripts", action = "Index", id = UrlParameter.Optional }
+            );
             
             routes.MapRoute(
                 name: "Default",

@@ -6,15 +6,17 @@
 @section scripts
 {
     <script type="text/javascript">
-        require(["viewModels/videosViewModel", "jquery", "knockout"],
-            function (videosVm, $, ko) {
-                $(function () {
-                    var container = $("div.main-container div[data-pjax-container]")[0],
-                        vm = new videosVm();
-                    vm.pageLoaded();
-                    ko.applyBindings(vm, container);
+        require(["viewModels/scaffold"], function () {
+            require(["viewModels/videosViewModel", "jquery", "knockout"],
+                function(videosVm, $, ko) {
+                    $(function() {
+                        var container = $("div.main-container div[data-pjax-container]")[0],
+                            vm = new videosVm();
+                        vm.pageLoaded();
+                        ko.applyBindings(vm, container);
+                    });
                 });
-            });
+        });
     </script>
 }
 <h1>@ViewBag.Title</h1>

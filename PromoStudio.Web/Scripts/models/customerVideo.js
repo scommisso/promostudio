@@ -1,7 +1,8 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="customerVideoVoiceOver.js" />
 /// <reference path="customerVideoItem.js" />
-/// <reference path="enums.js" />
+/// <reference path="storyboard.js" />
 
 "use strict";
 
@@ -9,19 +10,12 @@ define([
     "models/customerVideoItem",
     "models/storyboard",
     "models/customerVideoVoiceOver",
-    "knockout",
-    "ps/vidyardPlayer",
-    "models/enums",
-    "strings",
-    "ps/extensions"
+    "knockout"
 ], function (
         customerVideoItem,
         storyboard,
         customerVideoVoiceOver,
-        ko,
-        vPlayer,
-        enums,
-        strings) {
+        ko) {
     function ctor (data) {
         var self = this;
         data = data || {};
@@ -45,91 +39,6 @@ define([
         self.Storyboard = ko.observable(null);
         self.VoiceOver = ko.observable(null);
         self.Items = ko.observableArray([]);
-
-        self.CustomerVideoRenderStatus = ko.computed(function () {
-            var id = self.fk_CustomerVideoRenderStatusId();
-            return enums.customerVideoRenderStatus(id);
-        });
-        self.IsHosted = ko.computed(function () {
-            var vId = self.VidyardPlayerUuid();
-            return (!!vId);
-        });
-        self.IsIncomplete = ko.computed(function () {
-            var id = self.fk_CustomerVideoRenderStatusId();
-            return id !== 15;
-        });
-        self.LinkUrl = ko.computed(function () {
-            var previewPath = self.PreviewFilePath(),
-                completedPath = self.CompletedFilePath(),
-                displayPath = completedPath || previewPath;
-            if (displayPath === null) { return "javascript:void(0);"; }
-            return displayPath;
-        });
-        self.LinkFileName = ko.computed(function () {
-            var previewPath = self.PreviewFilePath(),
-                completedPath = self.CompletedFilePath(),
-                displayPath = completedPath || previewPath,
-                ix;
-            if (!displayPath) { return null; }
-            ix = displayPath.lastIndexOf("\\");
-            if (ix === -1) { ix = displayPath.lastIndexOf("/"); }
-            if (ix === -1) { return displayPath; }
-            displayPath = displayPath.substring(ix + 1);
-            ix = displayPath.indexOf("?");
-            if (ix !== -1) { displayPath = displayPath.substring(0, ix); }
-            return displayPath;
-        });
-        
-        self.ThumbnailUrl = ko.computed(function () {
-            var vId = self.VidyardPlayerUuid();
-            if (!vId) { return null; }
-            return strings.getResource("Vidyard__ThumbnailUrl").format(vId);
-        });
-
-        self.ThumbnailBackground = ko.computed(function () {
-            var url = self.ThumbnailUrl();
-            if (url) {
-                return "url('{0}')".format(url);
-            }
-            return "none";
-        });
-
-        self.PlayerUrl = ko.computed(function () {
-            var vId = self.VidyardPlayerUuid(),
-                statusId = self.fk_CustomerVideoRenderStatusId(),
-                url;
-            if (!vId) { return null; }
-            url = strings.getResource("Vidyard__PlayerUrl").format(vId);
-            return url;
-        });
-
-        self.InlineEmbedCode = ko.computed(function () {
-            var vId = self.VidyardPlayerUuid();
-            if (!vId) { return null; }
-            return strings.getResource("Vidyard__InlineEmbed").format(vId);
-        });
-
-        self.LightboxEmbedCode = ko.computed(function () {
-            var vId = self.VidyardPlayerUuid();
-            if (!vId) { return null; }
-            return strings.getResource("Vidyard__LightboxEmbed").format(
-                vId, vId.replace(/-/g, "$"), self.Name());
-        });
-
-        self.Player = null;
-
-        self.LoadPlayer = function () {
-            self.Player = new vPlayer({ VideoId: self.VidyardPlayerUuid() });
-        };
-        self.PlayLightbox = function (d, e) {
-            if (!self.Player && self.VidyardPlayerUuid()) {
-                self.LoadPlayer();
-            }
-            if (self.Player) {
-                self.Player.ShowLightbox();
-            }
-            e.stopImmediatePropagation();
-        };
 
         self.LoadItems = function (storyboardData, voiceOverData, items) {
             var i, item;
@@ -164,16 +73,6 @@ define([
         delete copy.CompletedFilePath;
         delete copy.Storyboard;
         delete copy.CustomerVideoRenderStatus;
-        delete copy.IsHosted;
-        delete copy.IsIncomplete;
-        delete copy.LinkUrl;
-        delete copy.LinkFileName;
-        delete copy.ThumbnailUrl;
-        delete copy.ThumbnailBackground;
-        delete copy.PlayerUrl;
-        delete copy.InlineEmbedCode;
-        delete copy.LightboxEmbedCode;
-        delete copy.Player;
 
         return copy;
     };
