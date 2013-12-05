@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AmazonS3StorageProvider_Tests.cs" />
+    <Compile Include="VimeoStreamingProvider_Tests.cs" />
     <Compile Include="VidyardStreamingProvider_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

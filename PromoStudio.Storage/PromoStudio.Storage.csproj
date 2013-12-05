@@ -61,6 +61,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AmazonS3StorageProvider.cs" />
+    <Compile Include="FileSystemStorageProvider.cs" />
+    <Compile Include="VimeoStreamingProvider.cs" />
     <Compile Include="IStorageProvider.cs" />
     <Compile Include="IStreamingProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +90,10 @@
     <ProjectReference Include="..\PromoStudio.Common\PromoStudio.Common.csproj">
       <Project>{6e9aafa0-e570-46a1-a5a1-6e4484e3555b}</Project>
       <Name>PromoStudio.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VimeoAPI\VimeoAPI.csproj">
+      <Project>{a1c45cc0-c830-4bfe-9be1-0503991fab26}</Project>
+      <Name>VimeoAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

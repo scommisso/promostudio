@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VimeoAPI", "VimeoAPI\VimeoAPI.csproj", "{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{F627004F-D91D-4995-B8A9-2086C056A784}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BD0C0471-9543-4DC0-9D90-156385F2AE02}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+		VimeoDotNet.vsmdi = VimeoDotNet.vsmdi
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs05
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = VimeoAPI\\VimeoAPI.csproj
+		SccProjectName1 = VimeoAPI
+		SccLocalPath1 = VimeoAPI
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = VimeoDotNet.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Release|x86.ActiveCfg = Release|Any CPU
+		{F627004F-D91D-4995-B8A9-2086C056A784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F627004F-D91D-4995-B8A9-2086C056A784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F627004F-D91D-4995-B8A9-2086C056A784}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F627004F-D91D-4995-B8A9-2086C056A784}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F627004F-D91D-4995-B8A9-2086C056A784}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F627004F-D91D-4995-B8A9-2086C056A784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F627004F-D91D-4995-B8A9-2086C056A784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F627004F-D91D-4995-B8A9-2086C056A784}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F627004F-D91D-4995-B8A9-2086C056A784}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F627004F-D91D-4995-B8A9-2086C056A784}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

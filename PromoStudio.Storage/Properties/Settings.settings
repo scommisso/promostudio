@@ -26,5 +26,20 @@
     <Setting Name="VidyardApiSecret" Type="System.String" Scope="Application">
       <Value Profile="(Default)">goldmine</Value>
     </Setting>
+    <Setting Name="VimeoApiClientId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">2eff82107e5b7abb7b83889168a5385d4546be90</Value>
+    </Setting>
+    <Setting Name="VimeoApiClientSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">802c6e4ef26ca3df7dcc956c7c2f0514d927507c</Value>
+    </Setting>
+    <Setting Name="VimeoApiAccessToken" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">6ab2b3453d507d15e84616b92b7c58d8</Value>
+    </Setting>
+    <Setting Name="VimeoApiAccessTokenSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">4d5f61bd6ae663c62937b522aa37a059f2d69c86</Value>
+    </Setting>
+    <Setting Name="VimeoApiPresetId" Type="System.Int64" Scope="Application">
+      <Value Profile="(Default)">358907</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
