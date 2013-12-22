@@ -27,16 +27,16 @@
       <Value Profile="(Default)">goldmine</Value>
     </Setting>
     <Setting Name="VimeoApiClientId" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">2eff82107e5b7abb7b83889168a5385d4546be90</Value>
+      <Value Profile="(Default)">d46e4b11bc1d52a70a3c86ce4014667c6f8a7816</Value>
     </Setting>
     <Setting Name="VimeoApiClientSecret" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">802c6e4ef26ca3df7dcc956c7c2f0514d927507c</Value>
+      <Value Profile="(Default)">9386add8a2a2919c24c7a341ca673dbb1930d2c4</Value>
     </Setting>
     <Setting Name="VimeoApiAccessToken" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">6ab2b3453d507d15e84616b92b7c58d8</Value>
+      <Value Profile="(Default)">2ab50b80be96906ad305a25414b36e2d</Value>
     </Setting>
     <Setting Name="VimeoApiAccessTokenSecret" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">4d5f61bd6ae663c62937b522aa37a059f2d69c86</Value>
+      <Value Profile="(Default)">f0feea423cb655950dc00b5c98651b122dedd877</Value>
     </Setting>
     <Setting Name="VimeoApiPresetId" Type="System.Int64" Scope="Application">
       <Value Profile="(Default)">358907</Value>
