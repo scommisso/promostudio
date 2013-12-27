@@ -1,0 +1,10 @@
+﻿@model PromoStudio.Web.ViewModels.AccountViewModelBase
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Navigation {
+    @Html.Partial("_AccountNavigation", Model)
+}
+
+@RenderBody()

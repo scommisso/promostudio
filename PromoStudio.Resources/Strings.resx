@@ -129,8 +129,8 @@
   <data name="BuildStep__Audio" xml:space="preserve">
     <value>Audio</value>
   </data>
-  <data name="BuildStep__Branding" xml:space="preserve">
-    <value>Branding</value>
+  <data name="BuildStep__Customize" xml:space="preserve">
+    <value>Customize</value>
   </data>
   <data name="BuildStep__Choose_your_template" xml:space="preserve">
     <value>Choose your template</value>
@@ -147,8 +147,8 @@
   <data name="BuildStep__Script" xml:space="preserve">
     <value>Script</value>
   </data>
-  <data name="BuildStep__Summary" xml:space="preserve">
-    <value>Summary</value>
+  <data name="BuildStep__Preview" xml:space="preserve">
+    <value>Preview</value>
   </data>
   <data name="Error_period" xml:space="preserve">
     <value>Error.</value>
@@ -159,8 +159,8 @@
   <data name="Login__Welcome_back" xml:space="preserve">
     <value>Welcome back, {0}!</value>
   </data>
-  <data name="Navigation__Build" xml:space="preserve">
-    <value>Build</value>
+  <data name="Navigation__Video_Builder" xml:space="preserve">
+    <value>Video Builder</value>
   </data>
   <data name="Navigation__Create_a_new_video" xml:space="preserve">
     <value>Create a new video</value>
@@ -171,11 +171,11 @@
   <data name="Navigation__View_your_video_library" xml:space="preserve">
     <value>View your video library</value>
   </data>
-  <data name="Next_step" xml:space="preserve">
-    <value>Next step</value>
+  <data name="Next_Step" xml:space="preserve">
+    <value>Next Step</value>
   </data>
-  <data name="Previous_step" xml:space="preserve">
-    <value>Previous step</value>
+  <data name="Previous_Step" xml:space="preserve">
+    <value>Previous Step</value>
   </data>
   <data name="PromoStudio" xml:space="preserve">
     <value>PromoStudio</value>
@@ -342,11 +342,11 @@
   <data name="BuildStep__Choose_your_logo_placements" xml:space="preserve">
     <value>Choose your logo placements</value>
   </data>
-  <data name="Log_out" xml:space="preserve">
-    <value>Log out</value>
+  <data name="Sign_Out" xml:space="preserve">
+    <value>Sign Out</value>
   </data>
-  <data name="BuildStep__Choose_your_background_music_track" xml:space="preserve">
-    <value>Choose your background music track</value>
+  <data name="BuildStep__Choose_your_background_music" xml:space="preserve">
+    <value>Choose your background music</value>
   </data>
   <data name="BuildStep__Choose_your_voiceover_talent" xml:space="preserve">
     <value>Choose your voiceover talent</value>
@@ -388,5 +388,14 @@
   </data>
   <data name="VideoRenderStatus__InProgressHostProcessing" xml:space="preserve">
     <value>Generating Player</value>
+  </data>
+  <data name="Sign_In" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="BuildStep__Select_your_Audio" xml:space="preserve">
+    <value>Select your Audio</value>
+  </data>
+  <data name="play" xml:space="preserve">
+    <value>play</value>
   </data>
 </root>

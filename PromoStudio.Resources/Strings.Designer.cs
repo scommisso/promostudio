@@ -97,15 +97,6 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Branding.
-        /// </summary>
-        public static string BuildStep__Branding {
-            get {
-                return ResourceManager.GetString("BuildStep__Branding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Build.
         /// </summary>
         public static string BuildStep__Build {
@@ -151,11 +142,11 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose your background music track.
+        ///   Looks up a localized string similar to Choose your background music.
         /// </summary>
-        public static string BuildStep__Choose_your_background_music_track {
+        public static string BuildStep__Choose_your_background_music {
             get {
-                return ResourceManager.GetString("BuildStep__Choose_your_background_music_track", resourceCulture);
+                return ResourceManager.GetString("BuildStep__Choose_your_background_music", resourceCulture);
             }
         }
         
@@ -183,6 +174,15 @@ namespace PromoStudio.Resources {
         public static string BuildStep__Choose_your_voiceover_talent {
             get {
                 return ResourceManager.GetString("BuildStep__Choose_your_voiceover_talent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customize.
+        /// </summary>
+        public static string BuildStep__Customize {
+            get {
+                return ResourceManager.GetString("BuildStep__Customize", resourceCulture);
             }
         }
         
@@ -232,6 +232,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string BuildStep__Preview {
+            get {
+                return ResourceManager.GetString("BuildStep__Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Review your video.
         /// </summary>
         public static string BuildStep__Review_your_video {
@@ -259,11 +268,11 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Summary.
+        ///   Looks up a localized string similar to Select your Audio.
         /// </summary>
-        public static string BuildStep__Summary {
+        public static string BuildStep__Select_your_Audio {
             get {
-                return ResourceManager.GetString("BuildStep__Summary", resourceCulture);
+                return ResourceManager.GetString("BuildStep__Select_your_Audio", resourceCulture);
             }
         }
         
@@ -313,15 +322,6 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Log out.
-        /// </summary>
-        public static string Log_out {
-            get {
-                return ResourceManager.GetString("Log_out", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Welcome, {0} ({1}).
         /// </summary>
         public static string Login__Welcome {
@@ -349,20 +349,20 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Build.
-        /// </summary>
-        public static string Navigation__Build {
-            get {
-                return ResourceManager.GetString("Navigation__Build", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Create a new video.
         /// </summary>
         public static string Navigation__Create_a_new_video {
             get {
                 return ResourceManager.GetString("Navigation__Create_a_new_video", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video Builder.
+        /// </summary>
+        public static string Navigation__Video_Builder {
+            get {
+                return ResourceManager.GetString("Navigation__Video_Builder", resourceCulture);
             }
         }
         
@@ -385,11 +385,11 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next step.
+        ///   Looks up a localized string similar to Next Step.
         /// </summary>
-        public static string Next_step {
+        public static string Next_Step {
             get {
-                return ResourceManager.GetString("Next_step", resourceCulture);
+                return ResourceManager.GetString("Next_Step", resourceCulture);
             }
         }
         
@@ -403,11 +403,20 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Previous step.
+        ///   Looks up a localized string similar to play.
         /// </summary>
-        public static string Previous_step {
+        public static string play {
             get {
-                return ResourceManager.GetString("Previous_step", resourceCulture);
+                return ResourceManager.GetString("play", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous Step.
+        /// </summary>
+        public static string Previous_Step {
+            get {
+                return ResourceManager.GetString("Previous_Step", resourceCulture);
             }
         }
         
@@ -516,6 +525,24 @@ namespace PromoStudio.Resources {
         public static string ScriptItemType__Video {
             get {
                 return ResourceManager.GetString("ScriptItemType__Video", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign In.
+        /// </summary>
+        public static string Sign_In {
+            get {
+                return ResourceManager.GetString("Sign_In", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign Out.
+        /// </summary>
+        public static string Sign_Out {
+            get {
+                return ResourceManager.GetString("Sign_Out", resourceCulture);
             }
         }
         

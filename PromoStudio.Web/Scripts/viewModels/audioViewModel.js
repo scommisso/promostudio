@@ -18,7 +18,6 @@ define([
         "strings",
         "models/enums",
         "ps/logger",
-        "bootstrap",
         "lib/ko.custom",
         "lib/ko.jplayer"
 ], function (
@@ -84,7 +83,6 @@ define([
         self.ActorSection = ko.observable({});
 
         self.Bind = function (selector, navSelector) {
-            ko.applyBindings(self, $(selector)[0]);
             ko.callbackOnBind($(navSelector)[0], function (navVm) {
                 isStepCompleted = navVm.IsStepCompleted;
                 video = navVm.Video;
@@ -93,6 +91,7 @@ define([
                 loadVideoData(video());
 
                 self.IsCompleted(); // check completed status
+                ko.applyBindings(self, $(selector)[0]);
             }, 1000);
         };
         self.IsCompleted = ko.computed(function () {

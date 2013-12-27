@@ -7,7 +7,7 @@
 "use strict";
 
 define(["ps/logger",
-    "jquery",
+    "jqueryui",
     "knockout",
     "lib/jquery-scrolltofixed"],
     function (logger, $, ko) {

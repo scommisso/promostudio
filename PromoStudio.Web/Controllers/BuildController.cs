@@ -96,7 +96,7 @@ namespace PromoStudio.Web.Controllers
                 CurrentUser.OrganizationId, CurrentUser.VerticalId));
 
             var data = GetFromCookie();
-            var vm = new FootageViewModel()
+            var vm = new FootageViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 StepsCompleted = (data == null || data.CompletedSteps == null)
                     ? new List<int>()
@@ -181,7 +181,7 @@ namespace PromoStudio.Web.Controllers
                 }
             }
 
-            var vm = new BrandingViewModel()
+            var vm = new BrandingViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 Organization = organization,
                 Video = data.Video,
@@ -202,7 +202,7 @@ namespace PromoStudio.Web.Controllers
 
 
             var data = GetFromCookie();
-            var vm = new ScriptViewModel()
+            var vm = new ScriptViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 Video = data.Video,
                 StepsCompleted = new List<int>(data.CompletedSteps)
@@ -216,12 +216,12 @@ namespace PromoStudio.Web.Controllers
         [ActionName("Audio")]
         public async Task<ActionResult> Audio()
         {
-            if (!ValidateUserStep(4))
-            {
-                return new RedirectResult("~/Build");
-            }
+            //if (!ValidateUserStep(4))
+            //{
+            //    return new RedirectResult("~/Build");
+            //}
 
-            var data = GetFromCookie();
+            //var data = GetFromCookie();
 
             var stockAudioTask = _dataService.StockAudio_SelectByOrganizationIdAndVerticalIdAsync(
                 CurrentUser.OrganizationId, CurrentUser.VerticalId);
@@ -232,12 +232,12 @@ namespace PromoStudio.Web.Controllers
             var stockAudio = stockAudioTask.Result.ToList();
             var voiceActors = actorTask.Result.ToList();
 
-            var vm = new AudioViewModel()
+            var vm = new AudioViewModel(Request.RequestContext.HttpContext, RouteData)
             {
-                Video = data.Video,
+                Video = new CustomerVideo(),//data.Video,
                 StockAudio = stockAudio,
                 VoiceActors = voiceActors,
-                StepsCompleted = new List<int>(data.CompletedSteps)
+                StepsCompleted = new List<int>(new int[] { 1, 2, 3, 4} )//new List<int>(data.CompletedSteps)
             };
 
             return PAjax("Audio", model: vm);
@@ -254,7 +254,7 @@ namespace PromoStudio.Web.Controllers
             }
 
             var data = GetFromCookie();
-            var vm = new SummaryViewModel()
+            var vm = new SummaryViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 Video = data.Video,
                 StepsCompleted = new List<int>(data.CompletedSteps)

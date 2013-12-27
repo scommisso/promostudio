@@ -1,23 +1,4 @@
-﻿@{
-    bool useAlternateHeader = false;
-    var user = Context.User != null
-        && Context.User.Identity != null
-        && Context.User.Identity.IsAuthenticated
-            ? (PromoStudio.Web.PromoStudioIdentity)Context.User.Identity
-            : null;
-    if (user != null && user.OrganizationId == 2)
-    {
-        useAlternateHeader = true;
-    }
-}
-
-@if (useAlternateHeader)
-{
-<span style="width:210px;height:60px;display:inline-block;margin-top:-14px;">
-    <img src="~/Content/img/qsciences_logo.png" alt="Q Sciences" />
-</span>
-}
-else
-{
-<h1><strong>White</strong>Label</h1>
-}
+﻿@using PromoStudio.Resources
+<strong class="logo">
+    <a href="@Url.Action("Index", "Home")">@Strings.PromoStudio</a>
+</strong>

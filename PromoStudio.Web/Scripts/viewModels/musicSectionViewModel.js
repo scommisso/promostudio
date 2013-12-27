@@ -15,9 +15,7 @@ define(["models/stockAudio",
         "knockout",
         "strings",
         "models/enums",
-        "ps/logger",
-        "bootstrap",
-        "jqueryui"
+        "ps/logger"
 ],
     function (
         stockAudio,
@@ -70,19 +68,6 @@ define(["models/stockAudio",
                 }
             }
 
-            function registerEvents() {
-                $(function () {
-                    var $elems = $("#musicCollapse .panel-heading .step-title,#musicCollapse .panel-heading .step-subtitle,#musicCollapse .panel-heading .step-done");
-                    $('#musicPanel')
-                        .on('show.bs.collapse', function () {
-                            $elems.switchClass("collapsed", "opened", transitionTime);
-                        })
-                        .on('hide.bs.collapse', function () {
-                            $elems.switchClass("opened", "collapsed", transitionTime);
-                        });
-                });
-            }
-
             var self = this,
                 transitionTime = 350, /* from bootstrap-transitions */
                 musicItem = null,
@@ -113,7 +98,6 @@ define(["models/stockAudio",
             self.StartOpen = ko.observable(false);
 
             loadData(data.CustomerTemplateScripts, data.StockAudio, video);
-            registerEvents();
         }
 
         return ctor;

@@ -6,24 +6,37 @@
 }
 
 @section Navigation {
-    @Html.Partial("_BuildNavigation", Model)
+    <ul class="progress-bar">
+    @for (int i = 1; i <= 5; i++)
+    {
+        string classes = Model.GetStepClass(i);
+        if (i == Model.CurrentStep) {
+            classes += " active";
+        }
+        else if (Model.IsStepCompleted(i))
+        {
+            classes += " done";
+        }	    <li class="@classes"><span>@Model.GetStepTitle(i)</span></li>
+    }    </ul>
 }
+
 @section modals {
     @RenderSection("modals", required: false)
 }
+
 @section scripts {
     <script>
         require(["viewModels/scaffold"], function() {
-            require(["viewModels/buildNavViewModel", "jquery", "knockout"], function(buildNavViewModel, $, ko) {
+            require(["viewModels/buildNavViewModel", "jqueryui", "knockout"], function(buildNavViewModel, $, ko) {
                 $(function() {
                     var navVm = new buildNavViewModel({
                         Video: @Html.Raw(JsonConvert.SerializeObject(Model.Video)),
-                        CurrentStep: @Html.Raw(@Model.CurrentStep),
+                        CurrentStep: @Html.Raw(Model.CurrentStep),
                         StepsCompleted: @Html.Raw(JsonConvert.SerializeObject(Model.StepsCompleted)),
                         IsStepCompleted: @Html.Raw(Model.IsStepCompleted(Model.CurrentStep).ToString().ToLower()),
                     });
-                    ko.applyBindings(navVm, $(".build-steps")[0]);
-                    ko.applyBindings(navVm, $(".nav.navbar-nav")[0]);
+                    ko.applyBindings(navVm, $(".switcher")[0]);
+                    ko.applyBindings(navVm, $(".progress-bar")[0]);
                 });
             });
         });
@@ -31,31 +44,30 @@
     @RenderSection("scripts", required: false)
 }
 
-@RenderBody()
-<div class="build-steps clearfix">
+<!-- bar -->
+<div class="bar">
+	<!-- switcher -->
+	<div class="switcher">
 @if (Model.CurrentStep > 1)
 {
-    <a data-pjax data-bind="click: StepChange" href="@Url.Action(Model.GetStepTitle(Model.CurrentStep - 1), "Build")">
-        <div class="build-step build-previous-step clearfix">
-            <span class="glyphicons circle_arrow_left"></span>
-            <label>
-                @Strings.Previous_step
-                <span class="muted">@Model.GetStepDescription(Model.CurrentStep - 1)</span>
-            </label>
-        </div>
-    </a>
+		<div class="btn-prev disabled" data-bind="css: { 'disabled': false }">
+			<span></span>
+			<a data-pjax data-bind="click: StepChange" href="@Url.Action(Model.GetStepTitle(Model.CurrentStep - 1), "Build")">
+                @Strings.Previous_Step
+			</a>
+		</div>
 }
 @if (Model.CurrentStep < 5)
 {
-    <a data-pjax data-bind="click: StepChange, css: { notready: !IsStepCompleted() }" href="@Url.Action(Model.GetStepTitle(Model.CurrentStep + 1), "Build")"
-        @Html.Raw(Model.GetFooterClassAttribute(Model.CurrentStep + 1))>
-        <div class="build-step build-next-step clearfix">
-            <span class="glyphicons circle_arrow_right"></span>
-            <label>
-                @Strings.Next_step
-                <span class="muted">@Model.GetStepDescription(Model.CurrentStep + 1)</span>
-            </label>
-        </div>
-    </a>
+		<div class="btn-next disabled" data-bind="css: { 'disabled': !IsStepCompleted() }">
+			<span></span>
+            <a data-pjax data-bind="click: StepChange, css: { 'notready': !IsStepCompleted() }" href="@Url.Action(Model.GetStepTitle(Model.CurrentStep + 1), "Build")">
+			    @Strings.Next_Step
+            </a>
+		</div>
 }
+	</div>
+	<span>Step @Model.CurrentStep: @Model.GetStepDescription(Model.CurrentStep)</span>
 </div>
+
+@RenderBody()

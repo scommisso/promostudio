@@ -1,5 +1,6 @@
 ﻿using log4net;
 using PromoStudio.Data;
+using PromoStudio.Web.ViewModels;
 using System.Web.Mvc;
 
 namespace PromoStudio.Web.Controllers
@@ -15,7 +16,12 @@ namespace PromoStudio.Web.Controllers
         // GET: /Home/
         public ActionResult Index()
         {
-            return PAjax();
+            var vm = new HomeViewModel(Request.RequestContext.HttpContext, RouteData);
+            if (vm.User != null)
+            {
+                return RedirectToAction("Index", "Account");
+            }
+            return View(vm);
         }
 
         //

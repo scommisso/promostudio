@@ -1,21 +1,7 @@
 ﻿@using PromoStudio.Resources
-@model PromoStudio.Web.PromoStudioPrincipal
+@model PromoStudio.Web.ViewModels.HomeViewModel
 @{
-    ViewBag.Title = "Welcome to PromoStudio";
-    string firstName = null;
-    var user = Context.User != null
-        && Context.User.Identity != null
-        && Context.User.Identity.IsAuthenticated
-            ? (PromoStudio.Web.PromoStudioIdentity)Context.User.Identity
-            : null;
-    if (user != null)
-    {
-        firstName = user.FullName;
-        int ix = firstName.IndexOf(" ");
-        if (ix > 0) {
-            firstName = firstName.Substring(0, ix);
-        }
-    }
+    ViewBag.Title = Strings.Sign_In;
 }
 
 @section scripts
@@ -30,30 +16,25 @@
         });
     </script>
 }
-<h1>@ViewBag.Title</h1>
-<hr />
 
-<!-- Jumbotron -->
-<div class="jumbotron">
+@section Navigation {
+}
     
-    @if (user == null) {
-        <div id="loginButtons">
-            <a id="fbLogin" class="signinBtn facebookSignin"></a>
-            <a id="gLogin" class="signinBtn googleSignin"></a>
-        </div>
+@if (@Model.User == null) {
+    <div id="loginButtons">
+        <a id="fbLogin" class="signinBtn facebookSignin"></a>
+        <a id="gLogin" class="signinBtn googleSignin"></a>
+    </div>
 
-        <div id="loginResult" style="display: none">
-            <div id="userName"></div>
-        </div>
-    }
-    else {
-        <div>
-            @string.Format(Strings.Login__Welcome_back, firstName)
-        </div>
-    }
-</div>
-
-<hr />
+    <div id="loginResult" style="display: none">
+        <div id="userName"></div>
+    </div>
+}
+else {
+    <div>
+        @string.Format(Strings.Login__Welcome_back, @Model.UserFirstName)
+    </div>
+}
     
 <div class="panel panel-info">
     <div class="panel-heading">
@@ -65,13 +46,3 @@
         styled, and certain pieces of functionality may still be incomplete, or temporarily disabled.
     </div>
 </div>
-
-@section modals
-{
-    <div id="lbImg" class="lightbox hide fade"  tabindex="-1" role="dialog" aria-hidden="true">
-	    <div class='lightbox-content'>
-		    <img src="/Content/img/promoStudio.jpg">
-		    <div class="lightbox-caption"><p>Your caption here</p></div>
-	    </div>
-    </div>
-}

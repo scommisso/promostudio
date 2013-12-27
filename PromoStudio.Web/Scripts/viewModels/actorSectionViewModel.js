@@ -12,19 +12,15 @@
 define(["models/customerVideoVoiceOver",
         "models/voiceActor",
         "viewModels/actorViewModel",
-        "jquery",
         "knockout",
         "strings",
         "models/enums",
-        "ps/logger",
-        "bootstrap",
-        "jqueryui"
+        "ps/logger"
 ],
     function (
         customerVideoVoiceOver,
         voiceActor,
         actorViewModel,
-        $,
         ko,
         strings,
         enums,
@@ -68,19 +64,6 @@ define(["models/customerVideoVoiceOver",
                 voiceOver = videoData.VoiceOver();
             }
 
-            function registerEvents() {
-                $(function () {
-                    var $elems = $("#actorCollapse .panel-heading .step-title,#actorCollapse .panel-heading .step-subtitle,#actorCollapse .panel-heading .step-done");
-                    $('#actorPanel')
-                        .on('show.bs.collapse', function () {
-                            $elems.switchClass("collapsed", "opened", transitionTime);
-                        })
-                        .on('hide.bs.collapse', function () {
-                            $elems.switchClass("opened", "collapsed", transitionTime);
-                        });
-                });
-            }
-
             var self = this,
                 transitionTime = 350, /* from bootstrap-transitions */
                 voiceOver = null,
@@ -111,7 +94,6 @@ define(["models/customerVideoVoiceOver",
             self.StartOpen = ko.observable(false);
 
             loadData(data.CustomerTemplateScripts, data.VoiceActors, video);
-            registerEvents();
         }
 
         return ctor;

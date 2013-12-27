@@ -1,4 +1,6 @@
 ﻿using PromoStudio.Common.Models;
+using System.Web;
+using System.Web.Routing;
 
 namespace PromoStudio.Web.ViewModels
 {
@@ -6,8 +8,8 @@ namespace PromoStudio.Web.ViewModels
     {
         public Organization Organization { get; set; }
 
-        public BrandingViewModel()
-            : base()
+        public BrandingViewModel(HttpContextBase context, RouteData routeData)
+            : base(context, routeData)
         {
             CurrentStep = 2;
         }

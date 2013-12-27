@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using PromoStudio.Common.Models;
+using System.Web;
+using System.Web.Routing;
 
 namespace PromoStudio.Web.ViewModels
 {
@@ -8,8 +10,8 @@ namespace PromoStudio.Web.ViewModels
         public List<StockAudio> StockAudio { get; set; }
         public List<VoiceActor> VoiceActors { get; set; }
 
-        public AudioViewModel()
-            : base()
+        public AudioViewModel(HttpContextBase context, RouteData routeData)
+            : base(context, routeData)
         {
             CurrentStep = 4;
         }

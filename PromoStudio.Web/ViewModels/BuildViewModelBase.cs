@@ -2,43 +2,45 @@
 using Newtonsoft.Json;
 using PromoStudio.Common.Models;
 using PromoStudio.Resources;
+using System.Web;
+using System.Web.Routing;
 
 namespace PromoStudio.Web.ViewModels
 {
-    public abstract class BuildViewModelBase
+    public abstract class BuildViewModelBase : ViewModelBase
     {
         #region Constants
         private static readonly string[] _keys = new string[]
         {
             "Footage",
-            "Branding",
+            "Customize",
             "Script",
             "Audio",
-            "Summary"
+            "Preview"
         };
         private static readonly string[] _titles = new string[]
         {
             Strings.BuildStep__Footage,
-            Strings.BuildStep__Branding,
+            Strings.BuildStep__Customize,
             Strings.BuildStep__Script,
             Strings.BuildStep__Audio,
-            Strings.BuildStep__Summary
+            Strings.BuildStep__Preview
         };
         private static readonly string[] _descriptions = new string[]
         {
             Strings.BuildStep__Choose_your_template,
             Strings.BuildStep__Customize_the_footage,
             Strings.BuildStep__Add_your_script,
-            Strings.BuildStep__Add_music_amp_voice,
+            Strings.BuildStep__Select_your_Audio,
             Strings.BuildStep__Review_your_video
         };
-        private static readonly string[] _icons = new string[]
+        private static readonly string[] _classes = new string[]
         {
-            "show_thumbnails",
-            "magic",
-            "align_left",
-            "playlist",
-            "folder_open"
+            "footage",
+            "customize",
+            "script",
+            "audio",
+            "preview"
         };
         #endregion
 
@@ -48,6 +50,16 @@ namespace PromoStudio.Web.ViewModels
 
         [JsonIgnore]
         public string VmJson { get; set; }
+
+        #region ctor
+
+        public BuildViewModelBase(HttpContextBase context, RouteData routeData)
+            : base(context, routeData)
+        {
+            StepsCompleted = new List<int>();
+        }
+
+        #endregion
 
         public bool IsStepCompleted(int stepId)
         {
@@ -92,6 +104,15 @@ namespace PromoStudio.Web.ViewModels
             return _titles[stepId - 1];
         }
 
+        public string GetStepClass(int stepId)
+        {
+            if (stepId < 1 || stepId > 5)
+            {
+                return null;
+            }
+            return _classes[stepId - 1];
+        }
+
         public string GetStepDescription(int stepId)
         {
             if (stepId < 1 || stepId > 5)
@@ -99,15 +120,6 @@ namespace PromoStudio.Web.ViewModels
                 return null;
             }
             return _descriptions[stepId - 1];
-        }
-
-        public string GetStepIcon(int stepId)
-        {
-            if (stepId < 1 || stepId > 5)
-            {
-                return null;
-            }
-            return _icons[stepId - 1];
         }
 
         public string GetFooterClassAttribute(int stepId)
@@ -142,11 +154,6 @@ namespace PromoStudio.Web.ViewModels
 
             if (classes.Count == 0) { return ""; }
             return string.Format(" class=\"{0}\"", string.Join(" ", classes));
-        }
-
-        protected BuildViewModelBase()
-        {
-            StepsCompleted = new List<int>();
         }
     }
 }
