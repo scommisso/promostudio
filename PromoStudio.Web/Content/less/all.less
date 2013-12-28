@@ -754,6 +754,10 @@ input[type="submit"]:focus{
 	left:50%;
 	margin:-7px 0 0 -6px;
 }
+.list-of-audio .btn-play.playing:after {
+	background:url(../images/sprite.png) no-repeat -62px -340px;
+}
+
 .list-of-audio .info{
 	float:left;
 	padding:7px 0 0;
@@ -828,7 +832,12 @@ input[type="submit"]:focus{
 .voice-block .list-of-audio .hover .btn-play2,
 .list-of-audio .image .btn-play2:hover{
 	background:#000 url(../images/btn-play2.png) no-repeat 50% 50%;
-	background:rgba(0, 0, 0, 0.82) url(../images/btn-play2.png) no-repeat 50% 50%;
+	background:rgba(0, 0, 0, 0.62) url(../images/btn-play2.png) no-repeat 50% 50%;
+}
+.voice-block .list-of-audio .hover .btn-play2.playing,
+.list-of-audio .image .btn-play2.playing:hover {
+	background:#000 url(../images/btn-stop2.png) no-repeat 50% 50%;
+	background:rgba(0, 0, 0, 0.62) url(../images/btn-stop2.png) no-repeat 50% 50%;
 }
 .voice-block .list-of-audio .image img{border-radius:0;}
 /* video-holder */

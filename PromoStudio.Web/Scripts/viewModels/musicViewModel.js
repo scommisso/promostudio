@@ -44,13 +44,18 @@ define([
             self.Description = stockAudio.Description;
 
             self.IsSelected = ko.observable(false);
+            self.IsPlaying = ko.observable(false);
 
             self.Play = function (data, event) {
+                var playing = self.IsPlaying();
                 getPlayers(event.srcElement).each(function () {
                     var $this = $(this);
-                    $this.jPlayer("stop");
+                    $this.jPlayer("pause", 0);
                 });
-                $(event.srcElement).closest("li").find("div.jp-jplayer").jPlayer("play");
+                if (!playing) {
+                    $(event.srcElement).closest("li").find("div.jp-jplayer").jPlayer("play");
+                    self.IsPlaying(true);
+                }
             };
 
             self.ToggleSelection = function (data, event) {

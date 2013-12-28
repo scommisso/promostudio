@@ -197,7 +197,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <None Include="app.build.js" />
-    <Content Include="Content\css\jplayer.blue.monday.css" />
     <Content Include="Content\fonts\proxima2bnova2bthin-webfont.svg" />
     <Content Include="Content\fonts\proximanova-light-webfont.svg" />
     <Content Include="Content\fonts\proximanova-lightitalic-webfont.svg" />
@@ -207,6 +206,7 @@
     <Content Include="Content\images\btn-pause.png" />
     <Content Include="Content\images\btn-play.png" />
     <Content Include="Content\images\btn-play2.png" />
+    <Content Include="Content\images\btn-stop2.png" />
     <Content Include="Content\images\card-ameex.gif" />
     <Content Include="Content\images\card-discover.gif" />
     <Content Include="Content\images\card-mc.gif" />
@@ -246,13 +246,16 @@
     <Content Include="Content\images\signin-twitter-sprite.png" />
     <Content Include="Content\images\sprite.png" />
     <Content Include="Scripts\lib\ie.js" />
+    <Content Include="Scripts\lib\jquery-1.10.2.js" />
     <Content Include="Scripts\lib\jquery-1.8.3.js" />
     <Content Include="Scripts\lib\jquery-1.9.1.js" />
     <Content Include="Scripts\lib\jquery.main.js" />
+    <Content Include="Scripts\lib\knockout-3.0.0.js" />
     <Content Include="Scripts\optimizedRequireConfig.js" />
     <Content Include="Scripts\lib\ko.jplayer.js" />
     <Content Include="Scripts\lib\Jplayer.swf" />
     <Content Include="Scripts\lib\jquery.jplayer.js" />
+    <Content Include="Scripts\viewModels\musicViewModel.js" />
     <Content Include="Scripts\viewModels\customerVideoViewModel.js" />
     <Content Include="Scripts\viewModels\textItemViewModel.js" />
     <Compile Include="ViewModels\BuildCookieViewModel.cs" />
@@ -366,6 +369,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\css\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

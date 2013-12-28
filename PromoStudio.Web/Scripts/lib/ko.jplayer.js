@@ -60,6 +60,7 @@
                 media = ko.toJS(vals.media || opts.media),
                 supplied = ko.toJS(opts.supplied),
                 title = ko.toJS(vals.title || opts.title),
+                isPlayingObservable = vals.isPlaying || opts.isPlaying,
                 $element = $(element),
                 $container = $element.children(playerClass),
                 containerId = $container.attr("id"),
@@ -70,6 +71,7 @@
                     title: ko.observable(title)
                 },
                 playerId, prop;
+
             if (!opts.swfPath) {
                 opts.swfPath = "/Scripts/lib";
             }
@@ -81,6 +83,9 @@
                 supplied = supplied.join(", ");
             }
             opts.supplied = supplied;
+            if (!ko.isWriteableObservable(isPlayingObservable)) {
+                isPlayingObservable = ko.observable(false);
+            }
             if ($container.length === 0) {
                 // if no container, add it
                 lastId += 1;
@@ -108,6 +113,10 @@
             opts.play = function(e) {
                 var $player = $(this);
                 $player.jPlayer("pauseOthers");
+                isPlayingObservable(true);
+            };
+            opts.pause = function (e) {
+                isPlayingObservable(false);
             };
             
             opts.wmode = "window";
