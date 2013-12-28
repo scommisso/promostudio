@@ -27,7 +27,7 @@
 @section scripts {
     <script>
         require(["viewModels/scaffold"], function() {
-            require(["viewModels/buildNavViewModel", "jqueryui", "knockout"], function(buildNavViewModel, $, ko) {
+            require(["viewModels/buildNavViewModel", "jqueryui", "knockout", "lib/ko.custom"], function(buildNavViewModel, $, ko) {
                 $(function() {
                     var navVm = new buildNavViewModel({
                         Video: @Html.Raw(JsonConvert.SerializeObject(Model.Video)),
@@ -37,6 +37,9 @@
                     });
                     ko.applyBindings(navVm, $(".switcher")[0]);
                     ko.applyBindings(navVm, $(".progress-bar")[0]);
+                    ko.callbackOnBind($("#main form")[0], function () {
+                        $.initJcf();
+                    }, 1000);
                 });
             });
         });

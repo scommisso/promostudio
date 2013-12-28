@@ -91,6 +91,7 @@ define([
                 loadVideoData(video());
 
                 self.IsCompleted(); // check completed status
+
                 ko.applyBindings(self, $(selector)[0]);
             }, 1000);
         };

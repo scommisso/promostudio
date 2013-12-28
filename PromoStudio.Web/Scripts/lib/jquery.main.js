@@ -679,14 +679,15 @@ define(["jquery"], function(jQuery, undefined) {
 	    } else {
 		    // desktop browser handlers
 		    toggleOn = function(e) {
-			    var options = e.data, element = $(this);
+		        var options = e.data, element = $(this);
+		        element.parent().children().removeClass(options.hoverClass);
 			    element.addClass(options.hoverClass);
 			    $(options.context).on(eventOff, options.selector, options, toggleOff);
 			    if(options.onHover) options.onHover(element);
 		    };
 		    toggleOff = function(e) {
-			    var options = e.data, element = $(this);
-			    element.removeClass(options.hoverClass);
+		        var options = e.data, element = $(this);
+		        element.parent().children().removeClass(options.hoverClass);
 			    $(options.context).off(eventOff, options.selector, toggleOff);
 			    if(options.onLeave) options.onLeave(element);
 		    };
@@ -2164,9 +2165,11 @@ define(["jquery"], function(jQuery, undefined) {
 	    toggle: function(e){
 		    if(!this.realElement.disabled) {
 			    if(this.realElement.checked) {
-				    this.realElement.checked = false;
+			        this.realElement.checked = false;
+			        this.realElement.removeAttribute("checked");
 			    } else {
-				    this.realElement.checked = true;
+			        this.realElement.checked = true;
+			        this.realElement.setAttribute("checked", "");
 			    }
 		    }
 		    this.refreshState();
@@ -2346,7 +2349,7 @@ define(["jquery"], function(jQuery, undefined) {
 
 
     // init
-    jQuery(function () {
+    jQuery.initJcf = function () {
         initTabs();
         jcf.customForms.replaceAll();
         initAccordion();
@@ -2357,7 +2360,7 @@ define(["jquery"], function(jQuery, undefined) {
         jQuery('input, textarea').placeholder();
         initEdit();
         initEditVideo();
-    });
+    };
 
 
     return jQuery;

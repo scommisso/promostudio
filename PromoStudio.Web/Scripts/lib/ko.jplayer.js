@@ -1,4 +1,4 @@
-﻿define(["knockout", "jquery", "lib/jquery.jplayer"], function (ko, $) {
+﻿define(["knockout", "jqueryui", "lib/jquery.jplayer"], function (ko, $) {
     var supportedUpdates = [
         "size", "sizeFull", "smoothPlayBar", "fullScreen", "fullWindow",
         "audioFullScreen", "autohide", "volume", "muted", "cssSelectorAncestor", "cssSelector", "loop",

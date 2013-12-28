@@ -1,5 +1,56 @@
 ﻿@import url('jcf.less');
 
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+
+@cs: 4px; /* rounded corner size */
+
+.rounded(@radius: 2px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.background-clip(@argument: padding-box) {
+  -moz-background-clip: @argument;
+  -webkit-background-clip: @argument;
+  background-clip: @argument;
+}
+
+.border-radius(@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
+    -webkit-border-top-right-radius: @topright;
+    -webkit-border-bottom-right-radius: @bottomright;
+    -webkit-border-bottom-left-radius: @bottomleft;
+    -webkit-border-top-left-radius: @topleft;
+    -moz-border-radius-topright: @topright;
+    -moz-border-radius-bottomright: @bottomright;
+    -moz-border-radius-bottomleft: @bottomleft;
+    -moz-border-radius-topleft: @topleft;
+    border-top-right-radius: @topright;
+    border-bottom-right-radius: @bottomright;
+    border-bottom-left-radius: @bottomleft;
+    border-top-left-radius: @topleft;
+    .background-clip(padding-box);
+}
+
 a.signinBtn {
     margin-top: 12px;
     border: 0;
@@ -10,19 +61,19 @@ a.signinBtn {
     cursor: pointer;
 }
 
-a.signinBtn:hover,
-a.signinBtn:active {
-    background-position-y: -176px;
-}
+    a.signinBtn:hover,
+    a.signinBtn:active {
+        background-position-y: -176px;
+    }
 
-a.signinBtn.wait,
-a.signinBtn.wait:link,
-a.signinBtn.wait:visited,
-a.signinBtn.wait:hover,
-a.signinBtn.wait:active {
-    background-position-y: -88px;
-    cursor: wait;
-}
+    a.signinBtn.wait,
+    a.signinBtn.wait:link,
+    a.signinBtn.wait:visited,
+    a.signinBtn.wait:hover,
+    a.signinBtn.wait:active {
+        background-position-y: -88px;
+        cursor: wait;
+    }
 
 a.facebookSignin {
     background: url(../images/signin-facebook-sprite.png) 0 0 no-repeat transparent;
@@ -34,4 +85,57 @@ a.googleSignin {
 
 a.twitterSignin {
     background: url(../images/signin-twitter-sprite.png) 0 0 no-repeat transparent;
+}
+
+div.audio-player {
+    font-size: 12pt;
+
+    div.jp-interface {
+        height: 56px !important;
+    }
+
+    div.jp-title {
+        display: none;
+    }
+
+    div.jp-audio {
+        border: 1px solid transparent;
+        width: 443px;
+    }
+
+    ul.jp-controls {
+        width: 420px;
+        padding: 8px 0 0 8px;
+    }
+
+    div.jp-progress {
+        left: 100px;
+        top: 20px;
+    }
+
+    div.jp-time-holder {
+        left: 100px;
+        top: 36px;
+    }
+
+    div.jp-volume-bar {
+        top: 26px;
+        left: 318px;
+        width: 80px;
+    }
+
+    a.jp-mute,
+    a.jp-unmute,
+    a.jp-volume-max {
+        margin-top: 13px;
+    }    
+
+    a.jp-mute,
+    a.jp-unmute {
+        margin-left: 216px !important;
+    }
+
+    a.jp-volume-max {
+        margin-left: 83px !important;
+    }
 }

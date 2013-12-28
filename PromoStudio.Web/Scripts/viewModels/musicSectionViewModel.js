@@ -11,6 +11,7 @@
 "use strict";
 
 define(["models/stockAudio",
+        "viewModels/musicViewModel",
         "jquery",
         "knockout",
         "strings",
@@ -19,12 +20,20 @@ define(["models/stockAudio",
 ],
     function (
         stockAudio,
+        musicViewModel,
         $,
         ko,
         strings,
         enums,
         logger) {
         function ctor(data, video) {
+
+            var self = this,
+                transitionTime = 350, /* from bootstrap-transitions */
+                musicItem = null,
+                customerTemplateScripts;
+            data = data || {};
+            video = video || {};
 
             function loadData(customerTemplateScriptData, stockAudioData, videoData) {
                 var id, songs, song, i;
@@ -52,6 +61,7 @@ define(["models/stockAudio",
                 for (i = 0; i < stockAudioData.length; i++) {
                     item = stockAudioData[i];
                     item = new stockAudio(item);
+                    item = new musicViewModel(self, item);
                     music.push(item);
                 }
                 self.AvailableMusic(music);
@@ -68,19 +78,18 @@ define(["models/stockAudio",
                 }
             }
 
-            var self = this,
-                transitionTime = 350, /* from bootstrap-transitions */
-                musicItem = null,
-                customerTemplateScripts;
-            data = data || {};
-            video = video || {};
-
             self.AvailableMusic = ko.observableArray([]);
             self.SelectedMusic = ko.observable(null);
             self.IsSelected = function (music) {
                 return self.SelectedMusic() === music;
             };
             self.SelectMusic = function (music) {
+                var i, songs = self.AvailableMusic();
+                for (i = 0; i < songs.length; i++) {
+                    if (songs[i] !== music) {
+                        songs[i].IsSelected(false);
+                    }
+                }
                 if (self.IsSelected(music)) {
                     self.SelectedMusic(null);
                     musicItem.fk_CustomerVideoItemId(null);

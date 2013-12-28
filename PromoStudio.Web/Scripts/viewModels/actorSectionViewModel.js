@@ -27,6 +27,13 @@ define(["models/customerVideoVoiceOver",
         logger) {
         function ctor(data, video) {
 
+            var self = this,
+                transitionTime = 350, /* from bootstrap-transitions */
+                voiceOver = null,
+                customerTemplateScripts;
+            data = data || {};
+            video = video || {};
+
             function loadData(customerTemplateScriptData, voiceActorData, videoData) {
                 var id, actors, actor, i;
 
@@ -53,7 +60,7 @@ define(["models/customerVideoVoiceOver",
                 for (i = 0; i < voiceActorData.length; i++) {
                     item = voiceActorData[i];
                     item = new voiceActor(item);
-                    item = new actorViewModel(item);
+                    item = new actorViewModel(self, item);
                     actor.push(item);
                 }
                 self.AvailableActors(actor);
@@ -64,19 +71,18 @@ define(["models/customerVideoVoiceOver",
                 voiceOver = videoData.VoiceOver();
             }
 
-            var self = this,
-                transitionTime = 350, /* from bootstrap-transitions */
-                voiceOver = null,
-                customerTemplateScripts;
-            data = data || {};
-            video = video || {};
-
             self.AvailableActors = ko.observableArray([]);
             self.SelectedActor = ko.observable(null);
             self.IsSelected = function (actor) {
                 return self.SelectedActor() === actor;
             };
             self.SelectActor = function (actor) {
+                var i, actors = self.AvailableActors();
+                for (i = 0; i < actors.length; i++) {
+                    if (actors[i] !== actor) {
+                        actors[i].IsSelected(false);
+                    }
+                }
                 if (self.IsSelected(actor)) {
                     self.SelectedActor(null);
                     voiceOver.fk_VoiceActorId(null);

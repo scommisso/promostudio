@@ -117,8 +117,8 @@ namespace PromoStudio.Web.Controllers
 
         //
         // GET: /Build/Branding
-        [ActionName("Branding")]
-        public async Task<ActionResult> Branding()
+        [ActionName("Customize")]
+        public async Task<ActionResult> Customize()
         {
             if (!ValidateUserStep(2))
             {
@@ -216,12 +216,12 @@ namespace PromoStudio.Web.Controllers
         [ActionName("Audio")]
         public async Task<ActionResult> Audio()
         {
-            //if (!ValidateUserStep(4))
-            //{
-            //    return new RedirectResult("~/Build");
-            //}
+            if (!ValidateUserStep(4))
+            {
+                return new RedirectResult("~/Build");
+            }
 
-            //var data = GetFromCookie();
+            var data = GetFromCookie();
 
             var stockAudioTask = _dataService.StockAudio_SelectByOrganizationIdAndVerticalIdAsync(
                 CurrentUser.OrganizationId, CurrentUser.VerticalId);
@@ -234,10 +234,10 @@ namespace PromoStudio.Web.Controllers
 
             var vm = new AudioViewModel(Request.RequestContext.HttpContext, RouteData)
             {
-                Video = new CustomerVideo(),//data.Video,
+                Video = data.Video,
                 StockAudio = stockAudio,
                 VoiceActors = voiceActors,
-                StepsCompleted = new List<int>(new int[] { 1, 2, 3, 4} )//new List<int>(data.CompletedSteps)
+                StepsCompleted = new List<int>(data.CompletedSteps)
             };
 
             return PAjax("Audio", model: vm);

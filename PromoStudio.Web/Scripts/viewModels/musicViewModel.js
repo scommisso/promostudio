@@ -3,7 +3,7 @@
 /// <reference path="../models/enums.js" />
 /// <reference path="../ps/logger.js" />
 /// <reference path="../ps/extensions.js" />
-/// <reference path="../models/voiceActor.js" />
+/// <reference path="../models/stockAudio.js" />
 
 "use strict";
 
@@ -21,7 +21,7 @@ define([
         strings,
         enums,
         logger) {
-        function ctor(sectionVm, voiceActor) {
+        function ctor(sectionVm, stockAudio) {
             var self = this,
                 slider,
                 checkboxes,
@@ -39,18 +39,9 @@ define([
                 return players || getSlider(srcElement).find("div.jp-jplayer");
             }
 
-            self.pk_VoiceActorId = voiceActor.pk_VoiceActorId;
-            self.FullName = voiceActor.FullName;
-            self.Description = voiceActor.Description;
-            self.PhotoUrl = ko.computed(function () {
-                var id = voiceActor.pk_VoiceActorId();
-                return "/Resources/ActorPhoto?voiceActorId={0}".format(id);
-            });
-            self.PhotoBackground = ko.computed(function () {
-                var url = self.PhotoUrl();
-                if (url === null) { return "none"; }
-                return "url({0})".format(url);
-            });
+            self.pk_StockAudioId = stockAudio.pk_StockAudioId;
+            self.Name = stockAudio.Name;
+            self.Description = stockAudio.Description;
 
             self.IsSelected = ko.observable(false);
 
@@ -81,7 +72,7 @@ define([
                     sectionVm.toggling = false;
                 }
 
-                sectionVm.SelectActor(self);
+                sectionVm.SelectMusic(self);
             };
         }
 

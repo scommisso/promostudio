@@ -21,7 +21,8 @@
 <form action="#">
 	<!-- accordion -->
 	<ul class="accordion">
-		<li data-bind="css: { 'active': MusicSection().StartOpen, 'done': MusicSection().IsCompleted, 'not-done': !MusicSection().IsCompleted() }">
+        <!-- ko with: MusicSection -->
+		<li data-bind="css: { 'active': StartOpen, 'done': IsCompleted, 'not-done': !IsCompleted() }">
 			<!-- opener -->
 			<a class="opener" href="#">
 				<div class="holder">
@@ -37,7 +38,7 @@
 				<!-- tabset -->
 				<nav  class="tabset">
 					<ul>
-						<li><a href="#tab1">Rock</a></li>
+						<li><a href="#tab1" data-bind="css: { 'active': StartOpen }">Rock</a></li>
 						<li><a href="#tab2">HipHop</a></li>
 					</ul>
 				</nav>
@@ -46,19 +47,20 @@
 					<!-- tab1 -->
 					<section id="tab1">
 						<!-- list-of-audio -->
-						<ul class="list-of-audio" data-bind="foreach: MusicSection().AvailableMusic">							<li>
+						<ul class="list-of-audio" data-bind="foreach: AvailableMusic">							<li>
 								<span class="image">
-									<a href="#" class="btn-play">@Strings.play</a>
-									<img width="79" height="72" src="@Url.Content("~/Content/images/img03.jpg")" data-bind="attr: { 'alt': $data.Description }">
+									<a href="#" class="btn-play" data-bind="click: Play">@Strings.play</a>
+									<img width="79" height="72" src="@Url.Content("~/Content/images/img03.jpg")" data-bind="attr: { 'alt': Description }">
 								</span>
-								<label data-bind="attr: { 'for': 'check' + $data.pk_StockAudioId() }">
+								<label data-bind="attr: { 'for': 'sa_check' + pk_StockAudioId() }">
 									<span class="info">
-										<strong data-bind="text: $data.Name"></strong>
+										<strong data-bind="text: Name"></strong>
                                         <!-- ko text: $data.Description --><!-- /ko -->
 									</span>
-									<input type="checkbox" data-bind="checked: $root.MusicSection().IsSelected($data), attr: { 'id': 'check' + $data.pk_StockAudioId() }">
+									<input type="checkbox" data-bind="attr: { 'id': 'sa_check' + pk_StockAudioId() }, event: { 'change': ToggleSelection }" />
 								</label>
-                                <div class="audio-player" data-bind="jplayer: { 'media': { 'mp3': '/Resources/StockAudio?stockAudioId=' + $data.pk_StockAudioId() }, 'title': $data.Name }"> 
+                                <div class="audio-player" style="display:none"
+                                    data-bind="jplayer: { 'media': { 'mp3': '/Resources/StockAudio?stockAudioId=' + pk_StockAudioId() }, 'title': Name }"> 
                                 </div>							</li>
 						</ul>
 					</section>
@@ -72,7 +74,9 @@
 				</div>
 			</div>
 		</li>
-		<li data-bind="css: { 'active': ActorSection().StartOpen, 'done': ActorSection().IsCompleted, 'not-done': !ActorSection().IsCompleted() }">
+        <!-- /ko -->
+        <!-- ko with: ActorSection -->
+		<li data-bind="css: { 'active': StartOpen, 'done': IsCompleted, 'not-done': !IsCompleted() }">
 			<!-- opener -->
 			<a class="opener" href="#">
 				<div class="holder">
@@ -90,20 +94,21 @@
 					<div class="col">
 						<h3>Male</h3>
 						<!-- list-of-audio -->
-						<ul class="list-of-audio" data-bind="foreach: ActorSection().AvailableActors">
+						<ul class="list-of-audio" data-bind="foreach: AvailableActors">
 							<li>
 								<div class="image">
-									<a href="#" class="btn-play2">@Strings.play</a>
-									<img src="#" width="79" height="72" data-bind="attr: { 'alt': $data.FullName, 'src': $data.PhotoUrl }" />
+									<a href="#" class="btn-play2" data-bind="click: Play">@Strings.play</a>
+									<img src="#" width="79" height="72" data-bind="attr: { 'alt': FullName, 'src': PhotoUrl }" />
 								</div>
-								<label data-bind="attr: { 'for': 'check' + $data.pk_VoiceActorId() }">
+								<label data-bind="attr: { 'for': 'va_check' + pk_VoiceActorId() }">
 									<span class="info">
-										<strong data-bind="text: $data.FullName"></strong>
+										<strong data-bind="text: FullName"></strong>
                                         <!-- ko text: $data.Description --><!-- /ko -->
 									</span>
-									<input type="checkbox" data-bind="attr: { 'id': 'check' + $data.pk_VoiceActorId() }">
+									<input type="checkbox" data-bind="attr: { 'id': 'va_check' + pk_VoiceActorId() }, event: { 'change': ToggleSelection }" />
 								</label>
-                                <div class="audio-player" data-bind="jplayer: { media: { mp3: '/Resources/ActorSample?voiceActorId=' + $data.pk_VoiceActorId() }, title: $data.FullName }">
+                                <div class="audio-player" style="display:none"
+                                    data-bind="jplayer: { media: { mp3: '/Resources/ActorSample?voiceActorId=' + pk_VoiceActorId() }, title: FullName }">
                                 </div>
 							</li>
 						</ul>
