@@ -28,7 +28,7 @@ namespace PromoStudio.Web.ViewModels
         };
         private static readonly string[] _descriptions = new string[]
         {
-            Strings.BuildStep__Choose_your_template,
+            Strings.BuildStep__Select_your_Footage,
             Strings.BuildStep__Customize_the_footage,
             Strings.BuildStep__Add_your_script,
             Strings.BuildStep__Select_your_Audio,

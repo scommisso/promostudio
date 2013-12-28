@@ -26,15 +26,21 @@
     
 	<div id="wrapper" class="account">
 		<div class="w1">
-			<!-- header -->
+			@* header *@
 			<header id="header">
 				<div class="header-holder">
-					<!-- logo -->
 					@Html.Partial("_Header")
-					<!-- menu -->
+					@* menu *@
 					<nav class="menu">
 						<ul>
+                            @if (Model.IsAccountController)
+                            {
 							<li><a href="@Url.Action("Index", "Build")">@Strings.Navigation__Video_Builder</a></li>
+                            }
+                            else
+                            {
+							<li><a href="@Url.Action("Index", "Account")">@Strings.Navigation__My_Account</a></li>
+                            }
 							<li><a href="#">@Strings.Sign_Out</a></li>
 						</ul>
 					</nav>

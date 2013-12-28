@@ -62,8 +62,6 @@ define([
                 if (sectionVm.toggling === true) { return true; }
 
                 var selected = !self.IsSelected();
-                self.IsSelected(selected);
-
                 if (selected) {
                     // Hack to work with JCF
                     sectionVm.toggling = true;

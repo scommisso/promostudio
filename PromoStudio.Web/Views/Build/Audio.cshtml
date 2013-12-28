@@ -19,11 +19,11 @@
 }
 
 <form action="#">
-	<!-- accordion -->
-	<ul class="accordion">
+	@* accordion *@
+	<ul class="accordion" style="display: none" data-bind="visible: true">
         <!-- ko with: MusicSection -->
 		<li data-bind="css: { 'active': StartOpen, 'done': IsCompleted, 'not-done': !IsCompleted() }">
-			<!-- opener -->
+			@* opener *@
 			<a class="opener" href="#">
 				<div class="holder">
 					<span class="num"><em>1</em></span>
@@ -33,20 +33,20 @@
 					</span>
 				</div>
 			</a>
-			<!-- slide -->
+			@* slide *@
 			<div class="slide">
-				<!-- tabset -->
+				@* tabset *@
 				<nav  class="tabset">
 					<ul>
 						<li><a href="#tab1" data-bind="css: { 'active': StartOpen }">Rock</a></li>
 						<li><a href="#tab2">HipHop</a></li>
 					</ul>
 				</nav>
-				<!-- tab-content -->
+				@* tab-content *@
 				<div class="tab-content">
-					<!-- tab1 -->
+					@* tab1 *@
 					<section id="tab1">
-						<!-- list-of-audio -->
+						@* list-of-audio *@
 						<ul class="list-of-audio" data-bind="foreach: AvailableMusic">
 							<li>
 								<span class="image">
@@ -56,7 +56,7 @@
 								<label data-bind="attr: { 'for': 'sa_check' + pk_StockAudioId() }">
 									<span class="info">
 										<strong data-bind="text: Name"></strong>
-                                        <!-- ko text: $data.Description --><!-- /ko -->
+                                        <!-- ko text: Description --><!-- /ko -->
 									</span>
 									<input type="checkbox" data-bind="attr: { 'id': 'sa_check' + pk_StockAudioId() }, event: { 'change': ToggleSelection }" />
 								</label>
@@ -66,7 +66,7 @@
 							</li>
 						</ul>
 					</section>
-					<!-- tab2 -->
+					@* tab2 *@
 					<section id="tab2">
                         Hip Hop here
 					</section>
@@ -79,7 +79,7 @@
         <!-- /ko -->
         <!-- ko with: ActorSection -->
 		<li data-bind="css: { 'active': StartOpen, 'done': IsCompleted, 'not-done': !IsCompleted() }">
-			<!-- opener -->
+			@* opener *@
 			<a class="opener" href="#">
 				<div class="holder">
 					<span class="num"><em>2</em></span>
@@ -89,13 +89,13 @@
 					</span>
 				</div>
 			</a>
-			<!-- slide -->
+			@* slide *@
 			<div class="slide">
-				<!-- voice-block -->
+				@* voice-block *@
 				<div class="voice-block">
 					<div class="col">
 						<h3>Male</h3>
-						<!-- list-of-audio -->
+						@* list-of-audio *@
 						<ul class="list-of-audio" data-bind="foreach: AvailableActors">
 							<li>
 								<div class="image">
@@ -105,7 +105,7 @@
 								<label data-bind="attr: { 'for': 'va_check' + pk_VoiceActorId() }">
 									<span class="info">
 										<strong data-bind="text: FullName"></strong>
-                                        <!-- ko text: $data.Description --><!-- /ko -->
+                                        <!-- ko text: Description --><!-- /ko -->
 									</span>
 									<input type="checkbox" data-bind="attr: { 'id': 'va_check' + pk_VoiceActorId() }, event: { 'change': ToggleSelection }" />
 								</label>

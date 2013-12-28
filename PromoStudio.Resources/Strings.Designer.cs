@@ -160,15 +160,6 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose your template.
-        /// </summary>
-        public static string BuildStep__Choose_your_template {
-            get {
-                return ResourceManager.GetString("BuildStep__Choose_your_template", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Choose your voiceover talent.
         /// </summary>
         public static string BuildStep__Choose_your_voiceover_talent {
@@ -277,6 +268,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select your Footage.
+        /// </summary>
+        public static string BuildStep__Select_your_Footage {
+            get {
+                return ResourceManager.GetString("BuildStep__Select_your_Footage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text.
         /// </summary>
         public static string BuildStep__Text {
@@ -349,11 +349,11 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a new video.
+        ///   Looks up a localized string similar to My Account.
         /// </summary>
-        public static string Navigation__Create_a_new_video {
+        public static string Navigation__My_Account {
             get {
-                return ResourceManager.GetString("Navigation__Create_a_new_video", resourceCulture);
+                return ResourceManager.GetString("Navigation__My_Account", resourceCulture);
             }
         }
         
@@ -363,24 +363,6 @@ namespace PromoStudio.Resources {
         public static string Navigation__Video_Builder {
             get {
                 return ResourceManager.GetString("Navigation__Video_Builder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Videos.
-        /// </summary>
-        public static string Navigation__Videos {
-            get {
-                return ResourceManager.GetString("Navigation__Videos", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View your video library.
-        /// </summary>
-        public static string Navigation__View_your_video_library {
-            get {
-                return ResourceManager.GetString("Navigation__View_your_video_library", resourceCulture);
             }
         }
         

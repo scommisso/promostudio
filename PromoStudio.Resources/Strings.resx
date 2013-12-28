@@ -132,9 +132,6 @@
   <data name="BuildStep__Customize" xml:space="preserve">
     <value>Customize</value>
   </data>
-  <data name="BuildStep__Choose_your_template" xml:space="preserve">
-    <value>Choose your template</value>
-  </data>
   <data name="BuildStep__Customize_the_footage" xml:space="preserve">
     <value>Customize the footage</value>
   </data>
@@ -161,15 +158,6 @@
   </data>
   <data name="Navigation__Video_Builder" xml:space="preserve">
     <value>Video Builder</value>
-  </data>
-  <data name="Navigation__Create_a_new_video" xml:space="preserve">
-    <value>Create a new video</value>
-  </data>
-  <data name="Navigation__Videos" xml:space="preserve">
-    <value>Videos</value>
-  </data>
-  <data name="Navigation__View_your_video_library" xml:space="preserve">
-    <value>View your video library</value>
   </data>
   <data name="Next_Step" xml:space="preserve">
     <value>Next Step</value>
@@ -397,5 +385,11 @@
   </data>
   <data name="play" xml:space="preserve">
     <value>play</value>
+  </data>
+  <data name="BuildStep__Select_your_Footage" xml:space="preserve">
+    <value>Select your Footage</value>
+  </data>
+  <data name="Navigation__My_Account" xml:space="preserve">
+    <value>My Account</value>
   </data>
 </root>

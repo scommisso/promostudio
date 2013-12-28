@@ -181,7 +181,7 @@ namespace PromoStudio.Web.Controllers
                 }
             }
 
-            var vm = new BrandingViewModel(Request.RequestContext.HttpContext, RouteData)
+            var vm = new CustomizeViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 Organization = organization,
                 Video = data.Video,

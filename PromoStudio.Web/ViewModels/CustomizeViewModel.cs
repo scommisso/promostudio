@@ -4,11 +4,11 @@ using System.Web.Routing;
 
 namespace PromoStudio.Web.ViewModels
 {
-    public class BrandingViewModel : BuildViewModelBase
+    public class CustomizeViewModel : BuildViewModelBase
     {
         public Organization Organization { get; set; }
 
-        public BrandingViewModel(HttpContextBase context, RouteData routeData)
+        public CustomizeViewModel(HttpContextBase context, RouteData routeData)
             : base(context, routeData)
         {
             CurrentStep = 2;

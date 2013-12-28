@@ -8,27 +8,44 @@
 @section scripts {
     <script>
         require(["viewModels/scaffold"], function () {
-            require(["viewModels/footageViewModel", "jquery"], function(footage, $) {
-                $(function() {
+            require(["viewModels/footageViewModel", "jqueryui"], function (footage, $) {
+                $(function () {
                     var vm = new footage(@Html.Raw(JsonConvert.SerializeObject(Model)));
-                    vm.Bind(".thumbcontainer", ".build-steps");
+                    vm.Bind("#main form", ".progress-bar", ".popup-holder");
                 });
             });
         });
     </script>
 }
-<div class="thumbcontainer clearfix" data-bind="foreach: Storyboards">
-    <a style="display: none" href="#" class="footage-thumbnail"
-        data-bind="visible: true, css: { selected: $parent.IsSelected($data) }, click: function () { $parent.SelectStoryboard($data); }">
-        <div class="footage-preview" data-bind="style: { backgroundImage: ThumbnailBackground }">
-            <div class="footage-play" data-bind="click: $data.PlayLightbox">
-                <span class="glyphicons play"></span>
-            </div>
-        </div>
-        <div class="footage-selection">
-            <span class="glyphicons check"></span>
-            <span class="glyphicons unchecked"></span>
-            <span class="footage-title" data-bind="text: $data.Name"></span>
-        </div>
-    </a>
-</div>
+
+<form action="#">
+	@* list-video *@
+	<ul class="list-video" style="display: none" data-bind="visible: true, foreach: Storyboards">
+		<li style="display:none" data-bind="visible: true, css: { 'checked': $parent.IsSelected($data) }">
+			<div class="video">
+				<img src="#" data-bind="attr: { 'src': ThumbnailUrl, 'alt': Name }">
+				<a class="play" href="#" data-bind="attr: { 'href': '#vid_' + pk_StoryboardId() }">play</a>
+			</div>
+			<div class="title">
+				<input data-bind="attr: { 'id': 'sb_' + pk_StoryboardId() }, event: { 'change': ToggleSelection }" name="cbStoryboard" type="checkbox">
+				<label data-bind="attr: { 'for': 'sb_' + pk_StoryboardId() }, text: Name"></label>
+			</div>
+		</li>
+    </ul>
+</form>
+
+@section modals {    
+	<div class="popup-holder" style="display: none" data-bind="visible: true, foreach: Storyboards">
+		<div class="lightbox" data-bind="attr: { 'id': 'vid_' + pk_StoryboardId() }">
+			<div class="title">
+				<a href="#" class="close">Close</a>
+                <!-- ko text: Name --><!-- /ko -->
+			</div>
+			<div class="video-holder">
+                @* Embed Codes Go Here *@
+				<a href="#"></a>
+				<img src="#" data-bind="attr: { 'src': ThumbnailUrl, 'alt': Name }">
+			</div>
+		</div>
+	</div>
+}

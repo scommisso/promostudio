@@ -86,14 +86,16 @@ define(["models/stockAudio",
             self.SelectMusic = function (music) {
                 var i, songs = self.AvailableMusic();
                 for (i = 0; i < songs.length; i++) {
-                    if (songs[i] !== music) {
+                    if (songs[i] !== music && songs[i].IsSelected()) {
                         songs[i].IsSelected(false);
                     }
                 }
                 if (self.IsSelected(music)) {
+                    music.IsSelected(false);
                     self.SelectedMusic(null);
                     musicItem.fk_CustomerVideoItemId(null);
                 } else {
+                    music.IsSelected(true);
                     self.SelectedMusic(music);
                     musicItem.fk_CustomerVideoItemId(music.pk_StockAudioId());
                 }

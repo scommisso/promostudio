@@ -2074,7 +2074,7 @@ define(["jquery"], function(jQuery, undefined) {
 	    },
 	    toggleRadio: function(){
 		    if(!this.realElement.disabled && !this.realElement.checked) {
-			    this.realElement.checked = true;
+		        this.realElement.checked = true;
 			    jcf.lib.fireEvent(this.realElement, 'change');
 		    }
 		    this.refreshState();

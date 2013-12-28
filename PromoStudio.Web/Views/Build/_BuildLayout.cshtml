@@ -16,8 +16,10 @@
         else if (Model.IsStepCompleted(i))
         {
             classes += " done";
-        }	    <li class="@classes"><span>@Model.GetStepTitle(i)</span></li>
-    }    </ul>
+        }
+	    <li class="@classes"><span>@Model.GetStepTitle(i)</span></li>
+    }
+    </ul>
 }
 
 @section modals {
@@ -38,7 +40,9 @@
                     ko.applyBindings(navVm, $(".switcher")[0]);
                     ko.applyBindings(navVm, $(".progress-bar")[0]);
                     ko.callbackOnBind($("#main form")[0], function () {
-                        $.initJcf();
+                        window.setTimeout(function () {
+                            $.initJcf();
+                        }, 100);
                     }, 1000);
                 });
             });
@@ -47,9 +51,9 @@
     @RenderSection("scripts", required: false)
 }
 
-<!-- bar -->
+@* bar *@
 <div class="bar">
-	<!-- switcher -->
+	@* switcher *@
 	<div class="switcher">
 @if (Model.CurrentStep > 1)
 {

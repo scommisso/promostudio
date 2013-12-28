@@ -79,14 +79,16 @@ define(["models/customerVideoVoiceOver",
             self.SelectActor = function (actor) {
                 var i, actors = self.AvailableActors();
                 for (i = 0; i < actors.length; i++) {
-                    if (actors[i] !== actor) {
+                    if (actors[i] !== actor && actors[i].IsSelected()) {
                         actors[i].IsSelected(false);
                     }
                 }
                 if (self.IsSelected(actor)) {
+                    actor.IsSelected(false);
                     self.SelectedActor(null);
                     voiceOver.fk_VoiceActorId(null);
                 } else {
+                    actor.IsSelected(true);
                     self.SelectedActor(actor);
                     voiceOver.fk_VoiceActorId(actor.pk_VoiceActorId());
                 }

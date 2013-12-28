@@ -257,10 +257,11 @@
     <Content Include="Scripts\lib\jquery.jplayer.js" />
     <Content Include="Scripts\viewModels\musicViewModel.js" />
     <Content Include="Scripts\viewModels\customerVideoViewModel.js" />
+    <Content Include="Scripts\viewModels\storyboardViewModel.js" />
     <Content Include="Scripts\viewModels\textItemViewModel.js" />
     <Compile Include="ViewModels\BuildCookieViewModel.cs" />
     <Compile Include="ViewModels\BuildViewModelBase.cs" />
-    <Compile Include="ViewModels\BrandingViewModel.cs" />
+    <Compile Include="ViewModels\CustomizeViewModel.cs" />
     <Compile Include="ViewModels\AudioViewModel.cs" />
     <Compile Include="ViewModels\SummaryViewModel.cs" />
     <Compile Include="ViewModels\ScriptViewModel.cs" />
@@ -424,7 +425,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\Local.pubxml" />
-    <Content Include="Views\Build\Branding.cshtml" />
+    <Content Include="Views\Build\Customize.cshtml" />
     <Content Include="Views\Build\Script.cshtml" />
     <Content Include="Views\Build\Footage.cshtml" />
     <Content Include="Views\Shared\_PjaxLayout.cshtml" />
