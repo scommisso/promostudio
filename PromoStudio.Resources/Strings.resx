@@ -277,7 +277,7 @@
     <value>You have no videos</value>
   </data>
   <data name="BuildStep__Num_spots_need_your_own_photos" xml:space="preserve">
-    <value>{0} spot{1} need{2} your own photo{1}</value>
+    <value>Your video has {0} place{1} for you to add your photo{1}</value>
     <comment>0: # items
 1: 's' if # &gt; 0, plural, '' otherwise
 2: '' if # &gt; 0, plural, 's' otherwise</comment>
@@ -391,5 +391,32 @@
   </data>
   <data name="Navigation__My_Account" xml:space="preserve">
     <value>My Account</value>
+  </data>
+  <data name="BuildStep__Add_to_selected_frame" xml:space="preserve">
+    <value>Add to selected frame</value>
+  </data>
+  <data name="BuildStep__Insert_your_text_here" xml:space="preserve">
+    <value>Insert your text here</value>
+  </data>
+  <data name="BuildStep__Logo" xml:space="preserve">
+    <value>Logo</value>
+  </data>
+  <data name="BuildStep__Upload_your_logo" xml:space="preserve">
+    <value>Upload your logo and then choose one the animations below.</value>
+  </data>
+  <data name="center" xml:space="preserve">
+    <value>center</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="left" xml:space="preserve">
+    <value>left</value>
+  </data>
+  <data name="Photos" xml:space="preserve">
+    <value>Photos</value>
+  </data>
+  <data name="right" xml:space="preserve">
+    <value>right</value>
   </data>
 </root>

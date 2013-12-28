@@ -8,137 +8,395 @@
 @section scripts {
     <script>
         require(["viewModels/scaffold"], function () {
-            require(["viewModels/brandingViewModel", "jquery", "bootstrap"], function(branding, $) {
+            require(["viewModels/brandingViewModel", "jqueryui"], function(branding, $) {
                 $(function() {
                     var vm = new branding(@Html.Raw(JsonConvert.SerializeObject(Model)));
-                    vm.Bind(".brandingWizard", ".build-steps");
+                    vm.Bind("#main form", ".progress-bar");
                 });
             });
         });
     </script>
 }
 
-@* Do not use a with: binding on the panels as it will break the bootstrap integration *@
-<div class="brandingWizard accordion">
-    <div class="panel-group" id="brandingWizard">
-        <div id="photoCollapse" class="panel panel-default" style="display: none" data-bind="visible: PhotoSection().IsVisible">
-            <div class="panel-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#brandingWizard" href="#photoPanel">
-                    <h4 class="panel-title">
-                        <div class="step-title" data-bind="text: PhotoSection().TitleText, css: { 'opened': PhotoSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(PhotoSection().StartOpen) }"></div>
-                        <div class="step-subtitle" data-bind="css: { 'opened': PhotoSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(PhotoSection().StartOpen) }">@Strings.BuildStep__Your_potential_clients_want_to_see_you</div>
-                        <div class="step-completed">
-                            <span class="step-done glyphicons circle_ok" style="display: none" data-bind="visible: PhotoSection().IsCompleted, css: { 'opened': PhotoSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(PhotoSection().StartOpen) }"></span>
-                        </div>
-                    </h4>
-                </a>
-            </div>
-            <div id="photoPanel" class="panel-collapse collapse" data-bind="css: { 'in': PhotoSection().StartOpen }">
-                <div class="panel-body">
-                    <div class="thumbcontainer clearfix" data-bind="foreach: PhotoSection().PhotoSlots">
-                        <a style="display: none" href="#" class="photo-thumbnail"
-                           data-bind="visible: true, css: { selected: $root.PhotoSection().IsSelected($data) }, click: function () { $root.PhotoSection().SelectSlot($data); }">
-                            <div class="photo-preview clearfix" data-bind="css: { completed: $data.IsCompleted }, style: { backgroundImage: $data.PhotoBackground }">
-                                @*put this back in when we can edit text associated with a photo*@
-                                @*                  <div class="photo-select">
-                                    <span class="glyphicons circle_ok"></span>
-                                </div>*@
-                                <div class="photo-upload">
-                                    <span class="glyphicons plus"></span>
-                                    <span class="photo-upload-label">@Strings.BuildStep__Choose_photo</span>
-                                </div>
-                                <div class="photo-change" data-bind="click: function (d, e) { e.stopImmediatePropagation();$root.PhotoSection().ChangeSlot($data); }">
-                                    <span class="glyphicons edit"></span>
-                                    <span class="photo-change-label">@Strings.BuildStep__Change_photo</span>
-                                </div>
-                                <span class="photo-title" data-bind="text: $data.Title"></span>
-                            </div>
-                        </a>
+<form action="#">
+	@* accordion *@
+	<ul class="accordion" style="display: none" data-bind="visible: true">
+        <!-- ko with: PhotoSection -->
+		<li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
+			@* opener *@
+			<a class="opener" href="#">
+				<div class="holder">
+					<span class="num"><em>1</em></span>
+					<span class="title">
+						<strong>@Strings.Photos</strong>
+						<span data-bind="text: TitleText"></span>
+					</span>
+				</div>
+			</a>
+			@* slide *@
+			<div class="slide">
+				@* list-buttons *@
+				<ul class="list-buttons" data-bind="foreach: PhotoSlots">					<li>
+						<div class="upload-image" data-bind="visible: IsCompleted">
+							<img src="#" width="228" height="130" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
+							<span class="title" data-bind="text: PhotoName"></span>
+						</div>
+						<input type="file">
+						<span class="file-input-text">
+                            <span>@Strings.BuildStep__Choose_photo</span>
+                            <!-- ko text: Title --><!-- /ko -->
+						</span>
+					</li>				</ul>
+				@* large-image *@
+                <div data-bind="visible: !!SelectedSlot()">
+                    <!-- ko with: SelectedSlot -->
+				    <div class="large-image">
+					    <img src="#" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
+					    @* tools *@
+					    <div class="tools" style="display:none"> @* Remove display:none style when we support this *@
+						    @* style *@
+						    <ul class="style">							    <li><a class="bold" href="#">B</a></li>							    <li class="active"><a class="italic" href="#">I</a></li>							    <li><a class="underline" href="#">T</a></li>						    </ul>
+						    @* font *@
+						    <select>@* Bind to font names when this is supported *@							    <option>Segoe Script</option>
+							    <option>Segoe Script</option>
+							    <option>Segoe Script</option>
+							    <option>Segoe Script</option>
+						    </select>
+						    @* align *@						    <ul class="align">							    <li><a class="left" href="#">@Strings.left</a></li>							    <li class="active"><a class="center" href="#">@Strings.center</a></li>							    <li><a class="right" href="#">@Strings.right</a></li>						    </ul>
+					    </div>
+				    </div>
+                    <div style="display:none"> @* Remove display:none style when we support this *@
+				        <textarea class="text-area" cols="30" rows="10" placeholder="@Strings.BuildStep__Insert_your_text_here"></textarea>
+				        <span class="signs">-300</span>@* Add knockout charsleft binding when this is supported *@
                     </div>
-                    @*put this back in when we can edit text associated with a photo*@
-                    @*                  <div class="photo-selected" style="display: none">
-                    </div>*@
+				    <div class="btn-holder">
+					    <input type="submit" value="@Strings.BuildStep__Add_to_selected_frame">
+				    </div>
+                    <!-- /ko -->
                 </div>
-            </div>
-        </div>
-        
-        
-        <div id="brandingCollapse" class="panel panel-default" style="display: none" data-bind="visible: BrandingSection().IsVisible">
-            <div class="panel-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#brandingWizard" href="#brandingPanel">
-                    <h4 class="panel-title">
-                        <div class="step-title" data-bind="css: { 'opened': BrandingSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(BrandingSection().StartOpen) }">@Strings.BuildStep__Branding</div>
-                        <div class="step-subtitle" data-bind="css: { 'opened': BrandingSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(BrandingSection().StartOpen) }">@Strings.BuildStep__Choose_your_logo_placements</div>
-                        <div class="step-completed">
-                            <span class="step-done glyphicons circle_ok" style="display: none" data-bind="visible: BrandingSection().IsCompleted, css: { 'opened': BrandingSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(BrandingSection().StartOpen) }"></span>
-                        </div>
-                    </h4>
-                </a>
-            </div>
-            <div id="brandingPanel" class="panel-collapse collapse" data-bind="css: { 'in': BrandingSection().StartOpen }">
-                <div class="panel-body">
-                    <div class="thumbcontainer clearfix" data-bind="foreach: BrandingSection().LogoSlots">
-                        <a style="display: none" href="#" class="photo-thumbnail"
-                           data-bind="visible: true, css: { selected: $root.BrandingSection().IsSelected($data) }, click: function () { $root.BrandingSection().SelectSlot($data); }">
-                            <div class="photo-preview clearfix" data-bind="css: { completed: $data.IsCompleted }, style: { backgroundImage: $data.PhotoBackground }">
-                                <div class="photo-upload">
-                                    <span class="glyphicons plus"></span>
-                                    <span class="photo-upload-label">@Strings.BuildStep__Choose_logo</span>
-                                </div>
-                                <div class="photo-change" data-bind="click: function (d, e) { e.stopImmediatePropagation();$root.BrandingSection().ChangeSlot($data); }">
-                                    <span class="glyphicons edit"></span>
-                                    <span class="photo-change-label">@Strings.BuildStep__Change_logo</span>
-                                </div>
-                                <span class="photo-title" data-bind="text: $data.Title"></span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-        <div id="textCollapse" class="panel panel-default" style="display: none" data-bind="visible: TextSection().IsVisible">
-            <div class="panel-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#brandingWizard" href="#textPanel">
-                    <h4 class="panel-title">
-                        <div class="step-title" data-bind="css: { 'opened': TextSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(TextSection().StartOpen) }">@Strings.BuildStep__Text</div>
-                        <div class="step-subtitle" data-bind="text: TextSection().TitleText, css: { 'opened': TextSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(TextSection().StartOpen) }"></div>
-                        <div class="step-completed">
-                            <span class="step-done glyphicons circle_ok" style="display: none" data-bind="visible: TextSection().IsCompleted, css: { 'opened': TextSection().StartOpen, 'collapsed': !ko.utils.unwrapObservable(TextSection().StartOpen) }"></span>
-                        </div>
-                    </h4>
-                </a>
-            </div>
-            <div id="textPanel" class="panel-collapse collapse" data-bind="css: { 'in': TextSection().StartOpen }">
-                <div class="panel-body">
-                    <div class="thumbcontainer clearfix" data-bind="foreach: TextSection().TextTemplateItems">
-                        <div class="text-item">
-                            <label class="control-label" data-bind="text: Name"></label>
-                            <input type="text" class="form-control" data-bind="value: TextValue, valueUpdate: 'afterkeydown'" />
-                            <div>
-                                <span class="text-description" data-bind="text: Description"></span>:
-                                <span class="text-timing" data-bind="text: TimingText"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+			</div>
+		</li>
+        <!-- /ko -->
+        <!-- ko with: BrandingSection -->
+		<li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
+			@* opener *@
+			<a class="opener" href="#">
+				<div class="holder">
+					<span class="num"><em>2</em></span>
+					<span class="title">
+						<strong>@Strings.BuildStep__Logo</strong>
+						<span>@Strings.BuildStep__Upload_your_logo</span>
+					</span>
+				</div>
+			</a>
+			@* slide *@
+			<div class="slide">
+				@* upload-logo *@
+				<div class="upload-logo">
+					<input type="file" title="Upload logo">
+					<span class="file-input-text">No file selected</span>
+				</div>
+				@* options *@
+				<ul class="options">					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check01" type="checkbox">							<label for="check01">Fade in</label>
+						</div>
+					</li>					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check02" checked="checked" type="checkbox">
+							<label for="check02">Left to right</label>
+						</div>
+					</li>
+					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check03" type="checkbox">
+							<label for="check03">Right to left</label>
+						</div>
+					</li>
+					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check04" type="checkbox">
+							<label for="check04">Dissolve</label>
+						</div>
+					</li>				</ul>
+			</div>
+		</li>
+        <!-- /ko -->
+        <!-- ko with: TextSection -->
+		<li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
+			@* opener *@
+			<a class="opener" href="#">
+				<div class="holder">
+					<span class="num"><em>3</em></span>
+					<span class="title">
+						<strong>Lower Third</strong>
+						<span>This image is at the bottom of your video </span>
+					</span>
+				</div>
+			</a>
+			@* slide *@
+			<div class="slide">
+				@* contact-info *@
+				<div class="contact-info">
+					<div class="row">
+						<label for="phone-number">Add your phone number</label>
+						<input id="phone-number" type="tel" value="">
+					</div>
+					<div class="row">
+						<label for="website">Add your website</label>
+						<input id="website" type="url" value="">
+					</div>
+				</div>
+				@* options *@
+				<ul class="options">
+					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check05" type="checkbox">
+							<label for="check05">No lower third</label>
+						</div>
+					</li>
+					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check06" checked="checked" type="checkbox">
+							<label for="check06">logo on left - website on right</label>
+						</div>
+					</li>
+					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check07" type="checkbox">
+							<label for="check07">logo on right - website on left</label>
+						</div>
+					</li>
+					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check08" type="checkbox">
+							<label for="check08">Website &amp; phone number only</label>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</li>
+        <!-- /ko -->
+		<li>
+			@*@ opener *@
+			<a class="opener" href="#">
+				<div class="holder">
+					<span class="num"><em>4</em></span>
+					<span class="title">
+						<strong>Call to action</strong>
+						<span>Help your viewers engage with your video</span>
+					</span>
+				</div>
+			</a>
+			@* slide *@
+			<div class="slide">
+				@* action-block *@
+				<div class="action-block">
+					<div class="box">
+						<input id="none" checked="checked" type="checkbox" />						<label for="none">None</label>
+					</div>
+					<div class="box">
+						<div class="check-wrap">
+							<input id="website3" type="checkbox" />							<label for="website3">Add your website</label>
+						</div>
+						<div class="block">
+							<div class="text-holder">
+								<div class="row">
+									<label for="text">Text</label>
+									<input id="text" type="text" placeholder="ex. Vist us now!">
+								</div>
+								<div class="row">
+									<label for="website2">Url</label>
+									<input id="website2" type="text" placeholder="www.YourWebsiteHere.com ">
+								</div>
+							</div>
+							<div class="image-holder">
+								<div class="image">
+									<img src="images/img04.jpg" width="228" height="130" alt="image description">
+									<span>Section 1 - appx. 0:12 into video</span>
+								</div>
+								<a href="#">Preview</a>
+							</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="check-wrap">
+							<input id="contact-form" type="checkbox" />
+							<label for="contact-form">Add your contact form</label>
+						</div>
+						<div class="block">
+							<div class="text-holder">
+								<div class="row">
+									<label for="text2">Text</label>
+									<input id="text2" type="text" placeholder="ex. Fill out this form for more information!">
+								</div>
+								<span class="title">Optional Form Fields</span>
+								<ul class="check-list">									<li>
+										<input id="check-1" type="checkbox" />										<label for="check-1">Full name*</label>
+									</li>
+									<li>
+										<input id="check-2" type="checkbox" />
+										<label for="check-2">Email address*</label>
+									</li>
+									<li>
+										<input id="check-3" type="checkbox" />
+										<label for="check-3">Phone*</label>
+									</li>
+									<li>
+										<input id="check-4" type="checkbox" />
+										<label for="check-4">Comments*</label>
+									</li>								</ul>
+							</div>
+							<div class="image-holder">
+								<div class="image">
+									<img src="images/img04.jpg" width="228" height="130" alt="image description">
+									<span>Section 1 - appx. 0:12 into video</span>
+								</div>
+								<a href="#">Preview</a>
+							</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="check-wrap popup-wrap">
+							<input id="notiifications" type="checkbox" />
+							<label for="notiifications">Notiifications </label>
+							<div class="popup-box">
+								<a class="open" href="#">?</a>
+								<div class="popup">
+									Recieve SMS Text Messages or Email Notifcations when a viewer engages with your call to action.
+								</div>
+							</div>
+						</div>
+						<div class="block2">
+							<div class="col-1">
+								<div class="row">
+									<input id="sms" type="checkbox">									<label for="sms">SMS Text Message</label>
+								</div>
+								<div class="row">
+									<input id="email" type="checkbox">
+									<label for="email">Email</label>
+								</div>
+							</div>
+							<div class="col-2">
+								<div class="row">
+									<label for="phone">Phone</label>
+									<input id="phone" type="tel" placeholder="555.555.5555">
+								</div>
+								<div class="row">
+									<label for="address">Address</label>
+									<input id="address" type="email" placeholder="email@youraddress.com">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box">
+						<input id="share" checked="checked" type="checkbox" />
+						<label for="share">Let your viewers share your video</label>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li>
+			@* opener *@
+			<a class="opener" href="#">
+				<div class="holder">
+					<span class="num"><em>5</em></span>
+					<span class="title">
+						<strong>Ending</strong>
+						<span>This is the last frame your viewers will see. Make a lasting impression!</span>
+					</span>
+				</div>
+			</a>
+			@* slide *@
+			<div class="slide">
+				<!-- options -->
+				<ul class="options">
+					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check09" type="checkbox">
+							<label for="check09">Animated logo with text</label>
+						</div>
+					</li>
+					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check10" checked="checked" type="checkbox">
+							<label for="check10">Animated logo with text below</label>
+						</div>
+					</li>
+					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check11" type="checkbox">
+							<label for="check11">Animated logo with text above</label>
+						</div>
+					</li>
+					<li>
+						<div class="wrap"></div>
+						<div class="check-holder">
+							<input id="check12" type="checkbox">
+							<label for="check12">Animated logo with text on right</label>
+						</div>
+					</li>
+				</ul>
+				@* large-image *@
+				<div class="large-image">
+					<img src="images/img05.jpg" alt="image description">
+					@* tools *@
+					<div class="tools">
+						@* style *@
+						<ul class="style">
+							<li><a class="bold" href="#">B</a></li>
+							<li class="active"><a class="italic" href="#">I</a></li>
+							<li><a class="underline" href="#">T</a></li>
+						</ul>
+						@* font *@
+						<select>
+							<option>Segoe Script</option>
+							<option>Segoe Script</option>
+							<option>Segoe Script</option>
+							<option>Segoe Script</option>
+						</select>
+						@* align *@
+						<ul class="align">
+							<li><a class="left" href="#">left</a></li>
+							<li class="active"><a class="center" href="#">center</a></li>
+							<li><a class="right" href="#">right</a></li>
+						</ul>
+					</div>
+				</div>
+				<textarea class="text-area" cols="30" rows="10" placeholder="Insert your text here"></textarea>
+				<span class="signs">-300</span>
+				<div class="btn-holder">
+					<input type="submit" value="Add to selected frame">
+				</div>
+			</div>
+		</li>
+	</ul>
+</form>
 
 @section modals {
-    <div class="modal fade" id="photoChooserModal" tabindex="-1" role="dialog" data-show="false">
-        <div class="modal-dialog" data-bind="template: { name: 'photo-chooser-template' }">
-        </div>
+    <div class="lightbox" id="photoChooserModal" tabindex="-1">
+		<div class="title">
+			<a href="#" class="close" data-bind="click: Cancel">@Strings.Close</a>
+		</div>
+		<div class="video-holder" data-bind="template: { name: 'photo-chooser-template' }">
+		</div>
     </div>
     
     @* This is in a template to prevent issues with multiple bindings when re-opening the modal *@
     <script type="text/html" id="photo-chooser-template">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-bind="click: Cancel">&times;</button>
                 <h4 class="modal-title">@Strings.Modals__Choose_a_Photo</h4>
             </div>
             <div class="modal-body">
@@ -150,8 +408,8 @@
                     <div id="orgPhotos" class="tab-pane fade active in">
                         <div class="thumbcontainer clearfix" data-bind="foreach: OrganizationPhotos">
                             <a style="display: none" href="#" class="photo-thumbnail"
-                                data-bind="visible: true, css: { selected: $parent.IsSelected($data) }, click: function () { $parent.SelectPhoto($data); }">
-                                <div class="photo-preview no-choose clearfix" data-bind="style: { backgroundImage: 'url(' + $data.LinkUrl() + ')' }">
+                                data-bind="visible: true, css: { 'selected': $parent.IsSelected($data) }, click: function () { $parent.SelectPhoto($data); }">
+                                <div class="photo-preview no-choose clearfix" data-bind="style: { 'backgroundImage': 'url(' + $data.LinkUrl() + ')' }">
                                     <div class="photo-select">
                                         <span class="glyphicons circle_ok"></span>
                                     </div>
@@ -163,12 +421,12 @@
                     <div id="custPhotos" class="tab-pane fade">
                         <div class="thumbcontainer clearfix" data-bind="foreach: CustomerPhotos">
                             <a style="display: none" href="#" class="photo-thumbnail"
-                                data-bind="visible: true, css: { selected: $parent.IsSelected($data) }, click: function () { $parent.SelectPhoto($data); }">
-                                <div class="photo-preview no-choose clearfix" data-bind="style: { backgroundImage: 'url(' + $data.LinkUrl() + ')' }">
+                                data-bind="visible: true, css: { 'selected': $parent.IsSelected($data) }, click: function () { $parent.SelectPhoto($data); }">
+                                <div class="photo-preview no-choose clearfix" data-bind="style: { 'backgroundImage': 'url(' + LinkUrl() + ')' }">
                                     <div class="photo-select">
                                         <span class="glyphicons circle_ok"></span>
                                     </div>
-                                    <span class="photo-title" data-bind="text: $data.LinkFileName"></span>
+                                    <span class="photo-title" data-bind="text: LinkFileName"></span>
                                 </div>
                             </a>
                         </div>

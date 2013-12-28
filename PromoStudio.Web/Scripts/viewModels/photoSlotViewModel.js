@@ -89,11 +89,6 @@ define([
                 if (res == null) { return null; }
                 return res.LinkUrl();
             });
-            self.PhotoBackground = ko.computed(function () {
-                var url = self.PhotoUrl();
-                if (url === null) { return "none"; }
-                return "url({0})".format(url);
-            });
             self.PhotoName = ko.computed(function () {
                 var res = customerTemplateScriptItem.Resource();
                 if (res == null) { return null; }

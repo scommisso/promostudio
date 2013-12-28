@@ -188,7 +188,7 @@ namespace PromoStudio.Web.Controllers
                 StepsCompleted = new List<int>(data.CompletedSteps)
             };
 
-            return PAjax("Branding", model: vm);
+            return PAjax("Customize", model: vm);
         }
 
         //

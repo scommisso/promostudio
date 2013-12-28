@@ -79,6 +79,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add to selected frame.
+        /// </summary>
+        public static string BuildStep__Add_to_selected_frame {
+            get {
+                return ResourceManager.GetString("BuildStep__Add_to_selected_frame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add your script.
         /// </summary>
         public static string BuildStep__Add_your_script {
@@ -196,6 +205,24 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert your text here.
+        /// </summary>
+        public static string BuildStep__Insert_your_text_here {
+            get {
+                return ResourceManager.GetString("BuildStep__Insert_your_text_here", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logo.
+        /// </summary>
+        public static string BuildStep__Logo {
+            get {
+                return ResourceManager.GetString("BuildStep__Logo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Music.
         /// </summary>
         public static string BuildStep__Music {
@@ -214,7 +241,7 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} spot{1} need{2} your own photo{1}.
+        ///   Looks up a localized string similar to Your video has {0} place{1} for you to add your photo{1}.
         /// </summary>
         public static string BuildStep__Num_spots_need_your_own_photos {
             get {
@@ -286,6 +313,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upload your logo and then choose one the animations below..
+        /// </summary>
+        public static string BuildStep__Upload_your_logo {
+            get {
+                return ResourceManager.GetString("BuildStep__Upload_your_logo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voice.
         /// </summary>
         public static string BuildStep__Voice {
@@ -313,11 +349,38 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to center.
+        /// </summary>
+        public static string center {
+            get {
+                return ResourceManager.GetString("center", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error..
         /// </summary>
         public static string Error_period {
             get {
                 return ResourceManager.GetString("Error_period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to left.
+        /// </summary>
+        public static string left {
+            get {
+                return ResourceManager.GetString("left", resourceCulture);
             }
         }
         
@@ -385,6 +448,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Photos.
+        /// </summary>
+        public static string Photos {
+            get {
+                return ResourceManager.GetString("Photos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to play.
         /// </summary>
         public static string play {
@@ -408,6 +480,15 @@ namespace PromoStudio.Resources {
         public static string PromoStudio {
             get {
                 return ResourceManager.GetString("PromoStudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to right.
+        /// </summary>
+        public static string right {
+            get {
+                return ResourceManager.GetString("right", resourceCulture);
             }
         }
         
