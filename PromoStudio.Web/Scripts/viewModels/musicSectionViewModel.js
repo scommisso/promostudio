@@ -43,6 +43,7 @@ define(["models/stockAudio",
                 loadVideoData(videoData);
 
                 id = musicItem.fk_CustomerVideoItemId();
+
                 if (id > 0) {
                     songs = self.AvailableMusic();
                     for (i = 0; i < songs.length; i++) {

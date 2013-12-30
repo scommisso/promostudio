@@ -53,12 +53,12 @@
 									<a href="#" class="btn-play" data-bind="click: Play, css: { 'playing': IsPlaying }">@Strings.play</a>
 									<img width="79" height="72" src="@Url.Content("~/Content/images/img03.jpg")" data-bind="attr: { 'alt': Description }">
 								</span>
-								<label data-bind="attr: { 'for': 'sa_check' + pk_StockAudioId() }">
+								<label data-bind="attr: { 'for': AttrBinding().id }">
 									<span class="info">
 										<strong data-bind="text: Name"></strong>
                                         <!-- ko text: Description --><!-- /ko -->
 									</span>
-									<input type="checkbox" data-bind="attr: { 'id': 'sa_check' + pk_StockAudioId() }, event: { 'change': ToggleSelection }" />
+				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
                                 <div class="audio-player" style="display:none"
                                     data-bind="jplayer: { 'media': { 'mp3': '/Resources/StockAudio?stockAudioId=' + pk_StockAudioId() }, 'title': Name, 'isPlaying': IsPlaying }"> 
@@ -102,12 +102,12 @@
 									<a href="#" class="btn-play2" data-bind="click: Play, css: { 'playing': IsPlaying }">@Strings.play</a>
 									<img src="#" width="79" height="72" data-bind="attr: { 'alt': FullName, 'src': PhotoUrl }" />
 								</div>
-								<label data-bind="attr: { 'for': 'va_check' + pk_VoiceActorId() }">
+								<label data-bind="attr: { 'for': AttrBinding().id }">
 									<span class="info">
 										<strong data-bind="text: FullName"></strong>
                                         <!-- ko text: Description --><!-- /ko -->
 									</span>
-									<input type="checkbox" data-bind="attr: { 'id': 'va_check' + pk_VoiceActorId() }, event: { 'change': ToggleSelection }" />
+				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
                                 <div class="audio-player" style="display:none"
                                     data-bind="jplayer: { 'media': { 'mp3': '/Resources/ActorSample?voiceActorId=' + pk_VoiceActorId() }, 'title': FullName, 'isPlaying': IsPlaying }">

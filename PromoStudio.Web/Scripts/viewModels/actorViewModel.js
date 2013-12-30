@@ -55,6 +55,19 @@ define([
             self.IsSelected = ko.observable(false);
             self.IsPlaying = ko.observable(false);
 
+            self.AttrBinding = ko.computed(function () {
+                var selected = self.IsSelected(),
+                    id = self.pk_VoiceActorId();
+
+                var attr = {
+                    id: 'va_' + id
+                };
+                if (selected) {
+                    attr.checked = "checked";
+                }
+                return attr;
+            });
+
             self.Play = function (data, event) {
                 var playing = self.IsPlaying();
                 getPlayers(event.srcElement).each(function () {
@@ -68,23 +81,18 @@ define([
             };
 
             self.ToggleSelection = function (data, event) {
-                if (sectionVm.toggling === true) { return true; }
-
                 var selected = !self.IsSelected();
+                self.IsSelected(selected);
+
                 if (selected) {
                     // Hack to work with JCF
-                    sectionVm.toggling = true;
                     getCheckboxes(event.srcElement).each(function () {
-                        if (this !== event.srcElement) {
-                            this.checked = true;
-                            this.removeAttribute("checked");
-                            $(this).trigger("click");
-                        }
+                        this.checked = this === event.srcElement ? selected : false;
                     });
-                    sectionVm.toggling = false;
                 }
 
                 sectionVm.SelectActor(self);
+                $.jcfModule.customForms.refreshAll();
             };
         }
 

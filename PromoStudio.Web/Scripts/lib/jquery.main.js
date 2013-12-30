@@ -2361,6 +2361,7 @@ define(["jquery"], function(jQuery, undefined) {
         initEdit();
         initEditVideo();
     };
+    jQuery.jcfModule = jcf;
 
 
     return jQuery;

@@ -27,8 +27,8 @@
 				<a class="play" href="#" data-bind="attr: { 'href': '#vid_' + pk_StoryboardId() }">play</a>
 			</div>
 			<div class="title">
-				<input data-bind="attr: { 'id': 'sb_' + pk_StoryboardId() }, event: { 'change': ToggleSelection }" name="cbStoryboard" type="checkbox">
-				<label data-bind="attr: { 'for': 'sb_' + pk_StoryboardId() }, text: Name"></label>
+				<input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
+				<label data-bind="attr: { 'for': AttrBinding().id }, text: Name"></label>
 			</div>
 		</li>
     </ul>

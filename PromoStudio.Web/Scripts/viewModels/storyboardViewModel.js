@@ -23,7 +23,7 @@ define([
                 checkboxes;
 
             function getCheckboxes(srcElement) {
-                return checkboxes || $(srcElement).closest("ul").find("input[type^='radio']");
+                return checkboxes || $(srcElement).closest("ul").find("input[type^='checkbox']");
             }
 
             self.pk_StoryboardId = storyboard.pk_StoryboardId;
@@ -44,26 +44,33 @@ define([
             });
 
             self.IsSelected = ko.observable(false);
-            self.ToggleSelection = function (data, event) {
-                if (sectionVm.toggling === true) { return true; }
 
+            self.AttrBinding = ko.computed(function () {
+                var selected = self.IsSelected(),
+                    id = self.pk_StoryboardId();
+
+                var attr = {
+                    id: 'sb_' + id
+                };
+                if (selected) {
+                    attr.checked = "checked";
+                }
+                return attr;
+            });
+
+            self.ToggleSelection = function (data, event) {
                 var selected = !self.IsSelected();
                 self.IsSelected(selected);
 
                 if (selected) {
                     // Hack to work with JCF
-                    sectionVm.toggling = true;
                     getCheckboxes(event.srcElement).each(function () {
-                        if (this !== event.srcElement) {
-                            this.checked = true;
-                            this.removeAttribute("checked");
-                            $(this).trigger("click");
-                        }
+                        this.checked = this === event.srcElement ? selected : false;
                     });
-                    sectionVm.toggling = false;
                 }
 
                 sectionVm.SelectStoryboard(self);
+                $.jcfModule.customForms.refreshAll();
             };
 
             self.Player = null;

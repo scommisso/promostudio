@@ -9,7 +9,7 @@
 
 define(["models/storyboard",
         "viewModels/storyboardViewModel",
-        "jquery",
+        "jqueryui",
         "knockout",
         "ps/logger",
         "lib/ko.custom"],
@@ -46,7 +46,7 @@ define(["models/storyboard",
                     for (i = 0; i < storyboards.length; i++) {
                         item = storyboards[i];
                         if (item.pk_StoryboardId() === storyboardId) {
-                            self.SelectedStoryboard(item);
+                            self.SelectStoryboard(item);
                             break;
                         }
                     }
