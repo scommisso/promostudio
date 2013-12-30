@@ -163,6 +163,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="ViewModels\AccountViewModelBase.cs" />
+    <Compile Include="ViewModels\AccountDashboardViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <None Include="build.bat" />
@@ -171,7 +174,7 @@
     <Compile Include="Controllers\OAuthController.cs" />
     <Compile Include="Controllers\ScriptsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -256,6 +259,7 @@
     <Content Include="Scripts\lib\Jplayer.swf" />
     <Content Include="Scripts\lib\jquery.jplayer.js" />
     <Content Include="Scripts\viewModels\callToActionSectionViewModel.js" />
+    <Content Include="Scripts\viewModels\accountDashboardViewModel.js" />
     <Content Include="Scripts\viewModels\endingSectionViewModel.js" />
     <Content Include="Scripts\viewModels\musicViewModel.js" />
     <Content Include="Scripts\viewModels\customerVideoViewModel.js" />
@@ -270,6 +274,7 @@
     <Compile Include="ViewModels\FootageViewModel.cs" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <Content Include="Views\Shared\_AccountNavigation.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -368,7 +373,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Build\_BuildLayout.cshtml" />
     <Content Include="Views\Build\Audio.cshtml" />
-    <Content Include="Views\Build\Summary.cshtml" />
+    <Content Include="Views\Build\Preview.cshtml" />
     <Content Include="Views\Scripts\Strings.cshtml" />
   </ItemGroup>
   <ItemGroup>

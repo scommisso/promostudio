@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using PromoStudio.Web.Helpers;
+using PromoStudio.Web.ViewModels;
 
 namespace PromoStudio.Web.Controllers
 {
@@ -18,21 +19,8 @@ namespace PromoStudio.Web.Controllers
         }
 
         //
-        // GET: /Videos/
-        public ActionResult Index()
-        {
-            if (CurrentUser == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-
-            return PAjax();
-        }
-
-        //
-        // GET: /Videos/Data
-        [NoCache]
-        public async Task<ActionResult> Data()
+        // GET: /Account/
+        public async Task<ActionResult> Index()
         {
             if (CurrentUser == null)
             {
@@ -46,57 +34,12 @@ namespace PromoStudio.Web.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var videos = (await _dataService.CustomerVideo_SelectByCustomerIdAsync(customerId))
-                .Where(v => v.fk_CustomerVideoRenderStatusId != (sbyte) CustomerVideoRenderStatus.Canceled)
-                .ToList();
-            
-            return Json(new
+            var vm = new AccountDashboardViewModel(Request.RequestContext.HttpContext, RouteData)
             {
-                Customer = customerInfo,
-                CustomerVideos = videos
-            }, JsonRequestBehavior.AllowGet);
-        }
+                Customer = customerInfo
+            };
 
-        //
-        // GET: /Videos/Status
-        [NoCache]
-        public async Task<ActionResult> Status()
-        {
-            if (CurrentUser == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
-            long customerId = CurrentUser.CustomerId;
-
-            var videos = (await _dataService.CustomerVideo_SelectByCustomerIdAsync(customerId));
-
-            return Json(videos, JsonRequestBehavior.AllowGet);
-        }
-
-        //
-        // GET: /Videos/Play?cvid={cvid}
-        public async Task<ActionResult> Play(long cvid)
-        {
-            // TODO: Add filter here to only allow vidyard to pull down content - 404 for all other callers
-            var video = (await _dataService.CustomerVideo_SelectAsync(cvid));
-            if (video == null)
-            {
-                return new HttpNotFoundResult();
-            }
-
-            string path = null;
-            if (!string.IsNullOrEmpty(video.PreviewFilePath)) {
-                path = video.PreviewFilePath;
-            }
-            if (!string.IsNullOrEmpty(video.CompletedFilePath)) {
-                path = video.CompletedFilePath;
-            }
-            if (string.IsNullOrEmpty(path))
-            {
-                return new HttpNotFoundResult();
-            }
-
-            return Redirect(path);
+            return PAjax("Index", model: vm);
         }
     }
 }

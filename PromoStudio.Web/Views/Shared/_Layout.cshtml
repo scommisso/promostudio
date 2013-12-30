@@ -5,7 +5,7 @@
 @{
     var useOptimizedScripts = PromoStudio.Web.Properties.Settings.Default.UseOptimizedScripts;
     var title = Strings.PromoStudio;
-    // TODO: Any additional title stuff from child views here
+        // TODO: Any additional title stuff from child views here
 }
 <!DOCTYPE html>
 <html>
@@ -41,7 +41,9 @@
 					@* menu *@
 					<nav class="menu">
 						<ul>
-                            @if (Model.IsAccountController)
+                        @if (Model.User != null)
+                        {
+                            if (Model.IsAccountController)
                             {
 							<li><a href="@Url.Action("Index", "Build")">@Strings.Navigation__Video_Builder</a></li>
                             }
@@ -49,7 +51,8 @@
                             {
 							<li><a href="@Url.Action("Index", "Account")">@Strings.Navigation__My_Account</a></li>
                             }
-							<li><a href="#">@Strings.Sign_Out</a></li>
+							<li><a id="logout" href="#">@Strings.Sign_Out</a></li>
+                        }
 						</ul>
 					</nav>
 				</div>

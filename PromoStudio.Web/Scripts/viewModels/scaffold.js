@@ -34,7 +34,7 @@ define(["ps/logger",
                     url: "/OAuth/Logout",
                     success: function (data, textStatus, jqXHR) {
                         initContainer("", "login");
-                        $("div.navbar").hide();
+                        //$("div.navbar").hide();
                         if ($.pjax) {
                             $.pjax({ url: "/", container: $.fn.pjaxScaffold.containerSelector });
                         } else {
@@ -53,11 +53,8 @@ define(["ps/logger",
                 var container = $.fn.pjaxScaffold.containerSelector,
                     determineActiveNav = function (url) {
                         var loc = url.toLowerCase();
-                        if (loc.indexOf("videos") === 0) {
-                            return "#navVideos";
-                        }
-                        if (loc.indexOf("resources") === 0) {
-                            return "#navResources";
+                        if (loc.indexOf("account") === 0) {
+                            return "#navAccount";
                         }
                         if (loc.indexOf("build") === 0) {
                             return "#navBuild";
@@ -111,7 +108,7 @@ define(["ps/logger",
             };
 
             $(document).ready(function () {
-                $("div.navbar").scrollToFixed();
+                //$("div.navbar").scrollToFixed();
 
 
                 // Wire logout button

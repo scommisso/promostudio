@@ -48,9 +48,6 @@ namespace PromoStudio.Web.ViewModels
         public int CurrentStep { get; set; }
         public CustomerVideo Video { get; set; }
 
-        [JsonIgnore]
-        public string VmJson { get; set; }
-
         #region ctor
 
         public BuildViewModelBase(HttpContextBase context, RouteData routeData)

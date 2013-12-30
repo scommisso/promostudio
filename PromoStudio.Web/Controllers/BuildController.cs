@@ -67,13 +67,13 @@ namespace PromoStudio.Web.Controllers
             switch (lastComplete)
             {
                 case 1:
-                    return new RedirectResult("~/Build/Branding");
+                    return new RedirectResult("~/Build/Customize");
                 case 2:
                     return new RedirectResult("~/Build/Script");
                 case 3:
                     return new RedirectResult("~/Build/Audio");
                 case 4:
-                    return new RedirectResult("~/Build/Summary");
+                    return new RedirectResult("~/Build/Preview");
                 case 0:
                 case 5:
                 default:
@@ -244,9 +244,9 @@ namespace PromoStudio.Web.Controllers
         }
 
         //
-        // GET: /Build/Summary
-        [ActionName("Summary")]
-        public async Task<ActionResult> Summary()
+        // GET: /Build/Preview
+        [ActionName("Preview")]
+        public async Task<ActionResult> Preview()
         {
             if (!ValidateUserStep(5))
             {
@@ -260,7 +260,7 @@ namespace PromoStudio.Web.Controllers
                 StepsCompleted = new List<int>(data.CompletedSteps)
             };
 
-            return PAjax("Summary", model: vm);
+            return PAjax("Preview", model: vm);
         }
 
         //

@@ -1,0 +1,416 @@
+﻿@using PromoStudio.Resources
+@using Newtonsoft.Json
+@model PromoStudio.Web.ViewModels.AccountDashboardViewModel
+@{
+    ViewBag.Title = "Account Dashboard";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        require(["viewModels/scaffold"], function () {
+            require(["viewModels/accountDashboardViewModel", "jqueryui", "knockout", "lib/ko.custom"],
+                function(accountDashboardVm, $, ko) {
+                    $(function() {
+                        var vm = new accountDashboardVm({
+                                Customer: @Html.Raw(JsonConvert.SerializeObject(Model.Customer))
+                            }),
+                            container = $("#main")[0];
+                        ko.callbackOnBind(container, function () {
+                            window.setTimeout(function () {
+                                $.initJcf();
+                            }, 10);
+                        }, 1000);
+                        ko.applyBindings(vm, container);
+                    });
+                });
+        });
+    </script>
+}
+
+@section Navigation {
+}
+
+<!-- bar -->
+<div class="bar">
+	<span>Welcome, @Model.Customer.FullName!</span>
+</div>
+<!-- accordion -->
+<ul class="accordion">
+	<li class="active">
+		<!-- opener -->
+		<a class="opener" href="#">General Info &amp; Billing</a>
+		<!-- slide -->
+		<div class="slide">
+			<!-- order-form -->
+			<form action="#" class="order-form order-form-add">
+				<fieldset>
+					<div class="box">
+						<div class="btn-edit light active"><a href="#"><span>Edit</span><em>Save</em></a></div>
+						<!-- user-info -->
+						<dl class="user-info">
+							<dt>User name:</dt>
+							<dd>Magellans_Lost</dd>
+							<dt>Pin:</dt>
+							<dd>****</dd>
+						</dl>
+					</div>
+					<div class="box">
+						<div class="btn-edit"><a href="#"><span>Edit</span><em>Save</em></a></div>
+						<div class="row">
+							<label for="full-name">Full name*</label>
+							<input id="full-name" type="text" placeholder="Michael Davis">
+						</div>
+						<div class="row">
+							<label for="email">Email address*</label>
+							<input id="email" type="email" placeholder="email@youraddress.com">
+						</div>
+						<div class="row">
+							<label for="phone">Phone*</label>
+							<input id="phone" type="tel" placeholder="555.555.5555">
+						</div>
+						<div class="address-area">
+							<div class="row">
+								<label for="address">Billing Address*</label>
+								<div class="block">
+									<span class="add-info">Street Address</span>
+									<input id="address" type="text" placeholder="11111 Made up Address Ln">
+								</div>
+							</div>
+							<div class="row">
+								<div class="block">
+									<span class="add-info">Street Address</span>
+									<input type="text">
+								</div>
+							</div>
+							<div class="row">
+								<div class="block">
+									<span class="add-info">City</span>
+									<input type="text" placeholder="Phoenix">
+								</div>
+							</div>
+							<div class="row">
+								<div class="block">
+									<span class="add-info">State</span>
+									<input type="text" placeholder="AZ">
+								</div>
+							</div>
+							<div class="row">
+								<div class="block">
+									<span class="add-info">Zip Code</span>
+									<input type="text" placeholder="85003">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="btn-edit"><a href="#"><span>Edit</span><em>Save</em></a></div>
+						<div class="row">
+							<div class="block">
+								<label for="card-number">Card Number</label>
+								<input id="card-number" type="text" placeholder="4444000044440000">
+							</div>
+						</div>
+						<div class="row">
+							<ul class="cards">
+								<li><img src="images/card-visa.gif" width="48" height="17" alt="image description"></li>
+								<li><img src="images/card-mc.gif" width="52" height="31" alt="image description"></li>
+								<li><img src="images/card-ameex.gif" width="35" height="30" alt="image description"></li>
+								<li><img src="images/card-discover.gif" width="46" height="30" alt="image description"></li>
+							</ul>
+							<div class="block">
+								<label for="exp-date">Exp Date</label>
+								<input id="exp-date" type="text" placeholder="12/2016">
+							</div>
+						</div>
+						<div class="row">
+							<div class="block">
+								<label for="ccv">ccv</label>
+								<input id="ccv" type="text" placeholder="555">
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</li>
+	<li>
+		<!-- opener -->
+		<a class="opener" href="#"><span>My Video Library</span></a>
+		<!-- slide -->
+		<div class="slide">
+			<!-- info-video -->
+			<form action="#" class="info-video">
+				<div class="box">
+					<!-- video-panel -->
+					<div class="video-panel">
+						<div class="active-check">
+							<input class="check2" id="check-1" checked="checked" type="checkbox">
+							<label for="check-1">Active Video</label>
+						</div>
+						<div class="deactivate-check">
+							<label for="check-2">Deactivate Video</label>
+							<input class="check2" id="check-2" type="checkbox">
+						</div>
+						<h3>My Video 1</h3>
+					</div>
+					<!-- detail -->
+					<div class="detail">
+						<!-- video-block -->
+						<div class="col-1">
+							<div class="video">
+								<img src="images/img04.jpg" alt="image description">
+								<span class="title">Section 1 - appx. 0:12 into video</span>
+							</div>
+							<a class="edit" href="#">Edit your video</a>
+						</div>
+						<div class="col-2">
+							<div class="row">
+								<label for="code1">Embed code</label>
+								<input id="code1" type="text" placeholder="http://www.yidyard.com/hdjhflkjshdfkhdlfkjh 1234576dhfjh/">
+							</div>
+							<div class="row">
+								<label for="link1">Direct link</label>
+								<input id="link1" type="text" placeholder="www.YourWebsiteHere.com/hdjhflkjshdfkhdlfkjh dhfjh/">
+							</div>
+							<!-- progress-bar -->
+							<ul class="progress-bar">
+								<li class="footage done"><a href="#"><span>Footage</span></a></li>
+								<li class="customize done"><a href="#"><span>Customize</span></a></li>
+								<li class="script done"><a href="#"><span>Script</span></a></li>
+								<li class="audio done"><a href="#"><span>Audio</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="box margin">
+					<div class="video-panel">
+						<h3>Video 1 Analytics</h3>
+					</div>
+					<!-- analytics-block -->
+					<div class="analytics-block">
+						<!-- graph -->
+						<div class="graph">
+							<time class="time" datetime="2013-11-01">Nov 1 - 30</time>
+							<img src="images/graph01.png" width="254" height="139" alt="image description">
+							<div class="popup-box">
+								<a class="open" href="#">?</a>
+								<div class="popup">
+									<div class="title">
+										Monthly Video Views
+										<div class="date-holder">
+											<a href="#" class="btn-prev">prev</a>
+											<span>Nov 2013</span>
+											<a href="#" class="btn-next">next</a>
+										</div>
+									</div>
+									<img src="images/graph02.png" width="406" height="512" alt="image description">
+								</div>
+							</div>
+						</div>
+						<!-- list-info -->
+						<ul class="list-info">
+							<li>
+								<div class="box2">124</div>
+								<span>Total Views</span>
+							</li>
+							<li>
+								<div class="box2">101</div>
+								<span>Mins Watched</span>
+							</li>
+							<li>
+								<div class="box2">63.5</div>
+								<span>CTA %</span>
+								<div class="popup-box">
+									<a class="open" href="#">?</a>
+									<div class="popup">
+										<div class="title">
+											Call to Action Results
+											<div class="date-holder">
+												<a href="#" class="btn-prev">prev</a>
+												<span>Nov 2013</span>
+												<a href="#" class="btn-next">next</a>
+											</div>
+										</div>
+										<table class="table">
+											<tr>
+												<th class="date">Date</th>
+												<th class="name">Name</th>
+												<th class="phone">Phone</th>
+												<th class="email">Email</th>
+											</tr>
+											<tr>
+												<td class="date">11/04</td>
+												<td class="name">Michael Davis</td>
+												<td class="phone">555.555.5555</td>
+												<td class="email">yourname@emailaddress.com</td>
+											</tr>
+											<tr>
+												<td class="date">11/06</td>
+												<td class="name">Tim Hargis</td>
+												<td class="phone">555.555.5555</td>
+												<td class="email">yourname@emailaddress.com</td>
+											</tr>
+											<tr>
+												<td class="date">11/07</td>
+												<td class="name">Unique Website Vistor</td>
+												<td class="phone"></td>
+												<td class="email"></td>
+											</tr>
+											<tr>
+												<td class="date">11/08</td>
+												<td class="name">Steve Sims</td>
+												<td class="phone">555.555.5555</td>
+												<td class="email">yourname@emailaddress.com</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="box">
+					<!-- video-panel -->
+					<div class="video-panel">
+						<div class="active-check">
+							<input class="check2" id="check-3" type="checkbox">
+							<label for="check-3">Active Video</label>
+						</div>
+						<div class="deactivate-check">
+							<label for="check-4">Deactivate Video</label>
+							<input class="check2" id="check-4" checked="checked" type="checkbox">
+						</div>
+						<h3>My Video 2</h3>
+					</div>
+					<!-- detail -->
+					<div class="detail">
+						<!-- video-block -->
+						<div class="col-1">
+							<div class="video">
+								<img src="images/img04.jpg" alt="image description">
+								<span class="title">Section 1 - appx. 0:12 into video</span>
+							</div>
+							<a class="edit" href="#">Edit your video</a>
+						</div>
+						<div class="col-2">
+							<div class="row">
+								<label for="code2">Embed code</label>
+								<input id="code2" type="text" placeholder="http://www.yidyard.com/hdjhflkjshdfkhdlfkjh 1234576dhfjh/">
+							</div>
+							<div class="row">
+								<label for="link2">Direct link</label>
+								<input id="link2" type="text" placeholder="www.YourWebsiteHere.com/hdjhflkjshdfkhdlfkjh dhfjh/">
+							</div>
+							<!-- progress-bar -->
+							<ul class="progress-bar">
+								<li class="footage done"><a href="#"><span>Footage</span></a></li>
+								<li class="customize done"><a href="#"><span>Customize</span></a></li>
+								<li class="script active"><a href="#"><span>Script</span></a></li>
+								<li class="audio done"><a href="#"><span>Audio</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</li>
+	<li>
+		<!-- opener -->
+		<a class="opener" href="#">FAQs</a>
+		<!-- slide -->
+		<div class="slide">
+			<div class="box questions">
+				<!-- list-of-questions -->
+				<ul class="list-of-questions">
+					<li>
+						<div class="popup-box">
+							<a class="open" href="#">Can I share my video on Facebook and Twitter?</a>
+							<div class="popup">
+								<strong>Can I share my video on Facebook and Twitter?</strong>
+								<p>Yes!  You can absolutely share your Promostudio video on Facebook and Twitter using the provided embed code or direct url link.</p>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="popup-box">
+							<a class="open" href="#">Can I share my video on Facebook and Twitter?</a>
+							<div class="popup">
+								<strong>Can I share my video on Facebook and Twitter?</strong>
+								<p>Yes!  You can absolutely share your Promostudio video on Facebook and Twitter using the provided embed code or direct url link.</p>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="popup-box">
+							<a class="open" href="#">Can I share my video on Facebook and Twitter?</a>
+							<div class="popup">
+								<strong>Can I share my video on Facebook and Twitter?</strong>
+								<p>Yes!  You can absolutely share your Promostudio video on Facebook and Twitter using the provided embed code or direct url link.</p>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="popup-box">
+							<a class="open" href="#">Can I share my video on Facebook and Twitter?</a>
+							<div class="popup">
+								<strong>Can I share my video on Facebook and Twitter?</strong>
+								<p>Yes!  You can absolutely share your Promostudio video on Facebook and Twitter using the provided embed code or direct url link.</p>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="popup-box">
+							<a class="open" href="#">Can I share my video on Facebook and Twitter?</a>
+							<div class="popup">
+								<strong>Can I share my video on Facebook and Twitter?</strong>
+								<p>Yes!  You can absolutely share your Promostudio video on Facebook and Twitter using the provided embed code or direct url link.</p>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="popup-box">
+							<a class="open" href="#">Can I share my video on Facebook and Twitter?</a>
+							<div class="popup">
+								<strong>Can I share my video on Facebook and Twitter?</strong>
+								<p>Yes!  You can absolutely share your Promostudio video on Facebook and Twitter using the provided embed code or direct url link.</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</li>
+	<li>
+		<!-- opener -->
+		<a class="opener" href="#">Help Center</a>
+		<!-- slide -->
+		<div class="slide">
+			<div class="help-block">
+				<div class="box">
+					<!-- help-form -->
+					<form action="#" class="help-form">
+						<fieldset>
+							<div class="row">
+								<div class="text">
+									<p>Tell us how we can help.</p>
+									<p>Please fill out the form explaining your trouble and we will do our best to resolve it within 24 hours.</p>
+								</div>
+								<textarea cols="30" rows="10" placeholder="Please tell us how we can help you here."></textarea>
+							</div>
+							<input type="submit" value="Send"/>
+						</fieldset>
+					</form>
+				</div>
+				<!-- quick-help -->
+				<div class="box quick-help">
+					<span>Need immediate assistance?</span>
+					<div class="inf">
+						<span>1.888.555.5555</span>
+						<span>M-F  9am - 5pm MST</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
