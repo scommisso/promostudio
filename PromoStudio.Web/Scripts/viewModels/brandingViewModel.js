@@ -15,6 +15,8 @@
 define(["viewModels/photosSectionViewModel",
         "viewModels/brandingSectionViewModel",
         "viewModels/textSectionViewModel",
+        "viewModels/callToActionSectionViewModel",
+        "viewModels/endingSectionViewModel",
         "models/customerTemplateScript",
         "models/customerVideoItem",
         "models/customerResource",
@@ -30,6 +32,8 @@ define(["viewModels/photosSectionViewModel",
         photosSectionViewModel,
         brandingSectionViewModel,
         textSectionViewModel,
+        ctaSectionViewModel,
+        endingSectionViewModel,
         customerTemplateScript,
         customerVideoItem,
         customerResource,
@@ -144,15 +148,45 @@ define(["viewModels/photosSectionViewModel",
                 self.PhotoSection(new photosSectionViewModel(data, videoData));
                 self.BrandingSection(new brandingSectionViewModel(data, videoData));
                 self.TextSection(new textSectionViewModel(data, videoData));
+                self.CtaSection(new ctaSectionViewModel(data, videoData));
+                self.EndingSection(new endingSectionViewModel(data, videoData));
 
-                if (!self.PhotoSection().IsCompleted()) {
+                if (self.PhotoSection().IsVisible() && !self.PhotoSection().IsCompleted()) {
                     self.PhotoSection().StartOpen(true);
                 }
-                else if (!self.BrandingSection().IsCompleted()) {
+                else if (self.BrandingSection().IsVisible() && !self.BrandingSection().IsCompleted()) {
                     self.BrandingSection().StartOpen(true);
                 }
-                else if (!self.TextSection().IsCompleted()) {
+                else if (self.TextSection().IsVisible() && !self.TextSection().IsCompleted()) {
                     self.TextSection().StartOpen(true);
+                }
+                else if (self.CtaSection().IsVisible() && !self.CtaSection().IsCompleted()) {
+                    self.CtaSection().StartOpen(true);
+                }
+                else if (self.EndingSection().IsVisible() && !self.EndingSection().IsCompleted()) {
+                    self.EndingSection().StartOpen(true);
+                }
+
+                var step = 1;
+                if (self.PhotoSection().IsVisible()) {
+                    self.PhotoSection().StepNumber(step);
+                    step += 1;
+                }
+                if (self.BrandingSection().IsVisible()) {
+                    self.BrandingSection().StepNumber(step);
+                    step += 1;
+                }
+                if (self.TextSection().IsVisible()) {
+                    self.TextSection().StepNumber(step);
+                    step += 1;
+                }
+                if (self.CtaSection().IsVisible()) {
+                    self.CtaSection().StepNumber(step);
+                    step += 1;
+                }
+                if (self.EndingSection().IsVisible()) {
+                    self.EndingSection().StepNumber(step);
+                    step += 1;
                 }
             }
 
@@ -170,6 +204,8 @@ define(["viewModels/photosSectionViewModel",
             self.PhotoSection = ko.observable({});
             self.BrandingSection = ko.observable({});
             self.TextSection = ko.observable({});
+            self.CtaSection = ko.observable({});
+            self.EndingSection = ko.observable({});
 
             self.Bind = function (selector, navSelector) {
                 ko.callbackOnBind($(navSelector)[0], function (navVm) {
@@ -187,13 +223,27 @@ define(["viewModels/photosSectionViewModel",
             self.IsCompleted = ko.computed(function () {
                 var ps = ko.toJS(self.PhotoSection()),
                     bs = ko.toJS(self.BrandingSection()),
+                    ts = ko.toJS(self.TextSection()),
+                    cs = ko.toJS(self.CtaSection()),
+                    ts = ko.toJS(self.TextSection()),
+                    es = ko.toJS(self.EndingSection()),
                     stepCompleted = true;
-                if (!ps || !ps.IsCompleted) {
+                if (!ps || (ps.IsVisible && !ps.IsCompleted)) {
                     stepCompleted = false;
                 }
-                if (!bs || !bs.IsCompleted) {
+                else if (!bs || (bs.IsVisible && !bs.IsCompleted)) {
                     stepCompleted = false;
                 }
+                else if (!ts || (ts.IsVisible && !ts.IsCompleted)) {
+                    stepCompleted = false;
+                }
+                else if (!cs || (cs.IsVisible && !cs.IsCompleted)) {
+                    stepCompleted = false;
+                }
+                else if (!es || (es.IsVisible && !es.IsCompleted)) {
+                    stepCompleted = false;
+                }
+
                 if (ko.isObservable(isStepCompleted)) {
                     isStepCompleted(stepCompleted);
                 }

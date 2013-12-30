@@ -255,6 +255,8 @@
     <Content Include="Scripts\lib\ko.jplayer.js" />
     <Content Include="Scripts\lib\Jplayer.swf" />
     <Content Include="Scripts\lib\jquery.jplayer.js" />
+    <Content Include="Scripts\viewModels\callToActionSectionViewModel.js" />
+    <Content Include="Scripts\viewModels\endingSectionViewModel.js" />
     <Content Include="Scripts\viewModels\musicViewModel.js" />
     <Content Include="Scripts\viewModels\customerVideoViewModel.js" />
     <Content Include="Scripts\viewModels\storyboardViewModel.js" />
@@ -294,6 +296,8 @@
     <Content Include="Content\less\jcf.less" />
     <Content Include="Content\less\all.less" />
     <Content Include="Content\less\ps.less" />
+    <Content Include="Content\less\ps-choosermodal.less" />
+    <Content Include="Content\less\elements.less" />
     <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Properties\PublishProfiles\Local File System.pubxml" />
     <None Include="Scripts\vsdoc\jquery-1.9.1.intellisense.js" />

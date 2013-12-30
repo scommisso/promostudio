@@ -27,6 +27,13 @@ define(["viewModels/textItemViewModel",
         logger) {
         function ctor(data, video) {
 
+            var self = this,
+                transitionTime = 350, /* from bootstrap-transitions */
+                textTitle = strings.getResource("BuildStep__Num_spots_can_be_customized"),
+                customerTemplateScripts;
+            data = data || {};
+            video = video || {};
+
             function loadData(customerTemplateScriptData, videoData) {
                 customerTemplateScripts = customerTemplateScriptData || [];
                 loadVideoData(videoData);
@@ -82,26 +89,7 @@ define(["viewModels/textItemViewModel",
                 self.TextTemplateItems(textTemplates);
             }
 
-            function registerEvents() {
-                $(function () {
-                    var $elems = $("#textCollapse .panel-heading .step-title,#textCollapse .panel-heading .step-subtitle,#textCollapse .panel-heading .step-done");
-                    $('#textPanel')
-                        .on('show.bs.collapse', function () {
-                            $elems.switchClass("collapsed", "opened", transitionTime);
-                        })
-                        .on('hide.bs.collapse', function () {
-                            $elems.switchClass("opened", "collapsed", transitionTime);
-                        });
-                });
-            }
-
-            var self = this,
-                transitionTime = 350, /* from bootstrap-transitions */
-                textTitle = strings.getResource("BuildStep__Num_spots_can_be_customized"),
-                customerTemplateScripts;
-            data = data || {};
-            video = video || {};
-
+            self.StepNumber = ko.observable(1);
             self.TextTemplateItems = ko.observableArray([]);
 
             self.IsVisible = ko.computed(function () {
@@ -130,7 +118,6 @@ define(["viewModels/textItemViewModel",
             });
 
             loadData(data.CustomerTemplateScripts, video);
-            registerEvents();
         }
 
         return ctor;

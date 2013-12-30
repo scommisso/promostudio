@@ -419,4 +419,25 @@
   <data name="right" xml:space="preserve">
     <value>right</value>
   </data>
+  <data name="BuildStep__Call_to_Action" xml:space="preserve">
+    <value>Call to Action</value>
+  </data>
+  <data name="BuildStep__Ending" xml:space="preserve">
+    <value>Ending</value>
+  </data>
+  <data name="BuildStep__Help_your_viewers_engage_with_your_video" xml:space="preserve">
+    <value>Help your viewers engage with your video</value>
+  </data>
+  <data name="BuildStep__Lower_Third" xml:space="preserve">
+    <value>Lower Third</value>
+  </data>
+  <data name="BuildStep__No_file_selected" xml:space="preserve">
+    <value>No file selected</value>
+  </data>
+  <data name="BuildStep__This_image_is_at_the_bottom_of_your_video" xml:space="preserve">
+    <value>This image is at the bottom of your video</value>
+  </data>
+  <data name="BuildStep__This_is_the_last_frame_your_viewers_will_see" xml:space="preserve">
+    <value>This is the last frame your viewers will see. Make a lasting impression!</value>
+  </data>
 </root>

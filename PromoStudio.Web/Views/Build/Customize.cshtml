@@ -26,7 +26,7 @@
 			@* opener *@
 			<a class="opener" href="#">
 				<div class="holder">
-					<span class="num"><em>1</em></span>
+					<span class="num"><em data-bind="text: StepNumber"></em></span>
 					<span class="title">
 						<strong>@Strings.Photos</strong>
 						<span data-bind="text: TitleText"></span>
@@ -82,7 +82,7 @@
 			@* opener *@
 			<a class="opener" href="#">
 				<div class="holder">
-					<span class="num"><em>2</em></span>
+					<span class="num"><em data-bind="text: StepNumber"></em></span>
 					<span class="title">
 						<strong>@Strings.BuildStep__Logo</strong>
 						<span>@Strings.BuildStep__Upload_your_logo</span>
@@ -93,14 +93,14 @@
 			<div class="slide">
 				@* upload-logo *@
 				<div class="upload-logo">
-					<input type="file" title="Upload logo">
-					<span class="file-input-text">No file selected</span>
+					<input type="file" title="@Strings.BuildStep__Choose_logo" data-bind="event: { 'change': FileSelected }">
+					<span class="file-input-text">@Strings.BuildStep__No_file_selected</span>
 				</div>
 				@* options *@
-				<ul class="options">					<li>
+				<ul class="options" style="display:none"> @* Show this when we support transitions *@					<li>
 						<div class="wrap"></div>
 						<div class="check-holder">
-							<input id="check01" type="checkbox">							<label for="check01">Fade in</label>
+							<input id="check01" type="checkbox">							<label for="check01">Fade_in</label>
 						</div>
 					</li>					<li>
 						<div class="wrap"></div>
@@ -131,28 +131,24 @@
 			@* opener *@
 			<a class="opener" href="#">
 				<div class="holder">
-					<span class="num"><em>3</em></span>
+					<span class="num"><em data-bind="text: StepNumber"></em></span>
 					<span class="title">
-						<strong>Lower Third</strong>
-						<span>This image is at the bottom of your video </span>
+						<strong>@Strings.BuildStep__Lower_Third</strong>
+						<span>@Strings.BuildStep__This_image_is_at_the_bottom_of_your_video</span>
 					</span>
 				</div>
 			</a>
 			@* slide *@
 			<div class="slide">
 				@* contact-info *@
-				<div class="contact-info">
+				<div class="contact-info" data-bind="foreach: TextTemplateItems">
 					<div class="row">
-						<label for="phone-number">Add your phone number</label>
-						<input id="phone-number" type="tel" value="">
-					</div>
-					<div class="row">
-						<label for="website">Add your website</label>
-						<input id="website" type="url" value="">
+						<label data-bind="text: Name, attr: { 'for': 'text_' + SortOrder() }">Add your phone number</label>
+						<input data-bind="value: TextValue, valueUpdate: 'afterkeydown', attr: { 'id': 'text_' + SortOrder(), 'type': InputType }">
 					</div>
 				</div>
 				@* options *@
-				<ul class="options">
+				<ul class="options" style="display: none"> @* Show this when we support lower third placement options *@
 					<li>
 						<div class="wrap"></div>
 						<div class="check-holder">
@@ -185,14 +181,15 @@
 			</div>
 		</li>
         <!-- /ko -->
-		<li>
+        <!-- ko with: CtaSection -->
+		<li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
 			@*@ opener *@
 			<a class="opener" href="#">
 				<div class="holder">
-					<span class="num"><em>4</em></span>
+					<span class="num"><em data-bind="text: StepNumber"></em></span>
 					<span class="title">
-						<strong>Call to action</strong>
-						<span>Help your viewers engage with your video</span>
+						<strong>@Strings.BuildStep__Call_to_Action</strong>
+						<span>@Strings.BuildStep__Help_your_viewers_engage_with_your_video</span>
 					</span>
 				</div>
 			</a>
@@ -304,14 +301,16 @@
 				</div>
 			</div>
 		</li>
-		<li>
+        <!-- /ko -->
+        <!-- ko with: EndingSection -->
+		<li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
 			@* opener *@
 			<a class="opener" href="#">
 				<div class="holder">
-					<span class="num"><em>5</em></span>
+					<span class="num"><em data-bind="text: StepNumber"></em></span>
 					<span class="title">
-						<strong>Ending</strong>
-						<span>This is the last frame your viewers will see. Make a lasting impression!</span>
+						<strong>@Strings.BuildStep__Ending</strong>
+						<span>@Strings.BuildStep__This_is_the_last_frame_your_viewers_will_see</span>
 					</span>
 				</div>
 			</a>
@@ -381,16 +380,19 @@
 				</div>
 			</div>
 		</li>
+        <!-- /ko -->
 	</ul>
 </form>
 
 @section modals {
-    <div class="lightbox" id="photoChooserModal" tabindex="-1">
-		<div class="title">
-			<a href="#" class="close" data-bind="click: Cancel">@Strings.Close</a>
-		</div>
-		<div class="video-holder" data-bind="template: { name: 'photo-chooser-template' }">
-		</div>
+	<div class="popup-holder" style="display: none" data-bind="visible: true">
+        <div class="lightbox" id="photoChooserModal" tabindex="-1">
+		    <div class="title">
+			    <a href="#" class="close" data-bind="click: Cancel">@Strings.Close</a>
+		    </div>
+		    <div class="video-holder" data-bind="template: { name: 'photo-chooser-template' }">
+		    </div>
+        </div>
     </div>
     
     @* This is in a template to prevent issues with multiple bindings when re-opening the modal *@

@@ -28,6 +28,13 @@ define(["viewModels/photoTemplatesViewModel",
         logger) {
         function ctor(data, video) {
 
+            var self = this,
+                transitionTime = 350, /* from bootstrap-transitions */
+                photoTitle = strings.getResource("BuildStep__Num_spots_need_your_own_photos"),
+                customerTemplateScripts;
+            data = data || {};
+            video = video || {};
+
             function loadData(customerTemplateScriptData, videoData) {
                 customerTemplateScripts = customerTemplateScriptData || [];
                 loadVideoData(videoData);
@@ -68,30 +75,16 @@ define(["viewModels/photoTemplatesViewModel",
 
             function registerEvents() {
                 $(function () {
-                    var $elems = $("#photoCollapse .panel-heading .step-title,#photoCollapse .panel-heading .step-subtitle,#photoCollapse .panel-heading .step-done"),
-                        $panel = $("#photoPanel .photo-selected");
+                    var $panel = $("#photoPanel .photo-selected");
                     self.PhotoPreviewShown.subscribe(function (newVal) {
                         if (newVal) {
                             $panel.slideDown(transitionTime);
                         }
                     });
-                    $('#photoPanel')
-                        .on('show.bs.collapse', function () {
-                            $elems.switchClass("collapsed", "opened", transitionTime);
-                        })
-                        .on('hide.bs.collapse', function () {
-                            $elems.switchClass("opened", "collapsed", transitionTime);
-                        });
                 });
             }
 
-            var self = this,
-                transitionTime = 350, /* from bootstrap-transitions */
-                photoTitle = strings.getResource("BuildStep__Num_spots_need_your_own_photos"),
-                customerTemplateScripts;
-            data = data || {};
-            video = video || {};
-
+            self.StepNumber = ko.observable(1);
             self.PhotoTemplates = ko.observableArray([]);
             self.PhotoSlots = ko.computed(function () {
                 var templates = self.PhotoTemplates(),

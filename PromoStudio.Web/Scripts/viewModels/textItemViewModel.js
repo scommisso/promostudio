@@ -24,6 +24,8 @@ define([
         logger) {
         function ctor(storyboardItem, customerTemplateScriptItem) {
             var self = this,
+                phoneRe = /phone/i,
+                urlRe = /(?:website|url)/i,
                 textTimingFormatString = strings.getResource("BuildStep__Section_num_timing"); //Sect. {0} - appx. {1} into video, slot {2}
 
             customerTemplateScriptItem = ko.utils.unwrapObservable(customerTemplateScriptItem || {});
@@ -31,6 +33,7 @@ define([
             self.Name = customerTemplateScriptItem.ScriptItem().Name;
             self.Description = customerTemplateScriptItem.ScriptItem().Description;
             self.TextValue = customerTemplateScriptItem.Resource().Value;
+            self.InputType = ko.observable(detectInputType());
             self.SortOrder = ko.computed(function () {
                 var sortValue =
                     storyboardItem.SortOrder() * 10000
@@ -51,6 +54,30 @@ define([
                 var val = self.TextValue();
                 return (val && val.length > 0);
             });
+
+            function detectInputType() {
+                var type = "text",
+                    name = self.Name(),
+                    desc = self.Description();
+
+                // Name has priority over description
+                if (phoneRe.test(name)) {
+                    type = "tel";
+                }
+                else if (urlRe.test(name)) {
+                    type = "url";
+                }
+                else {
+                    if (phoneRe.test(desc)) {
+                        type = "tel";
+                    }
+                    else if (urlRe.test(desc)) {
+                        type = "url";
+                    }
+                }
+
+                return type;
+            }
 
             function calculateStoryboardTiming() {
                 var prevSeconds = 0,

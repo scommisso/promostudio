@@ -5,18 +5,15 @@
 /// <reference path="../models/enums.js" />
 /// <reference path="../ps/logger.js" />
 /// <reference path="../lib/ko.custom.js" />
-/// <reference path="../ps/extensions.js" />
 
 "use strict";
 
 define(["viewModels/photoTemplatesViewModel",
-        "jquery",
+        "jqueryui",
         "knockout",
         "strings",
         "models/enums",
-        "ps/logger",
-        "bootstrap",
-        "jqueryui"
+        "ps/logger"
 ],
     function (
         photoTemplatesViewModel,
@@ -26,6 +23,12 @@ define(["viewModels/photoTemplatesViewModel",
         enums,
         logger) {
         function ctor(data, video) {
+
+            var self = this,
+                transitionTime = 350, /* from bootstrap-transitions */
+                customerTemplateScripts;
+            data = data || {};
+            video = video || {};
 
             function loadData(customerTemplateScriptData, videoData) {
                 customerTemplateScripts = customerTemplateScriptData || [];
@@ -65,25 +68,7 @@ define(["viewModels/photoTemplatesViewModel",
                 self.LogoTemplates(logoTemplates);
             }
 
-            function registerEvents() {
-                $(function () {
-                    var $elems = $("#brandingCollapse .panel-heading .step-title,#brandingCollapse .panel-heading .step-subtitle,#brandingCollapse .panel-heading .step-done");
-                    $('#brandingPanel')
-                        .on('show.bs.collapse', function () {
-                            $elems.switchClass("collapsed", "opened", transitionTime);
-                        })
-                        .on('hide.bs.collapse', function () {
-                            $elems.switchClass("opened", "collapsed", transitionTime);
-                        });
-                });
-            }
-
-            var self = this,
-                transitionTime = 350, /* from bootstrap-transitions */
-                customerTemplateScripts;
-            data = data || {};
-            video = video || {};
-
+            self.StepNumber = ko.observable(1);
             self.LogoTemplates = ko.observableArray([]);
             self.LogoSlots = ko.computed(function () {
                 var templates = self.LogoTemplates(),
@@ -95,41 +80,9 @@ define(["viewModels/photoTemplatesViewModel",
                         slots.push(templateSlots[j]);
                     }
                 }
-                slots.sort(function (a, b) {
-                    if (a.SortOrder() < b.SortOrder()) {
-                        return -1;
-                    }
-                    if (a.SortOrder() > b.SortOrder()) {
-                        return 1;
-                    }
-                    return 0;
-                });
                 return slots;
             });
-            self.SelectedSlot = ko.observable(null);
-            self.LogoPreviewShown = ko.computed(function () {
-                return self.SelectedSlot() !== null;
-            });
-            self.IsSelected = function (slot) {
-                return self.SelectedSlot() === slot;
-            };
-            self.SelectSlot = function (slot) {
-                if (!slot.IsCompleted()) {
-                    self.ChangeSlot(slot);
-                } else {
-                    if (self.IsSelected(slot)) {
-                        self.SelectedSlot(null);
-                    } else {
-                        self.SelectedSlot(slot);
-                    }
-                }
-            };
-            self.ChangeSlot = function (slot) {
-                slot.ChoosePhoto(function () {
-                    self.SelectedSlot(slot);
-                });
-            };
-
+            
             self.IsVisible = ko.computed(function () {
                 var length = self.LogoSlots().length;
                 return length > 0;
@@ -147,8 +100,15 @@ define(["viewModels/photoTemplatesViewModel",
 
             self.StartOpen = ko.observable(false);
 
+            self.FileSelected = function (data, event) {
+                var fileName = event.target.value;
+
+                // TODO: upload    ... or, even better ...   get our photo chooser working with the JCF crap
+
+                // TODO: attach selected photo to the slots
+            };
+
             loadData(data.CustomerTemplateScripts, video);
-            registerEvents();
         }
 
         return ctor;

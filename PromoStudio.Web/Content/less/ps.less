@@ -1,55 +1,5 @@
 ﻿@import url('jcf.less');
-
-.clearfix:after {
-	content: ".";
-	display: block;
-	clear: both;
-	visibility: hidden;
-	line-height: 0;
-	height: 0;
-}
- 
-.clearfix {
-	display: inline-block;
-}
- 
-html[xmlns] .clearfix {
-	display: block;
-}
- 
-* html .clearfix {
-	height: 1%;
-}
-
-@cs: 4px; /* rounded corner size */
-
-.rounded(@radius: 2px) {
-    -webkit-border-radius: @radius;
-    -moz-border-radius: @radius;
-    border-radius: @radius;
-}
-
-.background-clip(@argument: padding-box) {
-  -moz-background-clip: @argument;
-  -webkit-background-clip: @argument;
-  background-clip: @argument;
-}
-
-.border-radius(@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
-    -webkit-border-top-right-radius: @topright;
-    -webkit-border-bottom-right-radius: @bottomright;
-    -webkit-border-bottom-left-radius: @bottomleft;
-    -webkit-border-top-left-radius: @topleft;
-    -moz-border-radius-topright: @topright;
-    -moz-border-radius-bottomright: @bottomright;
-    -moz-border-radius-bottomleft: @bottomleft;
-    -moz-border-radius-topleft: @topleft;
-    border-top-right-radius: @topright;
-    border-bottom-right-radius: @bottomright;
-    border-bottom-left-radius: @bottomleft;
-    border-top-left-radius: @topleft;
-    .background-clip(padding-box);
-}
+@import url('elements.less');
 
 a.signinBtn {
     margin-top: 12px;
@@ -139,3 +89,5 @@ div.audio-player {
         margin-left: 83px !important;
     }
 }
+
+@import url('ps-choosermodal.less');

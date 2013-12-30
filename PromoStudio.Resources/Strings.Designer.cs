@@ -115,6 +115,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Call to Action.
+        /// </summary>
+        public static string BuildStep__Call_to_Action {
+            get {
+                return ResourceManager.GetString("BuildStep__Call_to_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change logo.
         /// </summary>
         public static string BuildStep__Change_logo {
@@ -196,11 +205,29 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ending.
+        /// </summary>
+        public static string BuildStep__Ending {
+            get {
+                return ResourceManager.GetString("BuildStep__Ending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Footage.
         /// </summary>
         public static string BuildStep__Footage {
             get {
                 return ResourceManager.GetString("BuildStep__Footage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help your viewers engage with your video.
+        /// </summary>
+        public static string BuildStep__Help_your_viewers_engage_with_your_video {
+            get {
+                return ResourceManager.GetString("BuildStep__Help_your_viewers_engage_with_your_video", resourceCulture);
             }
         }
         
@@ -223,11 +250,29 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lower Third.
+        /// </summary>
+        public static string BuildStep__Lower_Third {
+            get {
+                return ResourceManager.GetString("BuildStep__Lower_Third", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Music.
         /// </summary>
         public static string BuildStep__Music {
             get {
                 return ResourceManager.GetString("BuildStep__Music", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No file selected.
+        /// </summary>
+        public static string BuildStep__No_file_selected {
+            get {
+                return ResourceManager.GetString("BuildStep__No_file_selected", resourceCulture);
             }
         }
         
@@ -309,6 +354,24 @@ namespace PromoStudio.Resources {
         public static string BuildStep__Text {
             get {
                 return ResourceManager.GetString("BuildStep__Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This image is at the bottom of your video.
+        /// </summary>
+        public static string BuildStep__This_image_is_at_the_bottom_of_your_video {
+            get {
+                return ResourceManager.GetString("BuildStep__This_image_is_at_the_bottom_of_your_video", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is the last frame your viewers will see. Make a lasting impression!.
+        /// </summary>
+        public static string BuildStep__This_is_the_last_frame_your_viewers_will_see {
+            get {
+                return ResourceManager.GetString("BuildStep__This_is_the_last_frame_your_viewers_will_see", resourceCulture);
             }
         }
         

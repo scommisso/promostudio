@@ -69,7 +69,7 @@ define(["jquery"], function(jQuery, undefined) {
     // fancybox modal popup init
     function initLightbox() {
 	    jQuery('a.play, a[rel*="lightbox"]').each(function(){
-		    var link = jQuery(this);
+	        var link = jQuery(this);
 		    link.fancybox({
 			    padding: 10,
 			    margin: 0,

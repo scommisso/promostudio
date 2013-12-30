@@ -1,0 +1,44 @@
+﻿@import url('elements.less');
+
+@modalbgcolor: darken(@bgbasecolor, 1%);
+
+/* Modal with tabs */
+.modal-content {
+    background-color: @modalbgcolor;
+
+    .nav-tabs > li > a,
+    .nav-tabs > li > a:link,
+    .nav-tabs > li > a:visited {
+        color: @contentmutedcolor;
+    }
+
+        .nav-tabs > li > a:hover,
+        .nav-tabs > li > a:focus,
+        .nav-tabs > li > a:active,
+        .nav-tabs > li.active > a,
+        .nav-tabs > li.active > a:link,
+        .nav-tabs > li.active > a:hover,
+        .nav-tabs > li.active > a:focus,
+        .nav-tabs > li.active > a:active,
+        .nav-tabs > li.active > a:visited {
+            color: @contentcolor;
+        }
+
+        .nav-tabs > li > a:hover {
+            @bc1: lighten(@inactivecolor, 7%);
+            border-color: @bc1 @bc1 @inactivecolor @bc1;
+        }
+
+    .nav-tabs > li.active > a:hover {
+        border-color: @inactivecolor @inactivecolor transparent @inactivecolor;
+    }
+
+    .tab-content {
+        padding: 12px;
+        background-color: @bgbasecolor;
+        border: solid 1px @inactivecolor;
+        border-top: none;
+        overflow: hidden;
+        .border-radius(0, @cs, @cs, 0);
+    }
+}
