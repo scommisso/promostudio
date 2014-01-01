@@ -10,7 +10,8 @@
 "use strict";
 
 define(["models/customerResource",
-        "jquery",
+        "viewModels/customerResourceViewModel",
+        "jqueryui",
         "knockout",
         "strings",
         "models/enums",
@@ -19,6 +20,7 @@ define(["models/customerResource",
 ],
     function (
         customerResource,
+        customerResourceViewModel,
         $,
         ko,
         strings,
@@ -35,6 +37,7 @@ define(["models/customerResource",
                         continue;
                     }
                     photo = new customerResource(photoResources[i]);
+                    photo = new customerResourceViewModel(self, photo);
                     if (photo.IsCustomerResource()) {
                         custPhotos.push(photo);
                     }
@@ -53,6 +56,10 @@ define(["models/customerResource",
                 }
                 self.CustomerPhotos(custPhotos);
                 self.OrganizationPhotos(orgPhotos);
+                window.setTimeout(function () {
+                    // JCF hack for checkboxes
+                    $.jcfModule.customForms.replaceAll();
+                }, 10);
             }
 
             function getPhotos() {
@@ -65,14 +72,14 @@ define(["models/customerResource",
                 })
                     .done(function (photoData) {
                         loadPhotos(photoData.CustomerResources);
-                        self.LoadingData(false);
+                        self.IsLoading(false);
                     })
                     .error(function (jqHxr, textStatus, errorThrown) {
                         logger.log("Error retrieving photo data: " + textStatus);
                         logger.log(errorThrown);
                     })
                     .always(function () {
-                        self.LoadingData(false);
+                        self.IsLoading(false);
                     });
             }
 
@@ -96,9 +103,24 @@ define(["models/customerResource",
                 return self.SelectedPhoto() === photo;
             };
             self.SelectPhoto = function (photo) {
+                var i, photos = self.CustomerPhotos();
+                for (i = 0; i < photos.length; i++) {
+                    if (photos[i] !== photo && photos[i].IsSelected()) {
+                        photos[i].IsSelected(false);
+                    }
+                }
+                photos = self.OrganizationPhotos();
+                for (i = 0; i < photos.length; i++) {
+                    if (photos[i] !== photo && photos[i].IsSelected()) {
+                        photos[i].IsSelected(false);
+                    }
+                }
+
                 if (self.IsSelected(photo)) {
+                    photo.IsSelected(false);
                     self.SelectedPhoto(null);
                 } else {
+                    photo.IsSelected(true);
                     self.SelectedPhoto(photo);
                 }
             };
@@ -108,12 +130,12 @@ define(["models/customerResource",
                 ko.cleanNode($elem[0]);
                 $elem.find(".modal-dialog").empty();
                 ko.applyBindings(self, $elem[0]);
-                $elem.modal("show");
                 getPhotos();
+                $(".jcf-upload-button").first().click();
             };
 
             self.Hide = function () {
-                $elem.modal("hide");
+                $.fancybox.close();
             };
 
             self.Cancel = function () {

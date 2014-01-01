@@ -36,17 +36,34 @@
 			@* slide *@
 			<div class="slide">
 				@* list-buttons *@
-				<ul class="list-buttons" data-bind="foreach: PhotoSlots">					<li>
+				<ul class="list-buttons" data-bind="foreach: PhotoSlots">
+					<li>
 						<div class="upload-image" data-bind="visible: IsCompleted">
 							<img src="#" width="228" height="130" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
 							<span class="title" data-bind="text: PhotoName"></span>
 						</div>
-						<input type="file">
+
+
+
+                        <div class="file-area" data-bind="css: { 'no-file': !IsCompleted() }, click: ChoosePhoto" style="position: relative">
+                            <div class="jcf-input-wrapper">
+                                <label class="jcf-fake-input">
+                                    <span><em>
+                                        <span>@Strings.BuildStep__Choose_photo</span>
+                                        <!-- ko text: Title --><!-- /ko -->
+                                    </em></span>
+                                </label>
+                                <a href="#photoChooserModal" class="jcf-upload-button" rel="lightbox">
+                                    <span>Browse</span>
+                                </a>
+                            </div>
+                        </div>
+
+
 						<span class="file-input-text">
-                            <span>@Strings.BuildStep__Choose_photo</span>
-                            <!-- ko text: Title --><!-- /ko -->
 						</span>
-					</li>				</ul>
+					</li>
+				</ul>
 				@* large-image *@
                 <div data-bind="visible: !!SelectedSlot()">
                     <!-- ko with: SelectedSlot -->
@@ -55,14 +72,24 @@
 					    @* tools *@
 					    <div class="tools" style="display:none"> @* Remove display:none style when we support this *@
 						    @* style *@
-						    <ul class="style">							    <li><a class="bold" href="#">B</a></li>							    <li class="active"><a class="italic" href="#">I</a></li>							    <li><a class="underline" href="#">T</a></li>						    </ul>
+						    <ul class="style">
+							    <li><a class="bold" href="#">B</a></li>
+							    <li class="active"><a class="italic" href="#">I</a></li>
+							    <li><a class="underline" href="#">T</a></li>
+						    </ul>
 						    @* font *@
-						    <select>@* Bind to font names when this is supported *@							    <option>Segoe Script</option>
+						    <select>@* Bind to font names when this is supported *@
+							    <option>Segoe Script</option>
 							    <option>Segoe Script</option>
 							    <option>Segoe Script</option>
 							    <option>Segoe Script</option>
 						    </select>
-						    @* align *@						    <ul class="align">							    <li><a class="left" href="#">@Strings.left</a></li>							    <li class="active"><a class="center" href="#">@Strings.center</a></li>							    <li><a class="right" href="#">@Strings.right</a></li>						    </ul>
+						    @* align *@
+						    <ul class="align">
+							    <li><a class="left" href="#">@Strings.left</a></li>
+							    <li class="active"><a class="center" href="#">@Strings.center</a></li>
+							    <li><a class="right" href="#">@Strings.right</a></li>
+						    </ul>
 					    </div>
 				    </div>
                     <div style="display:none"> @* Remove display:none style when we support this *@
@@ -97,12 +124,15 @@
 					<span class="file-input-text">@Strings.BuildStep__No_file_selected</span>
 				</div>
 				@* options *@
-				<ul class="options" style="display:none"> @* Show this when we support transitions *@					<li>
+				<ul class="options" style="display:none"> @* Show this when we support transitions *@
+					<li>
 						<div class="wrap"></div>
 						<div class="check-holder">
-							<input id="check01" type="checkbox">							<label for="check01">Fade_in</label>
+							<input id="check01" type="checkbox">
+							<label for="check01">Fade_in</label>
 						</div>
-					</li>					<li>
+					</li>
+					<li>
 						<div class="wrap"></div>
 						<div class="check-holder">
 							<input id="check02" checked="checked" type="checkbox">
@@ -122,7 +152,8 @@
 							<input id="check04" type="checkbox">
 							<label for="check04">Dissolve</label>
 						</div>
-					</li>				</ul>
+					</li>
+				</ul>
 			</div>
 		</li>
         <!-- /ko -->
@@ -198,11 +229,13 @@
 				@* action-block *@
 				<div class="action-block">
 					<div class="box">
-						<input id="none" checked="checked" type="checkbox" />						<label for="none">None</label>
+						<input id="none" checked="checked" type="checkbox" />
+						<label for="none">None</label>
 					</div>
 					<div class="box">
 						<div class="check-wrap">
-							<input id="website3" type="checkbox" />							<label for="website3">Add your website</label>
+							<input id="website3" type="checkbox" />
+							<label for="website3">Add your website</label>
 						</div>
 						<div class="block">
 							<div class="text-holder">
@@ -236,8 +269,10 @@
 									<input id="text2" type="text" placeholder="ex. Fill out this form for more information!">
 								</div>
 								<span class="title">Optional Form Fields</span>
-								<ul class="check-list">									<li>
-										<input id="check-1" type="checkbox" />										<label for="check-1">Full name*</label>
+								<ul class="check-list">
+									<li>
+										<input id="check-1" type="checkbox" />
+										<label for="check-1">Full name*</label>
 									</li>
 									<li>
 										<input id="check-2" type="checkbox" />
@@ -250,7 +285,8 @@
 									<li>
 										<input id="check-4" type="checkbox" />
 										<label for="check-4">Comments*</label>
-									</li>								</ul>
+									</li>
+								</ul>
 							</div>
 							<div class="image-holder">
 								<div class="image">
@@ -275,7 +311,8 @@
 						<div class="block2">
 							<div class="col-1">
 								<div class="row">
-									<input id="sms" type="checkbox">									<label for="sms">SMS Text Message</label>
+									<input id="sms" type="checkbox">
+									<label for="sms">SMS Text Message</label>
 								</div>
 								<div class="row">
 									<input id="email" type="checkbox">
@@ -388,65 +425,62 @@
 	<div class="popup-holder" style="display: none" data-bind="visible: true">
         <div class="lightbox" id="photoChooserModal" tabindex="-1">
 		    <div class="title">
+                <h4 class="modal-title">@Strings.Modals__Choose_a_Photo</h4>
 			    <a href="#" class="close" data-bind="click: Cancel">@Strings.Close</a>
 		    </div>
-		    <div class="video-holder" data-bind="template: { name: 'photo-chooser-template' }">
+		    <div class="modal-dialog" data-bind="template: { name: 'photo-chooser-template' }">
 		    </div>
         </div>
     </div>
     
     @* This is in a template to prevent issues with multiple bindings when re-opening the modal *@
     <script type="text/html" id="photo-chooser-template">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">@Strings.Modals__Choose_a_Photo</h4>
-            </div>
-            <div class="modal-body">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a id="orgPhotosTab" href="#orgPhotos" data-toggle="tab">Company Photos</a></li>
-                    <li><a id="custPhotosTab" href="#custPhotos" data-toggle="tab">My Photos</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div id="orgPhotos" class="tab-pane fade active in">
-                        <div class="thumbcontainer clearfix" data-bind="foreach: OrganizationPhotos">
-                            <a style="display: none" href="#" class="photo-thumbnail"
-                                data-bind="visible: true, css: { 'selected': $parent.IsSelected($data) }, click: function () { $parent.SelectPhoto($data); }">
-                                <div class="photo-preview no-choose clearfix" data-bind="style: { 'backgroundImage': 'url(' + $data.LinkUrl() + ')' }">
-                                    <div class="photo-select">
-                                        <span class="glyphicons circle_ok"></span>
-                                    </div>
-                                    <span class="photo-title" data-bind="text: $data.LinkFileName"></span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div id="custPhotos" class="tab-pane fade">
-                        <div class="thumbcontainer clearfix" data-bind="foreach: CustomerPhotos">
-                            <a style="display: none" href="#" class="photo-thumbnail"
-                                data-bind="visible: true, css: { 'selected': $parent.IsSelected($data) }, click: function () { $parent.SelectPhoto($data); }">
-                                <div class="photo-preview no-choose clearfix" data-bind="style: { 'backgroundImage': 'url(' + LinkUrl() + ')' }">
-                                    <div class="photo-select">
-                                        <span class="glyphicons circle_ok"></span>
-                                    </div>
-                                    <span class="photo-title" data-bind="text: LinkFileName"></span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">PromoStudio Demo Notice</h3>
-                            </div>
-                            <div class="panel-body">
-                                For demo purposes, uploading images is disabled.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-bind="click: Cancel">@Strings.Cancel</button>
-                <button type="button" class="btn btn-primary" data-bind="click: Save">@Strings.OK</button>
-            </div>
+        <div class="modal-body">
+			@* tabset *@
+			<nav  class="tabset">
+				<ul>
+					<li><a href="#companyPhotos">Company Photos</a></li>
+					<li><a href="#myPhotos">My Photos</a></li>
+				</ul>
+			</nav>
+			@* tab-content *@
+			<div class="tab-content">
+				@* companyPhotos *@
+				<section id="companyPhotos">
+	                <ul class="list-video" data-bind="foreach: OrganizationPhotos">
+		                <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
+			                <div class="video">
+				                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
+			                </div>
+			                <div class="title">
+				                <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
+				                <label data-bind="attr: { 'for': AttrBinding().id }, text: LinkFileName"></label>
+			                </div>
+		                </li>
+                    </ul>
+
+
+
+				</section>
+				@* myPhotos *@
+				<section id="myPhotos">
+	                <ul class="list-video" data-bind="foreach: CustomerPhotos">
+		                <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
+			                <div class="video">
+				                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
+			                </div>
+			                <div class="title">
+				                <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
+				                <label data-bind="attr: { 'for': AttrBinding().id }, text: LinkFileName"></label>
+			                </div>
+		                </li>
+                    </ul>
+				</section>
+			</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-bind="click: Cancel">@Strings.Cancel</button>
+            <button type="button" class="btn btn-primary" data-bind="click: Save">@Strings.OK</button>
         </div>
     </script>
 }
