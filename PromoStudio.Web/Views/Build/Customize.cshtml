@@ -53,7 +53,7 @@
                                         <!-- ko text: Title --><!-- /ko -->
                                     </em></span>
                                 </label>
-                                <a href="#photoChooserModal" class="jcf-upload-button" rel="lightbox">
+                                <a href="#photoChooserModal" class="jcf-upload-button" rel="lightbox" data-fb-hideclose="true">
                                     <span>Browse</span>
                                 </a>
                             </div>
@@ -426,7 +426,6 @@
         <div class="lightbox" id="photoChooserModal" tabindex="-1">
 		    <div class="title">
                 <h4 class="modal-title">@Strings.Modals__Choose_a_Photo</h4>
-			    <a href="#" class="close" data-bind="click: Cancel">@Strings.Close</a>
 		    </div>
 		    <div class="modal-dialog" data-bind="template: { name: 'photo-chooser-template' }">
 		    </div>
@@ -439,17 +438,17 @@
 			@* tabset *@
 			<nav  class="tabset">
 				<ul>
-					<li><a href="#companyPhotos">Company Photos</a></li>
-					<li><a href="#myPhotos">My Photos</a></li>
+					<li><a href="#companyPhotos" data-bind="css: { 'active': !ShowCustomerAtStart() }">Company Photos</a></li>
+					<li><a href="#myPhotos" data-bind="css: { 'active': ShowCustomerAtStart }">My Photos</a></li>
 				</ul>
 			</nav>
 			@* tab-content *@
 			<div class="tab-content">
 				@* companyPhotos *@
 				<section id="companyPhotos">
-	                <ul class="list-video" data-bind="foreach: OrganizationPhotos">
+	                <ul class="list-photo" data-bind="foreach: OrganizationPhotos">
 		                <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
-			                <div class="video">
+			                <div class="photo">
 				                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
 			                </div>
 			                <div class="title">
@@ -464,9 +463,9 @@
 				</section>
 				@* myPhotos *@
 				<section id="myPhotos">
-	                <ul class="list-video" data-bind="foreach: CustomerPhotos">
+	                <ul class="list-photo" data-bind="foreach: CustomerPhotos">
 		                <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
-			                <div class="video">
+			                <div class="photo">
 				                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
 			                </div>
 			                <div class="title">
@@ -477,10 +476,10 @@
                     </ul>
 				</section>
 			</div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-bind="click: Cancel">@Strings.Cancel</button>
-            <button type="button" class="btn btn-primary" data-bind="click: Save">@Strings.OK</button>
+		    <div class="btn-holder">
+			    <input class="save" type="submit" value="@Strings.OK" data-bind="click: Save">
+			    <input type="submit" value="@Strings.Cancel" data-bind="click: Cancel">
+		    </div>
         </div>
     </script>
 }

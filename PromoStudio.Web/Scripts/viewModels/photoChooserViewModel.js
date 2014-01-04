@@ -47,10 +47,7 @@ define(["models/customerResource",
                     if (photo.pk_CustomerResourceId() === selectedResourceId) {
                         self.SelectedPhoto(photo);
                         if (photo.IsCustomerResource()) {
-                            $("#custPhotosTab").tab("show");
-                        }
-                        else if (photo.IsOrganizationResource()) {
-                            $("#orgPhotosTab").tab("show");
+                            self.ShowCustomerAtStart(true);
                         }
                     }
                 }
@@ -59,6 +56,7 @@ define(["models/customerResource",
                 window.setTimeout(function () {
                     // JCF hack for checkboxes
                     $.jcfModule.customForms.replaceAll();
+                    $.initJcf.tabs();
                 }, 10);
             }
 
@@ -94,6 +92,7 @@ define(["models/customerResource",
             self.IsLoading = ko.observable(true);
             self.CustomerPhotos = ko.observableArray([]);
             self.OrganizationPhotos = ko.observableArray([]);
+            self.ShowCustomerAtStart = ko.observable(false);
 
             self.SelectedPhoto = ko.observable(null);
             self.PhotoPreviewShown = ko.computed(function () {
