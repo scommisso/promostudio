@@ -43,7 +43,10 @@ Required Setup
  - Install Visual Studio 2012 or higher
  - Install ASP.NET MVC4 via Visual Studio NuGet
  - Install [NodeJS](http://nodejs.org/)
-   - Run `npm install` from `PromoStudio.Web` folder.
+   - Run `npm install` from `PromoStudio.Web` folder. This should install `less` and `requirejs`
+   - Run `buildCss.bat` to create CSS files required for Web
+   - Run `buildScripts.bat` to create optimized scripts required when Web has `UseOptimizedScripts` set to `True`
+   - `build.bat` will build both CSS and scripts.
 
 ### Server Install Punchlist ###
  - Enable `Desktop Experience` on Win Server 2008/12
