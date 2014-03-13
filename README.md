@@ -40,6 +40,12 @@ Logins
 **Password**: `pr0m057ud10`  
 **Sample Connection String**: `Server=127.0.0.1;Database=promostudio;Uid=PromoStudioUser;Pwd=pr0m057ud10;`
 
+#### Vimeo API ####
+**VimeoApiClientId**: `d46e4b11bc1d52a70a3c86ce4014667c6f8a7816`  
+**VimeoApiClientSecret**: `9386add8a2a2919c24c7a341ca673dbb1930d2c4`  
+**VimeoApiAccessToken**: `2ab50b80be96906ad305a25414b36e2d`  
+**VimeoApiAccessTokenSecret**: `f0feea423cb655950dc00b5c98651b122dedd877`
+
 
 Required Setup
 --------------
