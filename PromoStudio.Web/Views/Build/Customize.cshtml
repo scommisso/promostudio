@@ -444,9 +444,9 @@
 			</nav>
 			@* tab-content *@
 			<div class="tab-content">
-				@* companyPhotos *@
-				<section id="companyPhotos">
-	                <ul class="list-photo" data-bind="foreach: OrganizationPhotos">
+				@* myPhotos *@
+				<section id="myPhotos">
+	                <ul class="list-photo" data-bind="foreach: CustomerPhotos">
 		                <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
 			                <div class="photo">
 				                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
@@ -457,13 +457,13 @@
 			                </div>
 		                </li>
                     </ul>
-
-
-
+                    <div>
+                        TODO: Upload photos here
+                    </div>
 				</section>
-				@* myPhotos *@
-				<section id="myPhotos">
-	                <ul class="list-photo" data-bind="foreach: CustomerPhotos">
+				@* companyPhotos *@
+				<section id="companyPhotos">
+	                <ul class="list-photo" data-bind="foreach: OrganizationPhotos">
 		                <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
 			                <div class="photo">
 				                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">

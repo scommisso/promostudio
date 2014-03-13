@@ -61,7 +61,7 @@
 				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
                                 <div class="audio-player" style="display:none"
-                                    data-bind="jplayer: { 'media': { 'mp3': '/Resources/StockAudio?stockAudioId=' + pk_StockAudioId() }, 'title': Name, 'isPlaying': IsPlaying }"> 
+                                    data-bind="jplayer: { 'media': { 'mp3': '/Resources/StockAudio?stockAudioId=' + pk_StockAudioId() }, 'title': Name, 'isPlaying': IsPlaying, 'options': { 'solution': 'html5,flash' } }"> 
                                 </div>
 							</li>
 						</ul>
@@ -102,12 +102,11 @@
 								<label data-bind="attr: { 'for': AttrBinding().id }">
 									<span class="info">
 										<strong data-bind="text: FullName"></strong>
-                                        <!-- ko text: Description --><!-- /ko -->
 									</span>
 				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
                                 <div class="audio-player" style="display:none"
-                                    data-bind="jplayer: { 'media': { 'mp3': '/Resources/ActorSample?voiceActorId=' + pk_VoiceActorId() }, 'title': FullName, 'isPlaying': IsPlaying }">
+                                    data-bind="jplayer: { 'media': { 'mp3': '/Resources/ActorSample?voiceActorId=' + pk_VoiceActorId() }, 'title': FullName, 'isPlaying': IsPlaying, 'options': { 'solution': 'html5,flash' } }">
                                 </div>
 							</li>
 						</ul>

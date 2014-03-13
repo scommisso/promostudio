@@ -79,8 +79,6 @@ define(["jquery", "lib/jquery.fancybox", "lib/jquery.mousewheel"], function (jQu
 	            helpers: {
 	                overlay: {
 	                    css: {
-	                        background: '#efefef',
-	                        opacity: 1,
                             zIndex: 20000
 	                    }
 	                },

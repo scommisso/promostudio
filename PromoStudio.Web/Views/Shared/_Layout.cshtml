@@ -20,8 +20,15 @@
         @* White label CSS - Also change Strings.PromoStudio *@
         .logo {
             background: url(@Url.Content("~/Content/images/logo.png")) no-repeat;
+            background-size: 100% 100%;
             width: 284px;
             height: 51px;
+        }
+        @@media only screen and (max-width:767px) {
+            .logo {
+                width: 142px;
+                height: 25px;
+            }
         }
     </style>
     <script type="text/javascript">if(navigator.userAgent.match(/IEMobile\/10\.0/)){var msViewportStyle=document.createElement("style");msViewportStyle.appendChild(document.createTextNode("@@-ms-viewport{width:auto!important}"));document.getElementsByTagName("head")[0].appendChild(msViewportStyle)};</script>
