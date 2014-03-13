@@ -1,0 +1,14 @@
+{
+  "name": "PromoStudio-Web",
+  "preferGlobal": true,
+  "version": "0.0.1",
+  "author": "Stephen Commisso <steve@stevecommisso.com>",
+  "description": "Dev requirements for building PromoStudio resources",
+  "devDependencies" : {
+    "less"   :  "~1.7.0",
+    "requirejs"   :  "~2.1.11"
+  },
+  "engines": {
+    "node": ">=0.6"
+  }
+}
