@@ -35,6 +35,11 @@ Logins
 **Username**: `sa`  
 **Password**: `pr0m053rv!c3`
 
+#### MySQL User ####
+**Username**: `PromoStudioUser`  
+**Password**: `pr0m057ud10`  
+**Sample Connection String**: `Server=127.0.0.1;Database=promostudio;Uid=PromoStudioUser;Pwd=pr0m057ud10;`
+
 
 Required Setup
 --------------
