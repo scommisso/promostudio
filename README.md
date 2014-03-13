@@ -39,6 +39,12 @@ Logins
 Required Setup
 --------------
 
+### Dev Environment ###
+ - Install Visual Studio 2012 or higher
+ - Install ASP.NET MVC4 via Visual Studio NuGet
+ - Install [NodeJS](http://nodejs.org/)
+   - Run `npm install` from `PromoStudio.Web` folder.
+
 ### Server Install Punchlist ###
  - Enable `Desktop Experience` on Win Server 2008/12
  - Install Chrome browser
