@@ -41,11 +41,13 @@
     <Reference Include="LitS3">
       <HintPath>..\packages\LitS3.1.0.1\lib\LitS3.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\packages\RestSharp.104.2.0\lib\net4\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,6 +57,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="VimeoDotNet">
+      <HintPath>..\packages\VimeoDotNet.0.6.1.0\lib\net45\VimeoDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
@@ -90,10 +95,6 @@
     <ProjectReference Include="..\PromoStudio.Common\PromoStudio.Common.csproj">
       <Project>{6e9aafa0-e570-46a1-a5a1-6e4484e3555b}</Project>
       <Name>PromoStudio.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VimeoAPI\VimeoAPI.csproj">
-      <Project>{a1c45cc0-c830-4bfe-9be1-0503991fab26}</Project>
-      <Name>VimeoAPI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

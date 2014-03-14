@@ -36,8 +36,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoStudio.Storage.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoStudio.CloudStatusService", "PromoStudio.CloudStatusService\PromoStudio.CloudStatusService.csproj", "{D68582E1-12E1-41F9-B402-DD035621D4F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VimeoAPI", "VimeoAPI\VimeoAPI.csproj", "{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -154,14 +152,6 @@ Global
 		{D68582E1-12E1-41F9-B402-DD035621D4F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D68582E1-12E1-41F9-B402-DD035621D4F5}.ReleaseQueue|Any CPU.ActiveCfg = Release|Any CPU
 		{D68582E1-12E1-41F9-B402-DD035621D4F5}.ReleaseQueue|Any CPU.Build.0 = Release|Any CPU
-		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.QueueDebug|Any CPU.ActiveCfg = QueueDebug|Any CPU
-		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.QueueDebug|Any CPU.Build.0 = QueueDebug|Any CPU
-		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.ReleaseQueue|Any CPU.ActiveCfg = ReleaseQueue|Any CPU
-		{A1C45CC0-C830-4BFE-9BE1-0503991FAB26}.ReleaseQueue|Any CPU.Build.0 = ReleaseQueue|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
