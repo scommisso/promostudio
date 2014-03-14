@@ -26,7 +26,8 @@ define([
         self.fk_AudioScriptTemplateId = ko.observable(data.fk_AudioScriptTemplateId || null);
         self.Name = ko.observable(data.Name || null);
         self.Description = ko.observable(data.Description || null);
-        self.VidyardId = ko.observable(data.VidyardId || null);
+        self.VimeoVideoId = ko.observable(data.VimeoVideoId || null);
+        self.VimeoThumbnailUrl = ko.observable(data.VimeoThumbnailUrl || null);
 
         self.Items = ko.observableArray([]);
 

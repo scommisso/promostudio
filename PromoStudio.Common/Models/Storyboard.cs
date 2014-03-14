@@ -15,7 +15,8 @@ namespace PromoStudio.Common.Models
         public int? fk_AudioScriptTemplateId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string VidyardId { get; set; }
+        public long VimeoVideoId { get; set; }
+        public string VimeoThumbnailUrl { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
 
@@ -43,7 +44,8 @@ namespace PromoStudio.Common.Models
                 fk_AudioScriptTemplateId = fk_AudioScriptTemplateId,
                 Name = Name,
                 Description = Description,
-                VidyardId = VidyardId,
+                VimeoVideoId = VimeoVideoId,
+                VimeoThumbnailUrl = VimeoThumbnailUrl,
                 DateCreated = DateCreated,
                 DateUpdated = DateUpdated
             };

@@ -29,8 +29,8 @@ define([
         self.LoadingData = ko.observable(false);
 
         function isVideoPlaying() {
-            var vpDisplay = $(".vidyard_tmask").css("display");
-            return (vpDisplay !== undefined && vpDisplay === "none");
+            // TODO: Implement lightbox and check if it is open
+            return false;
         }
 
         self.SelectedVideo = ko.observable(null);
@@ -65,9 +65,9 @@ define([
                     updateField(match, item, "RenderFailureMessage");
                     updateField(match, item, "DateUpdated");
                     updateField(match, item, "DateCompleted");
-                    updateField(match, item, "VidyardVideoId");
-                    updateField(match, item, "VidyardPlayerId");
-                    updateField(match, item, "VidyardPlayerUuid");
+                    updateField(match, item, "VimeoVideoId");
+                    updateField(match, item, "VimeoThumbnailUrl");
+                    updateField(match, item, "VimeoStreamingUrl");
                 }
             }
             for (i = 0; i < newVideos.length; i++) {

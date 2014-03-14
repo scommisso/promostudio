@@ -62,7 +62,9 @@ define(["models/storyboard",
                     item = new storyboard(item);
                     item = new storyboardVm(self, item);
                     storyboards[i] = item;
-                    item.LoadPlayer();
+
+                    // TODO: create lightbox
+                    //item.LoadPlayer();
                 }
 
                 self.Storyboards(storyboards);

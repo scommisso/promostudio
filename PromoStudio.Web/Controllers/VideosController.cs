@@ -77,7 +77,7 @@ namespace PromoStudio.Web.Controllers
         // GET: /Videos/Play?cvid={cvid}
         public async Task<ActionResult> Play(long cvid)
         {
-            // TODO: Add filter here to only allow vidyard to pull down content - 404 for all other callers
+            // TODO: Add filter here to only allow internal/admin to pull down content - 404 for all other callers
             var video = (await _dataService.CustomerVideo_SelectAsync(cvid));
             if (video == null)
             {

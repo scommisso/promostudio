@@ -9,15 +9,15 @@
 define([
         "jquery",
         "knockout",
-        "ps/vidyardPlayer",
         "ps/logger",
+        "strings",
         "ps/extensions"
 ],
     function (
         $,
         ko,
-        vPlayer,
-        logger) {
+        logger,
+        strings) {
         function ctor(sectionVm, storyboard) {
             var self = this,
                 checkboxes;
@@ -33,14 +33,19 @@ define([
             self.fk_AudioScriptTemplateId = storyboard.fk_AudioScriptTemplateId;
             self.Name = storyboard.Name;
             self.Description = storyboard.Description;
-            self.VidyardId = storyboard.VidyardId;
+            self.VimeoVideoId = storyboard.VimeoVideoId;
+            self.VimeoThumbnailUrl = storyboard.VimeoThumbnailUrl;
 
             self.ThumbnailUrl = ko.computed(function () {
-                var vId = self.VidyardId();
-                if (vId === null) {
-                    return null;
-                }
-                return "//embed.vidyard.com/embed/{0}/thumbnail.jpg".format(vId);
+                var vUrl = self.VimeoThumbnailUrl();
+                if (!vUrl) { return null; }
+                return vUrl;
+            });
+
+            self.InlineEmbedCode = ko.computed(function () {
+                var vId = self.VimeoVideoId();
+                if (!vId) { return null; }
+                return strings.getResource("Vimeo__InlineEmbed").format(vId);
             });
 
             self.IsSelected = ko.observable(false);
@@ -71,21 +76,6 @@ define([
 
                 sectionVm.SelectStoryboard(self);
                 $.jcfModule.customForms.refreshAll();
-            };
-
-            self.Player = null;
-
-            self.LoadPlayer = function () {
-                self.Player = new vPlayer({ VideoId: self.VidyardId() });
-            };
-            self.PlayLightbox = function (d, e) {
-                if (!self.Player && self.VidyardId()) {
-                    self.LoadPlayer();
-                }
-                if (self.Player) {
-                    self.Player.ShowLightbox();
-                }
-                e.stopImmediatePropagation();
             };
         }
 

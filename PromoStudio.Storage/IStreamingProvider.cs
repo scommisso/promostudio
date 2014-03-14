@@ -1,11 +1,12 @@
 ﻿using PromoStudio.Common.Enumerations;
-using PromoStudio.Storage.Vidyard;
+using VimeoDotNet.Models;
+using VimeoDotNet.Net;
 
 namespace PromoStudio.Storage
 {
     public interface IStreamingProvider
     {
-        Player StoreFile(string downloadUrl, string videoName, string videoDescription);
-        CloudStorageStatus GetFileStatus(long videoId);
+        IUploadRequest StoreFile(string filePath, string videoName, string videoDescription);
+        Video GetVideo(long videoId);
     }
 }

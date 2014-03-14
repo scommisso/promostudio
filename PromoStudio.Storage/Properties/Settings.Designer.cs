@@ -61,42 +61,6 @@ namespace PromoStudio.Storage.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("aK4mXiU6zwpuRqqxi9in")]
-        public string VidyardApiKey {
-            get {
-                return ((string)(this["VidyardApiKey"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://api.vidyard.com/dashboard/v1/")]
-        public string VidyardApiUrl {
-            get {
-                return ((string)(this["VidyardApiUrl"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tim@promostudio.com")]
-        public string VidyardApiUserId {
-            get {
-                return ((string)(this["VidyardApiUserId"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("goldmine")]
-        public string VidyardApiSecret {
-            get {
-                return ((string)(this["VidyardApiSecret"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("d46e4b11bc1d52a70a3c86ce4014667c6f8a7816")]
         public string VimeoApiClientId {
             get {

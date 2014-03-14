@@ -1,9 +1,10 @@
 ﻿using PromoStudio.Common.Enumerations;
 using PromoStudio.Storage.Properties;
-using PromoStudio.Storage.Vidyard;
 using System;
 using System.IO;
 using VimeoDotNet;
+using VimeoDotNet.Exceptions;
+using VimeoDotNet.Models;
 using VimeoDotNet.Net;
 
 namespace PromoStudio.Storage
@@ -13,32 +14,38 @@ namespace PromoStudio.Storage
         private string apiToken = Settings.Default.VimeoApiAccessToken;
         private long presetId = Settings.Default.VimeoApiPresetId;
 
-        public Player StoreFile(string downloadUrl, string videoName, string videoDescription)
+        private IVimeoClientFactory _vimeoClientFactory;
+
+        public VimeoStreamingProvider(IVimeoClientFactory vimeoClientFactory)
         {
-            var client = GetClient();
-            var uploadData = client.UploadEntireFile(new BinaryContent(downloadUrl));
+            _vimeoClientFactory = vimeoClientFactory;
+        }
 
-            // TODO: update video name, description, etc
-
-            return new Player()
+        public IUploadRequest StoreFile(string filePath, string videoName, string videoDescription)
+        {
+            using (var content = new BinaryContent(filePath))
             {
-                id = uploadData.ClipId
-            };
+                var client = GetClient();
+                var uploadData = client.UploadEntireFile(content);
+
+                if (!uploadData.ClipId.HasValue)
+                {
+                    throw new VimeoUploadException("Vimeo API did not return a Clip ID", uploadData);
+                }
+
+                return uploadData;
+            }
         }
 
-        public CloudStorageStatus GetFileStatus(long videoId)
+        public Video GetVideo(long videoId)
         {
             var client = GetClient();
-
-            // TODO: Get transcoding status
-
-            return CloudStorageStatus.InProgress;
+            return client.GetAccountVideo(videoId);
         }
 
-        private VimeoClient GetClient()
+        private IVimeoClient GetClient()
         {
-            var client = new VimeoClient(apiToken);
-            return client;
+            return _vimeoClientFactory.GetVimeoClient(apiToken);
         }
     }
 }

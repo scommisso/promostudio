@@ -10,7 +10,9 @@ namespace PromoStudio.Web.Models.Session
         public int fk_StoryboardId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string VidyardPlayerUuid { get; set; }
+        public long? VimeoVideoId { get; set; }
+        public string VimeoThumbnailUrl { get; set; }
+        public string VimeoStreamingUrl { get; set; }
 
         public CustomerVideoVoiceOver VoiceOver { get; set; }
 
@@ -25,6 +27,9 @@ namespace PromoStudio.Web.Models.Session
             fk_StoryboardId = video.fk_StoryboardId;
             Name = video.Name;
             Description = video.Description;
+            VimeoVideoId = video.VimeoVideoId;
+            VimeoThumbnailUrl = video.VimeoThumbnailUrl;
+            VimeoStreamingUrl = video.VimeoStreamingUrl;
             if (video.VoiceOver != null)
             {
                 VoiceOver = new CustomerVideoVoiceOver(video.VoiceOver);
@@ -40,7 +45,9 @@ namespace PromoStudio.Web.Models.Session
                 fk_StoryboardId = fk_StoryboardId,
                 Name = Name,
                 Description = Description,
-                VidyardPlayerUuid = VidyardPlayerUuid,
+                VimeoVideoId = VimeoVideoId,
+                VimeoThumbnailUrl = VimeoThumbnailUrl,
+                VimeoStreamingUrl = VimeoStreamingUrl,
                 VoiceOver = VoiceOver == null ? null : VoiceOver.ToModel()
             };
         }

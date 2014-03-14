@@ -6,7 +6,6 @@ using PromoStudio.Data;
 using PromoStudio.Rendering;
 using PromoStudio.RenderQueue.Properties;
 using PromoStudio.Storage;
-using PromoStudio.Storage.Vidyard;
 using System;
 using System.IO;
 using System.Linq;
@@ -88,17 +87,10 @@ namespace PromoStudio.RenderQueue
                 {
                     video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.UploadingPreview;
                     _dataService.CustomerVideo_Update(video);
-
-                    fileName = string.Format("{0}-preview.mov", video.pk_CustomerVideoId);
-                    _log.InfoFormat("CustomerVideo:{0} uploading file \"{1}\" to bucket \"{2}\", file \"{3}\".",
-                        video.pk_CustomerVideoId, video.PreviewFilePath, bucketName, fileName);
-                    outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.PreviewFilePath);
-                    video.PreviewFilePath = outputUrl;
-
-                    Player player = _streamingProvider.StoreFile(outputUrl, video.Name, video.Description);
-                    video.VidyardVideoId = player.chapters_attributes[0].video_id;
-                    video.VidyardPlayerId = player.id;
-                    video.VidyardPlayerUuid = player.uuid;
+                    
+                    var uploadResult = _streamingProvider.StoreFile(video.PreviewFilePath, video.Name, video.Description);
+                    video.VimeoVideoId = uploadResult.ClipId.Value;
+                    _dataService.CustomerVideo_Update(video);
 
                     CleanupTempFolder(Path.GetDirectoryName(video.PreviewFilePath));
 
@@ -118,14 +110,13 @@ namespace PromoStudio.RenderQueue
                     video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.UploadingFinalRender;
                     _dataService.CustomerVideo_Update(video);
 
-                    fileName = string.Format("{0}.mov", video.pk_CustomerVideoId);
-                    _log.InfoFormat("CustomerVideo:{0} uploading file \"{1}\" to bucket \"{2}\", file \"{3}\".",
-                        video.pk_CustomerVideoId, video.PreviewFilePath, fileName, bucketName);
-                    outputUrl = _storageProvider.StoreFile(bucketName, fileName, video.CompletedFilePath);
+                    var uploadResult = _streamingProvider.StoreFile(video.CompletedFilePath, video.Name, video.Description);
+                    // TODO: Delete the preview video
+                    video.VimeoVideoId = uploadResult.ClipId.Value;
+                    _dataService.CustomerVideo_Update(video);
 
                     CleanupTempFolder(Path.GetDirectoryName(video.CompletedFilePath));
 
-                    video.CompletedFilePath = outputUrl;
                     video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.InProgressHostProcessing;
                 }
 

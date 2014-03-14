@@ -364,7 +364,6 @@
     <Content Include="Scripts\viewModels\scaffold.js" />
     <Content Include="Scripts\viewModels\loginViewModel.js" />
     <Content Include="Scripts\viewModels\videosViewModel.js" />
-    <Content Include="Scripts\ps\vidyardPlayer.js" />
     <Content Include="Scripts\models\customerVideo.js" />
     <Content Include="Scripts\vsdoc\knockout-2.3.0.debug.js" />
     <Content Include="Scripts\vsdoc\require.js" />

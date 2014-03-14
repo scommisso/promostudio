@@ -57,8 +57,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="VimeoDotNet">
-      <HintPath>..\packages\VimeoDotNet.0.6.1.0\lib\net45\VimeoDotNet.dll</HintPath>
+    <Reference Include="VimeoDotNet, Version=0.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\VimeoDotNet.0.6.3.0\lib\net45\VimeoDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -76,12 +77,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="VidyardStreamingProvider.cs" />
-    <Compile Include="Vidyard\Chapter.cs" />
-    <Compile Include="Vidyard\Player.cs" />
-    <Compile Include="Vidyard\PlayerRequest.cs" />
-    <Compile Include="Vidyard\Tag.cs" />
-    <Compile Include="Vidyard\Video.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -32,9 +32,9 @@ define([
         self.DateCompleted = ko.observable(data.DateCompleted || null);
         self.PreviewFilePath = ko.observable(data.PreviewFilePath || null);
         self.CompletedFilePath = ko.observable(data.CompletedFilePath || null);
-        self.VidyardVideoId = ko.observable(data.VidyardVideoId || null);
-        self.VidyardPlayerId = ko.observable(data.VidyardPlayerId || null);
-        self.VidyardPlayerUuid = ko.observable(data.VidyardPlayerUuid || null);
+        self.VimeoVideoId = ko.observable(data.VimeoVideoId || null);
+        self.VimeoThumbnailUrl = ko.observable(data.VimeoThumbnailUrl || null);
+        self.VimeoStreamingUrl = ko.observable(data.VimeoStreamingUrl || null);
 
         self.Storyboard = ko.observable(null);
         self.VoiceOver = ko.observable(null);

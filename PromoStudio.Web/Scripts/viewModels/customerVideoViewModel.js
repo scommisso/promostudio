@@ -1,13 +1,11 @@
 ﻿/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
-/// <reference path="../ps/vidyardPlayer.js" />
 /// <reference path="enums.js" />
 
 "use strict";
 
 define([
     "knockout",
-    "ps/vidyardPlayer",
     "models/enums",
     "strings",
     "ps/extensions"
@@ -30,16 +28,16 @@ define([
         self.DateCreated = customerVideo.DateCreated || ko.observable();
         self.DateUpdated = customerVideo.DateUpdated || ko.observable();
         self.DateCompleted = customerVideo.DateCompleted || ko.observable();
-        self.VidyardVideoId = customerVideo.VidyardVideoId || ko.observable();
-        self.VidyardPlayerId = customerVideo.VidyardPlayerId || ko.observable();
-        self.VidyardPlayerUuid = customerVideo.VidyardPlayerUuid || ko.observable();
+        self.VimeoVideoId = customerVideo.VimeoVideoId || ko.observable();
+        self.VimeoThumbnailUrl = customerVideo.VimeoThumbnailUrl || ko.observable();
+        self.VimeoStreamingUrl = customerVideo.VimeoStreamingUrl || ko.observable();
 
         self.CustomerVideoRenderStatus = ko.computed(function () {
             var id = self.fk_CustomerVideoRenderStatusId();
             return enums.customerVideoRenderStatus(id);
         });
         self.IsHosted = ko.computed(function () {
-            var vId = self.VidyardPlayerUuid();
+            var vId = self.VimeoVideoId();
             return (!!vId);
         });
         self.IsIncomplete = ko.computed(function () {
@@ -48,10 +46,10 @@ define([
         });
 
         self.ThumbnailUrl = ko.computed(function () {
-            var vId = self.VidyardPlayerUuid(),
+            var vUrl = self.VimeoThumbnailUrl(),
                 incomplete = self.IsIncomplete();
-            if (incomplete || !vId) { return null; }
-            return strings.getResource("Vidyard__ThumbnailUrl").format(vId);
+            if (incomplete || !vUrl) { return null; }
+            return vUrl;
         });
 
         self.ThumbnailBackground = ko.computed(function () {
@@ -63,40 +61,20 @@ define([
         });
 
         self.PlayerUrl = ko.computed(function () {
-            var vId = self.VidyardPlayerUuid(),
+            var vId = self.VimeoVideoId(),
                 url;
             if (!vId) { return null; }
-            url = strings.getResource("Vidyard__PlayerUrl").format(vId);
+            url = strings.getResource("Vimeo__PlayerUrl").format(vId);
             return url;
         });
 
         self.InlineEmbedCode = ko.computed(function () {
-            var vId = self.VidyardPlayerUuid();
+            var vId = self.VimeoVideoId();
             if (!vId) { return null; }
-            return strings.getResource("Vidyard__InlineEmbed").format(vId);
-        });
-
-        self.LightboxEmbedCode = ko.computed(function () {
-            var vId = self.VidyardPlayerUuid();
-            if (!vId) { return null; }
-            return strings.getResource("Vidyard__LightboxEmbed").format(
-                vId, vId.replace(/-/g, "$"), self.Name());
+            return strings.getResource("Vimeo__InlineEmbed").format(vId);
         });
 
         self.Player = null;
-
-        self.LoadPlayer = function () {
-            self.Player = new vPlayer({ VideoId: self.VidyardPlayerUuid() });
-        };
-        self.PlayLightbox = function (d, e) {
-            if (!self.Player && self.VidyardPlayerUuid()) {
-                self.LoadPlayer();
-            }
-            if (self.Player) {
-                self.Player.ShowLightbox();
-            }
-            e.stopImmediatePropagation();
-        };
     }
     
     return ctor;

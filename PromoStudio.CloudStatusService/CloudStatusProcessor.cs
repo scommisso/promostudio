@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VimeoDotNet.Enums;
 
 namespace PromoStudio.CloudStatusService
 {
@@ -35,17 +36,28 @@ namespace PromoStudio.CloudStatusService
 
         private void CheckVideo(CustomerVideo video)
         {
-            if (!video.VidyardVideoId.HasValue)
+            if (!video.VimeoVideoId.HasValue)
             {
-                _log.Error("Error checking customer video for cloud status check. Missing Vidyard ID, id: " + video.pk_CustomerVideoId);
+                _log.Error("Error checking customer video for cloud status check. Missing Vimeo ID, id: " + video.pk_CustomerVideoId);
                 return;
             }
             try
             {
-                var status = _streamingProvider.GetFileStatus(video.VidyardVideoId.Value);
-                if (status == CloudStorageStatus.Completed)
+                var vimeoVideo = _streamingProvider.GetVideo(video.VimeoVideoId.Value);
+                if (vimeoVideo != null && vimeoVideo.VideoStatus == VideoStatusEnum.Available)
                 {
                     video.fk_CustomerVideoRenderStatusId = (sbyte) CustomerVideoRenderStatus.Completed;
+                    if (vimeoVideo.pictures != null)
+                    {
+                        var thumb = vimeoVideo.pictures.FirstOrDefault(p => p.PictureType == PictureTypeEnum.Thumbnail);
+                        if (thumb != null)
+                        {
+                            video.VimeoThumbnailUrl = thumb.link;
+                        }
+                    }
+
+                    // TODO: Check if this is the right link
+                    video.VimeoStreamingUrl = vimeoVideo.StreamingVideoSecureLink ?? vimeoVideo.StreamingVideoLink;
                     _dataService.CustomerVideo_Update(video);
                 }
             }
