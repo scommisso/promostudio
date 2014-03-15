@@ -9,5 +9,7 @@
         T DecryptObject<T>(string encryptedValue, string keys);
         byte[] DecryptBytes(byte[] data, string keys);
         string HashString(string value);
+        byte[] HashBytes(byte[] data);
+        string HashObject(object value);
     }
 }

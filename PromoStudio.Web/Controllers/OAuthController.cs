@@ -35,6 +35,7 @@ namespace PromoStudio.Web.Controllers
                 {
                     key = _cryptoManager.HashString(key);
                 }
+
                 var clcs = await _dataService.CustomerWithLoginCredential_SelectByLoginCredentialAsync(pId, key, email);
                 var clc = clcs.FirstOrDefault(c => c.fk_CustomerLoginPlatformId == pId);
                 if (clc == null) { clc = clcs.FirstOrDefault(); }
@@ -42,8 +43,11 @@ namespace PromoStudio.Web.Controllers
                 Customer customer = null;
                 Organization organization = null;
                 bool forcePrimary = false;
-                if (clc == null)
+                if (clc == null /* && pId != ((sbyte) CustomerLoginPlatform.Forms) */)
                 {
+                    // To only create logins automatically for facebook/google logins,
+                    // uncomment the condition above.
+
                     customer = new Customer()
                     {
                         FullName = name,

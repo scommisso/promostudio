@@ -14,6 +14,8 @@ namespace PromoStudio.Common.Encryption
             _serializationManager = serializationManager;
         }
 
+        #region Encryption
+
         public string EncryptString(string value, string keys)
         {
             if (string.IsNullOrEmpty(value))
@@ -106,13 +108,40 @@ namespace PromoStudio.Common.Encryption
             aesAlg.IV = Convert.FromBase64String(keyVals[1]);
         }
 
-        private string HashString(string value)
+        #endregion
+
+        #region Hashing
+
+        public byte[] HashBytes(byte[] data)
         {
-            using (SHA256 shaM = new SHA256Managed())
+            if (data == null)
+                throw new ArgumentNullException("data");
+            using (var shaMAlg = new SHA256Managed())
             {
-                byte[] hashedBytes = shaM.ComputeHash(Encoding.UTF8.GetBytes(value));
-                return BitConverter.ToString(hashedBytes);
+                return shaMAlg.ComputeHash(data);
             }
         }
+
+        public string HashString(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException("value");
+
+            var encoded = Encoding.UTF8.GetBytes(value);
+            var hashed = HashBytes(encoded);
+            return Convert.ToBase64String(hashed);
+        }
+
+        public string HashObject(object value)
+        {
+            if (value == null)
+                throw new ArgumentNullException("value");
+
+            var serialized = _serializationManager.Serialize(value);
+            var hashed = HashBytes(serialized);
+            return Convert.ToBase64String(hashed);
+        }
+
+        #endregion
     }
 }
