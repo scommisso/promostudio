@@ -4,6 +4,7 @@ using log4net;
 using PromoStudio.Data;
 using PromoStudio.RenderQueue;
 using PromoStudio.Storage;
+using VimeoDotNet;
 
 namespace PromoStudio.RenderQueueService
 {
@@ -15,7 +16,8 @@ namespace PromoStudio.RenderQueueService
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(typeof(IDataService).Assembly).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(typeof(IQueueProcessor).Assembly).AsImplementedInterfaces();
-            builder.RegisterAssemblyTypes(typeof(IStorageProvider).Assembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof(IStreamingProvider).Assembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof(IVimeoClientFactory).Assembly).AsImplementedInterfaces();
 
             var logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             builder.RegisterInstance<ILog>(logger);

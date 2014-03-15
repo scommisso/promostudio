@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PromoStudio.Storage
 {
-    public class AmazonS3StorageProvider// : IStorageProvider
+    public class AmazonS3StorageProvider : IStorageProvider
     {
         public string StoreFile(string bucketName, string fileName, string filePath)
         {
