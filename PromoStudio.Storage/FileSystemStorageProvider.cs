@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PromoStudio.Storage
 {
-    public class FileSystemStorageProvider : IStorageProvider
+    public class FileSystemStorageProvider// : IStorageProvider
     {
         public string StoreFile(string bucketName, string fileName, string filePath)
         {

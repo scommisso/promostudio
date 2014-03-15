@@ -40,6 +40,10 @@ Logins
 **Password**: `pr0m057ud10`  
 **Sample Connection String**: `Server=127.0.0.1;Database=promostudio;Uid=PromoStudioUser;Pwd=pr0m057ud10;`
 
+#### Vimeo User ####
+**Username**: `tim@clothingcycle.com`  
+**Password**: `clutch333`
+
 #### Vimeo API OAuth2 ####
 **Client Id**: `d46e4b11bc1d52a70a3c86ce4014667c6f8a7816`  
 **Client Secret**: `9386add8a2a2919c24c7a341ca673dbb1930d2c4`  

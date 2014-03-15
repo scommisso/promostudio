@@ -17,14 +17,12 @@ namespace PromoStudio.RenderQueue
     public class QueueProcessor : IQueueProcessor
     {
         private IDataService _dataService;
-        private IStorageProvider _storageProvider;
         private IStreamingProvider _streamingProvider;
         private ILog _log;
 
-        public QueueProcessor(IDataService dataService, IStorageProvider storageProvider, IStreamingProvider streamingProvider, ILog log)
+        public QueueProcessor(IDataService dataService, IStreamingProvider streamingProvider, ILog log)
         {
             _dataService = dataService;
-            _storageProvider = storageProvider;
             _streamingProvider = streamingProvider;
             _log = log;
         }
