@@ -42,13 +42,19 @@ define([
                 return vUrl;
             });
 
-            self.InlineEmbedCode = ko.computed(function () {
+            self.LightboxEmbedCode = ko.computed(function () {
                 var vId = self.VimeoVideoId();
                 if (!vId) { return null; }
-                return strings.getResource("Vimeo__InlineEmbed").format(vId);
+                return strings.getResource("Vimeo__InlineEmbed").format(vId, 360, 640);
             });
 
+            self.IsVisible = ko.observable(false);
             self.IsSelected = ko.observable(false);
+            self.IsPlaying = ko.observable(true);
+            self.StartPlaying = function () {
+                self.IsPlaying(true);
+                jQuery.fancybox.center();
+            };
 
             self.AttrBinding = ko.computed(function () {
                 var selected = self.IsSelected(),

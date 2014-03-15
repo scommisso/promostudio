@@ -952,7 +952,7 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;iframe src=&quot;//player.vimeo.com/video/{0}&quot; height=&quot;360&quot; width=&quot;640&quot; frameborder=&quot;0&quot; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;.
+        ///   Looks up a localized string similar to &lt;iframe src=&quot;//player.vimeo.com/video/{0}&quot; height=&quot;{1}&quot; width=&quot;{2}&quot; frameborder=&quot;0&quot; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;.
         /// </summary>
         public static string Vimeo__InlineEmbed {
             get {

@@ -41,9 +41,9 @@
                 <!-- ko text: Name --><!-- /ko -->
 			</div>
 			<div class="video-holder">
-                @* Embed Codes Go Here *@
-				<a href="#"></a>
-				<img src="#" data-bind="attr: { 'src': ThumbnailUrl, 'alt': Name }">
+				<a href="#", data-bind="visible: !IsPlaying(), click: StartPlaying"></a>
+                <div data-bind="visible: IsPlaying, html: LightboxEmbedCode"></div>
+				<img src="#" data-bind="visible: !IsPlaying(), attr: { 'src': ThumbnailUrl, 'alt': Name }">
 			</div>
 		</div>
 	</div>

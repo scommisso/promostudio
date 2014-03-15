@@ -68,10 +68,16 @@ define([
             return url;
         });
 
+        self.LightboxEmbedCode = ko.computed(function () {
+            var vId = self.VimeoVideoId();
+            if (!vId) { return null; }
+            return strings.getResource("Vimeo__InlineEmbed").format(vId, 360, 640);
+        });
+
         self.InlineEmbedCode = ko.computed(function () {
             var vId = self.VimeoVideoId();
             if (!vId) { return null; }
-            return strings.getResource("Vimeo__InlineEmbed").format(vId);
+            return strings.getResource("Vimeo__InlineEmbed").format(vId, 486, 864);
         });
 
         self.Player = null;

@@ -8,7 +8,7 @@
 @section scripts {
     <script>
         require(["viewModels/scaffold"], function() {
-            require(["viewModels/buildSummaryViewModel", "jquery", "bootstrap"], function(summary, $) {
+            require(["viewModels/buildSummaryViewModel", "jquery"], function(summary, $) {
                 $(function() {
                     var vm = new summary(@Html.Raw(JsonConvert.SerializeObject(Model)));
                     vm.Bind(".summaryWizard", ".build-steps");

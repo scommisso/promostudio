@@ -15,7 +15,6 @@ define(["viewModels/textItemViewModel",
         "strings",
         "models/enums",
         "ps/logger",
-        "bootstrap",
         "jqueryui"
 ],
     function (

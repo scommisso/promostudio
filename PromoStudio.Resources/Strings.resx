@@ -346,8 +346,10 @@
     <value>Voice</value>
   </data>
   <data name="Vimeo__InlineEmbed" xml:space="preserve">
-    <value>&lt;iframe src="//player.vimeo.com/video/{0}" height="360" width="640" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;</value>
-    <comment>0: VideoId</comment>
+    <value>&lt;iframe src="//player.vimeo.com/video/{0}" height="{1}" width="{2}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;</value>
+    <comment>0: VideoId
+1: Player Height
+2: Player Width</comment>
   </data>
   <data name="Vimeo__PlayerUrl" xml:space="preserve">
     <value>https://vimeo.com/{0}</value>

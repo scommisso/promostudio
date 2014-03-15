@@ -314,8 +314,6 @@
     <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Properties\PublishProfiles\Local File System.pubxml" />
     <None Include="Scripts\vsdoc\jquery-1.9.1.intellisense.js" />
-    <Content Include="Scripts\lib\bootstrap.js" />
-    <Content Include="Scripts\lib\bootstrap-lightbox.js" />
     <Content Include="Scripts\lib\css.js" />
     <Content Include="Scripts\models\customerVideoVoiceOver.js" />
     <Content Include="Scripts\models\voiceActor.js" />
@@ -327,7 +325,6 @@
     <Content Include="Scripts\lib\knockout-2.3.0.js" />
     <Content Include="Scripts\lib\ko.custom.js" />
     <Content Include="Scripts\lib\normalize.js" />
-    <Content Include="Scripts\lib\bs-lightbox.js" />
     <Content Include="Scripts\models\audioScriptTemplate.js" />
     <Content Include="Scripts\models\customerVideoScript.js" />
     <Content Include="Scripts\models\storyboardItem.js" />

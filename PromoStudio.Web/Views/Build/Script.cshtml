@@ -8,7 +8,7 @@
 @section scripts {
     <script>
         require(["viewModels/scaffold"], function () {
-            require(["viewModels/audioScriptViewModel", "jquery", "bootstrap"], function(audioScript, $) {
+            require(["viewModels/audioScriptViewModel", "jquery"], function(audioScript, $) {
                 $(function() {
                     var vm = new audioScript(@Html.Raw(JsonConvert.SerializeObject(Model)));
                     vm.Bind(".audioScriptWizard", ".build-steps");

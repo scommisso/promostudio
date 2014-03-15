@@ -16,7 +16,6 @@ define(["viewModels/photoTemplatesViewModel",
         "models/enums",
         "ps/logger",
         "ps/extensions",
-        "bootstrap",
         "jqueryui"
 ],
     function (

@@ -15,8 +15,7 @@ define(["models/customerResource",
         "knockout",
         "strings",
         "models/enums",
-        "ps/logger",
-        "bootstrap"
+        "ps/logger"
 ],
     function (
         customerResource,
