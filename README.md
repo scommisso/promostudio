@@ -44,6 +44,12 @@ Logins
 **Username**: `tim@clothingcycle.com`  
 **Password**: `clutch333`
 
+#### Vimeo API OAuth2 ####
+**Client Id**: `d46e4b11bc1d52a70a3c86ce4014667c6f8a7816`  
+**Client Secret**: `9386add8a2a2919c24c7a341ca673dbb1930d2c4`  
+**Access Token**: `8e8d0b8e480058e82daeba5b2f72b58f`  
+
+
 Required Setup
 --------------
 
