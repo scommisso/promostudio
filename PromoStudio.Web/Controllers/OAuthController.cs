@@ -1,5 +1,6 @@
 ﻿using log4net;
 using Newtonsoft.Json;
+using PromoStudio.Common.Encryption;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
 using PromoStudio.Data;
@@ -17,9 +18,11 @@ namespace PromoStudio.Web.Controllers
 {
     public class OAuthController : ControllerBase
     {
-        public OAuthController(IDataService dataService, ILog log)
+        protected ICryptoManager _cryptoManager;
+        public OAuthController(IDataService dataService, ILog log, ICryptoManager cryptoManager)
             : base(dataService, log)
         {
+            _cryptoManager = cryptoManager;
         }
 
         // /OAuth/Authorize
