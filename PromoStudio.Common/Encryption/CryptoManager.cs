@@ -105,5 +105,14 @@ namespace PromoStudio.Common.Encryption
             aesAlg.Key = Convert.FromBase64String(keyVals[0]);
             aesAlg.IV = Convert.FromBase64String(keyVals[1]);
         }
+
+        private string HashString(string value)
+        {
+            using (SHA256 shaM = new SHA256Managed())
+            {
+                byte[] hashedBytes = shaM.ComputeHash(Encoding.UTF8.GetBytes(value));
+                return BitConverter.ToString(hashedBytes);
+            }
+        }
     }
 }

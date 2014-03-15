@@ -31,6 +31,10 @@ namespace PromoStudio.Web.Controllers
         {
             try
             {
+                if (pId == ((sbyte) CustomerLoginPlatform.Forms))
+                {
+                    key = _cryptoManager.HashString(key);
+                }
                 var clcs = await _dataService.CustomerWithLoginCredential_SelectByLoginCredentialAsync(pId, key, email);
                 var clc = clcs.FirstOrDefault(c => c.fk_CustomerLoginPlatformId == pId);
                 if (clc == null) { clc = clcs.FirstOrDefault(); }

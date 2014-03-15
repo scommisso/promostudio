@@ -8,5 +8,6 @@
         string DecryptString(string encryptedValue, string keys);
         T DecryptObject<T>(string encryptedValue, string keys);
         byte[] DecryptBytes(byte[] data, string keys);
+        string HashString(string value);
     }
 }
