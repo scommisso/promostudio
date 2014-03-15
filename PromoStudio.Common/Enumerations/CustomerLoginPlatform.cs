@@ -3,6 +3,7 @@
     public enum CustomerLoginPlatform : sbyte
     {
         Google = 1,
-        Facebook
+        Facebook,
+        Forms
     }
 }
