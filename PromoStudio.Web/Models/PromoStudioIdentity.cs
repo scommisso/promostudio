@@ -4,6 +4,17 @@ namespace PromoStudio.Web
 {
     public class PromoStudioIdentity : IPromoStudioIdentity, IIdentity
     {
+        public PromoStudioIdentity(AuthData authData)
+        {
+            CustomerId = authData.CustomerId;
+            OrganizationId = authData.OrganizationId;
+            VerticalId = authData.VerticalId;
+            FullName = authData.FullName;
+            EmailAddress = authData.EmailAddress;
+            OrganizationName = authData.OrganizationName;
+            AuthenticationType = authData.AuthenticationType;
+        }
+
         public long CustomerId { get; set; }
         public int? OrganizationId { get; set; }
         public int? VerticalId { get; set; }
@@ -19,23 +30,7 @@ namespace PromoStudio.Web
 
         public bool IsAuthenticated
         {
-            get
-            {
-                return !string.IsNullOrEmpty(AuthenticationType);
-            }
-        }
-
-
-        public PromoStudioIdentity(AuthData authData)
-        {
-            CustomerId = authData.CustomerId;
-            OrganizationId = authData.OrganizationId;
-            VerticalId = authData.VerticalId;
-            FullName = authData.FullName;
-            EmailAddress = authData.EmailAddress;
-            OrganizationName = authData.OrganizationName;
-            AuthenticationType = authData.AuthenticationType;
-
+            get { return !string.IsNullOrEmpty(AuthenticationType); }
         }
     }
 }

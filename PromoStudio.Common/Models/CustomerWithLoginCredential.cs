@@ -1,5 +1,5 @@
-﻿using PromoStudio.Common.Enumerations;
-using System;
+﻿using System;
+using PromoStudio.Common.Enumerations;
 
 namespace PromoStudio.Common.Models
 {
@@ -19,25 +19,25 @@ namespace PromoStudio.Common.Models
         public string LoginKey { get; set; }
         public sbyte PrimaryLogin { get; set; }
         public DateTime LastLogin { get; set; }
-        
+
         public string OrganizationName { get; set; }
         public string OrganizationDisplayName { get; set; }
 
         public CustomerStatus Status
         {
-            get { return (CustomerStatus)fk_CustomerStatusId; }
-            set { fk_CustomerStatusId = (sbyte)value; }
+            get { return (CustomerStatus) fk_CustomerStatusId; }
+            set { fk_CustomerStatusId = (sbyte) value; }
         }
 
         public CustomerLoginPlatform Platform
         {
-            get { return (CustomerLoginPlatform)fk_CustomerLoginPlatformId; }
-            set { fk_CustomerLoginPlatformId = (sbyte)value; }
+            get { return (CustomerLoginPlatform) fk_CustomerLoginPlatformId; }
+            set { fk_CustomerLoginPlatformId = (sbyte) value; }
         }
 
         public Customer ToCustomer()
         {
-            return new Customer()
+            return new Customer
             {
                 pk_CustomerId = pk_CustomerId,
                 fk_OrganizationId = fk_OrganizationId,
@@ -51,7 +51,7 @@ namespace PromoStudio.Common.Models
 
         public CustomerLoginCredential ToCustomerLoginCredential()
         {
-            return new CustomerLoginCredential()
+            return new CustomerLoginCredential
             {
                 pk_CustomerLoginCredentialId = pk_CustomerLoginCredentialId,
                 fk_CustomerId = pk_CustomerId,
@@ -65,7 +65,7 @@ namespace PromoStudio.Common.Models
 
         public Organization ToOrganization()
         {
-            return new Organization()
+            return new Organization
             {
                 pk_OrganizationId = fk_OrganizationId.Value,
                 fk_VerticalId = fk_VerticalId,

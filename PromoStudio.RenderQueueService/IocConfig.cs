@@ -11,16 +11,17 @@ namespace PromoStudio.RenderQueueService
     public class IocConfig
     {
         public static IContainer Container { get; private set; }
+
         public static void RegisterIoc()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterAssemblyTypes(typeof(IDataService).Assembly).AsImplementedInterfaces();
-            builder.RegisterAssemblyTypes(typeof(IQueueProcessor).Assembly).AsImplementedInterfaces();
-            builder.RegisterAssemblyTypes(typeof(IStreamingProvider).Assembly).AsImplementedInterfaces();
-            builder.RegisterAssemblyTypes(typeof(IVimeoClientFactory).Assembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof (IDataService).Assembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof (IQueueProcessor).Assembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof (IStreamingProvider).Assembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(typeof (IVimeoClientFactory).Assembly).AsImplementedInterfaces();
 
-            var logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-            builder.RegisterInstance<ILog>(logger);
+            ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+            builder.RegisterInstance(logger);
 
             Container = builder.Build();
         }

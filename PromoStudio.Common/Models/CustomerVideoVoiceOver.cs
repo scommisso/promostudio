@@ -17,14 +17,14 @@ namespace PromoStudio.Common.Models
         {
             return new
             {
-                pk_CustomerVideoVoiceOverId = pk_CustomerVideoVoiceOverId,
-                fk_CustomerVideoId = fk_CustomerVideoId,
-                fk_VoiceActorId = fk_VoiceActorId,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated,
-                DateUploaded = DateUploaded,
-                Script = Script,
-                FilePath = FilePath
+                pk_CustomerVideoVoiceOverId,
+                fk_CustomerVideoId,
+                fk_VoiceActorId,
+                DateCreated,
+                DateUpdated,
+                DateUploaded,
+                Script,
+                FilePath
             };
         }
     }

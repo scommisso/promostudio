@@ -1,8 +1,5 @@
-﻿using PromoStudio.Common.Enumerations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using PromoStudio.Common.Enumerations;
 
 namespace PromoStudio.Common.Models
 {
@@ -20,23 +17,23 @@ namespace PromoStudio.Common.Models
 
         public AudioScriptTemplateStatus Status
         {
-            get { return (AudioScriptTemplateStatus)fk_AudioScriptTemplateStatusId; }
-            set { fk_AudioScriptTemplateStatusId = (sbyte)value; }
+            get { return (AudioScriptTemplateStatus) fk_AudioScriptTemplateStatusId; }
+            set { fk_AudioScriptTemplateStatusId = (sbyte) value; }
         }
 
         public dynamic ToPoco()
         {
             return new
             {
-                pk_AudioScriptTemplateId = pk_AudioScriptTemplateId,
-                fk_AudioScriptTemplateStatusId = fk_AudioScriptTemplateStatusId,
-                fk_OrganizationId = fk_OrganizationId,
-                fk_VerticalId = fk_VerticalId,
-                Name = Name,
-                Description = Description,
-                ScriptText = ScriptText,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated
+                pk_AudioScriptTemplateId,
+                fk_AudioScriptTemplateStatusId,
+                fk_OrganizationId,
+                fk_VerticalId,
+                Name,
+                Description,
+                ScriptText,
+                DateCreated,
+                DateUpdated
             };
         }
     }

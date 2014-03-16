@@ -13,9 +13,10 @@ namespace PromoStudio.Common.Models
         public int LengthInSeconds { get; set; }
         public sbyte SortOrder { get; set; }
 
-        public StoryboardItemType Type {
-            get { return (StoryboardItemType)fk_StoryboardItemTypeId; }
-            set { fk_StoryboardItemTypeId = (sbyte)value; }
+        public StoryboardItemType Type
+        {
+            get { return (StoryboardItemType) fk_StoryboardItemTypeId; }
+            set { fk_StoryboardItemTypeId = (sbyte) value; }
         }
 
         public TemplateScript TemplateScript { get; set; }
@@ -26,14 +27,14 @@ namespace PromoStudio.Common.Models
         {
             return new
             {
-                pk_StoryboardItemId = pk_StoryboardItemId,
-                fk_StoryboardId = fk_StoryboardId,
-                fk_StoryboardItemTypeId = fk_StoryboardItemTypeId,
-                fk_TemplateScriptId = fk_TemplateScriptId,
-                fk_StockVideoId = fk_StockVideoId,
-                Name = Name,
-                LengthInSeconds = LengthInSeconds,
-                SortOrder = SortOrder
+                pk_StoryboardItemId,
+                fk_StoryboardId,
+                fk_StoryboardItemTypeId,
+                fk_TemplateScriptId,
+                fk_StockVideoId,
+                Name,
+                LengthInSeconds,
+                SortOrder
             };
         }
     }

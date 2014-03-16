@@ -5,11 +5,6 @@ namespace PromoStudio.Web.Models.Session
     [Serializable]
     public class CustomerTemplateScriptItem
     {
-        public long pk_CustomerTemplateScriptItemId { get; set; }
-        public long fk_CustomerTemplateScriptId { get; set; }
-        public long fk_TemplateScriptItemId { get; set; }
-        public long fk_CustomerResourceId { get; set; }
-
         public CustomerTemplateScriptItem()
         {
         }
@@ -22,9 +17,14 @@ namespace PromoStudio.Web.Models.Session
             fk_CustomerResourceId = scriptItem.fk_CustomerResourceId;
         }
 
+        public long pk_CustomerTemplateScriptItemId { get; set; }
+        public long fk_CustomerTemplateScriptId { get; set; }
+        public long fk_TemplateScriptItemId { get; set; }
+        public long fk_CustomerResourceId { get; set; }
+
         public Common.Models.CustomerTemplateScriptItem ToModel()
         {
-            return new Common.Models.CustomerTemplateScriptItem()
+            return new Common.Models.CustomerTemplateScriptItem
             {
                 pk_CustomerTemplateScriptItemId = pk_CustomerTemplateScriptItemId,
                 fk_CustomerTemplateScriptId = fk_CustomerTemplateScriptId,

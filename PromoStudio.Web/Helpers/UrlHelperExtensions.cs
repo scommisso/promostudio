@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PromoStudio.Web
@@ -15,8 +14,8 @@ namespace PromoStudio.Web
             }
 
             // At this point, we know the url is relative.
-            var requestUri = url.RequestContext.HttpContext.Request.Url;
-            var absolute = string.Format("{0}://{1}{2}", requestUri.Scheme, requestUri.Authority, relativeOrAbsolute);
+            Uri requestUri = url.RequestContext.HttpContext.Request.Url;
+            string absolute = string.Format("{0}://{1}{2}", requestUri.Scheme, requestUri.Authority, relativeOrAbsolute);
             return absolute;
             //return VirtualPathUtility.ToAbsolute(relativeOrAbsolute);
         }

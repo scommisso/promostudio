@@ -1,11 +1,9 @@
-﻿using System.Linq;
-using log4net;
-using PromoStudio.Common.Enumerations;
-using PromoStudio.Data;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using PromoStudio.Web.Helpers;
+using log4net;
+using PromoStudio.Common.Models;
+using PromoStudio.Data;
 using PromoStudio.Web.ViewModels;
 
 namespace PromoStudio.Web.Controllers
@@ -28,7 +26,7 @@ namespace PromoStudio.Web.Controllers
             }
             long customerId = CurrentUser.CustomerId;
 
-            var customerInfo = (await _dataService.Customer_SelectAsync(customerId));
+            Customer customerInfo = (await _dataService.Customer_SelectAsync(customerId));
             if (customerInfo == null)
             {
                 return new HttpNotFoundResult();

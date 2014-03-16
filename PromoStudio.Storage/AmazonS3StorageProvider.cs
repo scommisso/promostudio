@@ -1,8 +1,8 @@
-﻿using LitS3;
-using PromoStudio.Storage.Properties;
-using System;
+﻿using System;
 using System.IO;
 using System.Web;
+using LitS3;
+using PromoStudio.Storage.Properties;
 
 namespace PromoStudio.Storage
 {
@@ -10,12 +10,13 @@ namespace PromoStudio.Storage
     {
         public string StoreFile(string bucketName, string fileName, string filePath)
         {
-            if (!File.Exists(filePath)) {
+            if (!File.Exists(filePath))
+            {
                 throw new ArgumentException(string.Format("filePath \"{0}\" does not exist.", filePath));
             }
             bucketName = Settings.Default.BucketNamePrefix + bucketName;
 
-            var storage = GetStorageService();
+            S3Service storage = GetStorageService();
             EnsureBucketExists(storage, bucketName);
             storage.AddObject(filePath, bucketName, fileName, MimeMapping.GetMimeMapping(fileName), CannedAcl.PublicRead);
             return storage.GetUrl(bucketName, fileName);
@@ -24,7 +25,7 @@ namespace PromoStudio.Storage
         public string GetFileUrl(string bucketName, string fileName)
         {
             bucketName = Settings.Default.BucketNamePrefix + bucketName;
-            var storage = GetStorageService();
+            S3Service storage = GetStorageService();
             return storage.GetUrl(bucketName, fileName);
         }
 
@@ -32,16 +33,20 @@ namespace PromoStudio.Storage
         {
             bucketName = Settings.Default.BucketNamePrefix + bucketName;
 
-            var storage = GetStorageService();
+            S3Service storage = GetStorageService();
             return storage.GetObjectStream(bucketName, fileName);
         }
 
         private void EnsureBucketExists(S3Service s3Service, string bucketName)
         {
-            var access = s3Service.QueryBucket(bucketName);
-            if (access == BucketAccess.Accessible) { return; }
+            BucketAccess access = s3Service.QueryBucket(bucketName);
+            if (access == BucketAccess.Accessible)
+            {
+                return;
+            }
             if (access == BucketAccess.NotAccessible)
-                throw new ArgumentOutOfRangeException("bucketName", "bucketName is already taken. Please provide a unique name");
+                throw new ArgumentOutOfRangeException("bucketName",
+                    "bucketName is already taken. Please provide a unique name");
             s3Service.CreateBucket(bucketName);
         }
 

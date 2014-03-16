@@ -1,16 +1,16 @@
-﻿using Autofac;
-using Nito.AsyncEx;
-using System;
+﻿using System;
 using System.ServiceProcess;
 using System.Timers;
+using Autofac;
+using Nito.AsyncEx;
 
 namespace PromoStudio.CloudStatusService
 {
     public partial class CloudStatusService : ServiceBase
     {
+        private bool _initialized;
         private Timer _timer;
         private bool _working;
-        private bool _initialized;
 
         public CloudStatusService()
         {
@@ -32,7 +32,10 @@ namespace PromoStudio.CloudStatusService
         public void DoWork()
         {
             // TODO: Log
-            if (_working) { return; } // still busy
+            if (_working)
+            {
+                return;
+            } // still busy
             _working = true;
 
             if (!_initialized)
@@ -41,15 +44,12 @@ namespace PromoStudio.CloudStatusService
                 _initialized = true;
             }
 
-            using (var container = IocConfig.Container.BeginLifetimeScope())
+            using (ILifetimeScope container = IocConfig.Container.BeginLifetimeScope())
             {
                 try
                 {
                     var processor = container.Resolve<ICloudStatusProcessor>();
-                    AsyncContext.Run(() =>
-                    {
-                        processor.Execute();
-                    });
+                    AsyncContext.Run(() => { processor.Execute(); });
                 }
                 catch (Exception ex)
                 {

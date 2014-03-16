@@ -18,15 +18,15 @@ namespace PromoStudio.Common.Models
         {
             return new
             {
-                pk_OrganizationId = pk_OrganizationId,
-                fk_VerticalId = fk_VerticalId,
-                Name = Name,
-                DisplayName = DisplayName,
-                ContactPhone = ContactPhone,
-                ContactEmail = ContactEmail,
-                Website = Website,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated
+                pk_OrganizationId,
+                fk_VerticalId,
+                Name,
+                DisplayName,
+                ContactPhone,
+                ContactEmail,
+                Website,
+                DateCreated,
+                DateUpdated
             };
         }
     }

@@ -1,6 +1,6 @@
-﻿using PromoStudio.Common.Enumerations;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using PromoStudio.Common.Enumerations;
 
 namespace PromoStudio.Common.Models
 {
@@ -22,32 +22,33 @@ namespace PromoStudio.Common.Models
 
         public AudioScriptTemplate AudioScriptTemplate { get; set; }
 
-        public List<StoryboardItem> Items {
+        public List<StoryboardItem> Items
+        {
             get { return _storyboardItems; }
             set { _storyboardItems = value; }
         }
 
         public StoryboardStatus Status
         {
-            get { return (StoryboardStatus)fk_StoryboardStatusId; }
-            set { fk_StoryboardStatusId = (sbyte)value; }
+            get { return (StoryboardStatus) fk_StoryboardStatusId; }
+            set { fk_StoryboardStatusId = (sbyte) value; }
         }
 
         public dynamic ToPoco()
         {
             return new
             {
-                pk_StoryboardId = pk_StoryboardId,
-                fk_StoryboardStatusId = fk_StoryboardStatusId,
-                fk_OrganizationId = fk_OrganizationId,
-                fk_VerticalId = fk_VerticalId,
-                fk_AudioScriptTemplateId = fk_AudioScriptTemplateId,
-                Name = Name,
-                Description = Description,
-                VimeoVideoId = VimeoVideoId,
-                VimeoThumbnailUrl = VimeoThumbnailUrl,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated
+                pk_StoryboardId,
+                fk_StoryboardStatusId,
+                fk_OrganizationId,
+                fk_VerticalId,
+                fk_AudioScriptTemplateId,
+                Name,
+                Description,
+                VimeoVideoId,
+                VimeoThumbnailUrl,
+                DateCreated,
+                DateUpdated
             };
         }
     }

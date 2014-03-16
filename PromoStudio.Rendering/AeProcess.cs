@@ -1,9 +1,8 @@
-﻿using PromoStudio.Rendering.Properties;
-using System;
+﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using PromoStudio.Rendering.Properties;
 
 namespace PromoStudio.Rendering
 {
@@ -12,14 +11,14 @@ namespace PromoStudio.Rendering
         private Process _process;
         private SemaphoreSlim _processExitedSignal;
 
-        public string ExePath { get; set; }
-        public bool RunUnattended { get; set; }
-
         public AeProcess()
         {
             ExePath = Settings.Default.AfterEffectsExePath;
             RunUnattended = true;
         }
+
+        public string ExePath { get; set; }
+        public bool RunUnattended { get; set; }
 
         public string ExecuteProcess(string scriptPath)
         {
@@ -37,7 +36,10 @@ namespace PromoStudio.Rendering
             }
             finally
             {
-                if (_process != null) { _process.Dispose(); }
+                if (_process != null)
+                {
+                    _process.Dispose();
+                }
             }
         }
 
@@ -67,10 +69,15 @@ namespace PromoStudio.Rendering
                     {
                         _process.Exited -= Process_Exited;
                     }
-                    catch { }
+                    catch
+                    {
+                    }
                     _process.Dispose();
                 }
-                if (_processExitedSignal != null) { _processExitedSignal.Dispose(); }
+                if (_processExitedSignal != null)
+                {
+                    _processExitedSignal.Dispose();
+                }
             }
         }
 

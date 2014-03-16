@@ -20,10 +20,10 @@
         {
             return new
             {
-                pk_CustomerTemplateScriptItemId = pk_CustomerTemplateScriptItemId,
-                fk_CustomerTemplateScriptId = fk_CustomerTemplateScriptId,
-                fk_TemplateScriptItemId = fk_TemplateScriptItemId,
-                fk_CustomerResourceId = fk_CustomerResourceId
+                pk_CustomerTemplateScriptItemId,
+                fk_CustomerTemplateScriptId,
+                fk_TemplateScriptItemId,
+                fk_CustomerResourceId
             };
         }
     }

@@ -1,7 +1,7 @@
-﻿using log4net;
+﻿using System.Web.Mvc;
+using log4net;
 using PromoStudio.Data;
 using PromoStudio.Web.ViewModels;
-using System.Web.Mvc;
 
 namespace PromoStudio.Web.Controllers
 {

@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using PromoStudio.Common.Models;
-using PromoStudio.Resources;
 using System.Web;
 using System.Web.Routing;
+using PromoStudio.Common.Models;
+using PromoStudio.Resources;
 
 namespace PromoStudio.Web.ViewModels
 {
     public abstract class BuildViewModelBase : ViewModelBase
     {
         #region Constants
-        private static readonly string[] _keys = new string[]
+
+        private static readonly string[] _keys =
         {
             "Footage",
             "Customize",
@@ -18,7 +18,8 @@ namespace PromoStudio.Web.ViewModels
             "Audio",
             "Preview"
         };
-        private static readonly string[] _titles = new string[]
+
+        private static readonly string[] _titles =
         {
             Strings.BuildStep__Footage,
             Strings.BuildStep__Customize,
@@ -26,7 +27,8 @@ namespace PromoStudio.Web.ViewModels
             Strings.BuildStep__Audio,
             Strings.BuildStep__Preview
         };
-        private static readonly string[] _descriptions = new string[]
+
+        private static readonly string[] _descriptions =
         {
             Strings.BuildStep__Select_your_Footage,
             Strings.BuildStep__Customize_the_footage,
@@ -34,7 +36,8 @@ namespace PromoStudio.Web.ViewModels
             Strings.BuildStep__Select_your_Audio,
             Strings.BuildStep__Review_your_video
         };
-        private static readonly string[] _classes = new string[]
+
+        private static readonly string[] _classes =
         {
             "footage",
             "customize",
@@ -42,6 +45,7 @@ namespace PromoStudio.Web.ViewModels
             "audio",
             "preview"
         };
+
         #endregion
 
         public List<int> StepsCompleted { get; set; }
@@ -68,7 +72,6 @@ namespace PromoStudio.Web.ViewModels
             if (stepId < 1 || stepId > 5)
             {
                 return false;
-
             }
             if (!IsStepCompleted(stepId))
             {
@@ -130,7 +133,10 @@ namespace PromoStudio.Web.ViewModels
                 }
             }
 
-            if (classes.Count == 0) { return ""; }
+            if (classes.Count == 0)
+            {
+                return "";
+            }
             return string.Format(" class=\"{0}\"", string.Join(" ", classes));
         }
 
@@ -149,7 +155,10 @@ namespace PromoStudio.Web.ViewModels
                 }
             }
 
-            if (classes.Count == 0) { return ""; }
+            if (classes.Count == 0)
+            {
+                return "";
+            }
             return string.Format(" class=\"{0}\"", string.Join(" ", classes));
         }
     }

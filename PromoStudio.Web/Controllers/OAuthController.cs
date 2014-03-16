@@ -1,11 +1,5 @@
-﻿using log4net;
-using Newtonsoft.Json;
-using PromoStudio.Common.Encryption;
-using PromoStudio.Common.Enumerations;
-using PromoStudio.Common.Models;
-using PromoStudio.Data;
-using PromoStudio.Web.Properties;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -13,12 +7,20 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
 using System.Web.Security;
+using log4net;
+using Newtonsoft.Json;
+using PromoStudio.Common.Encryption;
+using PromoStudio.Common.Enumerations;
+using PromoStudio.Common.Models;
+using PromoStudio.Data;
+using PromoStudio.Web.Properties;
 
 namespace PromoStudio.Web.Controllers
 {
     public class OAuthController : ControllerBase
     {
         protected ICryptoManager _cryptoManager;
+
         public OAuthController(IDataService dataService, ILog log, ICryptoManager cryptoManager)
             : base(dataService, log)
         {
@@ -31,28 +33,32 @@ namespace PromoStudio.Web.Controllers
         {
             try
             {
-                var clcs = await _dataService.CustomerWithLoginCredential_SelectByLoginCredentialAsync(pId, key, email);
-                var clc = clcs.FirstOrDefault(c => c.fk_CustomerLoginPlatformId == pId);
-                if (clc == null) { clc = clcs.FirstOrDefault(); }
+                IEnumerable<CustomerWithLoginCredential> clcs =
+                    await _dataService.CustomerWithLoginCredential_SelectByLoginCredentialAsync(pId, key, email);
+                CustomerWithLoginCredential clc = clcs.FirstOrDefault(c => c.fk_CustomerLoginPlatformId == pId);
+                if (clc == null)
+                {
+                    clc = clcs.FirstOrDefault();
+                }
 
                 Customer customer = null;
                 Organization organization = null;
                 bool forcePrimary = false;
                 if (clc == null)
                 {
-                    customer = new Customer()
+                    customer = new Customer
                     {
                         FullName = name,
                         fk_OrganizationId = 1, // TODO: Remove this after the demo
                         fk_VerticalId = 2, // TODO: Remove this after the demo
-                        fk_CustomerStatusId = (sbyte)CustomerStatus.Active,
+                        fk_CustomerStatusId = (sbyte) CustomerStatus.Active,
                         DateCreated = DateTime.Now
                     };
 
                     // TODO: Remove this after demo
                     organization = await _dataService.Organization_SelectAsync(1);
 
-                    var cust = (await _dataService.Customer_InsertAsync(customer));
+                    Customer cust = (await _dataService.Customer_InsertAsync(customer));
                     customer.pk_CustomerId = cust.pk_CustomerId;
                     forcePrimary = true;
                 }
@@ -62,14 +68,14 @@ namespace PromoStudio.Web.Controllers
                     organization = clc.ToOrganization();
                     forcePrimary = (clc.PrimaryLogin == 1);
                 }
-                var loginInfo = new CustomerLoginCredential()
+                var loginInfo = new CustomerLoginCredential
                 {
                     fk_CustomerId = customer.pk_CustomerId,
                     fk_CustomerLoginPlatformId = pId,
                     EmailAddress = email,
                     LoginKey = key,
                     LastLogin = DateTime.Now,
-                    PrimaryLogin = (sbyte)(forcePrimary ? 1 : 0)
+                    PrimaryLogin = (sbyte) (forcePrimary ? 1 : 0)
                 };
                 _dataService.CustomerLoginCredential_InsertUpdate(loginInfo);
 
@@ -79,7 +85,9 @@ namespace PromoStudio.Web.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error(string.Format("Error performing OAuth - pid:{0},key:{1},name:{2},email:{3}", pId, key, name, email), ex);
+                _log.Error(
+                    string.Format("Error performing OAuth - pid:{0},key:{1},name:{2},email:{3}", pId, key, name, email),
+                    ex);
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
@@ -101,7 +109,8 @@ namespace PromoStudio.Web.Controllers
         }
 
         // /OAuth/GetFacebookAccessToken
-        public ActionResult GetFacebookAccessToken() {            
+        public ActionResult GetFacebookAccessToken()
+        {
             try
             {
                 // Add/Remove from Memory cache
@@ -110,42 +119,44 @@ namespace PromoStudio.Web.Controllers
                 {
                     var wc = new WebClient();
                     accessToken = wc.DownloadString(new Uri("https://graph.facebook.com/oauth/access_token" +
-                        "?client_id=" + Url.Encode(Settings.Default.FacebookClientId) +
-                        "&client_secret=" + Url.Encode(Settings.Default.FacebookClientSecret) +
-                        "&grant_type=client_credentials"));
-                    if (!string.IsNullOrEmpty(accessToken) && accessToken.Length > 13 && accessToken.Substring(0, 13).ToLower() == "access_token=")
+                                                            "?client_id=" +
+                                                            Url.Encode(Settings.Default.FacebookClientId) +
+                                                            "&client_secret=" +
+                                                            Url.Encode(Settings.Default.FacebookClientSecret) +
+                                                            "&grant_type=client_credentials"));
+                    if (!string.IsNullOrEmpty(accessToken) && accessToken.Length > 13 &&
+                        accessToken.Substring(0, 13).ToLower() == "access_token=")
                     {
                         accessToken = accessToken.Substring(13);
-                        HttpContext.Cache.Add("FacebookAccessToken", accessToken, null, DateTime.Now.AddMinutes(10), Cache.NoSlidingExpiration, CacheItemPriority.High, null);
+                        HttpContext.Cache.Add("FacebookAccessToken", accessToken, null, DateTime.Now.AddMinutes(10),
+                            Cache.NoSlidingExpiration, CacheItemPriority.High, null);
                     }
                 }
 
                 if (accessToken != null)
                 {
-                    return Json(new { access_token = accessToken }, JsonRequestBehavior.AllowGet);
+                    return Json(new {access_token = accessToken}, JsonRequestBehavior.AllowGet);
                 }
-                else
-                {
-                    return Json(new { error = "No access key returned" }, JsonRequestBehavior.AllowGet);
-                }
+                return Json(new {error = "No access key returned"}, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { error = "Error retrieving access key" }, JsonRequestBehavior.AllowGet);
+                return Json(new {error = "Error retrieving access key"}, JsonRequestBehavior.AllowGet);
             }
         }
 
-        private void CreateCookie(HttpResponseBase response, Customer customer, Organization organization, CustomerLoginCredential loginInfo)
+        private void CreateCookie(HttpResponseBase response, Customer customer, Organization organization,
+            CustomerLoginCredential loginInfo)
         {
-            var authData = new AuthData()
+            var authData = new AuthData
             {
-                AuthenticationType = loginInfo.Platform.ToString() + " OAuth",
+                AuthenticationType = loginInfo.Platform + " OAuth",
                 CustomerId = customer.pk_CustomerId,
                 EmailAddress = loginInfo.EmailAddress,
                 FullName = customer.FullName,
                 VerticalId = customer.fk_VerticalId,
                 OrganizationId = organization == null ? (int?) null : organization.pk_OrganizationId,
-                OrganizationName = organization == null ? (string) null : organization.DisplayName
+                OrganizationName = organization == null ? null : organization.DisplayName
             };
 
             var ticket = new FormsAuthenticationTicket(
@@ -155,7 +166,7 @@ namespace PromoStudio.Web.Controllers
                 DateTime.Now.AddMinutes(FormsAuthentication.Timeout.TotalMinutes),
                 true,
                 JsonConvert.SerializeObject(authData));
-            var encrypted = FormsAuthentication.Encrypt(ticket);
+            string encrypted = FormsAuthentication.Encrypt(ticket);
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
             cookie.Expires = ticket.Expiration;
             cookie.HttpOnly = true;

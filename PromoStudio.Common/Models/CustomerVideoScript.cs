@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PromoStudio.Common.Models
+﻿namespace PromoStudio.Common.Models
 {
     public class CustomerVideoScript
     {
@@ -19,10 +13,10 @@ namespace PromoStudio.Common.Models
         {
             return new
             {
-                pk_CustomerVideoScriptId = pk_CustomerVideoScriptId,
-                fk_CustomerVideoId = fk_CustomerVideoId,
-                fk_AudioScriptTemplateId = fk_AudioScriptTemplateId,
-                ReplacementData = ReplacementData
+                pk_CustomerVideoScriptId,
+                fk_CustomerVideoId,
+                fk_AudioScriptTemplateId,
+                ReplacementData
             };
         }
     }

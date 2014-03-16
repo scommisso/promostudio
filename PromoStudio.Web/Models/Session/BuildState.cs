@@ -7,9 +7,6 @@ namespace PromoStudio.Web.Models.Session
     [Serializable]
     public class BuildState
     {
-        public int[] CompletedSteps { get; set; }
-        public CustomerVideo Video { get; set; }
-
         public BuildState()
         {
         }
@@ -20,9 +17,12 @@ namespace PromoStudio.Web.Models.Session
             Video = new CustomerVideo(cookieViewModel.Video);
         }
 
+        public int[] CompletedSteps { get; set; }
+        public CustomerVideo Video { get; set; }
+
         public BuildCookieViewModel ToModel()
         {
-            return new BuildCookieViewModel()
+            return new BuildCookieViewModel
             {
                 CompletedSteps = CompletedSteps.ToList(),
                 Video = Video.ToModel()

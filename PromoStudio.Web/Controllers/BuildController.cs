@@ -1,33 +1,42 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using System.Web;
-using System.Web.Security;
+using System.Web.Mvc;
 using log4net;
 using Newtonsoft.Json;
 using PromoStudio.Common.Encryption;
 using PromoStudio.Common.Enumerations;
+using PromoStudio.Common.Models;
 using PromoStudio.Common.Serialization;
 using PromoStudio.Data;
-using PromoStudio.Rendering.Properties;
 using PromoStudio.Web.Models.Session;
 using PromoStudio.Web.ViewModels;
-using System;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+using CustomerResource = PromoStudio.Common.Models.CustomerResource;
+using CustomerTemplateScript = PromoStudio.Common.Models.CustomerTemplateScript;
+using CustomerTemplateScriptItem = PromoStudio.Common.Models.CustomerTemplateScriptItem;
 using CustomerVideo = PromoStudio.Common.Models.CustomerVideo;
 using CustomerVideoItem = PromoStudio.Common.Models.CustomerVideoItem;
+using CustomerVideoVoiceOver = PromoStudio.Common.Models.CustomerVideoVoiceOver;
 
 namespace PromoStudio.Web.Controllers
 {
     [Authorize]
     public class BuildController : ControllerBase
     {
+        private const string buildCookieStateKey = "BuildData_State";
+        private const string buildCookieVideoItemsKey = "BuildData_VideoItems";
+        private const string buildCookieTemplateKey = "BuildData_Template";
+        private const string buildCookieTemplateItemsKey = "BuildData_TemplateItems";
+        private const string buildCookieResourcesKey = "BuildData_Resources";
+        private readonly ISerializationManager _serializationManager;
+        private BuildCookieViewModel _buildCookieViewModel;
         private ICryptoManager _cryptoManager;
-        private ISerializationManager _serializationManager;
 
-        public BuildController(IDataService dataService, ILog log, ICryptoManager cryptoManager, ISerializationManager serializationManager)
+        public BuildController(IDataService dataService, ILog log, ICryptoManager cryptoManager,
+            ISerializationManager serializationManager)
             : base(dataService, log)
         {
             _cryptoManager = cryptoManager;
@@ -44,7 +53,7 @@ namespace PromoStudio.Web.Controllers
             }
             long customerId = CurrentUser.CustomerId;
 
-            var data = GetFromCookie();
+            BuildCookieViewModel data = GetFromCookie();
             if (data == null
                 || data.CompletedSteps == null
                 || data.CompletedSteps.Count == 0
@@ -92,10 +101,11 @@ namespace PromoStudio.Web.Controllers
                 return new RedirectResult("~/Build");
             }
 
-            var storyboards = (await _dataService.Storyboard_SelectByOrganizationIdAndVerticalIdAsync(
-                CurrentUser.OrganizationId, CurrentUser.VerticalId));
+            IEnumerable<Storyboard> storyboards =
+                (await _dataService.Storyboard_SelectByOrganizationIdAndVerticalIdAsync(
+                    CurrentUser.OrganizationId, CurrentUser.VerticalId));
 
-            var data = GetFromCookie();
+            BuildCookieViewModel data = GetFromCookie();
             var vm = new FootageViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 StepsCompleted = (data == null || data.CompletedSteps == null)
@@ -103,12 +113,12 @@ namespace PromoStudio.Web.Controllers
                     : new List<int>(data.CompletedSteps),
                 Storyboards = storyboards.ToList(),
                 Video = (data == null || data.Video == null)
-                    ? new CustomerVideo()
-                        {
-                            pk_CustomerVideoId = -1,
-                            fk_CustomerId = CurrentUser.CustomerId,
-                            DateCreated = DateTime.Now
-                        }
+                    ? new CustomerVideo
+                    {
+                        pk_CustomerVideoId = -1,
+                        fk_CustomerId = CurrentUser.CustomerId,
+                        DateCreated = DateTime.Now
+                    }
                     : data.Video
             };
 
@@ -125,15 +135,16 @@ namespace PromoStudio.Web.Controllers
                 return new RedirectResult("~/Build");
             }
 
-            var data = GetFromCookie();
+            BuildCookieViewModel data = GetFromCookie();
 
             // Get required db items
             var tasks = new List<Task>();
-            Task<Common.Models.Organization> orgTask = null;
-            var storyboardTask = _dataService.Storyboard_SelectWithItemsAsync(data.Video.fk_StoryboardId);
-            var templatesTask =
+            Task<Organization> orgTask = null;
+            Task<Storyboard> storyboardTask = _dataService.Storyboard_SelectWithItemsAsync(data.Video.fk_StoryboardId);
+            Task<IEnumerable<TemplateScript>> templatesTask =
                 _dataService.TemplateScript_SelectByStoryboardIdWithItemsAsync(data.Video.fk_StoryboardId);
-            var resourcesTask = _dataService.CustomerResource_SelectActiveByCustomerIdAsync(CurrentUser.CustomerId);
+            Task<IEnumerable<CustomerResource>> resourcesTask =
+                _dataService.CustomerResource_SelectActiveByCustomerIdAsync(CurrentUser.CustomerId);
             tasks.AddRange(new Task[] {storyboardTask, templatesTask, resourcesTask});
 
             if (CurrentUser.OrganizationId.HasValue)
@@ -143,15 +154,15 @@ namespace PromoStudio.Web.Controllers
 
             await Task.WhenAll(tasks);
 
-            Common.Models.Organization organization = null;
-            var storyboard = storyboardTask.Result;
-            var templates = templatesTask.Result.ToList();
-            var resources = resourcesTask.Result.ToList();
+            Organization organization = null;
+            Storyboard storyboard = storyboardTask.Result;
+            List<TemplateScript> templates = templatesTask.Result.ToList();
+            List<CustomerResource> resources = resourcesTask.Result.ToList();
             if (orgTask != null)
             {
                 organization = orgTask.Result;
             }
-            foreach (var sbi in storyboard.Items)
+            foreach (StoryboardItem sbi in storyboard.Items)
             {
                 if (sbi.fk_TemplateScriptId.HasValue)
                 {
@@ -163,11 +174,11 @@ namespace PromoStudio.Web.Controllers
             data.Video.Storyboard = storyboard;
 
             // Link items to storyboard if populated
-            foreach (var cvItem in data.Video.Items)
+            foreach (CustomerVideoItem cvItem in data.Video.Items)
             {
                 if (cvItem.CustomerScript != null)
                 {
-                    foreach (var csi in cvItem.CustomerScript.Items)
+                    foreach (CustomerTemplateScriptItem csi in cvItem.CustomerScript.Items)
                     {
                         csi.ScriptItem = templates
                             .SelectMany(t => t.Items)
@@ -201,7 +212,7 @@ namespace PromoStudio.Web.Controllers
             }
 
 
-            var data = GetFromCookie();
+            BuildCookieViewModel data = GetFromCookie();
             var vm = new ScriptViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 Video = data.Video,
@@ -223,21 +234,22 @@ namespace PromoStudio.Web.Controllers
 
             //var data = GetFromCookie();
 
-            var stockAudioTask = _dataService.StockAudio_SelectByOrganizationIdAndVerticalIdAsync(
-                CurrentUser.OrganizationId, CurrentUser.VerticalId);
-            var actorTask = _dataService.VoiceActor_SelectAllAsync();
+            Task<IEnumerable<StockAudio>> stockAudioTask = _dataService
+                .StockAudio_SelectByOrganizationIdAndVerticalIdAsync(
+                    CurrentUser.OrganizationId, CurrentUser.VerticalId);
+            Task<IEnumerable<VoiceActor>> actorTask = _dataService.VoiceActor_SelectAllAsync();
 
             await Task.WhenAll(stockAudioTask, actorTask);
 
-            var stockAudio = stockAudioTask.Result.ToList();
-            var voiceActors = actorTask.Result.ToList();
+            List<StockAudio> stockAudio = stockAudioTask.Result.ToList();
+            List<VoiceActor> voiceActors = actorTask.Result.ToList();
 
             var vm = new AudioViewModel(Request.RequestContext.HttpContext, RouteData)
             {
-                Video = new CustomerVideo(),//data.Video,
+                Video = new CustomerVideo(), //data.Video,
                 StockAudio = stockAudio,
                 VoiceActors = voiceActors,
-                StepsCompleted = new List<int>(new int[] { 1, 2, 3, 4 })//new List<int>(data.CompletedSteps)
+                StepsCompleted = new List<int>(new[] {1, 2, 3, 4}) //new List<int>(data.CompletedSteps)
             };
 
             return PAjax("Audio", model: vm);
@@ -253,7 +265,7 @@ namespace PromoStudio.Web.Controllers
                 return new RedirectResult("~/Build");
             }
 
-            var data = GetFromCookie();
+            BuildCookieViewModel data = GetFromCookie();
             var vm = new SummaryViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 Video = data.Video,
@@ -270,7 +282,7 @@ namespace PromoStudio.Web.Controllers
         {
             try
             {
-                var video = (await _dataService.CustomerVideo_SelectAsync(cvid));
+                CustomerVideo video = (await _dataService.CustomerVideo_SelectAsync(cvid));
                 if (video == null)
                 {
                     return new HttpNotFoundResult();
@@ -335,10 +347,11 @@ namespace PromoStudio.Web.Controllers
             _log.InfoFormat("Customer {0} submitted video: {1}", customerId, json);
             try
             {
-                video.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Canceled; // store as canceled state until all children have populated
-                var newVideo = await _dataService.CustomerVideo_InsertAsync(video);
+                video.fk_CustomerVideoRenderStatusId = (sbyte) CustomerVideoRenderStatus.Canceled;
+                    // store as canceled state until all children have populated
+                CustomerVideo newVideo = await _dataService.CustomerVideo_InsertAsync(video);
 
-                Common.Models.CustomerVideoVoiceOver newVoiceOver = null;
+                CustomerVideoVoiceOver newVoiceOver = null;
                 if (video.VoiceOver != null)
                 {
                     video.VoiceOver.fk_CustomerVideoId = newVideo.pk_CustomerVideoId;
@@ -347,14 +360,14 @@ namespace PromoStudio.Web.Controllers
                     newVideo.VoiceOver = newVoiceOver;
 
                     // DEMO HACK: Add voice over item - this will normally be set when the voice actor uploads the audio
-                    var actor = (await _dataService.VoiceActor_SelectAllAsync())
+                    VoiceActor actor = (await _dataService.VoiceActor_SelectAllAsync())
                         .FirstOrDefault(va => va.pk_VoiceActorId == video.VoiceOver.fk_VoiceActorId);
                     newVoiceOver.FilePath = actor.SampleFilePath;
                     newVoiceOver.DateUploaded = DateTime.UtcNow;
                     _dataService.CustomerVideoVoiceOver_Update(newVoiceOver);
-                    var voiceOverItem = new CustomerVideoItem()
+                    var voiceOverItem = new CustomerVideoItem
                     {
-                        fk_CustomerVideoItemTypeId = (sbyte)CustomerVideoItemType.CustomerVideoVoiceOver,
+                        fk_CustomerVideoItemTypeId = (sbyte) CustomerVideoItemType.CustomerVideoVoiceOver,
                         fk_CustomerVideoItemId = newVoiceOver.pk_CustomerVideoVoiceOverId,
                         VoiceOver = video.VoiceOver
                     };
@@ -362,20 +375,22 @@ namespace PromoStudio.Web.Controllers
                     // END DEMO HACK
                 }
 
-                foreach (var item in video.Items)
+                foreach (CustomerVideoItem item in video.Items)
                 {
                     item.fk_CustomerVideoId = newVideo.pk_CustomerVideoId;
-                    if (item.fk_CustomerVideoItemTypeId == (sbyte)CustomerVideoItemType.CustomerTemplateScript)
+                    if (item.fk_CustomerVideoItemTypeId == (sbyte) CustomerVideoItemType.CustomerTemplateScript)
                     {
                         item.CustomerScript.fk_CustomerId = customerId;
-                        var newScript = await _dataService.CustomerTemplateScript_InsertAsync(item.CustomerScript);
-                        foreach (var scriptItem in item.CustomerScript.Items)
+                        CustomerTemplateScript newScript =
+                            await _dataService.CustomerTemplateScript_InsertAsync(item.CustomerScript);
+                        foreach (CustomerTemplateScriptItem scriptItem in item.CustomerScript.Items)
                         {
                             scriptItem.fk_CustomerTemplateScriptId = newScript.pk_CustomerTemplateScriptId;
                             if (scriptItem.fk_CustomerResourceId <= 0 && scriptItem.Resource != null)
                             {
                                 scriptItem.Resource.fk_CustomerId = customerId;
-                                var newResource = await _dataService.CustomerResource_InsertAsync(scriptItem.Resource);
+                                CustomerResource newResource =
+                                    await _dataService.CustomerResource_InsertAsync(scriptItem.Resource);
                                 scriptItem.fk_CustomerResourceId = newResource.pk_CustomerResourceId;
                             }
                             await _dataService.CustomerTemplateScriptItem_InsertAsync(scriptItem);
@@ -387,10 +402,10 @@ namespace PromoStudio.Web.Controllers
 
                 newVideo = await _dataService.CustomerVideo_SelectWithItemsAsync(newVideo.pk_CustomerVideoId);
                 newVideo.VoiceOver = newVoiceOver;
-                newVideo.fk_CustomerVideoRenderStatusId = (sbyte)CustomerVideoRenderStatus.Pending;
+                newVideo.fk_CustomerVideoRenderStatusId = (sbyte) CustomerVideoRenderStatus.Pending;
                 _dataService.CustomerVideo_Update(newVideo);
 
-                return Json(new { Model = newVideo });
+                return Json(new {Model = newVideo});
             }
             catch (Exception ex)
             {
@@ -407,7 +422,7 @@ namespace PromoStudio.Web.Controllers
                 return true;
             }
 
-            var data = GetFromCookie();
+            BuildCookieViewModel data = GetFromCookie();
             if (data == null
                 || data.CompletedSteps == null
                 || data.CompletedSteps.Count == 0
@@ -422,14 +437,14 @@ namespace PromoStudio.Web.Controllers
 
         private void MergeData(BuildCookieViewModel newCookie)
         {
-            var oldCookie = GetFromCookie();
+            BuildCookieViewModel oldCookie = GetFromCookie();
             if (oldCookie == null)
             {
                 return;
             }
 
-            var oldCookieVideo = oldCookie.Video;
-            var newCookieVideo = newCookie.Video;
+            CustomerVideo oldCookieVideo = oldCookie.Video;
+            CustomerVideo newCookieVideo = newCookie.Video;
 
             if (oldCookieVideo.fk_StoryboardId != newCookieVideo.fk_StoryboardId)
             {
@@ -439,7 +454,7 @@ namespace PromoStudio.Web.Controllers
             else
             {
                 // ensure that video has the matching footage items
-                foreach (var cvItem in newCookieVideo.Items)
+                foreach (CustomerVideoItem cvItem in newCookieVideo.Items)
                 {
                     if (cvItem.StockAudio != null
                         || cvItem.StockVideo != null
@@ -448,7 +463,7 @@ namespace PromoStudio.Web.Controllers
                     {
                         continue; // data already present
                     }
-                    var matchItem = oldCookieVideo.Items
+                    CustomerVideoItem matchItem = oldCookieVideo.Items
                         .FirstOrDefault(ocvItem =>
                             ocvItem.fk_CustomerVideoItemTypeId == cvItem.fk_CustomerVideoItemTypeId
                             && ocvItem.SortOrder == cvItem.SortOrder);
@@ -463,12 +478,6 @@ namespace PromoStudio.Web.Controllers
             }
         }
 
-        private const string buildCookieStateKey = "BuildData_State";
-        private const string buildCookieVideoItemsKey = "BuildData_VideoItems";
-        private const string buildCookieTemplateKey = "BuildData_Template";
-        private const string buildCookieTemplateItemsKey = "BuildData_TemplateItems";
-        private const string buildCookieResourcesKey = "BuildData_Resources";
-        private BuildCookieViewModel _buildCookieViewModel = null;
         private BuildCookieViewModel GetFromCookie()
         {
             if (_buildCookieViewModel != null)
@@ -486,28 +495,33 @@ namespace PromoStudio.Web.Controllers
             // get the cookies
             var videoItemsState = GetBuildCookieValue<Models.Session.CustomerVideoItem[]>(buildCookieVideoItemsKey);
             var templatesState = GetBuildCookieValue<Models.Session.CustomerTemplateScript[]>(buildCookieTemplateKey);
-            var templateItemsState = GetBuildCookieValue<Models.Session.CustomerTemplateScriptItem[]>(buildCookieTemplateItemsKey);
+            var templateItemsState =
+                GetBuildCookieValue<Models.Session.CustomerTemplateScriptItem[]>(buildCookieTemplateItemsKey);
             var resourcesState = GetBuildCookieValue<Models.Session.CustomerResource[]>(buildCookieResourcesKey);
 
             // combine the cookies back together
             _buildCookieViewModel = buildState.ToModel();
-            var videoItems = videoItemsState.Select(vis => vis.ToModel()).ToList();
-            var templates = templatesState.Select(ts => ts.ToModel()).ToList();
-            var templateItems = templateItemsState.Select(tsi => tsi.ToModel()).ToList();
-            var resources = resourcesState.Select(tsi => tsi.ToModel()).ToList();
+            List<CustomerVideoItem> videoItems = videoItemsState.Select(vis => vis.ToModel()).ToList();
+            List<CustomerTemplateScript> templates = templatesState.Select(ts => ts.ToModel()).ToList();
+            List<CustomerTemplateScriptItem> templateItems = templateItemsState.Select(tsi => tsi.ToModel()).ToList();
+            List<CustomerResource> resources = resourcesState.Select(tsi => tsi.ToModel()).ToList();
             _buildCookieViewModel.Video.Items.AddRange(videoItems);
-            foreach (var vidItem in videoItems.Where(vi => vi.Type == CustomerVideoItemType.CustomerTemplateScript))
+            foreach (
+                CustomerVideoItem vidItem in
+                    videoItems.Where(vi => vi.Type == CustomerVideoItemType.CustomerTemplateScript))
             {
                 vidItem.CustomerScript =
                     templates.FirstOrDefault(t => t.pk_CustomerTemplateScriptId == vidItem.fk_CustomerVideoItemId);
             }
-            foreach (var template in templates)
+            foreach (CustomerTemplateScript template in templates)
             {
-                template.Items.AddRange(templateItems.Where(ti => ti.fk_CustomerTemplateScriptId == template.pk_CustomerTemplateScriptId));
+                template.Items.AddRange(
+                    templateItems.Where(ti => ti.fk_CustomerTemplateScriptId == template.pk_CustomerTemplateScriptId));
             }
-            foreach (var templateItem in templateItems)
+            foreach (CustomerTemplateScriptItem templateItem in templateItems)
             {
-                templateItem.Resource = resources.FirstOrDefault(r => r.pk_CustomerResourceId == templateItem.fk_CustomerResourceId);
+                templateItem.Resource =
+                    resources.FirstOrDefault(r => r.pk_CustomerResourceId == templateItem.fk_CustomerResourceId);
             }
 
             return _buildCookieViewModel;
@@ -515,7 +529,7 @@ namespace PromoStudio.Web.Controllers
 
         private T GetBuildCookieValue<T>(string key) where T : class
         {
-            var cookie = Request.Cookies.Get(key);
+            HttpCookie cookie = Request.Cookies.Get(key);
             if (cookie == null || string.IsNullOrEmpty(cookie.Value))
             {
                 return null;
@@ -553,20 +567,21 @@ namespace PromoStudio.Web.Controllers
 
         private void CreateCookies(BuildCookieViewModel cookieModel)
         {
-            var videoItems = cookieModel.Video.Items.ToList();
-            var templates = videoItems.Where(vi => vi.CustomerScript != null).Select(vi => vi.CustomerScript).ToList();
+            List<CustomerVideoItem> videoItems = cookieModel.Video.Items.ToList();
+            List<CustomerTemplateScript> templates =
+                videoItems.Where(vi => vi.CustomerScript != null).Select(vi => vi.CustomerScript).ToList();
 
             // Ensure all customer templates have IDs
             if (templates.Count > 0)
             {
                 long minTemplateId = templates.Min(t => t.pk_CustomerTemplateScriptId);
-                foreach (var template in templates)
+                foreach (CustomerTemplateScript template in templates)
                 {
                     if (template.pk_CustomerTemplateScriptId == 0)
                     {
                         minTemplateId -= 1;
                         template.pk_CustomerTemplateScriptId = minTemplateId;
-                        var matchingItem = videoItems.FirstOrDefault(cvi => cvi.CustomerScript == template);
+                        CustomerVideoItem matchingItem = videoItems.FirstOrDefault(cvi => cvi.CustomerScript == template);
                         if (matchingItem != null)
                         {
                             matchingItem.fk_CustomerVideoItemId = minTemplateId;
@@ -575,21 +590,22 @@ namespace PromoStudio.Web.Controllers
                     template.Items.ForEach(ti => ti.fk_CustomerTemplateScriptId = template.pk_CustomerTemplateScriptId);
                 }
             }
-            var templateItems = templates.SelectMany(t => t.Items).ToList();
+            List<CustomerTemplateScriptItem> templateItems = templates.SelectMany(t => t.Items).ToList();
 
             // Ensure all resources have IDs
-            var resources = new List<Common.Models.CustomerResource>();
+            var resources = new List<CustomerResource>();
             if (templateItems.Count > 0)
             {
                 long minResourceId = templates.Min(t => t.pk_CustomerTemplateScriptId);
                 resources = templateItems.Where(ti => ti.Resource != null).Select(ti => ti.Resource).ToList();
-                foreach (var resource in resources)
+                foreach (CustomerResource resource in resources)
                 {
                     if (resource.pk_CustomerResourceId == 0)
                     {
                         minResourceId -= 1;
                         resource.pk_CustomerResourceId = minResourceId;
-                        var matchingItem = templateItems.FirstOrDefault(ti => ti.Resource == resource);
+                        CustomerTemplateScriptItem matchingItem =
+                            templateItems.FirstOrDefault(ti => ti.Resource == resource);
                         if (matchingItem != null)
                         {
                             matchingItem.fk_CustomerResourceId = minResourceId;
@@ -597,19 +613,23 @@ namespace PromoStudio.Web.Controllers
                     }
                 }
             }
-            
+
             // Create trimmed-down models for cookie storage
             var buildState = new BuildState(cookieModel);
-            var videoItemsState = videoItems.Select(vi => new Models.Session.CustomerVideoItem(vi)).ToArray();
-            var templatesState = templates.Select(t => new Models.Session.CustomerTemplateScript(t)).ToArray();
-            var templateItemsState = templateItems.Select(ti => new Models.Session.CustomerTemplateScriptItem(ti)).ToArray();
-            var resourcesState = resources.Select(r => new Models.Session.CustomerResource(r)).ToArray();
+            Models.Session.CustomerVideoItem[] videoItemsState =
+                videoItems.Select(vi => new Models.Session.CustomerVideoItem(vi)).ToArray();
+            Models.Session.CustomerTemplateScript[] templatesState =
+                templates.Select(t => new Models.Session.CustomerTemplateScript(t)).ToArray();
+            Models.Session.CustomerTemplateScriptItem[] templateItemsState =
+                templateItems.Select(ti => new Models.Session.CustomerTemplateScriptItem(ti)).ToArray();
+            Models.Session.CustomerResource[] resourcesState =
+                resources.Select(r => new Models.Session.CustomerResource(r)).ToArray();
 
-            var serializedBuildState = _serializationManager.SerializeToString(buildState);
-            var serializedVideoItems = _serializationManager.SerializeToString(videoItemsState);
-            var serializedTemplates = _serializationManager.SerializeToString(templatesState);
-            var serializedTemplateItems = _serializationManager.SerializeToString(templateItemsState);
-            var serializedResources = _serializationManager.SerializeToString(resourcesState);
+            string serializedBuildState = _serializationManager.SerializeToString(buildState);
+            string serializedVideoItems = _serializationManager.SerializeToString(videoItemsState);
+            string serializedTemplates = _serializationManager.SerializeToString(templatesState);
+            string serializedTemplateItems = _serializationManager.SerializeToString(templateItemsState);
+            string serializedResources = _serializationManager.SerializeToString(resourcesState);
 
             CreateBuildCookie(buildCookieStateKey, serializedBuildState);
             CreateBuildCookie(buildCookieVideoItemsKey, serializedVideoItems);

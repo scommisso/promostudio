@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Threading.Tasks;
 using Dapper;
 
 namespace PromoStudio.Data
 {
     /// <summary>
-    /// ADO.Net wrapper. Includes core Ado.net methods, as well as Dapper.net implementation for further abstraction.
+    ///     ADO.Net wrapper. Includes core Ado.net methods, as well as Dapper.net implementation for further abstraction.
     /// </summary>
-    /// <see cref="http://code.google.com/p/dapper-dot-net/"/>
+    /// <see cref="http://code.google.com/p/dapper-dot-net/" />
     public class DataWrapper : IDataWrapper
     {
         #region Private Members
 
         /// <summary>
-        /// Connection String Manager instance
+        ///     Connection String Manager instance
         /// </summary>
         private IConnectionManager ConnectionManager { get; set; }
 
@@ -29,7 +28,7 @@ namespace PromoStudio.Data
             if (connectionManager == null)
                 throw new ArgumentException("connectionManager cannot be null", "connectionManager");
 
-            this.ConnectionManager = connectionManager;
+            ConnectionManager = connectionManager;
         }
 
         #endregion Constructors
@@ -37,7 +36,7 @@ namespace PromoStudio.Data
         #region Core ADO.Net Implementation
 
         /// <summary>
-        /// Execute stored procedure with no return result
+        ///     Execute stored procedure with no return result
         /// </summary>
         /// <param name="storedProcedureName"></param>
         /// <param name="setParametersAction"></param>
@@ -55,7 +54,7 @@ namespace PromoStudio.Data
         }
 
         /// <summary>
-        /// Execute stored procedure with single-value result
+        ///     Execute stored procedure with single-value result
         /// </summary>
         /// <param name="storedProcedureName"></param>
         /// <param name="setParametersAction"></param>
@@ -74,7 +73,7 @@ namespace PromoStudio.Data
         }
 
         /// <summary>
-        /// Execute stored procedure with strongly typed single-value result
+        ///     Execute stored procedure with strongly typed single-value result
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="storedProcedureName"></param>
@@ -82,16 +81,17 @@ namespace PromoStudio.Data
         /// <returns></returns>
         public T ExecuteScalar<T>(string storedProcedureName, IEnumerable<IDbDataParameter> parameters)
         {
-            return (T)Convert.ChangeType(ExecuteScalar(storedProcedureName, parameters), typeof(T));
+            return (T) Convert.ChangeType(ExecuteScalar(storedProcedureName, parameters), typeof (T));
         }
 
         /// <summary>
-        /// Execute stored procedure and execute action with data reader
+        ///     Execute stored procedure and execute action with data reader
         /// </summary>
         /// <param name="storedProcedureName"></param>
         /// <param name="setParametersAction"></param>
         /// <param name="dataReaderAction"></param>
-        public void ExecuteReader(string storedProcedureName, IEnumerable<IDbDataParameter> parameters, Action<IDataReader> dataReaderAction)
+        public void ExecuteReader(string storedProcedureName, IEnumerable<IDbDataParameter> parameters,
+            Action<IDataReader> dataReaderAction)
         {
             using (IDbConnection conn = CreateConnection())
             using (IDbCommand cmd = conn.CreateCommand())
@@ -113,7 +113,7 @@ namespace PromoStudio.Data
         {
             if (parameters != null)
             {
-                foreach (var param in parameters)
+                foreach (IDbDataParameter param in parameters)
                     command.Parameters.Add(param);
             }
 
@@ -129,34 +129,42 @@ namespace PromoStudio.Data
         #region Query Execution
 
         /// <summary>
-        /// Query stored procedure using a new connection and return hydrated POCO objects
+        ///     Query stored procedure using a new connection and return hydrated POCO objects
         /// </summary>
         /// <typeparam name="T">Type to be mapped from sql result</typeparam>
         /// <param name="storedProcedure">Name of stored procedure</param>
-        /// <param name="commandTimeout">The command timeout for the stored procedure being executed. If null, uses the default command timeout</param>
+        /// <param name="commandTimeout">
+        ///     The command timeout for the stored procedure being executed. If null, uses the default
+        ///     command timeout
+        /// </param>
         /// <param name="dbParams">Object with public instance properties matching stored procedure parameters</param>
         /// <returns>Collection of hydrated POCO objects from sql result</returns>
-        public IEnumerable<T> QueryStoredProc<T>(string storedProcedure, int? commandTimeout = null, dynamic dbParams = null)
+        public IEnumerable<T> QueryStoredProc<T>(string storedProcedure, int? commandTimeout = null,
+            dynamic dbParams = null)
         {
-            using (var connection = OpenConnection())
+            using (IDbConnection connection = OpenConnection())
             {
                 return QueryStoredProc<T>(connection, storedProcedure, commandTimeout, dbParams);
             }
         }
 
         /// <summary>
-        /// Query stored procedure using provided connection and return hydrated POCO objects
+        ///     Query stored procedure using provided connection and return hydrated POCO objects
         /// </summary>
         /// <typeparam name="T">Type to be mapped from sql result</typeparam>
         /// <param name="connection">Open database connection</param>
         /// <param name="storedProcedure">Name of stored procedure</param>
-        /// <param name="commandTimeout">The command timeout for the stored procedure being executed. If null, uses the default command timeout</param>
+        /// <param name="commandTimeout">
+        ///     The command timeout for the stored procedure being executed. If null, uses the default
+        ///     command timeout
+        /// </param>
         /// <param name="dbParams">Object with public instance properties matching stored procedure parameters</param>
         /// <param name="transaction">The transaction to use when executing the stored procedure</param>
         /// <returns>Collection of hydrated POCO objects from sql result</returns>
-        public IEnumerable<T> QueryStoredProc<T>(IDbConnection connection, string storedProcedure, int? commandTimeout = null, dynamic dbParams = null, IDbTransaction transaction = null)
+        public IEnumerable<T> QueryStoredProc<T>(IDbConnection connection, string storedProcedure,
+            int? commandTimeout = null, dynamic dbParams = null, IDbTransaction transaction = null)
         {
-            return Dapper.SqlMapper.Query<T>(
+            return SqlMapper.Query<T>(
                 cnn: connection,
                 sql: storedProcedure,
                 param: dbParams,
@@ -166,6 +174,7 @@ namespace PromoStudio.Data
         }
 
         #region Multiple Result Sets
+
         /* Multiple result sets
 
         /// <summary>
@@ -209,6 +218,7 @@ namespace PromoStudio.Data
         }
         
          */
+
         #endregion
 
         #endregion Query Execution
@@ -216,34 +226,42 @@ namespace PromoStudio.Data
         #region Async Query Execution
 
         /// <summary>
-        /// Query stored procedure using a new connection and return hydrated POCO objects
+        ///     Query stored procedure using a new connection and return hydrated POCO objects
         /// </summary>
         /// <typeparam name="T">Type to be mapped from sql result</typeparam>
         /// <param name="storedProcedure">Name of stored procedure</param>
-        /// <param name="commandTimeout">The command timeout for the stored procedure being executed. If null, uses the default command timeout</param>
+        /// <param name="commandTimeout">
+        ///     The command timeout for the stored procedure being executed. If null, uses the default
+        ///     command timeout
+        /// </param>
         /// <param name="dbParams">Object with public instance properties matching stored procedure parameters</param>
         /// <returns>Collection of hydrated POCO objects from sql result</returns>
-        public async Task<IEnumerable<T>> QueryStoredProcAsync<T>(string storedProcedure, int? commandTimeout = null, dynamic dbParams = null)
+        public async Task<IEnumerable<T>> QueryStoredProcAsync<T>(string storedProcedure, int? commandTimeout = null,
+            dynamic dbParams = null)
         {
-            using (var connection = OpenConnection())
+            using (IDbConnection connection = OpenConnection())
             {
                 return await QueryStoredProcAsync<T>(connection, storedProcedure, commandTimeout, dbParams);
             }
         }
 
         /// <summary>
-        /// Query stored procedure using provided connection and return hydrated POCO objects
+        ///     Query stored procedure using provided connection and return hydrated POCO objects
         /// </summary>
         /// <typeparam name="T">Type to be mapped from sql result</typeparam>
         /// <param name="connection">Open database connection</param>
         /// <param name="storedProcedure">Name of stored procedure</param>
-        /// <param name="commandTimeout">The command timeout for the stored procedure being executed. If null, uses the default command timeout</param>
+        /// <param name="commandTimeout">
+        ///     The command timeout for the stored procedure being executed. If null, uses the default
+        ///     command timeout
+        /// </param>
         /// <param name="dbParams">Object with public instance properties matching stored procedure parameters</param>
         /// <param name="transaction">The transaction to use when executing the stored procedure</param>
         /// <returns>Collection of hydrated POCO objects from sql result</returns>
-        public async Task<IEnumerable<T>> QueryStoredProcAsync<T>(IDbConnection connection, string storedProcedure, int? commandTimeout = null, dynamic dbParams = null, IDbTransaction transaction = null)
+        public async Task<IEnumerable<T>> QueryStoredProcAsync<T>(IDbConnection connection, string storedProcedure,
+            int? commandTimeout = null, dynamic dbParams = null, IDbTransaction transaction = null)
         {
-            return await Dapper.SqlMapper.QueryAsync<T>(
+            return await SqlMapper.QueryAsync<T>(
                 cnn: connection,
                 sql: storedProcedure,
                 param: dbParams,
@@ -257,32 +275,39 @@ namespace PromoStudio.Data
         #region Method Execution
 
         /// <summary>
-        /// Execute stored procedure using a new connection
+        ///     Execute stored procedure using a new connection
         /// </summary>
         /// <param name="storedProcedure">Name of stored procedure</param>
         /// <param name="dbParams">Object with public instance properties matching stored procedure parameters</param>
-        /// <param name="commandTimeout">The command timeout for the stored procedure being executed. If null, uses the default command timeout</param>
+        /// <param name="commandTimeout">
+        ///     The command timeout for the stored procedure being executed. If null, uses the default
+        ///     command timeout
+        /// </param>
         /// <returns>ADO.Net affected count - may not be accurate, depending on Stored Proc implementation</returns>
         public void ExecuteStoredProc(string storedProcedure, int? commandTimeout = null, dynamic dbParams = null)
         {
-            using (var connection = OpenConnection())
+            using (IDbConnection connection = OpenConnection())
             {
                 ExecuteStoredProc(connection, storedProcedure, commandTimeout, dbParams);
             }
         }
 
         /// <summary>
-        /// Execute stored procedure using provided connection
+        ///     Execute stored procedure using provided connection
         /// </summary>
         /// <param name="connection">Open database connection</param>
         /// <param name="storedProcedure">Name of stored procedure</param>
-        /// <param name="commandTimeout">The command timeout for the stored procedure being executed. If null, uses the default command timeout</param>
+        /// <param name="commandTimeout">
+        ///     The command timeout for the stored procedure being executed. If null, uses the default
+        ///     command timeout
+        /// </param>
         /// <param name="dbParams">Object with public instance properties matching stored procedure parameters</param>
         /// <param name="transaction">The transaction to use when executing the stored procedure</param>
         /// <returns>ADO.Net affected count - may not be accurate, depending on Stored Proc implementation</returns>
-        public void ExecuteStoredProc(IDbConnection connection, string storedProcedure, int? commandTimeout = null, dynamic dbParams = null, IDbTransaction transaction = null)
+        public void ExecuteStoredProc(IDbConnection connection, string storedProcedure, int? commandTimeout = null,
+            dynamic dbParams = null, IDbTransaction transaction = null)
         {
-            Dapper.SqlMapper.Execute(
+            SqlMapper.Execute(
                 cnn: connection,
                 sql: storedProcedure,
                 param: dbParams,
@@ -339,11 +364,11 @@ namespace PromoStudio.Data
         #region Public Methods
 
         /// <summary>
-        /// Create and open a database connection
+        ///     Create and open a database connection
         /// </summary>
         public IDbConnection OpenConnection()
         {
-            var conn = this.CreateConnection();
+            IDbConnection conn = CreateConnection();
             conn.Open();
             return conn;
         }
@@ -353,7 +378,7 @@ namespace PromoStudio.Data
         #region Private Methods
 
         /// <summary>
-        /// Create SQL Connection object
+        ///     Create SQL Connection object
         /// </summary>
         private IDbConnection CreateConnection()
         {

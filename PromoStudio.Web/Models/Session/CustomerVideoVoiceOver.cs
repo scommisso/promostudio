@@ -5,12 +5,6 @@ namespace PromoStudio.Web.Models.Session
     [Serializable]
     public class CustomerVideoVoiceOver
     {
-        public long pk_CustomerVideoVoiceOverId { get; set; }
-        public long fk_CustomerVideoId { get; set; }
-        public int? fk_VoiceActorId { get; set; }
-        public string Script { get; set; }
-        public string FilePath { get; set; }
-
         public CustomerVideoVoiceOver()
         {
         }
@@ -24,9 +18,15 @@ namespace PromoStudio.Web.Models.Session
             FilePath = voiceOver.FilePath;
         }
 
+        public long pk_CustomerVideoVoiceOverId { get; set; }
+        public long fk_CustomerVideoId { get; set; }
+        public int? fk_VoiceActorId { get; set; }
+        public string Script { get; set; }
+        public string FilePath { get; set; }
+
         public Common.Models.CustomerVideoVoiceOver ToModel()
         {
-            return new Common.Models.CustomerVideoVoiceOver()
+            return new Common.Models.CustomerVideoVoiceOver
             {
                 pk_CustomerVideoVoiceOverId = pk_CustomerVideoVoiceOverId,
                 fk_CustomerVideoId = fk_CustomerVideoId,

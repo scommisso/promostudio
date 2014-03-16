@@ -1,6 +1,6 @@
-﻿using PromoStudio.Common.Enumerations;
+﻿using System.Text;
+using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Extensions;
-using System.Text;
 
 namespace PromoStudio.Common.Models
 {
@@ -17,15 +17,16 @@ namespace PromoStudio.Common.Models
         public sbyte SortOrder { get; set; }
         public string DefaultText { get; set; }
 
-        public TemplateScriptItemType Type {
-            get { return (TemplateScriptItemType)fk_TemplateScriptItemTypeId; }
-            set { fk_TemplateScriptItemTypeId = (sbyte)value; }
+        public TemplateScriptItemType Type
+        {
+            get { return (TemplateScriptItemType) fk_TemplateScriptItemTypeId; }
+            set { fk_TemplateScriptItemTypeId = (sbyte) value; }
         }
 
         public TemplateScriptItemCategory Category
         {
-            get { return (TemplateScriptItemCategory)fk_TemplateScriptItemCategoryId; }
-            set { fk_TemplateScriptItemCategoryId = (short)value; }
+            get { return (TemplateScriptItemCategory) fk_TemplateScriptItemCategoryId; }
+            set { fk_TemplateScriptItemCategoryId = (short) value; }
         }
 
         public string GetSwapItemJson(string swapValue)
@@ -47,16 +48,16 @@ namespace PromoStudio.Common.Models
         {
             return new
             {
-                pk_TemplateScriptItemId = pk_TemplateScriptItemId,
-                fk_TemplateScriptId = fk_TemplateScriptId,
-                fk_TemplateScriptItemTypeId = fk_TemplateScriptItemTypeId,
-                fk_TemplateScriptItemCategoryId = fk_TemplateScriptItemCategoryId,
-                Name = Name,
-                Description = Description,
-                ItemWidth = ItemWidth,
-                ItemHeight = ItemHeight,
-                SortOrder = SortOrder,
-                DefaultText = DefaultText
+                pk_TemplateScriptItemId,
+                fk_TemplateScriptId,
+                fk_TemplateScriptItemTypeId,
+                fk_TemplateScriptItemCategoryId,
+                Name,
+                Description,
+                ItemWidth,
+                ItemHeight,
+                SortOrder,
+                DefaultText
             };
         }
     }

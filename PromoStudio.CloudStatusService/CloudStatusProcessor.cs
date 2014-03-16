@@ -1,34 +1,39 @@
-﻿using log4net;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using log4net;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
 using PromoStudio.Data;
 using PromoStudio.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using VimeoDotNet.Enums;
+using VimeoDotNet.Models;
 
 namespace PromoStudio.CloudStatusService
 {
     public class CloudStatusProcessor : ICloudStatusProcessor
     {
-        private IDataService _dataService;
-        private IStreamingProvider _streamingProvider;
-        private ILog _log;
+        private readonly IDataService _dataService;
+        private readonly ILog _log;
+        private readonly IStreamingProvider _streamingProvider;
 
-        public CloudStatusProcessor(IDataService dataService,  IStreamingProvider streamingProvider, ILog log)
+        public CloudStatusProcessor(IDataService dataService, IStreamingProvider streamingProvider, ILog log)
         {
             _dataService = dataService;
             _streamingProvider = streamingProvider;
             _log = log;
         }
 
-        public async Task Execute() {
-            var videos = await RetrieveVideosForProcessing();
-            if (videos == null) { return; }
+        public async Task Execute()
+        {
+            IList<CustomerVideo> videos = await RetrieveVideosForProcessing();
+            if (videos == null)
+            {
+                return;
+            }
 
-            foreach (var video in videos)
+            foreach (CustomerVideo video in videos)
             {
                 CheckVideo(video);
             }
@@ -38,18 +43,20 @@ namespace PromoStudio.CloudStatusService
         {
             if (!video.VimeoVideoId.HasValue)
             {
-                _log.Error("Error checking customer video for cloud status check. Missing Vimeo ID, id: " + video.pk_CustomerVideoId);
+                _log.Error("Error checking customer video for cloud status check. Missing Vimeo ID, id: " +
+                           video.pk_CustomerVideoId);
                 return;
             }
             try
             {
-                var vimeoVideo = _streamingProvider.GetVideo(video.VimeoVideoId.Value);
+                Video vimeoVideo = _streamingProvider.GetVideo(video.VimeoVideoId.Value);
                 if (vimeoVideo != null && vimeoVideo.VideoStatus == VideoStatusEnum.Available)
                 {
                     video.fk_CustomerVideoRenderStatusId = (sbyte) CustomerVideoRenderStatus.Completed;
                     if (vimeoVideo.pictures != null)
                     {
-                        var thumb = vimeoVideo.pictures.FirstOrDefault(p => p.PictureType == PictureTypeEnum.Thumbnail);
+                        Picture thumb =
+                            vimeoVideo.pictures.FirstOrDefault(p => p.PictureType == PictureTypeEnum.Thumbnail);
                         if (thumb != null)
                         {
                             video.VimeoThumbnailUrl = thumb.link;
@@ -71,9 +78,10 @@ namespace PromoStudio.CloudStatusService
         {
             try
             {
-                var videosToCheck = (await _dataService.CustomerVideo_SelectForCloudStatusCheckAsync())
+                List<CustomerVideo> videosToCheck = (await _dataService.CustomerVideo_SelectForCloudStatusCheckAsync())
                     .ToList();
-                if (videosToCheck.Count == 0) {
+                if (videosToCheck.Count == 0)
+                {
                     _log.Debug("No CustomerVideo objects ready for status check. Sleeping...");
                     return null;
                 }

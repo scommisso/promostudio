@@ -24,7 +24,7 @@ namespace PromoStudio.Web.Controllers
 
         protected override void HandleUnknownAction(string actionName)
         {
-            var res = this.JavaScriptFromView();
+            ActionResult res = this.JavaScriptFromView();
             res.ExecuteResult(ControllerContext);
         }
     }

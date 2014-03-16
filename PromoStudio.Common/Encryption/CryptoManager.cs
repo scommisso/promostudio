@@ -21,8 +21,8 @@ namespace PromoStudio.Common.Encryption
             if (string.IsNullOrEmpty(keys))
                 throw new ArgumentNullException("keys");
 
-            var decrypted = Encoding.UTF8.GetBytes(value);
-            var encrypted = EncryptBytes(decrypted, keys);
+            byte[] decrypted = Encoding.UTF8.GetBytes(value);
+            byte[] encrypted = EncryptBytes(decrypted, keys);
             return Convert.ToBase64String(encrypted);
         }
 
@@ -33,8 +33,8 @@ namespace PromoStudio.Common.Encryption
             if (string.IsNullOrEmpty(keys))
                 throw new ArgumentNullException("keys");
 
-            var serialized = _serializationManager.Serialize(value);
-            var encrypted = EncryptBytes(serialized, keys);
+            byte[] serialized = _serializationManager.Serialize(value);
+            byte[] encrypted = EncryptBytes(serialized, keys);
             return Convert.ToBase64String(encrypted);
         }
 
@@ -48,8 +48,8 @@ namespace PromoStudio.Common.Encryption
             using (var aesAlg = new AesManaged())
             {
                 SetupCipher(aesAlg, keys);
-                var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-                var encrypted = encryptor.TransformFinalBlock(data, 0, data.Length);
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+                byte[] encrypted = encryptor.TransformFinalBlock(data, 0, data.Length);
                 return encrypted;
             }
         }
@@ -61,8 +61,8 @@ namespace PromoStudio.Common.Encryption
             if (string.IsNullOrEmpty(keys))
                 throw new ArgumentNullException("keys");
 
-            var encrypted = Convert.FromBase64String(encryptedValue);
-            var decrypted = DecryptBytes(encrypted, keys);
+            byte[] encrypted = Convert.FromBase64String(encryptedValue);
+            byte[] decrypted = DecryptBytes(encrypted, keys);
             return Encoding.UTF8.GetString(decrypted);
         }
 
@@ -73,8 +73,8 @@ namespace PromoStudio.Common.Encryption
             if (string.IsNullOrEmpty(keys))
                 throw new ArgumentNullException("keys");
 
-            var encrypted = Convert.FromBase64String(encryptedValue);
-            var decrypted = DecryptBytes(encrypted, keys);
+            byte[] encrypted = Convert.FromBase64String(encryptedValue);
+            byte[] decrypted = DecryptBytes(encrypted, keys);
             return _serializationManager.Deserialize<T>(decrypted);
         }
 
@@ -88,8 +88,8 @@ namespace PromoStudio.Common.Encryption
             using (var aesAlg = new AesManaged())
             {
                 SetupCipher(aesAlg, keys);
-                var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-                var decrypted = decryptor.TransformFinalBlock(data, 0, data.Length);
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                byte[] decrypted = decryptor.TransformFinalBlock(data, 0, data.Length);
                 return decrypted;
             }
         }
@@ -101,7 +101,7 @@ namespace PromoStudio.Common.Encryption
             aesAlg.Mode = CipherMode.CBC;
             aesAlg.Padding = PaddingMode.PKCS7;
 
-            var keyVals = Encoding.UTF8.GetString(Convert.FromBase64String(keys)).Split(',');
+            string[] keyVals = Encoding.UTF8.GetString(Convert.FromBase64String(keys)).Split(',');
             aesAlg.Key = Convert.FromBase64String(keyVals[0]);
             aesAlg.IV = Convert.FromBase64String(keyVals[1]);
         }

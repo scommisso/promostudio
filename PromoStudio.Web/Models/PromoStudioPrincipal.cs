@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
-using System.Text;
 
 namespace PromoStudio.Web
 {
@@ -10,7 +7,8 @@ namespace PromoStudio.Web
     {
         private readonly IPromoStudioIdentity _identity;
 
-        public PromoStudioPrincipal(AuthData authData) {
+        public PromoStudioPrincipal(AuthData authData)
+        {
             _identity = new PromoStudioIdentity(authData);
         }
 
