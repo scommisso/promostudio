@@ -5,7 +5,7 @@
 
 "use strict";
 
-define(["jquery",
+define(["jqueryui",
         "googleOAuth",
         "facebookOAuth",
         "strings",

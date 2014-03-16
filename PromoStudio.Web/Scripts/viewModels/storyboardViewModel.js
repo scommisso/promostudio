@@ -7,7 +7,7 @@
 "use strict";
 
 define([
-        "jquery",
+        "jqueryui",
         "knockout",
         "ps/logger",
         "strings",

@@ -8,7 +8,7 @@
 "use strict";
 
 define(["models/customerVideo",
-        "jquery",
+        "jqueryui",
         "knockout",
         "strings",
         "models/enums",

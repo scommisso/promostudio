@@ -12,7 +12,7 @@
 
 define(["models/stockAudio",
         "viewModels/musicViewModel",
-        "jquery",
+        "jqueryui",
         "knockout",
         "strings",
         "models/enums",

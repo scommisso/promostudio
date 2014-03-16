@@ -13,7 +13,7 @@ define([
         "models/customerVideoVoiceOver",
         "viewModels/musicSectionViewModel",
         "viewModels/actorSectionViewModel",
-        "jquery",
+        "jqueryui",
         "knockout",
         "strings",
         "models/enums",

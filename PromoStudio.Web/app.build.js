@@ -63,14 +63,15 @@
     //done. If that module or any of its dependencies includes i18n bundles,
     //only the root bundles will be included unless the locale: section is set above.
     paths: {
-        'jquery': 'empty:',
-        'knockout': 'empty:',
-        'bootstrap': 'empty:',
-        'jqueryui': 'lib/jquery-ui-effects-1.10.3',
-        'strings': 'empty:',
-        'facebookOAuth': 'empty:',
-        'googleOAuth': 'empty:',
-        'twitterOAuth': 'empty:'
+        jquery: 'lib/jquery-1.11.0',
+        jqueryui: 'lib/jquery.main',
+        //pjax: 'lib/jquery.pjax',
+        //history: 'lib/history',
+        knockout: 'lib/knockout-3.0.0',
+        strings: 'empty:',
+        facebookOAuth: 'empty:',
+        googleOAuth: 'empty:',
+        twitterOAuth: 'empty:'
     },
 
     //The directory path to save the output. If not specified, then

@@ -10,12 +10,11 @@
 "use strict";
 
 define(["viewModels/textItemViewModel",
-        "jquery",
+        "jqueryui",
         "knockout",
         "strings",
         "models/enums",
-        "ps/logger",
-        "jqueryui"
+        "ps/logger"
 ],
     function (
         textItemViewModel,

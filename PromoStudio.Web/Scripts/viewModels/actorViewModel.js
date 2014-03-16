@@ -8,7 +8,7 @@
 "use strict";
 
 define([
-        "jquery",
+        "jqueryui",
         "knockout",
         "strings",
         "models/enums",

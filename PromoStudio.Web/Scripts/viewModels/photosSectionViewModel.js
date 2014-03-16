@@ -10,13 +10,13 @@
 "use strict";
 
 define(["viewModels/photoTemplatesViewModel",
-        "jquery",
+        "jqueryui",
         "knockout",
         "strings",
         "models/enums",
         "ps/logger",
         "ps/extensions",
-        "jqueryui"
+        "lib/jquery.crop"
 ],
     function (
         photoTemplatesViewModel,
