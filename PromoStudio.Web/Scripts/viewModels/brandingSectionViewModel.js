@@ -13,7 +13,8 @@ define(["viewModels/photoTemplatesViewModel",
         "knockout",
         "strings",
         "models/enums",
-        "ps/logger"
+        "ps/logger",
+        "lib/jquery.crop"
 ],
     function (
         photoTemplatesViewModel,

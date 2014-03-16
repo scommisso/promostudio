@@ -7,7 +7,7 @@
 define([
     "models/customer",
     "ps/logger",
-    "jquery",
+    "jqueryui",
     "knockout"
 ], function (
     customer,

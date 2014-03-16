@@ -11,7 +11,7 @@ define([
     "models/customerVideo",
     "viewModels/customerVideoViewModel",
     "ps/logger",
-    "jquery",
+    "jqueryui",
     "knockout"
 ], function (
     customer,
