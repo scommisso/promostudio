@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PromoStudio.Common.Enumerations;
 
 namespace PromoStudio.Common.Models
@@ -19,21 +15,21 @@ namespace PromoStudio.Common.Models
 
         public CustomerLoginPlatform Platform
         {
-            get { return (CustomerLoginPlatform)fk_CustomerLoginPlatformId; }
-            set { fk_CustomerLoginPlatformId = (sbyte)value; }
+            get { return (CustomerLoginPlatform) fk_CustomerLoginPlatformId; }
+            set { fk_CustomerLoginPlatformId = (sbyte) value; }
         }
 
         public dynamic ToPoco()
         {
             return new
             {
-                pk_CustomerLoginCredentialId = pk_CustomerLoginCredentialId,
-                fk_CustomerId = fk_CustomerId,
-                fk_CustomerLoginPlatformId = fk_CustomerLoginPlatformId,
-                EmailAddress = EmailAddress,
-                LoginKey = LoginKey,
-                PrimaryLogin = PrimaryLogin,
-                LastLogin = LastLogin
+                pk_CustomerLoginCredentialId,
+                fk_CustomerId,
+                fk_CustomerLoginPlatformId,
+                EmailAddress,
+                LoginKey,
+                PrimaryLogin,
+                LastLogin
             };
         }
     }

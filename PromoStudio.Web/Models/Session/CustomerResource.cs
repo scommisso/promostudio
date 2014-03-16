@@ -5,13 +5,6 @@ namespace PromoStudio.Web.Models.Session
     [Serializable]
     public class CustomerResource
     {
-        public long pk_CustomerResourceId { get; set; }
-        public long fk_CustomerId { get; set; }
-        public sbyte fk_TemplateScriptItemTypeId { get; set; }
-        public short fk_TemplateScriptItemCategoryId { get; set; }
-        public sbyte fk_CustomerResourceStatusId { get; set; }
-        public string Value { get; set; }
-
         public CustomerResource()
         {
         }
@@ -26,9 +19,16 @@ namespace PromoStudio.Web.Models.Session
             Value = resource.Value;
         }
 
+        public long pk_CustomerResourceId { get; set; }
+        public long fk_CustomerId { get; set; }
+        public sbyte fk_TemplateScriptItemTypeId { get; set; }
+        public short fk_TemplateScriptItemCategoryId { get; set; }
+        public sbyte fk_CustomerResourceStatusId { get; set; }
+        public string Value { get; set; }
+
         public Common.Models.CustomerResource ToModel()
         {
-            return new Common.Models.CustomerResource()
+            return new Common.Models.CustomerResource
             {
                 pk_CustomerResourceId = pk_CustomerResourceId,
                 fk_CustomerId = fk_CustomerId,

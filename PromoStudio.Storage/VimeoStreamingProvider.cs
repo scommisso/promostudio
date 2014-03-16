@@ -1,7 +1,4 @@
-﻿using PromoStudio.Common.Enumerations;
-using PromoStudio.Storage.Properties;
-using System;
-using System.IO;
+﻿using PromoStudio.Storage.Properties;
 using VimeoDotNet;
 using VimeoDotNet.Exceptions;
 using VimeoDotNet.Models;
@@ -11,10 +8,9 @@ namespace PromoStudio.Storage
 {
     public class VimeoStreamingProvider : IStreamingProvider
     {
-        private string apiToken = Settings.Default.VimeoApiAccessToken;
+        private readonly IVimeoClientFactory _vimeoClientFactory;
+        private readonly string apiToken = Settings.Default.VimeoApiAccessToken;
         private long presetId = Settings.Default.VimeoApiPresetId;
-
-        private IVimeoClientFactory _vimeoClientFactory;
 
         public VimeoStreamingProvider(IVimeoClientFactory vimeoClientFactory)
         {
@@ -25,8 +21,8 @@ namespace PromoStudio.Storage
         {
             using (var content = new BinaryContent(filePath))
             {
-                var client = GetClient();
-                var uploadData = client.UploadEntireFile(content);
+                IVimeoClient client = GetClient();
+                IUploadRequest uploadData = client.UploadEntireFile(content);
 
                 if (!uploadData.ClipId.HasValue)
                 {
@@ -39,7 +35,7 @@ namespace PromoStudio.Storage
 
         public Video GetVideo(long videoId)
         {
-            var client = GetClient();
+            IVimeoClient client = GetClient();
             return client.GetAccountVideo(videoId);
         }
 

@@ -1,5 +1,5 @@
-﻿using PromoStudio.Common.Enumerations;
-using System;
+﻿using System;
+using PromoStudio.Common.Enumerations;
 
 namespace PromoStudio.Common.Models
 {
@@ -18,30 +18,30 @@ namespace PromoStudio.Common.Models
 
         public StockItemStatus Status
         {
-            get { return (StockItemStatus)fk_StockItemStatusId; }
-            set { fk_StockItemStatusId = (sbyte)value; }
+            get { return (StockItemStatus) fk_StockItemStatusId; }
+            set { fk_StockItemStatusId = (sbyte) value; }
         }
 
         public StoryboardItemType StoryboardType
         {
-            get { return (StoryboardItemType)fk_StoryboardItemType; }
-            set { fk_StoryboardItemType = (short)value; }
+            get { return (StoryboardItemType) fk_StoryboardItemType; }
+            set { fk_StoryboardItemType = (short) value; }
         }
 
         public dynamic ToPoco()
         {
             return new
             {
-                pk_StockVideoId = pk_StockVideoId,
-                fk_StockItemStatusId = fk_StockItemStatusId,
-                fk_StoryboardItemType = fk_StoryboardItemType,
-                fk_OrganizationId = fk_OrganizationId,
-                fk_VerticalId = fk_VerticalId,
-                Name = Name,
-                Description = Description,
-                FilePath = FilePath,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated
+                pk_StockVideoId,
+                fk_StockItemStatusId,
+                fk_StoryboardItemType,
+                fk_OrganizationId,
+                fk_VerticalId,
+                Name,
+                Description,
+                FilePath,
+                DateCreated,
+                DateUpdated
             };
         }
     }

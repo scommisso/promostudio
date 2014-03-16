@@ -27,7 +27,10 @@ namespace PromoStudio.Common.Models
 
         public string GetSwapItemJson()
         {
-            if (Items == null) { return "[]"; }
+            if (Items == null)
+            {
+                return "[]";
+            }
             return string.Format("[{0}]", string.Join(",", Items.Select(i => i.GetSwapItemJson())));
         }
 
@@ -35,14 +38,14 @@ namespace PromoStudio.Common.Models
         {
             return new
             {
-                pk_CustomerTemplateScriptId = pk_CustomerTemplateScriptId,
-                fk_CustomerId = fk_CustomerId,
-                fk_TemplateScriptId = fk_TemplateScriptId,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated,
-                DateCompleted = DateCompleted,
-                PreviewFilePath = PreviewFilePath,
-                CompletedFilePath = CompletedFilePath
+                pk_CustomerTemplateScriptId,
+                fk_CustomerId,
+                fk_TemplateScriptId,
+                DateCreated,
+                DateUpdated,
+                DateCompleted,
+                PreviewFilePath,
+                CompletedFilePath
             };
         }
     }

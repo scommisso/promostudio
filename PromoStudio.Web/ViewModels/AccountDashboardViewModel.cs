@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using PromoStudio.Common.Models;
-using PromoStudio.Resources;
-using System.Web;
+﻿using System.Web;
 using System.Web.Routing;
 
 namespace PromoStudio.Web.ViewModels

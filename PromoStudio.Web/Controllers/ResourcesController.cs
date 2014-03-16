@@ -1,14 +1,15 @@
-﻿using log4net;
-using PromoStudio.Common.Enumerations;
-using PromoStudio.Common.Models;
-using PromoStudio.Data;
-using PromoStudio.Rendering.Properties;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using log4net;
+using PromoStudio.Common.Enumerations;
+using PromoStudio.Common.Models;
+using PromoStudio.Data;
+using PromoStudio.Rendering.Properties;
 
 namespace PromoStudio.Web.Controllers
 {
@@ -42,18 +43,19 @@ namespace PromoStudio.Web.Controllers
             }
             long customerId = CurrentUser.CustomerId;
 
-            var customerInfo = (await _dataService.Customer_SelectAsync(customerId));
+            Customer customerInfo = (await _dataService.Customer_SelectAsync(customerId));
             if (customerInfo == null)
             {
                 return new HttpNotFoundResult();
             }
 
-            var resources = (await _dataService.CustomerResource_SelectActiveByCustomerIdAsync(customerId))
-                .Where(r => typeId.HasValue
-                    ? r.fk_TemplateScriptItemTypeId == (sbyte)typeId.Value
-                    : r.Type != TemplateScriptItemType.Text)
-                .ToList();
-            
+            List<CustomerResource> resources =
+                (await _dataService.CustomerResource_SelectActiveByCustomerIdAsync(customerId))
+                    .Where(r => typeId.HasValue
+                        ? r.fk_TemplateScriptItemTypeId == (sbyte) typeId.Value
+                        : r.Type != TemplateScriptItemType.Text)
+                    .ToList();
+
             return Json(new
             {
                 Customer = customerInfo,
@@ -75,15 +77,16 @@ namespace PromoStudio.Web.Controllers
             if (file.ContentLength > 0)
             {
                 // TODO: Check for allowed file extensions and infer type
-                TemplateScriptItemType type = TemplateScriptItemType.Image;
+                var type = TemplateScriptItemType.Image;
 
-                var fileName = Path.GetFileName(file.FileName);
-                var res = new CustomerResource() {
+                string fileName = Path.GetFileName(file.FileName);
+                var res = new CustomerResource
+                {
                     fk_CustomerId = customerId,
                     fk_CustomerResourceStatusId = (sbyte) CustomerResourceStatus.Active,
                     fk_TemplateScriptItemCategoryId = (sbyte) category,
                     fk_TemplateScriptItemTypeId = (sbyte) type,
-                    Value = Path.Combine(Settings.Default.UploadPath, string.Format("{0}\\{1}", customerId, fileName))                    
+                    Value = Path.Combine(Settings.Default.UploadPath, string.Format("{0}\\{1}", customerId, fileName))
                 };
 
                 if (isOrgResource == true && CurrentUser.OrganizationId.HasValue)
@@ -112,7 +115,7 @@ namespace PromoStudio.Web.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            var actor = (await _dataService.VoiceActor_SelectAllAsync())
+            VoiceActor actor = (await _dataService.VoiceActor_SelectAllAsync())
                 .FirstOrDefault(va => va.pk_VoiceActorId == voiceActorId.Value);
             if (actor == null)
             {
@@ -131,7 +134,7 @@ namespace PromoStudio.Web.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            var actor = (await _dataService.VoiceActor_SelectAllAsync())
+            VoiceActor actor = (await _dataService.VoiceActor_SelectAllAsync())
                 .FirstOrDefault(va => va.pk_VoiceActorId == voiceActorId.Value);
             if (actor == null)
             {
@@ -150,7 +153,7 @@ namespace PromoStudio.Web.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            var audio = (await _dataService.StockAudio_SelectAllAsync())
+            StockAudio audio = (await _dataService.StockAudio_SelectAllAsync())
                 .FirstOrDefault(sa => sa.pk_StockAudioId == stockAudioId.Value);
             if (audio == null)
             {
@@ -167,20 +170,20 @@ namespace PromoStudio.Web.Controllers
         {
             long customerId = CurrentUser.CustomerId;
 
-            var customer = (await _dataService.Customer_SelectAsync(customerId));
+            Customer customer = (await _dataService.Customer_SelectAsync(customerId));
             if (customer == null)
             {
                 return new HttpNotFoundResult();
             }
 
-            var resource = (await _dataService.CustomerResource_SelectAsync(crid));
+            CustomerResource resource = (await _dataService.CustomerResource_SelectAsync(crid));
             if (resource.fk_CustomerId != customerId
                 && resource.fk_OrganizationId != customer.fk_OrganizationId)
             {
                 return new HttpNotFoundResult();
             }
 
-            var type = (TemplateScriptItemType)resource.fk_TemplateScriptItemTypeId;
+            var type = (TemplateScriptItemType) resource.fk_TemplateScriptItemTypeId;
             string contentType;
             switch (type)
             {

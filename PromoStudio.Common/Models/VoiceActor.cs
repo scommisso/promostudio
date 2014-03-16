@@ -1,5 +1,5 @@
-﻿using PromoStudio.Common.Enumerations;
-using System;
+﻿using System;
+using PromoStudio.Common.Enumerations;
 
 namespace PromoStudio.Common.Models
 {
@@ -17,23 +17,23 @@ namespace PromoStudio.Common.Models
 
         public VoiceActorStatus Status
         {
-            get { return (VoiceActorStatus)fk_VoiceActorStatusId; }
-            set { fk_VoiceActorStatusId = (sbyte)value; }
+            get { return (VoiceActorStatus) fk_VoiceActorStatusId; }
+            set { fk_VoiceActorStatusId = (sbyte) value; }
         }
 
         public dynamic ToPoco()
         {
             return new
             {
-                pk_VoiceActorId = pk_VoiceActorId,
-                fk_VoiceActorStatusId = fk_VoiceActorStatusId,
-                UserName = UserName,
-                FullName = FullName,
+                pk_VoiceActorId,
+                fk_VoiceActorStatusId,
+                UserName,
+                FullName,
                 Biography = Description,
-                SampleFilePath = SampleFilePath,
-                PhotoFilePath = PhotoFilePath,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated
+                SampleFilePath,
+                PhotoFilePath,
+                DateCreated,
+                DateUpdated
             };
         }
     }

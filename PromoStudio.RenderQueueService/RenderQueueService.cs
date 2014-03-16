@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
 using System.Timers;
 using Autofac;
 using Nito.AsyncEx;
@@ -15,9 +9,9 @@ namespace PromoStudio.RenderQueueService
 {
     public partial class RenderQueueService : ServiceBase
     {
+        private bool _initialized;
         private Timer _timer;
         private bool _working;
-        private bool _initialized;
 
         public RenderQueueService()
         {
@@ -39,7 +33,10 @@ namespace PromoStudio.RenderQueueService
         public void DoWork()
         {
             // TODO: Log
-            if (_working) { return; } // still busy
+            if (_working)
+            {
+                return;
+            } // still busy
             _working = true;
 
             if (!_initialized)
@@ -48,15 +45,12 @@ namespace PromoStudio.RenderQueueService
                 _initialized = true;
             }
 
-            using (var container = IocConfig.Container.BeginLifetimeScope())
+            using (ILifetimeScope container = IocConfig.Container.BeginLifetimeScope())
             {
                 try
                 {
                     var processor = container.Resolve<IQueueProcessor>();
-                    AsyncContext.Run(() =>
-                    {
-                        processor.Execute();
-                    });
+                    AsyncContext.Run(() => { processor.Execute(); });
                 }
                 catch (Exception ex)
                 {

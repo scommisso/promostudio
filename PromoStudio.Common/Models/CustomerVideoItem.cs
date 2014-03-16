@@ -1,10 +1,5 @@
 ﻿using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PromoStudio.Common.Models
 {
@@ -18,8 +13,8 @@ namespace PromoStudio.Common.Models
 
         public CustomerVideoItemType Type
         {
-            get { return (CustomerVideoItemType)fk_CustomerVideoItemTypeId; }
-            set { fk_CustomerVideoItemTypeId = (sbyte)value; }
+            get { return (CustomerVideoItemType) fk_CustomerVideoItemTypeId; }
+            set { fk_CustomerVideoItemTypeId = (sbyte) value; }
         }
 
         public CustomerTemplateScript CustomerScript { get; set; }
@@ -37,12 +32,12 @@ namespace PromoStudio.Common.Models
             }
             if (Type == CustomerVideoItemType.CustomerTemplateScript && CustomerScript != null
                 && ((!isPreview && !string.IsNullOrEmpty(CustomerScript.CompletedFilePath))
-                || (isPreview && !string.IsNullOrEmpty(CustomerScript.PreviewFilePath))))
+                    || (isPreview && !string.IsNullOrEmpty(CustomerScript.PreviewFilePath))))
             {
                 return string.Format("{{ file: \"{0}\", includeAudio: true }}",
                     isPreview
-                    ? CustomerScript.PreviewFilePath.ToAfterEffectsPath()
-                    : CustomerScript.CompletedFilePath.ToAfterEffectsPath());
+                        ? CustomerScript.PreviewFilePath.ToAfterEffectsPath()
+                        : CustomerScript.CompletedFilePath.ToAfterEffectsPath());
             }
 
             // Audio
@@ -51,7 +46,8 @@ namespace PromoStudio.Common.Models
                 return string.Format("{{ file: \"{0}\", gainAdjust: 0 }}",
                     StockAudio.FilePath.ToAfterEffectsPath());
             }
-            if (Type == CustomerVideoItemType.CustomerVideoVoiceOver && VoiceOver != null && !string.IsNullOrEmpty(VoiceOver.FilePath))
+            if (Type == CustomerVideoItemType.CustomerVideoVoiceOver && VoiceOver != null &&
+                !string.IsNullOrEmpty(VoiceOver.FilePath))
             {
                 return string.Format("{{ file: \"{0}\", gainAdjust: 0 }}",
                     VoiceOver.FilePath.ToAfterEffectsPath());
@@ -65,11 +61,11 @@ namespace PromoStudio.Common.Models
         {
             return new
             {
-                pk_CustomerVideoItemId = pk_CustomerVideoItemId,
-                fk_CustomerVideoId = fk_CustomerVideoId,
-                fk_CustomerVideoItemId = fk_CustomerVideoItemId,
-                fk_CustomerVideoItemTypeId = fk_CustomerVideoItemTypeId,
-                SortOrder = SortOrder
+                pk_CustomerVideoItemId,
+                fk_CustomerVideoId,
+                fk_CustomerVideoItemId,
+                fk_CustomerVideoItemTypeId,
+                SortOrder
             };
         }
     }

@@ -1,5 +1,4 @@
-﻿using PromoStudio.Common.Enumerations;
-using VimeoDotNet.Models;
+﻿using VimeoDotNet.Models;
 using VimeoDotNet.Net;
 
 namespace PromoStudio.Storage

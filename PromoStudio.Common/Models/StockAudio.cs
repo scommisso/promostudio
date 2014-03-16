@@ -1,5 +1,5 @@
-﻿using PromoStudio.Common.Enumerations;
-using System;
+﻿using System;
+using PromoStudio.Common.Enumerations;
 
 namespace PromoStudio.Common.Models
 {
@@ -17,23 +17,23 @@ namespace PromoStudio.Common.Models
 
         public StockItemStatus Status
         {
-            get { return (StockItemStatus)fk_StockItemStatusId; }
-            set { fk_StockItemStatusId = (sbyte)value; }
+            get { return (StockItemStatus) fk_StockItemStatusId; }
+            set { fk_StockItemStatusId = (sbyte) value; }
         }
 
         public dynamic ToPoco()
         {
             return new
             {
-                pk_StockAudioId = pk_StockAudioId,
-                fk_StockItemStatusId = fk_StockItemStatusId,
-                fk_OrganizationId = fk_OrganizationId,
-                fk_VerticalId = fk_VerticalId,
-                Name = Name,
-                Description = Description,
-                FilePath = FilePath,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated
+                pk_StockAudioId,
+                fk_StockItemStatusId,
+                fk_OrganizationId,
+                fk_VerticalId,
+                Name,
+                Description,
+                FilePath,
+                DateCreated,
+                DateUpdated
             };
         }
     }

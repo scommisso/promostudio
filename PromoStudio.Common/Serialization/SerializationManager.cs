@@ -16,7 +16,7 @@ namespace PromoStudio.Common.Serialization
             {
                 var formatter = new BinaryFormatter();
                 stream.Seek(0, SeekOrigin.Begin);
-                return (TData)formatter.Deserialize(stream);
+                return (TData) formatter.Deserialize(stream);
             }
         }
 

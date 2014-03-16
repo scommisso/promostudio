@@ -17,7 +17,10 @@ namespace PromoStudio.Data
         Task<Customer> Customer_InsertAsync(Customer customer);
         void Customer_Update(Customer customer);
         void Customer_Delete(long customerId);
-        Task<IEnumerable<CustomerWithLoginCredential>> CustomerWithLoginCredential_SelectByLoginCredentialAsync(sbyte customerLoginPlatformId, string loginKey, string emailAddress);
+
+        Task<IEnumerable<CustomerWithLoginCredential>> CustomerWithLoginCredential_SelectByLoginCredentialAsync(
+            sbyte customerLoginPlatformId, string loginKey, string emailAddress);
+
         void CustomerLoginCredential_InsertUpdate(CustomerLoginCredential customerLoginCredential);
         Task<CustomerVideo> CustomerVideo_SelectAsync(long customerVideoId);
         Task<IEnumerable<CustomerVideo>> CustomerVideo_SelectByCustomerIdAsync(long customerId);
@@ -41,25 +44,42 @@ namespace PromoStudio.Data
         Task<CustomerVideoScript> CustomerVideoScript_SelectByCustomerVideoIdAsync(long customerVideoId);
         Task<CustomerResource> CustomerResource_SelectAsync(long customerResourceId);
         Task<IEnumerable<CustomerResource>> CustomerResource_SelectActiveByCustomerIdAsync(long customerId);
-        Task<IEnumerable<CustomerResource>> CustomerResource_SelectByCustomerTemplateScriptIdAsync(long customerTemplateScriptId);
+
+        Task<IEnumerable<CustomerResource>> CustomerResource_SelectByCustomerTemplateScriptIdAsync(
+            long customerTemplateScriptId);
+
         Task<CustomerResource> CustomerResource_InsertAsync(CustomerResource customerResource);
         void CustomerResource_Delete(long customerResourceId);
         Task<CustomerTemplateScript> CustomerTemplateScript_SelectAsync(long customerTemplateScriptId);
         Task<CustomerTemplateScript> CustomerTemplateScript_SelectWithItemsAsync(long customerTemplateScriptId);
-        Task<CustomerTemplateScript> CustomerTemplateScript_SelectWithItemsAsync(IDbConnection conn, long customerTemplateScriptId);
+
+        Task<CustomerTemplateScript> CustomerTemplateScript_SelectWithItemsAsync(IDbConnection conn,
+            long customerTemplateScriptId);
+
         Task<CustomerTemplateScript> CustomerTemplateScript_InsertAsync(CustomerTemplateScript customerTemplateScript);
         void CustomerTemplateScript_Update(CustomerTemplateScript customerTemplateScript);
         Task<CustomerTemplateScriptItem> CustomerTemplateScriptItem_SelectByIdAsync(long customerTemplateScriptItemId);
-        Task<IEnumerable<CustomerTemplateScriptItem>> CustomerTemplateScriptItem_SelectByCustomerTemplateScriptIdAsync(long customerTemplateScriptId);
-        Task<CustomerTemplateScriptItem> CustomerTemplateScriptItem_InsertAsync(CustomerTemplateScriptItem customerTemplateScriptItem);
+
+        Task<IEnumerable<CustomerTemplateScriptItem>> CustomerTemplateScriptItem_SelectByCustomerTemplateScriptIdAsync(
+            long customerTemplateScriptId);
+
+        Task<CustomerTemplateScriptItem> CustomerTemplateScriptItem_InsertAsync(
+            CustomerTemplateScriptItem customerTemplateScriptItem);
+
         void CustomerTemplateScriptItem_Update(CustomerTemplateScriptItem customerTemplateScriptItem);
         Task<Organization> Organization_SelectAsync(int organizationId);
         Task<IEnumerable<StockAudio>> StockAudio_SelectAllAsync();
         Task<IEnumerable<StockAudio>> StockAudio_SelectByCustomerVideoIdAsync(long customerVideoId);
-        Task<IEnumerable<StockAudio>> StockAudio_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId);
+
+        Task<IEnumerable<StockAudio>> StockAudio_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId,
+            int? verticalId);
+
         Task<IEnumerable<StockVideo>> StockVideo_SelectAllAsync();
         Task<IEnumerable<StockVideo>> StockVideo_SelectByCustomerVideoIdAsync(long customerVideoId);
-        Task<IEnumerable<StockVideo>> StockVideo_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId);
+
+        Task<IEnumerable<StockVideo>> StockVideo_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId,
+            int? verticalId);
+
         Task<IEnumerable<StockVideo>> StockVideo_SelectByStoryboardIdAsync(int storyboardId);
         void Storyboard_Delete(int storyboardId);
         Task<Storyboard> Storyboard_InsertAsync(Storyboard storyboard);
@@ -67,7 +87,10 @@ namespace PromoStudio.Data
         Task<IEnumerable<Storyboard>> Storyboard_SelectByCustomerVideoIdAsync(long customerVideoId);
         Task<Storyboard> Storyboard_SelectAsync(int storyboardId);
         Task<Storyboard> Storyboard_SelectWithItemsAsync(int storyboardId);
-        Task<IEnumerable<Storyboard>> Storyboard_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId);
+
+        Task<IEnumerable<Storyboard>> Storyboard_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId,
+            int? verticalId);
+
         void Storyboard_Update(Storyboard storyboard);
         Task<StoryboardItem> StoryboardItem_InsertAsync(StoryboardItem storyboardItem);
         void StoryboardItem_Delete(long storyboardItemId);
@@ -76,7 +99,10 @@ namespace PromoStudio.Data
         Task<IEnumerable<StoryboardItem>> StoryboardItem_SelectByStoryboardIdAsync(int storyboardId);
         Task<IEnumerable<TemplateScript>> TemplateScript_SelectAllWithItemsAsync();
         Task<TemplateScript> TemplateScript_SelectAsync(long templateScriptId);
-        Task<IEnumerable<TemplateScript>> TemplateScript_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId);
+
+        Task<IEnumerable<TemplateScript>> TemplateScript_SelectByOrganizationIdAndVerticalIdAsync(int? organizationId,
+            int? verticalId);
+
         Task<TemplateScript> TemplateScript_SelectWithItemsAsync(long templateScriptId);
         Task<IEnumerable<TemplateScript>> TemplateScript_SelectByStoryboardIdAsync(int storyboardId);
         Task<IEnumerable<TemplateScript>> TemplateScript_SelectByStoryboardIdWithItemsAsync(int storyboardId);

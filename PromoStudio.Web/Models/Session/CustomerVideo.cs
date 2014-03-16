@@ -5,17 +5,6 @@ namespace PromoStudio.Web.Models.Session
     [Serializable]
     public class CustomerVideo
     {
-        public long pk_CustomerVideoId { get; set; }
-        public long fk_CustomerId { get; set; }
-        public int fk_StoryboardId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public long? VimeoVideoId { get; set; }
-        public string VimeoThumbnailUrl { get; set; }
-        public string VimeoStreamingUrl { get; set; }
-
-        public CustomerVideoVoiceOver VoiceOver { get; set; }
-
         public CustomerVideo()
         {
         }
@@ -36,9 +25,20 @@ namespace PromoStudio.Web.Models.Session
             }
         }
 
+        public long pk_CustomerVideoId { get; set; }
+        public long fk_CustomerId { get; set; }
+        public int fk_StoryboardId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public long? VimeoVideoId { get; set; }
+        public string VimeoThumbnailUrl { get; set; }
+        public string VimeoStreamingUrl { get; set; }
+
+        public CustomerVideoVoiceOver VoiceOver { get; set; }
+
         public Common.Models.CustomerVideo ToModel()
         {
-            return new Common.Models.CustomerVideo()
+            return new Common.Models.CustomerVideo
             {
                 pk_CustomerVideoId = pk_CustomerVideoId,
                 fk_CustomerId = fk_CustomerId,

@@ -1,9 +1,6 @@
-﻿using PromoStudio.Common.Enumerations;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PromoStudio.Common.Enumerations;
 
 namespace PromoStudio.Common.Models
 {
@@ -27,42 +24,43 @@ namespace PromoStudio.Common.Models
         public DateTime DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
 
-        public List<TemplateScriptItem> Items {
+        public List<TemplateScriptItem> Items
+        {
             get { return _scriptItems; }
             set { _scriptItems = value; }
         }
 
         public TemplateScriptStatus Status
         {
-            get { return (TemplateScriptStatus)fk_TemplateScriptStatusId; }
-            set { fk_TemplateScriptStatusId = (sbyte)value; }
+            get { return (TemplateScriptStatus) fk_TemplateScriptStatusId; }
+            set { fk_TemplateScriptStatusId = (sbyte) value; }
         }
 
         public StoryboardItemType StoryboardType
         {
-            get { return (StoryboardItemType)fk_StoryboardItemType; }
-            set { fk_StoryboardItemType = (short)value; }
+            get { return (StoryboardItemType) fk_StoryboardItemType; }
+            set { fk_StoryboardItemType = (short) value; }
         }
 
         public dynamic ToPoco()
         {
             return new
             {
-                pk_TemplateScriptId = pk_TemplateScriptId,
-                fk_TemplateScriptStatusId = fk_TemplateScriptStatusId,
-                fk_OrganizationId = fk_OrganizationId,
-                fk_StoryboardItemType = fk_StoryboardItemType,
-                Name = Name,
-                Description = Description,
-                ProjectFilePath = ProjectFilePath,
-                ThumbnailFilePath = ThumbnailFilePath,
-                PreviewFilePath = PreviewFilePath,
-                RenderCompName = RenderCompName,
-                RenderPreviewCompName = RenderPreviewCompName,
-                RenderCompStartTime = RenderCompStartTime,
-                RenderCompEndTime = RenderCompEndTime,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated
+                pk_TemplateScriptId,
+                fk_TemplateScriptStatusId,
+                fk_OrganizationId,
+                fk_StoryboardItemType,
+                Name,
+                Description,
+                ProjectFilePath,
+                ThumbnailFilePath,
+                PreviewFilePath,
+                RenderCompName,
+                RenderPreviewCompName,
+                RenderCompStartTime,
+                RenderCompEndTime,
+                DateCreated,
+                DateUpdated
             };
         }
     }

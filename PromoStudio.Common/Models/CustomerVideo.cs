@@ -1,7 +1,7 @@
-﻿using PromoStudio.Common.Enumerations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PromoStudio.Common.Enumerations;
 
 namespace PromoStudio.Common.Models
 {
@@ -27,8 +27,8 @@ namespace PromoStudio.Common.Models
 
         public CustomerVideoRenderStatus RenderStatus
         {
-            get { return (CustomerVideoRenderStatus)fk_CustomerVideoRenderStatusId; }
-            set { fk_CustomerVideoRenderStatusId = (sbyte)value; }
+            get { return (CustomerVideoRenderStatus) fk_CustomerVideoRenderStatusId; }
+            set { fk_CustomerVideoRenderStatusId = (sbyte) value; }
         }
 
         public Storyboard Storyboard { get; set; }
@@ -42,48 +42,54 @@ namespace PromoStudio.Common.Models
 
         public string GetVideoItemsJson(bool isPreview)
         {
-            if (Items == null) { return "[]"; }
+            if (Items == null)
+            {
+                return "[]";
+            }
             return string.Format("[{0}]", string.Join(",",
                 Items
-                .Where(i =>
-                    i.Type == CustomerVideoItemType.StockVideo
-                    || (i.Type == CustomerVideoItemType.CustomerTemplateScript))
-                .OrderBy(i => i.SortOrder ?? 0)
-                .Select(i => i.GetRenderItemJson(isPreview))
-                .Where(json => json != null)));
+                    .Where(i =>
+                        i.Type == CustomerVideoItemType.StockVideo
+                        || (i.Type == CustomerVideoItemType.CustomerTemplateScript))
+                    .OrderBy(i => i.SortOrder ?? 0)
+                    .Select(i => i.GetRenderItemJson(isPreview))
+                    .Where(json => json != null)));
         }
 
         public string GetAudioItemsJson()
         {
-            if (Items == null) { return "[]"; }
+            if (Items == null)
+            {
+                return "[]";
+            }
             return string.Format("[{0}]", string.Join(",",
                 Items
-                .Where(i =>
-                    i.Type == CustomerVideoItemType.StockAudio
-                    || (i.Type == CustomerVideoItemType.CustomerVideoVoiceOver))
-                .Select(i => i.GetRenderItemJson(false))
-                .Where(json => json != null)));
+                    .Where(i =>
+                        i.Type == CustomerVideoItemType.StockAudio
+                        || (i.Type == CustomerVideoItemType.CustomerVideoVoiceOver))
+                    .Select(i => i.GetRenderItemJson(false))
+                    .Where(json => json != null)));
         }
 
         public dynamic ToPoco()
         {
             return new
             {
-                pk_CustomerVideoId = pk_CustomerVideoId,
-                fk_CustomerId = fk_CustomerId,
-                fk_CustomerVideoRenderStatusId = fk_CustomerVideoRenderStatusId,
-                fk_StoryboardId = fk_StoryboardId,
-                Name = Name,
-                Description = Description,
-                RenderFailureMessage = RenderFailureMessage,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated,
-                DateCompleted = DateCompleted,
-                PreviewFilePath = PreviewFilePath,
-                CompletedFilePath = CompletedFilePath,
-                VimeoVideoId = VimeoVideoId,
-                VimeoThumbnailUrl = VimeoThumbnailUrl,
-                VimeoStreamingUrl = VimeoStreamingUrl
+                pk_CustomerVideoId,
+                fk_CustomerId,
+                fk_CustomerVideoRenderStatusId,
+                fk_StoryboardId,
+                Name,
+                Description,
+                RenderFailureMessage,
+                DateCreated,
+                DateUpdated,
+                DateCompleted,
+                PreviewFilePath,
+                CompletedFilePath,
+                VimeoVideoId,
+                VimeoThumbnailUrl,
+                VimeoStreamingUrl
             };
         }
     }

@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace PromoStudio.Common.Extensions
 {
     public static class StringExtensions
     {
+        private static readonly Regex _collapseUnderscoreRe = new Regex("([_-]{2,})", RegexOptions.Compiled);
+
         public static string ToAfterEffectsPath(this string windowsPath)
         {
-            if (string.IsNullOrEmpty(windowsPath)) { return null; }
+            if (string.IsNullOrEmpty(windowsPath))
+            {
+                return null;
+            }
             if (windowsPath[1] == ':')
             {
                 windowsPath = "/" + windowsPath[0] + windowsPath.Substring(2);
@@ -20,7 +21,6 @@ namespace PromoStudio.Common.Extensions
             return windowsPath;
         }
 
-        private static readonly Regex _collapseUnderscoreRe = new Regex("([_-]{2,})", RegexOptions.Compiled);
         public static string ToSafeFileName(this string fileName)
         {
             var sbFileName = new StringBuilder();
@@ -35,7 +35,7 @@ namespace PromoStudio.Common.Extensions
                 }
             }
             string outFile = sbFileName.ToString();
-            outFile = _collapseUnderscoreRe.Replace(outFile, new MatchEvaluator(m => "_"));
+            outFile = _collapseUnderscoreRe.Replace(outFile, m => "_");
             return outFile;
         }
     }

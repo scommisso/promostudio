@@ -1,19 +1,17 @@
-﻿using PromoStudio.Common.Enumerations;
-using PromoStudio.Rendering.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
+using System.Text;
+using PromoStudio.Common.Enumerations;
+using PromoStudio.Rendering.Properties;
 
 namespace PromoStudio.Rendering
 {
     public abstract class ScriptBase
     {
         private readonly Dictionary<string, string> _replacements = new Dictionary<string, string>();
-        
+
         public string ScriptTemplateDirectory
         {
             get
@@ -24,28 +22,25 @@ namespace PromoStudio.Rendering
 
         public string ScriptOutputDirectory
         {
-            get
-            {
-                return Path.Combine(Settings.Default.ScriptPath, "RenderScripts");
-            }
+            get { return Path.Combine(Settings.Default.ScriptPath, "RenderScripts"); }
         }
 
-        public IDictionary<string, string> Replacements { get { return _replacements; } }
+        public IDictionary<string, string> Replacements
+        {
+            get { return _replacements; }
+        }
 
         /// <summary>
-        /// Returns the name of the input script template file
+        ///     Returns the name of the input script template file
         /// </summary>
         public abstract string ScriptTemplateFileName { get; }
 
         /// <summary>
-        /// Returns the name path to the output script template file
+        ///     Returns the name path to the output script template file
         /// </summary>
         public string ScriptTemplatePath
         {
-            get
-            {
-                return Path.Combine(ScriptTemplateDirectory, ScriptTemplateFileName);
-            }
+            get { return Path.Combine(ScriptTemplateDirectory, ScriptTemplateFileName); }
         }
 
         public void Render()
@@ -56,7 +51,7 @@ namespace PromoStudio.Rendering
                 path = GenerateScript();
                 if (string.IsNullOrEmpty(path) || !File.Exists(path))
                 {
-                    throw new ApplicationException("Error generating script for template: " + this.GetType().Name);
+                    throw new ApplicationException("Error generating script for template: " + GetType().Name);
                 }
                 var process = new AeProcess();
                 process.ExecuteProcess(path);
@@ -75,14 +70,15 @@ namespace PromoStudio.Rendering
                         File.Delete(path);
                     }
                 }
-                catch {
+                catch
+                {
                     // TODO: Log
                 }
             }
         }
 
         /// <summary>
-        /// Generate the script and return the path to the completed .jsx script file.
+        ///     Generate the script and return the path to the completed .jsx script file.
         /// </summary>
         /// <returns>The path to the .jsx script file (delete after use)</returns>
         public string GenerateScript()

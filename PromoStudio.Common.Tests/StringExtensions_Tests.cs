@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PromoStudio.Common.Extensions;
 
 namespace PromoStudio.Common.Tests
@@ -14,7 +13,7 @@ namespace PromoStudio.Common.Tests
             string fileName = "a___b___c.txt";
 
             // Act
-            string result = StringExtensions.ToSafeFileName(fileName);
+            string result = fileName.ToSafeFileName();
 
             // Assert
             Assert.AreEqual("a_b_c.txt", result);
@@ -27,7 +26,7 @@ namespace PromoStudio.Common.Tests
             string fileName = "a_-_b_-_c.txt";
 
             // Act
-            string result = StringExtensions.ToSafeFileName(fileName);
+            string result = fileName.ToSafeFileName();
 
             // Assert
             Assert.AreEqual("a_b_c.txt", result);
@@ -40,7 +39,7 @@ namespace PromoStudio.Common.Tests
             string fileName = "a-b-c_-_d.txt";
 
             // Act
-            string result = StringExtensions.ToSafeFileName(fileName);
+            string result = fileName.ToSafeFileName();
 
             // Assert
             Assert.AreEqual("a-b-c_d.txt", result);

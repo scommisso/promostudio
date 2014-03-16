@@ -5,12 +5,6 @@ namespace PromoStudio.Web.Models.Session
     [Serializable]
     public class CustomerVideoItem
     {
-        public long pk_CustomerVideoItemId { get; set; }
-        public long fk_CustomerVideoId { get; set; }
-        public long fk_CustomerVideoItemId { get; set; }
-        public sbyte fk_CustomerVideoItemTypeId { get; set; }
-        public sbyte? SortOrder { get; set; }
-
         public CustomerVideoItem()
         {
         }
@@ -24,9 +18,15 @@ namespace PromoStudio.Web.Models.Session
             SortOrder = videoItem.SortOrder;
         }
 
+        public long pk_CustomerVideoItemId { get; set; }
+        public long fk_CustomerVideoId { get; set; }
+        public long fk_CustomerVideoItemId { get; set; }
+        public sbyte fk_CustomerVideoItemTypeId { get; set; }
+        public sbyte? SortOrder { get; set; }
+
         public Common.Models.CustomerVideoItem ToModel()
         {
-            return new Common.Models.CustomerVideoItem()
+            return new Common.Models.CustomerVideoItem
             {
                 pk_CustomerVideoItemId = pk_CustomerVideoItemId,
                 fk_CustomerVideoId = fk_CustomerVideoId,

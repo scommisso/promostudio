@@ -1,5 +1,5 @@
-﻿using PromoStudio.Common.Enumerations;
-using System;
+﻿using System;
+using PromoStudio.Common.Enumerations;
 
 namespace PromoStudio.Common.Models
 {
@@ -15,21 +15,21 @@ namespace PromoStudio.Common.Models
 
         public CustomerStatus Status
         {
-            get { return (CustomerStatus)fk_CustomerStatusId; }
-            set { fk_CustomerStatusId = (sbyte)value; }
+            get { return (CustomerStatus) fk_CustomerStatusId; }
+            set { fk_CustomerStatusId = (sbyte) value; }
         }
 
         public dynamic ToPoco()
         {
             return new
             {
-                pk_CustomerId = pk_CustomerId,
-                fk_OrganizationId = fk_OrganizationId,
-                fk_CustomerStatusId = fk_CustomerStatusId,
-                fk_VerticalId = fk_VerticalId,
-                FullName = FullName,
-                DateCreated = DateCreated,
-                DateUpdated = DateUpdated
+                pk_CustomerId,
+                fk_OrganizationId,
+                fk_CustomerStatusId,
+                fk_VerticalId,
+                FullName,
+                DateCreated,
+                DateUpdated
             };
         }
     }

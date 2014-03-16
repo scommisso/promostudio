@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nito.AsyncEx;
-using PromoStudio.Data;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PromoStudio.RenderQueue.Tests
 {
