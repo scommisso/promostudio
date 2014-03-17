@@ -53,7 +53,7 @@ namespace PromoStudio.Web.Controllers
             }
             long customerId = CurrentUser.CustomerId;
 
-            BuildCookieViewModel data = GetFromCookie();
+            BuildCookieViewModel data = GetSessionData();
             if (data == null
                 || data.CompletedSteps == null
                 || data.CompletedSteps.Count == 0
@@ -105,7 +105,7 @@ namespace PromoStudio.Web.Controllers
                 (await _dataService.Storyboard_SelectByOrganizationIdAndVerticalIdAsync(
                     CurrentUser.OrganizationId, CurrentUser.VerticalId));
 
-            BuildCookieViewModel data = GetFromCookie();
+            BuildCookieViewModel data = GetSessionData();
             var vm = new FootageViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 StepsCompleted = (data == null || data.CompletedSteps == null)
@@ -135,7 +135,7 @@ namespace PromoStudio.Web.Controllers
                 return new RedirectResult("~/Build");
             }
 
-            BuildCookieViewModel data = GetFromCookie();
+            BuildCookieViewModel data = GetSessionData();
 
             // Get required db items
             var tasks = new List<Task>();
@@ -206,13 +206,13 @@ namespace PromoStudio.Web.Controllers
         // GET: /Build/Script
         public async Task<ActionResult> Script()
         {
-            if (!ValidateUserStep(3))
-            {
-                return new RedirectResult("~/Build");
-            }
+            //if (!ValidateUserStep(3))
+            //{
+            //    return new RedirectResult("~/Build");
+            //}
 
 
-            BuildCookieViewModel data = GetFromCookie();
+            BuildCookieViewModel data = GetSessionData();
             var vm = new ScriptViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 Video = data.Video,
@@ -232,7 +232,7 @@ namespace PromoStudio.Web.Controllers
             //    return new RedirectResult("~/Build");
             //}
 
-            //var data = GetFromCookie();
+            //var data = GetSessionData();
 
             Task<IEnumerable<StockAudio>> stockAudioTask = _dataService
                 .StockAudio_SelectByOrganizationIdAndVerticalIdAsync(
@@ -265,7 +265,7 @@ namespace PromoStudio.Web.Controllers
                 return new RedirectResult("~/Build");
             }
 
-            BuildCookieViewModel data = GetFromCookie();
+            BuildCookieViewModel data = GetSessionData();
             var vm = new SummaryViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 Video = data.Video,
@@ -422,7 +422,7 @@ namespace PromoStudio.Web.Controllers
                 return true;
             }
 
-            BuildCookieViewModel data = GetFromCookie();
+            BuildCookieViewModel data = GetSessionData();
             if (data == null
                 || data.CompletedSteps == null
                 || data.CompletedSteps.Count == 0
@@ -437,7 +437,7 @@ namespace PromoStudio.Web.Controllers
 
         private void MergeData(BuildCookieViewModel newCookie)
         {
-            BuildCookieViewModel oldCookie = GetFromCookie();
+            BuildCookieViewModel oldCookie = GetSessionData();
             if (oldCookie == null)
             {
                 return;
@@ -478,8 +478,10 @@ namespace PromoStudio.Web.Controllers
             }
         }
 
-        private BuildCookieViewModel GetFromCookie()
+        private BuildCookieViewModel GetSessionData()
         {
+            // TODO: Get this from Redis or some other distributed session store instead of cookie
+
             if (_buildCookieViewModel != null)
             {
                 return _buildCookieViewModel;
