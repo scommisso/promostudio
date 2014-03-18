@@ -268,6 +268,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No file selected.
+        /// </summary>
+        public static string BuildStep__No_file_selected {
+            get {
+                return ResourceManager.GetString("BuildStep__No_file_selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No logo selected.
         /// </summary>
         public static string BuildStep__No_logo_selected {
@@ -349,6 +358,15 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start Upload.
+        /// </summary>
+        public static string BuildStep__Start_upload {
+            get {
+                return ResourceManager.GetString("BuildStep__Start_upload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text.
         /// </summary>
         public static string BuildStep__Text {
@@ -372,6 +390,15 @@ namespace PromoStudio.Resources {
         public static string BuildStep__This_is_the_last_frame_your_viewers_will_see {
             get {
                 return ResourceManager.GetString("BuildStep__This_is_the_last_frame_your_viewers_will_see", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload a File.
+        /// </summary>
+        public static string BuildStep__Upload_a_file {
+            get {
+                return ResourceManager.GetString("BuildStep__Upload_a_file", resourceCulture);
             }
         }
         

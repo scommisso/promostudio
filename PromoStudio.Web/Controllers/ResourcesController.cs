@@ -74,7 +74,11 @@ namespace PromoStudio.Web.Controllers
             }
             long customerId = CurrentUser.CustomerId;
 
-            if (file.ContentLength > 0)
+            if (file == null && Request.Files.Count > 0)
+            {
+                file = Request.Files[0];
+            }
+            if (file != null && file.ContentLength > 0)
             {
                 // TODO: Check for allowed file extensions and infer type
                 var type = TemplateScriptItemType.Image;
@@ -101,9 +105,15 @@ namespace PromoStudio.Web.Controllers
                 res = await _dataService.CustomerResource_InsertAsync(res);
 
                 // TODO: Log upload
+
+                return new JsonResult()
+                {
+                    Data = res,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
             }
 
-            return RedirectToAction("Index");
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         //

@@ -53,4 +53,22 @@ define([], function () {
             return createTimeString(this, false, includeLeadingZeros);
         };
     }
+    if (!Number.prototype.format) {
+        Number.prototype.format = function format(decimalPlaces) {
+            var withCommas = this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+                decimalIndex = withCommas.indexOf(".");
+            if (!decimalIndex && decimalPlaces > 0) {
+                return withCommas + "." + new Array(decimalPlaces + 1).join("0");
+            } else if (decimalIndex && decimalPlaces > 0) {
+                var decimal = withCommas.substring(decimalIndex + 1).replace(",", "");
+                if (decimal.length > decimalPlaces) {
+                    decimal = decimal.substring(0, decimalPlaces);
+                }
+                return withCommas.substring(0, decimalIndex + 1) + decimal;
+            } else if (decimalIndex) {
+                return withCommas.substring(0, decimalIndex);
+            }
+            return withCommas;
+        };
+    }
 });

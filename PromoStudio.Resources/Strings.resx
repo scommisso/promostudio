@@ -432,4 +432,13 @@
   <data name="BuildStep__This_is_the_last_frame_your_viewers_will_see" xml:space="preserve">
     <value>This is the last frame your viewers will see. Make a lasting impression!</value>
   </data>
+  <data name="BuildStep__No_file_selected" xml:space="preserve">
+    <value>No file selected</value>
+  </data>
+  <data name="BuildStep__Start_upload" xml:space="preserve">
+    <value>Start Upload</value>
+  </data>
+  <data name="BuildStep__Upload_a_file" xml:space="preserve">
+    <value>Upload a File</value>
+  </data>
 </root>

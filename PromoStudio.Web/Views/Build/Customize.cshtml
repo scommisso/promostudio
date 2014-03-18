@@ -38,20 +38,22 @@
 				@* list-buttons *@
 				<ul class="list-buttons" data-bind="foreach: PhotoSlots">
 					<li>
-                        <div class="upload-image" data-bind="visible: IsCompleted, click: ChoosePhoto">
+                        <div class="upload-image" data-bind="visible: IsCompleted, click: $parent.SelectSlot">
                             <img src="#" width="228" height="130" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
                             <span class="title" data-bind="text: PhotoName"></span>
                         </div>
 
-                        <div class="file-area" data-bind="css: { 'no-file': !IsCompleted() }, click: ChoosePhoto" style="position: relative">
+                        <div class="file-area" data-bind="css: { 'no-file': !IsCompleted() }, click: $parent.SelectSlot" style="position: relative">
                             <div class="jcf-input-wrapper">
                                 <label class="jcf-fake-input">
-                                    <span><em>
-                                        <span>@Strings.BuildStep__Choose_photo</span>
-                                        <!-- ko text: Title --><!-- /ko -->
-                                    </em></span>
+                                    <span>
+                                        <em>
+                                            <span>@Strings.BuildStep__Choose_photo</span>
+                                            <!-- ko text: Title --><!-- /ko -->
+                                        </em>
+                                    </span>
                                 </label>
-                                <a href="#photoChooserModal" class="jcf-upload-button" rel="lightbox" data-fb-hideclose="true">
+                                <a href="#photoChooserModal" class="jcf-upload-button photo-chooser" rel="lightbox" data-fb-hideclose="true">
                                     <span>Browse</span>
                                 </a>
                             </div>
@@ -61,7 +63,7 @@
 					</li>
 				</ul>
 				@* large-image *@
-                <div data-bind="visible: !!SelectedSlot()">
+                <div class="builder-edit-photo" data-bind="visible: !!SelectedSlot()">
                     <!-- ko with: SelectedSlot -->
 				    <div class="large-image">
 					    <img src="#" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
@@ -93,7 +95,9 @@
 				        <span class="signs">-300</span>@* Add knockout charsleft binding when this is supported *@
                     </div>
 				    <div class="btn-holder">
-					    <input type="submit" value="@Strings.BuildStep__Add_to_selected_frame">
+				        @*<input type="submit" value="@Strings.BuildStep__Add_to_selected_frame">*@
+                        @* Crop tools here *@
+                        <input type="submit" value="@Strings.BuildStep__Change_photo" data-bind="click: ChoosePhoto">
 				    </div>
                     <!-- /ko -->
                 </div>
@@ -128,7 +132,7 @@
                             </div>
                             <!-- /ko -->
                         </label>
-                        <a href="#photoChooserModal" class="jcf-upload-button" data-bind="visible: !IsCompleted()" rel=" lightbox" data-fb-hideclose="true">
+                        <a href="#photoChooserModal" class="jcf-upload-button logo-chooser" data-bind="visible: !IsCompleted()" rel="lightbox" data-fb-hideclose="true">
                             <span>@Strings.BuildStep__Choose_logo</span>
                         </a>
                     </div>
@@ -433,64 +437,92 @@
 </form>
 
 @section modals {
-	<div class="popup-holder" style="display: none" data-bind="visible: true">
+    <div class="popup-holder" style="display: none" data-bind="visible: true">
         <div class="lightbox" id="photoChooserModal" tabindex="-1">
-		    <div class="title">
+            <div class="title">
                 <h4 class="modal-title">@Strings.Modals__Choose_a_Photo</h4>
-		    </div>
-		    <div class="modal-dialog" data-bind="template: { name: 'photo-chooser-template' }">
-		    </div>
+            </div>
+            <div class="modal-dialog" data-bind="template: { name: 'photo-chooser-template' }">
+            </div>
         </div>
     </div>
     
     @* This is in a template to prevent issues with multiple bindings when re-opening the modal *@
     <script type="text/html" id="photo-chooser-template">
         <div class="modal-body">
-			@* tabset *@
-			<nav  class="tabset">
-				<ul>
-					<li><a href="#companyPhotos" data-bind="css: { 'active': !ShowCustomerAtStart() }">Company Photos</a></li>
-					<li><a href="#myPhotos" data-bind="css: { 'active': ShowCustomerAtStart }">My Photos</a></li>
-				</ul>
-			</nav>
-			@* tab-content *@
-			<div class="tab-content">
-				@* myPhotos *@
-				<section id="myPhotos">
-	                <ul class="list-photo" data-bind="foreach: CustomerPhotos">
-		                <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
-			                <div class="photo">
-				                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
-			                </div>
-			                <div class="title">
-				                <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
-				                <label data-bind="attr: { 'for': AttrBinding().id }, text: LinkFileName"></label>
-			                </div>
-		                </li>
+            @* tabset *@
+            <nav  class="tabset">
+                <ul>
+                    <li><a href="#companyPhotos" data-bind="css: { 'active': ShowOrganizationAtStart }">Company Photos</a></li>
+                    <li><a href="#myPhotos" data-bind="css: { 'active': !ShowOrganizationAtStart() }">My Photos</a></li>
+                </ul>
+            </nav>
+            @* tab-content *@
+            <div class="tab-content">
+                @* myPhotos *@
+                <section id="myPhotos">
+                    <!-- ko if: CustomerPhotos().length -->
+                    <ul class="list-photo" data-bind="foreach: CustomerPhotos">
+                        <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
+                            <div class="photo">
+                                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
+                            </div>
+                            <div class="title">
+                                <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
+                                <label data-bind="attr: { 'for': AttrBinding().id }, text: LinkFileName"></label>
+                            </div>
+                        </li>
                     </ul>
-                    <div>
-                        TODO: Upload photos here
+                    <!-- /ko -->
+                    <!-- ko ifnot: CustomerPhotos().length -->
+                    You don't have any photos.
+                    <!-- /ko -->
+                    <div class="upload-photo clearfix">
+                        <div class="file-area no-file" style="position: relative;">
+                            <div class="jcf-input-wrapper">
+                                <div class="jcf-wrap" style="width: 899px;">
+                                    <input type="file" data-bind="event: { change: OnUploadFileSelected }" class="file-input-opacity" style="position: absolute; z-index: -100; opacity: 0;">
+                                </div>
+                                <label class="jcf-fake-input" data-bind="click: ChangeUploadFile">
+                                    <span>
+                                        <!-- ko if: UploadFileChosen -->
+                                        <span data-bind="text: UploadFileName"></span>
+                                        <span class="smaller">(<span data-bind="text: UploadFileSizeKb"></span> kb) - click to change</span>
+                                        <!-- /ko -->
+                                    </span>
+                                </label>
+                                <a class="jcf-upload-button" data-bind="click: UploadFile">
+                                    <!-- ko if: UploadFileChosen -->
+                                    <span>@Strings.BuildStep__Start_upload</span>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: UploadFileChosen -->
+                                    <span>@Strings.BuildStep__Upload_a_file</span>
+                                    <!-- /ko -->
+                                </a>
+                                <progress data-bind="visible: IsUploading() && BytesUploaded(), attr: { value: BytesUploaded, max: UploadFileSize }"></progress>
+                            </div>
+                        </div>
                     </div>
-				</section>
-				@* companyPhotos *@
-				<section id="companyPhotos">
-	                <ul class="list-photo" data-bind="foreach: OrganizationPhotos">
-		                <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
-			                <div class="photo">
-				                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
-			                </div>
-			                <div class="title">
-				                <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
-				                <label data-bind="attr: { 'for': AttrBinding().id }, text: LinkFileName"></label>
-			                </div>
-		                </li>
+                </section>
+                @* companyPhotos *@
+                <section id="companyPhotos">
+                    <ul class="list-photo" data-bind="foreach: OrganizationPhotos">
+                        <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
+                            <div class="photo">
+                                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
+                            </div>
+                            <div class="title">
+                                <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
+                                <label data-bind="attr: { 'for': AttrBinding().id }, text: LinkFileName"></label>
+                            </div>
+                        </li>
                     </ul>
-				</section>
-			</div>
-		    <div class="btn-holder">
-			    <input class="save" type="submit" value="@Strings.OK" data-bind="click: Save">
-			    <input type="submit" value="@Strings.Cancel" data-bind="click: Cancel">
-		    </div>
+                </section>
+            </div>
+            <div class="btn-holder">
+                <input class="save" type="submit" value="@Strings.OK" data-bind="click: Save">
+                <input type="submit" value="@Strings.Cancel" data-bind="click: Cancel">
+            </div>
         </div>
     </script>
 }

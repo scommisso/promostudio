@@ -99,7 +99,7 @@ define(["viewModels/photoTemplatesViewModel",
                 }
                 return slots;
             });
-            
+
             self.IsVisible = ko.computed(function () {
                 var length = self.LogoSlots().length;
                 return length > 0;

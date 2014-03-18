@@ -80,7 +80,7 @@
     padding: 2px 3px 4px;
 }
 
-.file-area .jcf-upload-button {
+.jcf-input-wrapper .jcf-upload-button {
     background: #24a62a url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzI0YTYyYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMlIiBzdG9wLWNvbG9yPSIjMjhhZTJlIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzIyYTAyOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
     background: -moz-linear-gradient(top, #24a62a 0%, #28ae2e 3%, #22a028 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#24a62a), color-stop(3%,#28ae2e), color-stop(100%,#22a028));
@@ -120,6 +120,37 @@
     em {
         font-style: normal;
     }
+}
+
+.upload-photo .file-area .jcf-fake-input
+{
+    cursor:pointer;
+}
+
+.jcf-fake-input span.smaller {
+    font-size: 16px;
+    color:#868686; 
+}
+
+.upload-photo {
+    width:100%;
+    margin-bottom: 20px;
+    
+
+    .jcf-upload-button {
+        background: #417be8;
+        background: -moz-linear-gradient(top, #417be8 0%, #4e87f2 3%, #3873e0 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#417be8), color-stop(3%,#4e87f2), color-stop(100%,#3873e0));
+        background: -webkit-linear-gradient(top, #417be8 0%,#4e87f2 3%,#3873e0 100%);
+        background: -o-linear-gradient(top, #417be8 0%,#4e87f2 3%,#3873e0 100%);
+        background: -ms-linear-gradient(top, #417be8 0%,#4e87f2 3%,#3873e0 100%);
+        background: linear-gradient(to bottom, #417be8 0%,#4e87f2 3%,#3873e0 100%);
+        -webkit-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2), 0 -1px 1px #163784 inset;
+        box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2), 0 -1px 1px #163784 inset;
+        margin-bottom: 20px;
+        margin-right: 5px;
+    }
+
 }
 
 .list-buttons .file-area {

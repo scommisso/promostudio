@@ -2225,7 +2225,7 @@ define(["jquery", "lib/jquery.fancybox", "lib/jquery.mousewheel"], function (jQu
     // custom upload field module
     jcf.addModule({
 	    name: 'file',
-	    selector: 'input[type="file"]',
+	    selector: 'input[data-jcf][type="file"]',
 	    defaultOptions: {
 		    buttonWidth: 30,
 		    bigFontSize: 200,
@@ -2294,8 +2294,8 @@ define(["jquery", "lib/jquery.fancybox", "lib/jquery.mousewheel"], function (jQu
 	    updateExtensionClass: function(){
 		    var currentExtension = this.getFileExtension();
 		    if(currentExtension) {
-			    this.fakeElement.className = this.fakeElement.className.replace(new RegExp('(\\s|^)'+this.options.extPrefixClass+'[^ ]+','gi'),'')
-			    jcf.lib.addClass(this.fakeElement, this.options.extPrefixClass+currentExtension)
+		        this.fakeElement.className = this.fakeElement.className.replace(new RegExp('(\\s|^)' + this.options.extPrefixClass + '[^ ]+', 'gi'), '');
+		        jcf.lib.addClass(this.fakeElement, this.options.extPrefixClass + currentExtension);
 		    }
 	    },
 	    shakeInput: function() {

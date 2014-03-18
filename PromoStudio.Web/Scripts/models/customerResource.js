@@ -26,17 +26,20 @@ define(["models/enums", "knockout"], function (enums, ko) {
 
         self.TemplateScriptItemCategory = ko.computed(function () {
             var id = self.fk_TemplateScriptItemCategoryId();
+            if (!id) { return null; }
             return enums.templateScriptItemCategory(id);
         });
 
         self.TemplateScriptItemType = ko.computed(function () {
             var id = self.fk_TemplateScriptItemTypeId();
+            if (!id) { return null; }
             return enums.templateScriptItemType(id);
         });
 
         self.LinkUrl = ko.computed(function () {
             // TODO: This should point to our content host (Amazon S3) instead of local
             var type = self.TemplateScriptItemType();
+            if (!type) { return null; }
             if (type === "Text") { return "javascript:void(0);"; }
             return "/Resources/Download?crid=" + self.pk_CustomerResourceId();
         });
@@ -45,6 +48,7 @@ define(["models/enums", "knockout"], function (enums, ko) {
             var type = self.TemplateScriptItemType(),
                 displayPath = self.Value(),
                 ix;
+            if (!type) { return null; }
             if (type === "Text") { return "Text"; }
             ix = displayPath.lastIndexOf("\\");
             if (ix === -1) { ix = displayPath.lastIndexOf("/"); }

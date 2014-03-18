@@ -15,7 +15,8 @@ define(["models/customerResource",
         "knockout",
         "strings",
         "models/enums",
-        "ps/logger"
+        "ps/logger",
+        "ps/extensions"
 ],
     function (
         customerResource,
@@ -45,8 +46,8 @@ define(["models/customerResource",
                     }
                     if (photo.pk_CustomerResourceId() === selectedResourceId) {
                         self.SelectedPhoto(photo);
-                        if (photo.IsCustomerResource()) {
-                            self.ShowCustomerAtStart(true);
+                        if (photo.IsOrganizationResource()) {
+                            self.ShowOrganizationAtStart(true);
                         }
                     }
                 }
@@ -59,7 +60,7 @@ define(["models/customerResource",
                     var checkedItem = $("ul.list-photo li.checked");
                     checkedItem.find("input").attr("checked", "checked");
                     checkedItem.find(".chk-area").removeClass("chk-unchecked").addClass("chk-checked");
-                }, 10);
+                }, 1);
             }
 
             function getPhotos() {
@@ -94,7 +95,7 @@ define(["models/customerResource",
             self.IsLoading = ko.observable(true);
             self.CustomerPhotos = ko.observableArray([]);
             self.OrganizationPhotos = ko.observableArray([]);
-            self.ShowCustomerAtStart = ko.observable(false);
+            self.ShowOrganizationAtStart = ko.observable(false);
 
             self.SelectedPhoto = ko.observable(null);
             self.PhotoPreviewShown = ko.computed(function () {
@@ -126,13 +127,132 @@ define(["models/customerResource",
                 }
             };
 
-            self.Show = function (selectedId) {
+            self.UploadFileChosen = ko.observable(false);
+            self.FileToUpload = ko.observable(null);
+            self.UploadFileName = ko.observable(null);
+            self.UploadFileContentType = ko.observable(null);
+            self.UploadFileSize = ko.observable(null);
+            self.UploadFileError = ko.observable(null);
+            self.IsUploading = ko.observable(false);
+            self.BytesUploaded = ko.observable(0);
+            self.UploadFileSizeKb = ko.computed(function() {
+                var size = self.UploadFileSize();
+                size = (size / 1000).format();
+                return size;
+            });
+
+            function launchUploader(e) {
+                $(e.srcElement).closest("div").find("input[type='file']").click();
+            }
+
+            function performUpload(originalEvent, callback) {
+                var file = self.FileToUpload(),
+                    fd = new FormData();
+                fd.append("upload_photo", file);
+                self.IsUploading(true);
+                $.ajax({
+                    type: "POST",
+                    url: "/Resources/Upload?category={0}&isOrgResource={1}".format(categoryId, false),
+                    enctype: 'multipart/form-data',
+                    xhr: function () {
+                        var myXhr = $.ajaxSettings.xhr();
+                        if (myXhr.upload) {
+                            myXhr.upload.addEventListener(
+                                "progress",
+                                function (e) {
+                                    if (e.lengthComputable) {
+                                        self.BytesUploaded(e.loaded);
+                                        self.UploadFileSize(e.total);
+                                    }
+                                }, false); // For handling the progress of the upload
+                        }
+                        return myXhr;
+                    },
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function (data, textStatus, jqXhr) {
+                        self.IsUploading(false);
+                        self.BytesUploaded(0);
+                        var retData = data;
+                        if (typeof data === "string") {
+                            try {
+                                retData = JSON.parse(data);
+                            } catch (e) {
+                                retData = "unable to parse server response";
+                            }
+                        }
+                        callback(retData);
+                    },
+                    error: function (jqXhr, textStatus, error) {
+                        self.IsUploading(false);
+                        self.BytesUploaded(0);
+                        callback(error);
+                    }
+                });
+            }
+
+            self.UploadFile = function (d, e) {
+                if (!self.UploadFileChosen()) {
+                    launchUploader(e);
+                } else {
+                    performUpload(e, function (uploaded) {
+                        if (typeof uploaded === "string") {
+                            self.UploadFileError(uploaded);
+                        } else {
+                            // reload
+                            console.log(uploaded);
+                            self.Show(uploaded.pk_CustomerResourceId, true);
+                        }
+                    });
+                }
+                e.preventDefault();
+                return true;
+            };
+            self.ChangeUploadFile = function(d, e) {
+                if (self.UploadFileChosen()) {
+                    launchUploader(e);
+                }
+                e.preventDefault();
+                return true;
+            };
+            self.OnUploadFileSelected = function (d, e) {
+                if (!e.srcElement.files || !e.srcElement.files.length) { return; }
+                var file = e.srcElement.files[0];
+                self.FileToUpload(file);
+                self.UploadFileChosen(true);
+                self.UploadFileName(file.name);
+                self.UploadFileContentType(file.type);
+                self.UploadFileSize(file.size);
+                self.UploadFileError(null);
+                self.BytesUploaded(0);
+                self.IsUploading(false);
+            };
+
+            function reset() {
+                self.FileToUpload(null);
+                self.UploadFileChosen(false);
+                self.UploadFileName(null);
+                self.UploadFileContentType(null);
+                self.UploadFileSize(0);
+                self.UploadFileError(null);
+                self.BytesUploaded(0);
+                self.IsUploading(false);
+
+                self.ShowOrganizationAtStart(false);
+            }
+
+            self.Show = function (selectedId, skipLaunch) {
+                reset();
                 selectedResourceId = selectedId;
                 ko.cleanNode($elem[0]);
                 $elem.find(".modal-dialog").empty();
                 ko.applyBindings(self, $elem[0]);
                 getPhotos();
-                $(".jcf-upload-button").first().click();
+                if (skipLaunch !== true) {
+                    $(".jcf-upload-button.photo-chooser").first().click();
+                }
             };
 
             self.Hide = function () {
