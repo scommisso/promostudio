@@ -56,6 +56,9 @@ define(["models/customerResource",
                     // JCF hack for checkboxes
                     $.jcfModule.customForms.replaceAll();
                     $.initJcf.tabs();
+                    var checkedItem = $("ul.list-photo li.checked");
+                    checkedItem.find("input").attr("checked", "checked");
+                    checkedItem.find(".chk-area").removeClass("chk-unchecked").addClass("chk-checked");
                 }, 10);
             }
 

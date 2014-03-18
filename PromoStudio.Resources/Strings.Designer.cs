@@ -268,11 +268,11 @@ namespace PromoStudio.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No file selected.
+        ///   Looks up a localized string similar to No logo selected.
         /// </summary>
-        public static string BuildStep__No_file_selected {
+        public static string BuildStep__No_logo_selected {
             get {
-                return ResourceManager.GetString("BuildStep__No_file_selected", resourceCulture);
+                return ResourceManager.GetString("BuildStep__No_logo_selected", resourceCulture);
             }
         }
         

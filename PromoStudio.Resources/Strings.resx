@@ -423,8 +423,8 @@
   <data name="BuildStep__Lower_Third" xml:space="preserve">
     <value>Lower Third</value>
   </data>
-  <data name="BuildStep__No_file_selected" xml:space="preserve">
-    <value>No file selected</value>
+  <data name="BuildStep__No_logo_selected" xml:space="preserve">
+    <value>No logo selected</value>
   </data>
   <data name="BuildStep__This_image_is_at_the_bottom_of_your_video" xml:space="preserve">
     <value>This image is at the bottom of your video</value>

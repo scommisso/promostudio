@@ -38,12 +38,10 @@
 				@* list-buttons *@
 				<ul class="list-buttons" data-bind="foreach: PhotoSlots">
 					<li>
-						<div class="upload-image" data-bind="visible: IsCompleted">
-							<img src="#" width="228" height="130" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
-							<span class="title" data-bind="text: PhotoName"></span>
-						</div>
-
-
+                        <div class="upload-image" data-bind="visible: IsCompleted, click: ChoosePhoto">
+                            <img src="#" width="228" height="130" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
+                            <span class="title" data-bind="text: PhotoName"></span>
+                        </div>
 
                         <div class="file-area" data-bind="css: { 'no-file': !IsCompleted() }, click: ChoosePhoto" style="position: relative">
                             <div class="jcf-input-wrapper">
@@ -59,9 +57,7 @@
                             </div>
                         </div>
 
-
-						<span class="file-input-text">
-						</span>
+						<span class="file-input-text"> </span>
 					</li>
 				</ul>
 				@* large-image *@
@@ -119,11 +115,26 @@
 			@* slide *@
 			<div class="slide">
 				@* upload-logo *@
-				<div class="upload-logo">
-					<input type="file" title="@Strings.BuildStep__Choose_logo" data-bind="event: { 'change': FileSelected }">
-					<span class="file-input-text">@Strings.BuildStep__No_file_selected</span>
-				</div>
-				@* options *@
+                <div class="file-area" data-bind="css: { 'no-file': !IsCompleted() }, click: ChooseLogo" style="position: relative;">
+                    <div class="jcf-input-wrapper">
+                        <label class="jcf-fake-input">
+                            <!-- ko ifnot: LogoUrl -->
+                            <span><em>@Strings.BuildStep__No_logo_selected</em></span>
+                            <!-- /ko -->
+                            <!-- ko if: LogoUrl -->
+                            <div class="customize-logo upload-image" data-bind="visible: IsCompleted">
+                                <label class="title" data-bind="text: LogoName"></label>
+                                <img src="#" data-bind="attr: { 'src': LogoUrl, 'alt': LogoName }">
+                            </div>
+                            <!-- /ko -->
+                        </label>
+                        <a href="#photoChooserModal" class="jcf-upload-button" data-bind="visible: !IsCompleted()" rel=" lightbox" data-fb-hideclose="true">
+                            <span>@Strings.BuildStep__Choose_logo</span>
+                        </a>
+                    </div>
+                </div>
+
+			    @* options *@
 				<ul class="options" style="display:none"> @* Show this when we support transitions *@
 					<li>
 						<div class="wrap"></div>

@@ -77,11 +77,11 @@ define(["jquery", "lib/jquery.fancybox", "lib/jquery.mousewheel"], function (jQu
 	            autoSize: true,
                 autoCenter: true,
 	            helpers: {
-	                overlay: {
+	                /*overlay: {
 	                    css: {
                             zIndex: 20000
 	                    }
-	                },
+	                },*/
 	                title: {
                         type: 'inside'
 	                }

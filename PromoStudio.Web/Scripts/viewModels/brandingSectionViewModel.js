@@ -26,7 +26,6 @@ define(["viewModels/photoTemplatesViewModel",
         function ctor(data, video) {
 
             var self = this,
-                transitionTime = 350, /* from bootstrap-transitions */
                 customerTemplateScripts;
             data = data || {};
             video = video || {};
@@ -67,7 +66,24 @@ define(["viewModels/photoTemplatesViewModel",
                 }
 
                 self.LogoTemplates(logoTemplates);
+
+                var slots = self.LogoSlots();
+                if (slots && slots.length > 0) {
+                    self.LogoItem(slots[0]);
+                }
             }
+
+            self.LogoItem = ko.observable(null);
+            self.LogoUrl = ko.computed(function () {
+                var logoItem = self.LogoItem();
+                if (!logoItem) { return null; }
+                return logoItem.PhotoUrl();
+            });
+            self.LogoName = ko.computed(function () {
+                var logoItem = self.LogoItem();
+                if (!logoItem) { return null; }
+                return logoItem.PhotoName();
+            });
 
             self.StepNumber = ko.observable(1);
             self.LogoTemplates = ko.observableArray([]);
@@ -101,12 +117,25 @@ define(["viewModels/photoTemplatesViewModel",
 
             self.StartOpen = ko.observable(false);
 
-            self.FileSelected = function (data, event) {
-                var fileName = event.target.value;
+            self.ChooseLogo = function (d, e) {
+                var logoItem = self.LogoItem();
+                if (!logoItem) {
+                    e.preventDefault();
+                    return true;
+                }
 
-                // TODO: upload    ... or, even better ...   get our photo chooser working with the JCF crap
-
-                // TODO: attach selected photo to the slots
+                // pop modal to select a photo
+                logger.log("choosing logo");
+                logoItem.ChoosePhoto(function () {
+                    // apply resource to other logo items
+                    var res = self.LogoItem().ChosenResource(),
+                        slots = self.LogoSlots(),
+                        i;
+                    if (!res) { return; }
+                    for (i = 0; i < slots.length; i++) {
+                        var j = slots[i].ChosenResource(res);
+                    }
+                });
             };
 
             loadData(data.CustomerTemplateScripts, video);

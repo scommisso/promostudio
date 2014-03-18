@@ -46,8 +46,7 @@ define([
 
             function onPhotoChosen(photo) {
                 if (photo) {
-                    customerTemplateScriptItem.fk_CustomerResourceId(photo.pk_CustomerResourceId());
-                    customerTemplateScriptItem.Resource(photo);
+                    self.ChosenResource(photo);
                 }
                 if (typeof photoCloseCallback === "function") {
                     photoCloseCallback();
@@ -76,6 +75,11 @@ define([
                 photoTitleFormatString = strings.getResource("BuildStep__Section_num_timing"), //Sect. {0} - appx. {1} into video, slot {2}
                 photoChooser, photoCloseCallback;
 
+            self.ChosenResource = ko.observable(null);
+            self.ChosenResource.subscribe(function(newResource) {
+                customerTemplateScriptItem.fk_CustomerResourceId(newResource.pk_CustomerResourceId());
+                customerTemplateScriptItem.Resource(newResource);
+            });
             self.Title = ko.computed(function () {
                 var storyboardSort = storyboardItem.SortOrder(),
                     storyboardTiming = calculateStoryboardTiming(storyboardItem),
@@ -99,9 +103,7 @@ define([
                 return res !== null;
             });
             self.SortOrder = ko.computed(function () {
-                var sortValue =
-                    storyboardItem.SortOrder() * 10000
-                        + customerTemplateScriptItem.ScriptItem().SortOrder();
+                var sortValue = (storyboardItem.SortOrder() * 10000) + customerTemplateScriptItem.ScriptItem().SortOrder();
                 return sortValue;
             });
 
