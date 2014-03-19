@@ -13,6 +13,7 @@ define([
         "strings",
         "models/enums",
         "ps/logger",
+        "ps/common",
         "ps/extensions"
 ],
     function (
@@ -20,7 +21,8 @@ define([
         ko,
         strings,
         enums,
-        logger) {
+        logger,
+        common) {
         function ctor(sectionVm, stockAudio) {
             var self = this,
                 slider,
@@ -60,25 +62,27 @@ define([
             });
 
             self.Play = function (data, event) {
-                var playing = self.IsPlaying();
-                getPlayers(event.srcElement).each(function () {
+                var playing = self.IsPlaying(),
+                    srcElement = common.getSourceElement(event);
+                getPlayers(srcElement).each(function () {
                     var $this = $(this);
                     $this.jPlayer("pause", 0);
                 });
                 if (!playing) {
-                    $(event.srcElement).closest("li").find("div.jp-jplayer").jPlayer("play");
+                    $(srcElement).closest("li").find("div.jp-jplayer").jPlayer("play");
                     self.IsPlaying(true);
                 }
             };
 
             self.ToggleSelection = function (data, event) {
-                var selected = !self.IsSelected();
+                var selected = !self.IsSelected(),
+                    srcElement = common.getSourceElement(event);
                 self.IsSelected(selected);
 
                 if (selected) {
                     // Hack to work with JCF
-                    getCheckboxes(event.srcElement).each(function () {
-                        this.checked = this === event.srcElement ? selected : false;
+                    getCheckboxes(srcElement).each(function () {
+                        this.checked = this === srcElement ? selected : false;
                     });
                 }
 

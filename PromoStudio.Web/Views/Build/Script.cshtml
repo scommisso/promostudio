@@ -8,17 +8,17 @@
 @section scripts {
     <script>
         require(["viewModels/scaffold"], function () {
-            require(["viewModels/audioScriptViewModel", "jquery"], function(audioScript, $) {
+            require(["viewModels/audioScriptViewModel", "jqueryui"], function(audioScript, $) {
                 $(function() {
                     var vm = new audioScript(@Html.Raw(JsonConvert.SerializeObject(Model)));
-                    vm.Bind(".audioScriptWizard", ".build-steps");
+                    vm.Bind("#main form", ".progress-bar");
                 });
             });
         });
     </script>
 }
 
-<div class="audioScriptWizard">
+<form action="#">
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">PromoStudio Demo Notice</h3>
@@ -29,4 +29,4 @@
             will be sent to the chosen voice actor along with a preview video.
         </div>
     </div>
-</div>
+</form>

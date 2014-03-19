@@ -16,6 +16,7 @@ define(["models/customerResource",
         "strings",
         "models/enums",
         "ps/logger",
+        "ps/common",
         "ps/extensions"
 ],
     function (
@@ -25,7 +26,8 @@ define(["models/customerResource",
         ko,
         strings,
         enums,
-        logger) {
+        logger,
+        common) {
         function ctor(data) {
 
             function loadPhotos(photoResources) {
@@ -142,10 +144,16 @@ define(["models/customerResource",
             });
 
             function launchUploader(e) {
-                $(e.srcElement).closest("div").find("input[type='file']").click();
+                var srcElement = common.getSourceElement(e);
+                $(srcElement).closest("div").find("input[type='file']").click();
             }
 
             function performUpload(originalEvent, callback) {
+                if (!("FormData" in window)) {
+                    callback("Your browser does not support AJAX file uploads.");
+                    return;
+                }
+
                 var file = self.FileToUpload(),
                     fd = new FormData();
                 fd.append("upload_photo", file);
@@ -218,8 +226,9 @@ define(["models/customerResource",
                 return true;
             };
             self.OnUploadFileSelected = function (d, e) {
-                if (!e.srcElement.files || !e.srcElement.files.length) { return; }
-                var file = e.srcElement.files[0];
+                var srcElement = common.getSourceElement(e);
+                if (!srcElement || !srcElement.files || !srcElement.files.length) { return; }
+                var file = srcElement.files[0];
                 self.FileToUpload(file);
                 self.UploadFileChosen(true);
                 self.UploadFileName(file.name);
