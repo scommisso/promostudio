@@ -7,9 +7,8 @@
             public const string AudioScriptTemplateDelete_sp = "promostudio.AudioScriptTemplateDelete_sp";
             public const string AudioScriptTemplateInsert_sp = "promostudio.AudioScriptTemplateInsert_sp";
             public const string AudioScriptTemplateSelectAll_sp = "promostudio.AudioScriptTemplateSelectAll_sp";
-
-            public const string AudioScriptTemplateSelectByCustomerVideoId_sp =
-                "promostudio.AudioScriptTemplateSelectByCustomerVideoId_sp";
+            public const string AudioScriptTemplateSelectByCustomerVideoId_sp = "promostudio.AudioScriptTemplateSelectByCustomerVideoId_sp";
+            public const string AudioScriptTemplateSelectActiveByOrganizationIdAndVerticalId_sp = "promostudio.AudioScriptTemplateSelectActiveByOrganizationIdAndVerticalId_sp";
 
             public const string AudioScriptTemplateSelectById_sp = "promostudio.AudioScriptTemplateSelectById_sp";
             public const string AudioScriptTemplateUpdate_sp = "promostudio.AudioScriptTemplateUpdate_sp";
@@ -20,16 +19,14 @@
             public const string CustomerUpdate_sp = "promostudio.CustomerUpdate_sp";
             public const string CustomerDelete_sp = "promostudio.CustomerDelete_sp";
 
-            public const string CustomerLoginCredentialInsertUpdate_sp =
-                "promostudio.CustomerLoginCredentialInsertUpdate_sp";
+            public const string CustomerLoginCredentialInsertUpdate_sp = "promostudio.CustomerLoginCredentialInsertUpdate_sp";
 
             public const string CustomerVideoInsert_sp = "promostudio.CustomerVideoInsert_sp";
             public const string CustomerVideoSelectById_sp = "promostudio.CustomerVideoSelectById_sp";
             public const string CustomerVideoSelectByCustomerId_sp = "promostudio.CustomerVideoSelectByCustomerId_sp";
             public const string CustomerVideoSelectForProcessing_sp = "promostudio.CustomerVideoSelectForProcessing_sp";
 
-            public const string CustomerVideoSelectForCloudStatusCheck_sp =
-                "promostudio.CustomerVideoSelectForCloudStatusCheck_sp";
+            public const string CustomerVideoSelectForCloudStatusCheck_sp = "promostudio.CustomerVideoSelectForCloudStatusCheck_sp";
 
             public const string CustomerVideoUpdate_sp = "promostudio.CustomerVideoUpdate_sp";
             public const string CustomerVideoDelete_sp = "promostudio.CustomerVideoDelete_sp";
@@ -37,8 +34,7 @@
             public const string CustomerVideoItemInsert_sp = "promostudio.CustomerVideoItemInsert_sp";
             public const string CustomerVideoItemSelectById_sp = "promostudio.CustomerVideoItemSelectById_sp";
 
-            public const string CustomerVideoItemSelectByCustomerVideoId_sp =
-                "promostudio.CustomerVideoItemSelectByCustomerVideoId_sp";
+            public const string CustomerVideoItemSelectByCustomerVideoId_sp = "promostudio.CustomerVideoItemSelectByCustomerVideoId_sp";
 
             public const string CustomerVideoItemUpdate_sp = "promostudio.CustomerVideoItemUpdate_sp";
             public const string CustomerVideoItemDelete_sp = "promostudio.CustomerVideoItemDelete_sp";

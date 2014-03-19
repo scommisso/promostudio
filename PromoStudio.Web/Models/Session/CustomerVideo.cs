@@ -23,6 +23,10 @@ namespace PromoStudio.Web.Models.Session
             {
                 VoiceOver = new CustomerVideoVoiceOver(video.VoiceOver);
             }
+            if (video.Script != null)
+            {
+                Script = new CustomerVideoScript(video.Script);
+            }
         }
 
         public long pk_CustomerVideoId { get; set; }
@@ -35,6 +39,7 @@ namespace PromoStudio.Web.Models.Session
         public string VimeoStreamingUrl { get; set; }
 
         public CustomerVideoVoiceOver VoiceOver { get; set; }
+        public CustomerVideoScript Script { get; set; }
 
         public Common.Models.CustomerVideo ToModel()
         {
@@ -48,6 +53,7 @@ namespace PromoStudio.Web.Models.Session
                 VimeoVideoId = VimeoVideoId,
                 VimeoThumbnailUrl = VimeoThumbnailUrl,
                 VimeoStreamingUrl = VimeoStreamingUrl,
+                Script = Script == null ? null : Script.ToModel(),
                 VoiceOver = VoiceOver == null ? null : VoiceOver.ToModel()
             };
         }

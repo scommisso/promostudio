@@ -12,6 +12,7 @@ namespace PromoStudio.Data
         void AudioScriptTemplate_Update(AudioScriptTemplate audioScript);
         Task<AudioScriptTemplate> AudioScriptTemplate_SelectAsync(long audioScriptTemplateId);
         Task<AudioScriptTemplate> AudioScriptTemplate_SelectByCustomerVideoIdAsync(long customerVideoId);
+        Task<IEnumerable<AudioScriptTemplate>> AudioScriptTemplate_SelectActiveByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId);
         Task<IEnumerable<AudioScriptTemplate>> AudioScriptTemplate_SelectAllAsync();
         Task<Customer> Customer_SelectAsync(long customerId);
         Task<Customer> Customer_InsertAsync(Customer customer);

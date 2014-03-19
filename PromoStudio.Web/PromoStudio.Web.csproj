@@ -164,6 +164,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\Session\CustomerVideoScript.cs" />
     <Compile Include="ViewModels\AccountViewModelBase.cs" />
     <Compile Include="ViewModels\AccountDashboardViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
@@ -276,6 +277,7 @@
     <Content Include="Scripts\viewModels\endingSectionViewModel.js" />
     <Content Include="Scripts\viewModels\musicViewModel.js" />
     <Content Include="Scripts\viewModels\customerVideoViewModel.js" />
+    <Content Include="Scripts\viewModels\audioScriptTemplateViewModel.js" />
     <Content Include="Scripts\viewModels\storyboardViewModel.js" />
     <Content Include="Scripts\viewModels\textItemViewModel.js" />
     <Compile Include="ViewModels\BuildCookieViewModel.cs" />

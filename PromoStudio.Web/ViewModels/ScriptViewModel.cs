@@ -1,5 +1,7 @@
-﻿using System.Web;
+﻿using System.Collections.Generic;
+using System.Web;
 using System.Web.Routing;
+using PromoStudio.Common.Models;
 
 namespace PromoStudio.Web.ViewModels
 {
@@ -10,5 +12,7 @@ namespace PromoStudio.Web.ViewModels
         {
             CurrentStep = 3;
         }
+
+        public List<AudioScriptTemplate> Scripts { get; set; }
     }
 }

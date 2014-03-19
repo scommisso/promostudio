@@ -150,6 +150,7 @@ namespace PromoStudio.Web.Controllers
             if (CurrentUser.OrganizationId.HasValue)
             {
                 orgTask = _dataService.Organization_SelectAsync(CurrentUser.OrganizationId.Value);
+                tasks.Add(orgTask);
             }
 
             await Task.WhenAll(tasks);
@@ -211,11 +212,20 @@ namespace PromoStudio.Web.Controllers
             //    return new RedirectResult("~/Build");
             //}
 
-
             BuildCookieViewModel data = GetSessionData();
+
+            Task<IEnumerable<AudioScriptTemplate>> scriptsTask =
+                _dataService.AudioScriptTemplate_SelectActiveByOrganizationIdAndVerticalIdAsync(
+                CurrentUser.OrganizationId, CurrentUser.VerticalId);
+
+            await Task.WhenAll(scriptsTask);
+
+            List<AudioScriptTemplate> scripts = scriptsTask.Result.ToList();
+
             var vm = new ScriptViewModel(Request.RequestContext.HttpContext, RouteData)
             {
                 Video = data.Video,
+                Scripts = scripts,
                 StepsCompleted = new List<int>(data.CompletedSteps)
             };
 

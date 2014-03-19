@@ -33,6 +33,7 @@ namespace PromoStudio.Common.Models
 
         public Storyboard Storyboard { get; set; }
         public CustomerVideoVoiceOver VoiceOver { get; set; }
+        public CustomerVideoScript Script { get; set; }
 
         public List<CustomerVideoItem> Items
         {

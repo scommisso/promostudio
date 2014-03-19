@@ -80,6 +80,18 @@ namespace PromoStudio.Data
             return audioScript;
         }
 
+        public async Task<IEnumerable<AudioScriptTemplate>> AudioScriptTemplate_SelectActiveByOrganizationIdAndVerticalIdAsync(int? organizationId, int? verticalId)
+        {
+            List<AudioScriptTemplate> audioScripts =
+                (await
+                    DataWrapper.QueryStoredProcAsync<AudioScriptTemplate>(
+                        Constants.StoredProcedures.AudioScriptTemplateSelectActiveByOrganizationIdAndVerticalId_sp,
+                        dbParams: new { OrganizationId = organizationId, VerticalId = verticalId }))
+                    .ToList();
+
+            return audioScripts;
+        }
+
         public async Task<IEnumerable<AudioScriptTemplate>> AudioScriptTemplate_SelectAllAsync()
         {
             List<AudioScriptTemplate> audioScripts =

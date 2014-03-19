@@ -10,11 +10,13 @@ define([
     "models/customerVideoItem",
     "models/storyboard",
     "models/customerVideoVoiceOver",
+    "models/customerVideoScript",
     "knockout"
 ], function (
         customerVideoItem,
         storyboard,
         customerVideoVoiceOver,
+        customerVideoScript,
         ko) {
     function ctor (data) {
         var self = this;
@@ -38,9 +40,10 @@ define([
 
         self.Storyboard = ko.observable(null);
         self.VoiceOver = ko.observable(null);
+        self.Script = ko.observable(null);
         self.Items = ko.observableArray([]);
 
-        self.LoadItems = function (storyboardData, voiceOverData, items) {
+        self.LoadItems = function (storyboardData, voiceOverData, scriptData, items) {
             var i, item;
             items = items || [];
 
@@ -49,6 +52,9 @@ define([
 
             if (voiceOverData) {
                 self.VoiceOver(new customerVideoVoiceOver(voiceOverData));
+            }
+            if (scriptData) {
+                self.Script(new customerVideoScript(scriptData));
             }
 
             for (i = 0; i < items.length; i++) {
@@ -59,7 +65,7 @@ define([
             self.Storyboard(storyboardData);
             self.Items(items);
         };
-        self.LoadItems(data.Storyboard, data.VoiceOver, data.Items);
+        self.LoadItems(data.Storyboard, data.VoiceOver, data.Script, data.Items);
     }
 
     ctor.prototype.toJSON = function () {

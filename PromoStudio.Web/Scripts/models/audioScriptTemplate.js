@@ -6,24 +6,7 @@
 define(["knockout"], function (ko) {
     function ctor (data) {
 
-        function getMatches(val, re, i) {
-            i = (i || 1);
-            var matches = [], match;
-            while (match = re.exec(val)) {
-                matches.push(match[i]);
-            }
-            return matches;
-        }
-
-        function getReplacementItems() {
-            var scriptText = self.ScriptText(),
-                matches = getMatches(scriptText, replacementRegex, 1);
-
-            return matches;
-        }
-        
-        var self = this,
-            replacementRegex = /\[\[([^\]]+)\]\]/g;
+        var self = this;
         data = data || {};
 
         self.pk_AudioScriptTemplateId = ko.observable(data.pk_AudioScriptTemplateId || null);
@@ -35,10 +18,6 @@ define(["knockout"], function (ko) {
         self.ScriptText = ko.observable(data.ScriptText || null);
         self.DateCreated = ko.observable(data.DateCreated || null);
         self.DateUpdated = ko.observable(data.DateUpdated || null);
-
-        self.getScriptVariables = function () {
-            return getReplacementItems();
-        };
     }
 
     ctor.prototype.toJSON = function () {
