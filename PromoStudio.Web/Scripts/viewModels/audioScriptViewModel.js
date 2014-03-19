@@ -28,6 +28,12 @@ define([
         logger) {
     function ctor(data) {
 
+        var self = this,
+            isStepCompleted = null,
+            video = null,
+            sectionLength = 6;
+        data = data || {};
+
         function stepChanging(navVm, callback) {
             var customerVideo = video(),
                 script = self.CustomerScript();
@@ -53,24 +59,31 @@ define([
 
         function loadData() {
             var scripts = data.Scripts || [],
+                scriptSections = [],
                 i, script;
 
             for (i = 0; i < scripts.length; i++) {
                 script = new audioScriptTemplate(scripts[i]);
-                scripts[i] = new audioScriptTemplateViewModel(script);
+                script = new audioScriptTemplateViewModel(script, i);
+                scripts[i] = script;
+                if (!scriptSections.length ||
+                    (scriptSections[scriptSections.length - 1].Scripts().length % sectionLength === 0)) {
+                    scriptSections.push({
+                        Scripts: ko.observableArray([])
+                    });
+                }
+                scriptSections[scriptSections.length - 1].Scripts.push(script);
             }
 
             self.CustomerScript(new customerVideoScript());
             self.Scripts(scripts);
+            self.ScriptSections(scriptSections);
+
+            $.initJcf.tabs(); //refresh tab UI
         }
 
-        var self = this;
-        data = data || {};
-
-        var isStepCompleted = null,
-            video = null;
-
         self.Scripts = ko.observableArray([]);
+        self.ScriptSections = ko.observableArray([]);
         self.CustomerScript = ko.observable(null);
         self.SelectedScript = ko.observable(null);
         self.SelectedScriptTemplateId = ko.computed(function () {
