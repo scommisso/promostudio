@@ -21,11 +21,13 @@ namespace PromoStudio.RenderQueue
         private readonly IDataService _dataService;
         private readonly ILog _log;
         private readonly IStreamingProvider _streamingProvider;
+        private readonly IStorageProvider _storageProvider;
 
-        public QueueProcessor(IDataService dataService, IStreamingProvider streamingProvider, ILog log)
+        public QueueProcessor(IDataService dataService, IStreamingProvider streamingProvider, IStorageProvider storageProvider, ILog log)
         {
             _dataService = dataService;
             _streamingProvider = streamingProvider;
+            _storageProvider = storageProvider;
             _log = log;
         }
 
@@ -90,9 +92,6 @@ namespace PromoStudio.RenderQueue
 
             try
             {
-                string bucketName = video.fk_CustomerId.ToString();
-                string fileName;
-                string outputUrl;
                 if (isPreview)
                 {
                     video.fk_CustomerVideoRenderStatusId = (sbyte) CustomerVideoRenderStatus.UploadingPreview;
@@ -316,10 +315,11 @@ namespace PromoStudio.RenderQueue
             }
         }
 
-        private void RenderTemplateScript(CustomerVideo video, CustomerTemplateScript customerTemplateScript,
+        private async Task RenderTemplateScript(CustomerVideo video, CustomerTemplateScript customerTemplateScript,
             bool preview)
         {
             string folder = CreateTempFolder(video.fk_CustomerId, video.pk_CustomerVideoId);
+            string resourceFolder = Path.Combine(folder, "Resources");
 
             string outPath = Path.Combine(folder, string.Format("{0}_{1}_{2}_{3}.mov",
                 customerTemplateScript.pk_CustomerTemplateScriptId, video.Name,
@@ -332,6 +332,21 @@ namespace PromoStudio.RenderQueue
 
             _log.InfoFormat("CustomerTemplateScript:{0} performing {1} render to \"{2}\"",
                 customerTemplateScript.pk_CustomerTemplateScriptId, preview ? "preview" : "final", outPath);
+
+            // copy all remote resources local
+            foreach (var item in customerTemplateScript.Items.Where(i => i.Resource != null && i.Resource.Type != TemplateScriptItemType.Text))
+            {
+                string resPath = Path.Combine(resourceFolder, item.Resource.pk_CustomerResourceId.ToString());
+                using (var resourceStream = _storageProvider.GetFile(
+                    customerTemplateScript.fk_CustomerId.ToString(),
+                    item.Resource.pk_CustomerResourceId.ToString()))
+                using (var fs = File.Open(resPath, FileMode.Create))
+                {
+                    resourceStream.CopyToAsync(fs).Wait();
+                    item.Resource.Value = resPath;
+                }
+            }
+
             var renderer = new RenderTemplateScript(customerTemplateScript, outPath, preview);
             renderer.Render();
             if (!File.Exists(outPath))
