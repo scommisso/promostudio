@@ -93,6 +93,11 @@ define([
                 if (res == null) { return null; }
                 return res.LinkUrl();
             });
+            self.ThumbnailUrl = ko.computed(function () {
+                var res = customerTemplateScriptItem.Resource();
+                if (res == null) { return null; }
+                return res.ThumbnailUrl();
+            });
             self.PhotoName = ko.computed(function () {
                 var res = customerTemplateScriptItem.Resource();
                 if (res == null) { return null; }

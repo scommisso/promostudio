@@ -1,7 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)"
-              GeneratedClassNamespace="PromoStudio.Storage.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PromoStudio.Storage.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="AmazonS3AccessKey" Type="System.String" Scope="Application">
@@ -27,6 +25,9 @@
     </Setting>
     <Setting Name="VimeoApiPresetId" Type="System.Int64" Scope="Application">
       <Value Profile="(Default)">358907</Value>
+    </Setting>
+    <Setting Name="LocalStoragePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\PromoStudio\Uploads</Value>
     </Setting>
   </Settings>
 </SettingsFile>

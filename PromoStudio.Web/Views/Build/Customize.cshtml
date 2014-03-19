@@ -39,7 +39,7 @@
                 <ul class="list-buttons" data-bind="foreach: PhotoSlots">
                     <li>
                         <div class="upload-image" data-bind="visible: IsCompleted, click: $parent.SelectSlot">
-                            <img src="#" width="228" height="130" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
+                            <img src="#" width="228" height="130" data-bind="attr: { 'src': ThumbnailUrl, 'alt': PhotoName }">
                             <span class="title" data-bind="text: PhotoName"></span>
                         </div>
 
@@ -470,7 +470,7 @@
                     <ul class="list-photo" data-bind="foreach: CustomerPhotos">
                         <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
                             <div class="photo">
-                                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
+                                <img src="#" data-bind="attr: { 'src': ThumbnailUrl, 'alt': LinkFileName }">
                             </div>
                             <div class="title">
                                 <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
@@ -515,7 +515,7 @@
                     <ul class="list-photo" data-bind="foreach: OrganizationPhotos">
                         <li data-bind="css: { 'checked': $parent.IsSelected($data) }">
                             <div class="photo">
-                                <img src="#" data-bind="attr: { 'src': LinkUrl, 'alt': LinkFileName }">
+                                <img src="#" data-bind="attr: { 'src': ThumbnailUrl, 'alt': LinkFileName }">
                             </div>
                             <div class="title">
                                 <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">

@@ -553,6 +553,12 @@ namespace PromoStudio.Data
             return result;
         }
 
+        public void CustomerResource_Update(CustomerResource customerResource)
+        {
+            DataWrapper.ExecuteStoredProc(Constants.StoredProcedures.CustomerResourceUpdate_sp,
+                dbParams: customerResource.ToPoco());
+        }
+
         public void CustomerResource_Delete(long customerResourceId)
         {
             DataWrapper.ExecuteStoredProc(Constants.StoredProcedures.CustomerResourceDelete_sp,

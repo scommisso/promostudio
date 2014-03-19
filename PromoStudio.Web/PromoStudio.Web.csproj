@@ -412,6 +412,10 @@
       <Project>{f91ee58b-4179-4ca6-9ea6-6039afe7e782}</Project>
       <Name>PromoStudio.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PromoStudio.Storage\PromoStudio.Storage.csproj">
+      <Project>{e69f0944-a8a8-4ca5-92e9-91a3259c5bea}</Project>
+      <Name>PromoStudio.Storage</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Videos\Index.cshtml" />

@@ -63,6 +63,7 @@
                 "promostudio.CustomerResourceSelectByCustomerTemplateScriptId_sp";
 
             public const string CustomerResourceInsert_sp = "promostudio.CustomerResourceInsert_sp";
+            public const string CustomerResourceUpdate_sp = "promostudio.CustomerResourceUpdate_sp";
             public const string CustomerResourceDelete_sp = "promostudio.CustomerResourceDelete_sp";
 
             public const string CustomerTemplateScriptSelectById_sp = "promostudio.CustomerTemplateScriptSelectById_sp";

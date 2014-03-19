@@ -35,7 +35,8 @@ define([
             self.fk_CustomerId = customerResource.fk_CustomerId;
             self.fk_OrganizationId = customerResource.fk_OrganizationId;
             self.LinkFileName = customerResource.LinkFileName;
-            self.LinkUrl = customerResource.LinkUrl;
+            self.LinkUrl = customerResource.Value;
+            self.ThumbnailUrl = customerResource.ThumbnailUrl;
             self.IsCustomerResource = customerResource.IsCustomerResource;
             self.IsOrganizationResource = customerResource.IsOrganizationResource;
 

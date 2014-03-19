@@ -50,6 +50,7 @@ namespace PromoStudio.Data
             long customerTemplateScriptId);
 
         Task<CustomerResource> CustomerResource_InsertAsync(CustomerResource customerResource);
+        void CustomerResource_Update(CustomerResource customerResource);
         void CustomerResource_Delete(long customerResourceId);
         Task<CustomerTemplateScript> CustomerTemplateScript_SelectAsync(long customerTemplateScriptId);
         Task<CustomerTemplateScript> CustomerTemplateScript_SelectWithItemsAsync(long customerTemplateScriptId);

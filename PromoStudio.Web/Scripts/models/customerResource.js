@@ -16,6 +16,8 @@ define(["models/enums", "knockout"], function (enums, ko) {
         self.fk_TemplateScriptItemCategoryId = ko.observable(data.fk_TemplateScriptItemCategoryId || null);
         self.fk_CustomerResourceStatusId = ko.observable(data.fk_CustomerResourceStatusId || null);
         self.Value = ko.observable(data.Value || null);
+        self.OriginalFileName = ko.observable(data.OriginalFileName || null);
+        self.ThumbnailUrl = ko.observable(data.ThumbnailUrl || null);
 
         self.IsCustomerResource = ko.computed(function() {
             return (self.fk_CustomerId() > 0);
@@ -36,17 +38,12 @@ define(["models/enums", "knockout"], function (enums, ko) {
             return enums.templateScriptItemType(id);
         });
 
-        self.LinkUrl = ko.computed(function () {
-            // TODO: This should point to our content host (Amazon S3) instead of local
-            var type = self.TemplateScriptItemType();
-            if (!type) { return null; }
-            if (type === "Text") { return "javascript:void(0);"; }
-            return "/Resources/Download?crid=" + self.pk_CustomerResourceId();
+        self.LinkUrl = ko.computed(function() {
+            return self.Value();
         });
-
         self.LinkFileName = ko.computed(function () {
             var type = self.TemplateScriptItemType(),
-                displayPath = self.Value(),
+                displayPath = self.OriginalFileName(),
                 ix;
             if (!type) { return null; }
             if (type === "Text") { return "Text"; }

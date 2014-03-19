@@ -17,6 +17,8 @@ namespace PromoStudio.Web.Models.Session
             fk_TemplateScriptItemCategoryId = resource.fk_TemplateScriptItemCategoryId;
             fk_CustomerResourceStatusId = resource.fk_CustomerResourceStatusId;
             Value = resource.Value;
+            OriginalFileName = resource.OriginalFileName;
+            ThumbnailUrl = resource.ThumbnailUrl;
         }
 
         public long pk_CustomerResourceId { get; set; }
@@ -25,6 +27,8 @@ namespace PromoStudio.Web.Models.Session
         public short fk_TemplateScriptItemCategoryId { get; set; }
         public sbyte fk_CustomerResourceStatusId { get; set; }
         public string Value { get; set; }
+        public string OriginalFileName { get; set; }
+        public string ThumbnailUrl { get; set; }
 
         public Common.Models.CustomerResource ToModel()
         {
@@ -35,7 +39,9 @@ namespace PromoStudio.Web.Models.Session
                 fk_TemplateScriptItemTypeId = fk_TemplateScriptItemTypeId,
                 fk_TemplateScriptItemCategoryId = fk_TemplateScriptItemCategoryId,
                 fk_CustomerResourceStatusId = fk_CustomerResourceStatusId,
-                Value = Value
+                Value = Value,
+                OriginalFileName = OriginalFileName,
+                ThumbnailUrl = ThumbnailUrl
             };
         }
     }

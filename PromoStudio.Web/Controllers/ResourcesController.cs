@@ -9,16 +9,19 @@ using log4net;
 using PromoStudio.Common.Enumerations;
 using PromoStudio.Common.Models;
 using PromoStudio.Data;
-using PromoStudio.Rendering.Properties;
+using PromoStudio.Storage;
 
 namespace PromoStudio.Web.Controllers
 {
     [Authorize]
     public class ResourcesController : ControllerBase
     {
-        public ResourcesController(IDataService dataService, ILog log)
+        private IStorageProvider _storageProvider;
+
+        public ResourcesController(IDataService dataService, ILog log, IStorageProvider storageProvider)
             : base(dataService, log)
         {
+            _storageProvider = storageProvider;
         }
 
         //
@@ -96,58 +99,65 @@ namespace PromoStudio.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            // Setup resource options
-            int orgId = 0;
-            if (isOrgResource == true && CurrentUser.OrganizationId.HasValue)
+            try
             {
-                orgId = CurrentUser.OrganizationId.Value;
-                filePath = Path.Combine(Settings.Default.UploadPath, string.Format("org_{0}\\{1}", orgId, filePath));
-            }
-            else
-            {
-                filePath = Path.Combine(Settings.Default.UploadPath, string.Format("{0}\\{1}", customerId, filePath));
-                isOrgResource = false;
-            }
-            
-            // Write file local
-            // TODO: Should go to storage provider
-            // TODO: Create thumbnail
-            using (inputStream)
-            using (var fs = System.IO.File.Open(filePath, FileMode.Create))
-            {
-                byte[] buffer = new byte[4096];
-                int read = await inputStream.ReadAsync(buffer, 0, buffer.Length);
-                while (read > 0)
+                // Setup resource options
+                int orgId = 0;
+                string bucketName;
+                if (isOrgResource == true && CurrentUser.OrganizationId.HasValue)
                 {
-                    await fs.WriteAsync(buffer, 0, read);
-                    read = await inputStream.ReadAsync(buffer, 0, buffer.Length);
+                    orgId = CurrentUser.OrganizationId.Value;
+                    bucketName = string.Format("org_{0}", orgId);
                 }
+                else
+                {
+                    bucketName = customerId.ToString();
+                    isOrgResource = false;
+                }
+
+                // create file record
+                // TODO: Check for allowed file extensions and infer type
+                var type = TemplateScriptItemType.Image;
+                var res = new CustomerResource
+                {
+                    fk_CustomerId = customerId,
+                    fk_CustomerResourceStatusId = (sbyte) CustomerResourceStatus.Active,
+                    fk_TemplateScriptItemCategoryId = (sbyte) category,
+                    fk_TemplateScriptItemTypeId = (sbyte) type,
+                    OriginalFileName = filePath,
+                    Value = ""
+                };
+                if (isOrgResource == true)
+                {
+                    res.fk_CustomerId = null;
+                    res.fk_OrganizationId = orgId;
+                }
+
+                res = await _dataService.CustomerResource_InsertAsync(res);
+
+                // store file
+                string fileId = res.pk_CustomerResourceId.ToString();
+                string fileUrl = await _storageProvider.StoreFile(bucketName, fileId, inputStream);
+
+                // TODO: Create thumbnail (228x130) and push to storage provider
+                string thumbnailUrl = fileUrl;
+
+                // Update resource pointer
+                res.Value = fileUrl;
+                res.ThumbnailUrl = thumbnailUrl;
+                _dataService.CustomerResource_Update(res);
+
+                // TODO: Log upload
+
+                return new JsonResult()
+                {
+                    Data = res
+                };
             }
-
-            // TODO: Check for allowed file extensions and infer type
-            var type = TemplateScriptItemType.Image;
-            var res = new CustomerResource
+            finally
             {
-                fk_CustomerId = customerId,
-                fk_CustomerResourceStatusId = (sbyte)CustomerResourceStatus.Active,
-                fk_TemplateScriptItemCategoryId = (sbyte)category,
-                fk_TemplateScriptItemTypeId = (sbyte)type,
-                Value = filePath
-            };
-            if (isOrgResource == true)
-            {
-                res.fk_CustomerId = null;
-                res.fk_OrganizationId = orgId;
+                inputStream.Dispose();
             }
-
-            res = await _dataService.CustomerResource_InsertAsync(res);
-
-            // TODO: Log upload
-
-            return new JsonResult()
-            {
-                Data = res
-            };
         }
 
         //

@@ -80,7 +80,7 @@ define(["viewModels/photoTemplatesViewModel",
             self.LogoUrl = ko.computed(function () {
                 var logoItem = self.LogoItem();
                 if (!logoItem) { return null; }
-                return logoItem.PhotoUrl();
+                return logoItem.ThumbnailUrl();
             });
             self.LogoName = ko.computed(function () {
                 var logoItem = self.LogoItem();
