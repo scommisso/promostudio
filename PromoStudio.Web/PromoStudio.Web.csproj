@@ -257,7 +257,6 @@
     <Content Include="Content\images\sprite.png" />
     <Content Include="Scripts\lib\fileuploader.js" />
     <Content Include="Scripts\lib\ie.js" />
-    <Content Include="Scripts\lib\jquery-1.10.2.js" />
     <Content Include="Scripts\lib\jquery-1.11.0.js" />
     <Content Include="Scripts\lib\jquery.crop.js" />
     <Content Include="Scripts\lib\jquery.fancybox.js" />
@@ -270,6 +269,7 @@
     <Content Include="Scripts\lib\Jplayer.swf" />
     <Content Include="Scripts\lib\jquery.jplayer.js" />
     <Content Include="Scripts\ps\common.js" />
+    <Content Include="Scripts\ps\fileupload.js" />
     <Content Include="Scripts\viewModels\callToActionSectionViewModel.js" />
     <Content Include="Scripts\viewModels\accountDashboardViewModel.js" />
     <Content Include="Scripts\viewModels\customerResourceViewModel.js" />
@@ -285,6 +285,7 @@
     <Compile Include="ViewModels\SummaryViewModel.cs" />
     <Compile Include="ViewModels\ScriptViewModel.cs" />
     <Compile Include="ViewModels\FootageViewModel.cs" />
+    <Content Include="Scripts\vsdoc\knockout-3.0.0.debug.js" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <Content Include="Views\Shared\_AccountNavigation.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
@@ -318,7 +319,7 @@
     <Content Include="Content\less\elements.less" />
     <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Properties\PublishProfiles\Local File System.pubxml" />
-    <None Include="Scripts\vsdoc\jquery-1.9.1.intellisense.js" />
+    <None Include="Scripts\vsdoc\jquery-1.11.0.intellisense.js" />
     <Content Include="Scripts\lib\css.js" />
     <Content Include="Scripts\models\customerVideoVoiceOver.js" />
     <Content Include="Scripts\models\voiceActor.js" />
@@ -366,7 +367,6 @@
     <Content Include="Scripts\viewModels\loginViewModel.js" />
     <Content Include="Scripts\viewModels\videosViewModel.js" />
     <Content Include="Scripts\models\customerVideo.js" />
-    <Content Include="Scripts\vsdoc\knockout-2.3.0.debug.js" />
     <Content Include="Scripts\vsdoc\require.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

@@ -1,5 +1,5 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="../vsdoc/knockout-3.0.0.debug.js" />
 /// <reference path="../models/customer.js" />
 /// <reference path="../models/customerVideo.js" />
 /// <reference path="../viewModels/customerVideoViewModel.js" />

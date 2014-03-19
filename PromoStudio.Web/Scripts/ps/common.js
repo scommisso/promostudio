@@ -6,7 +6,17 @@ define([], function () {
         return event.currentTarget || event.srcElement || event.target || null;
     }
 
+    function cancelEvent(event) {
+        if (!event) { return; }
+        if (event.preventDefault) {
+            event.preventDefault();
+        } else {
+            event.returnValue = false;
+        }
+    }
+
     return {
-        getSourceElement: getSourceElement
+        getSourceElement: getSourceElement,
+        cancelEvent: cancelEvent
     };
 });

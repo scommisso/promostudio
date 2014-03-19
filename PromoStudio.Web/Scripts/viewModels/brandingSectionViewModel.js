@@ -1,9 +1,10 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/jquery-1.9.1.intellisense.js" />
+/// <reference path="../vsdoc/jquery-1.11.0.intellisense.js" />
 /// <reference path="../lib/jquery-ui-effects-1.10.3.js" />
-/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="../vsdoc/knockout-3.0.0.debug.js" />
 /// <reference path="../models/enums.js" />
 /// <reference path="../ps/logger.js" />
+/// <reference path="../ps/common.js" />
 /// <reference path="../lib/ko.custom.js" />
 
 "use strict";
@@ -14,6 +15,7 @@ define(["viewModels/photoTemplatesViewModel",
         "strings",
         "models/enums",
         "ps/logger",
+        "ps/common",
         "lib/jquery.crop"
 ],
     function (
@@ -22,7 +24,8 @@ define(["viewModels/photoTemplatesViewModel",
         ko,
         strings,
         enums,
-        logger) {
+        logger,
+        common) {
         function ctor(data, video) {
 
             var self = this,
@@ -120,8 +123,8 @@ define(["viewModels/photoTemplatesViewModel",
             self.ChooseLogo = function (d, e) {
                 var logoItem = self.LogoItem();
                 if (!logoItem) {
-                    e.preventDefault();
-                    return true;
+                    common.cancelEvent(e);
+                    return;
                 }
 
                 // pop modal to select a photo

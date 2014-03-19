@@ -418,7 +418,9 @@ define([], function(undefined) {
                     this._uploadFile(input);
                 }
             }
-            this._button.reset();
+            if (this._button) {
+                this._button.reset();
+            }
         },
         _uploadFileList: function(files) {
             var goodFiles = [];

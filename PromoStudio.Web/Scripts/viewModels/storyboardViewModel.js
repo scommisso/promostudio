@@ -1,5 +1,6 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="../vsdoc/jquery-1.11.0.intellisense.js" />
+/// <reference path="../vsdoc/knockout-3.0.0.debug.js" />
 /// <reference path="../ps/logger.js" />
 /// <reference path="../ps/extensions.js" />
 /// <reference path="../models/storyboard.js" />

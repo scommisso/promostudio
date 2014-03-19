@@ -1,7 +1,7 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/jquery-1.9.1.intellisense.js" />
+/// <reference path="../vsdoc/jquery-1.11.0.intellisense.js" />
 /// <reference path="../lib/jquery-scrolltofixed.js" />
-/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="../vsdoc/knockout-3.0.0.debug.js" />
 /// <reference path="../ps/logger.js" />
 
 "use strict";

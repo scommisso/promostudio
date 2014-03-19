@@ -1,5 +1,5 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
+/// <reference path="../vsdoc/knockout-3.0.0.debug.js" />
 /// <reference path="enums.js" />
 
 "use strict";

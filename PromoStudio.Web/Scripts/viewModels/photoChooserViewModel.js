@@ -1,8 +1,9 @@
 /// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
-/// <reference path="../lib/bootstrap.js" />
+/// <reference path="../vsdoc/knockout-3.0.0.debug.js" />
 /// <reference path="../models/enums.js" />
 /// <reference path="../ps/logger.js" />
+/// <reference path="../ps/fileupload.js" />
+/// <reference path="../ps/common.js" />
 /// <reference path="../ps/extensions.js" />
 /// <reference path="../models/customerResource.js" />
 /// <reference path="photoSlotViewModel.js" />
@@ -17,7 +18,7 @@ define(["models/customerResource",
         "models/enums",
         "ps/logger",
         "ps/common",
-        "lib/fileuploader",
+        "ps/fileupload",
         "ps/extensions"
 ],
     function (
@@ -29,7 +30,7 @@ define(["models/customerResource",
         enums,
         logger,
         common,
-        fileuploader) {
+        fileUpload) {
         function ctor(data) {
 
             function loadPhotos(photoResources) {
@@ -131,15 +132,27 @@ define(["models/customerResource",
                 }
             };
 
-            self.UploadFileChosen = ko.observable(false);
-            self.FileToUpload = ko.observable(null);
-            self.UploadFileId = ko.observable(null);
-            self.UploadFileName = ko.observable(null);
-            self.UploadFileContentType = ko.observable(null);
-            self.UploadFileSize = ko.observable(null);
+            var _fileUpload = new fileUpload({
+                CategoryId: categoryId,
+                IsOrganizationResource: false,
+                OnUploadFileCompleted: function (err, uploadedFile) {
+                    if (err) {
+                        logger.log("Error uploading file: " + err);
+                        self.UploadFileError(err);
+                    }
+                    else if (uploadedFile) {
+                        self.Show(uploadedFile.pk_CustomerResourceId, true);
+                    }
+                }
+            });
+
+            self.UploadFileChosen = _fileUpload.UploadFileChosen;
+            self.UploadFileName = _fileUpload.UploadFileName;
+            self.UploadFileSize = _fileUpload.UploadFileSize;
+            self.IsUploading = _fileUpload.IsUploading;
+            self.BytesUploaded = _fileUpload.BytesUploaded;
+
             self.UploadFileError = ko.observable(null);
-            self.IsUploading = ko.observable(false);
-            self.BytesUploaded = ko.observable(0);
             self.UploadFileSizeKb = ko.computed(function() {
                 var size = self.UploadFileSize();
                 size = (size / 1000).format();
@@ -151,111 +164,31 @@ define(["models/customerResource",
                 $(srcElement).closest("div").find("input[type='file']").click();
             }
 
-            var _fileUploader = null;
-            function initUpload(callback) {
-                var file = self.FileToUpload(),
-                    state = {},
-                    url = "/Resources/Upload?category={0}&isOrgResource={1}".format(categoryId, false);
-
-                _fileUploader = new fileuploader.UploadHandlerXhr({
-                    action: url,
-                    inputName: "fileName",
-                    params: {},
-                    sizeLimit: 0, // add client side limit here, also enforce server side
-                    onSubmit: function() {
-                        self.IsUploading(true);
-                        self.BytesUploaded(0);
-                    },
-                    onProgress: function(id, name, loaded, total) {
-                        self.BytesUploaded(loaded);
-                        self.UploadFileSize(total);
-                    },
-                    onError: function(fId, fName, xHr) {
-                        state.errored = true;
-                        self.IsUploading(false);
-                        self.BytesUploaded(0);
-                        callback(xHr.responseText);
-                    },
-                    onComplete: function(fId, fName, uploadData) {
-                        if (state.errored) {
-                            return;
-                        }
-                        if (typeof uploadData === "string") {
-                            try {
-                                uploadData = JSON.parse(uploadData);
-                            } catch (e) {
-                                uploadData = "unable to parse server response";
-                            }
-                        }
-                        self.IsUploading(false);
-                        self.BytesUploaded(0);
-                        callback(null, uploadData);
-                    }
-                });
-                var fileId = _fileUploader.add(file),
-                    fileName = _fileUploader.getName(fileId),
-                    fileSize = _fileUploader.getSize(fileId);
-
-                self.UploadFileId(fileId);
-                self.UploadFileName(fileName);
-                self.UploadFileSize(fileSize);
-                self.UploadFileError(null);
-                self.BytesUploaded(0);
-                self.IsUploading(false);
-                self.UploadFileChosen(true);
-            }
-
-            function performUpload(originalEvent, callback) {
-                if (!fileuploader.UploadHandlerXhr.isSupported) {
-                    callback("Your browser does not support AJAX file uploads.");
-                    return;
-                }
-                _fileUploader.upload(self.UploadFileId());
-            }
+            self.OnUploadFileSelected = function (data, event) {
+                _fileUpload.OnUploadFileSelected(event);
+            };
 
             self.UploadFile = function (d, e) {
                 if (!self.UploadFileChosen()) {
                     launchUploader(e);
                 } else {
-                    performUpload();
+                    _fileUpload.UploadFile();
                 }
-                e.preventDefault();
-                return true;
+                common.cancelEvent(e);
+                return;
             };
+
             self.ChangeUploadFile = function(d, e) {
                 if (self.UploadFileChosen()) {
                     launchUploader(e);
                 }
-                e.preventDefault();
-                return true;
-            };
-            self.OnUploadFileSelected = function (d, e) {
-                var srcElement = common.getSourceElement(e);
-                if (!srcElement || !srcElement.files || !srcElement.files.length) { return; }
-                var file = srcElement.files[0];
-                self.FileToUpload(file);
-                initUpload(function (err, uploaded) {
-                    if (err) {
-                        self.UploadFileError(err);
-                    } else {
-                        // reload
-                        console.log(uploaded);
-                        self.Show(uploaded.pk_CustomerResourceId, true);
-                    }
-                });
+                common.cancelEvent(e);
+                return;
             };
 
             function reset() {
-                self.FileToUpload(null);
-                self.UploadFileChosen(false);
-                self.UploadFileId(null);
-                self.UploadFileName(null);
-                self.UploadFileContentType(null);
-                self.UploadFileSize(0);
+                _fileUpload.ResetState();
                 self.UploadFileError(null);
-                self.BytesUploaded(0);
-                self.IsUploading(false);
-
                 self.ShowOrganizationAtStart(false);
             }
 
@@ -276,16 +209,12 @@ define(["models/customerResource",
             };
 
             self.Cancel = function () {
-                logger.log("Canceling");
                 self.Hide();
                 cancelCallback();
             };
 
             self.Save = function () {
-                logger.log("Saving");
-
                 var selected = self.SelectedPhoto();
-
                 self.Hide();
                 saveCallback(selected);
             };

@@ -1,5 +1,5 @@
 ﻿/// <reference path="../vsdoc/require.js" />
-/// <reference path="../vsdoc/jquery-1.9.1.intellisense.js" />
+/// <reference path="../vsdoc/jquery-1.11.0.intellisense.js" />
 /// <reference path="../ps/logger.js" />
 /// <reference path="../ps/extensions.js" />
 
