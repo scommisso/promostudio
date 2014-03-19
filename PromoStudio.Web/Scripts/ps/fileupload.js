@@ -104,7 +104,6 @@ define(["knockout",
                 var srcElement = common.getSourceElement(fileInputChangeEventArgs);
                 if (!srcElement || !srcElement.files || !srcElement.files.length) { return; }
 
-                fileuploader.UploadHandlerXhr.isSupported = function() { return false; };
                 initUploader(function (err, uploadedFile) {
                     if (typeof self.OnUploadFileCompleted !== "function") { return; }
                     self.OnUploadFileCompleted(err, uploadedFile);

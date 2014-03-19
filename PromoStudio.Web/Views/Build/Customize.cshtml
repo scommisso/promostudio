@@ -8,7 +8,7 @@
 @section scripts {
     <script>
         require(["viewModels/scaffold"], function () {
-            require(["viewModels/brandingViewModel", "jqueryui"], function(branding, $) {
+            require(["viewModels/brandingViewModel", "jqueryui"], function (branding, $) {
                 $(function() {
                     var vm = new branding(@Html.Raw(JsonConvert.SerializeObject(Model)));
                     vm.Bind("#main form", ".progress-bar");
@@ -18,26 +18,26 @@
     </script>
 }
 
-<form action="#">
-	@* accordion *@
-	<ul class="accordion" style="display: none" data-bind="visible: true">
+<form action="#" method="post" enctype="multipart/form-data">
+    @* accordion *@
+    <ul class="accordion" style="display: none" data-bind="visible: true">
         <!-- ko with: PhotoSection -->
-		<li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
-			@* opener *@
-			<a class="opener" href="#">
-				<div class="holder">
-					<span class="num"><em data-bind="text: StepNumber"></em></span>
-					<span class="title">
-						<strong>@Strings.Photos</strong>
-						<span data-bind="text: TitleText"></span>
-					</span>
-				</div>
-			</a>
-			@* slide *@
-			<div class="slide">
-				@* list-buttons *@
-				<ul class="list-buttons" data-bind="foreach: PhotoSlots">
-					<li>
+        <li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
+            @* opener *@
+            <a class="opener" href="#">
+                <div class="holder">
+                    <span class="num"><em data-bind="text: StepNumber"></em></span>
+                    <span class="title">
+                        <strong>@Strings.Photos</strong>
+                        <span data-bind="text: TitleText"></span>
+                    </span>
+                </div>
+            </a>
+            @* slide *@
+            <div class="slide">
+                @* list-buttons *@
+                <ul class="list-buttons" data-bind="foreach: PhotoSlots">
+                    <li>
                         <div class="upload-image" data-bind="visible: IsCompleted, click: $parent.SelectSlot">
                             <img src="#" width="228" height="130" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
                             <span class="title" data-bind="text: PhotoName"></span>
@@ -59,381 +59,386 @@
                             </div>
                         </div>
 
-						<span class="file-input-text"> </span>
-					</li>
-				</ul>
-				@* large-image *@
+                        <span class="file-input-text"> </span>
+                    </li>
+                </ul>
+                @* large-image *@
                 <div class="builder-edit-photo" data-bind="visible: !!SelectedSlot()">
                     <!-- ko with: SelectedSlot -->
-				    <div class="large-image">
-					    <img src="#" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
-					    @* tools *@
-					    <div class="tools" style="display:none"> @* Remove display:none style when we support this *@
-						    @* style *@
-						    <ul class="style">
-							    <li><a class="bold" href="#">B</a></li>
-							    <li class="active"><a class="italic" href="#">I</a></li>
-							    <li><a class="underline" href="#">T</a></li>
-						    </ul>
-						    @* font *@
-						    <select>@* Bind to font names when this is supported *@
-							    <option>Segoe Script</option>
-							    <option>Segoe Script</option>
-							    <option>Segoe Script</option>
-							    <option>Segoe Script</option>
-						    </select>
-						    @* align *@
-						    <ul class="align">
-							    <li><a class="left" href="#">@Strings.left</a></li>
-							    <li class="active"><a class="center" href="#">@Strings.center</a></li>
-							    <li><a class="right" href="#">@Strings.right</a></li>
-						    </ul>
-					    </div>
-				    </div>
-                    <div style="display:none"> @* Remove display:none style when we support this *@
-				        <textarea class="text-area" cols="30" rows="10" placeholder="@Strings.BuildStep__Insert_your_text_here"></textarea>
-				        <span class="signs">-300</span>@* Add knockout charsleft binding when this is supported *@
-                    </div>
-				    <div class="btn-holder">
-				        @*<input type="submit" value="@Strings.BuildStep__Add_to_selected_frame">*@
-                        @* Crop tools here *@
-                        <input type="submit" value="@Strings.BuildStep__Change_photo" data-bind="click: ChoosePhoto">
-				    </div>
-                    <!-- /ko -->
-                </div>
-			</div>
-		</li>
-        <!-- /ko -->
-        <!-- ko with: BrandingSection -->
-		<li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
-			@* opener *@
-			<a class="opener" href="#">
-				<div class="holder">
-					<span class="num"><em data-bind="text: StepNumber"></em></span>
-					<span class="title">
-						<strong>@Strings.BuildStep__Logo</strong>
-						<span>@Strings.BuildStep__Upload_your_logo</span>
-					</span>
-				</div>
-			</a>
-			@* slide *@
-			<div class="slide">
-				@* upload-logo *@
-                <div class="file-area" data-bind="css: { 'no-file': !IsCompleted() }, click: ChooseLogo" style="position: relative;">
-                    <div class="jcf-input-wrapper">
-                        <label class="jcf-fake-input">
-                            <!-- ko ifnot: LogoUrl -->
-                            <span><em>@Strings.BuildStep__No_logo_selected</em></span>
-                            <!-- /ko -->
-                            <!-- ko if: LogoUrl -->
-                            <div class="customize-logo upload-image" data-bind="visible: IsCompleted">
-                                <label class="title" data-bind="text: LogoName"></label>
-                                <img src="#" data-bind="attr: { 'src': LogoUrl, 'alt': LogoName }">
-                            </div>
-                            <!-- /ko -->
-                        </label>
-                        <a href="#photoChooserModal" class="jcf-upload-button logo-chooser" data-bind="visible: !IsCompleted()" rel="lightbox" data-fb-hideclose="true">
-                            <span>@Strings.BuildStep__Choose_logo</span>
-                        </a>
+                    <div class="large-image">
+                        <img src="#" data-bind="attr: { 'src': PhotoUrl, 'alt': PhotoName }">
+                        @* tools *@
+                        <div class="tools" style="display:none">
+                            @* Remove display:none style when we support this *@
+                            @* style *@
+                            <ul class="style">
+                                <li><a class="bold" href="#">B</a></li>
+                                <li class="active"><a class="italic" href="#">I</a></li>
+                                <li><a class="underline" href="#">T</a></li>
+                            </ul>
+                            @* font *@
+                            <select>
+                                @* Bind to font names when this is supported *@
+                            <option>Segoe Script</option>
+                            <option>Segoe Script</option>
+                            <option>Segoe Script</option>
+                            <option>Segoe Script</option>
+                        </select>
+                        @* align *@
+                        <ul class="align">
+                            <li><a class="left" href="#">@Strings.left</a></li>
+                            <li class="active"><a class="center" href="#">@Strings.center</a></li>
+                            <li><a class="right" href="#">@Strings.right</a></li>
+                        </ul>
                     </div>
                 </div>
+                <div style="display:none">
+                    @* Remove display:none style when we support this *@
+                    <textarea class="text-area" cols="30" rows="10" placeholder="@Strings.BuildStep__Insert_your_text_here"></textarea>
+                    <span class="signs">-300</span>@* Add knockout charsleft binding when this is supported *@
+                </div>
+                <div class="btn-holder">
+                    @*<input type="submit" value="@Strings.BuildStep__Add_to_selected_frame">*@
+                    @* Crop tools here *@
+                    <input type="submit" value="@Strings.BuildStep__Change_photo" data-bind="click: ChoosePhoto">
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </li>
+    <!-- /ko -->
+    <!-- ko with: BrandingSection -->
+    <li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
+        @* opener *@
+        <a class="opener" href="#">
+            <div class="holder">
+                <span class="num"><em data-bind="text: StepNumber"></em></span>
+                <span class="title">
+                    <strong>@Strings.BuildStep__Logo</strong>
+                    <span>@Strings.BuildStep__Upload_your_logo</span>
+                </span>
+            </div>
+        </a>
+        @* slide *@
+        <div class="slide">
+            @* upload-logo *@
+            <div class="file-area" data-bind="css: { 'no-file': !IsCompleted() }, click: ChooseLogo" style="position: relative;">
+                <div class="jcf-input-wrapper">
+                    <label class="jcf-fake-input">
+                        <!-- ko ifnot: LogoUrl -->
+                        <span><em>@Strings.BuildStep__No_logo_selected</em></span>
+                        <!-- /ko -->
+                        <!-- ko if: LogoUrl -->
+                        <div class="customize-logo upload-image" data-bind="visible: IsCompleted">
+                            <label class="title" data-bind="text: LogoName"></label>
+                            <img src="#" data-bind="attr: { 'src': LogoUrl, 'alt': LogoName }">
+                        </div>
+                        <!-- /ko -->
+                    </label>
+                    <a href="#photoChooserModal" class="jcf-upload-button logo-chooser" data-bind="visible: !IsCompleted()" rel="lightbox" data-fb-hideclose="true">
+                        <span>@Strings.BuildStep__Choose_logo</span>
+                    </a>
+                </div>
+            </div>
 
-			    @* options *@
-				<ul class="options" style="display:none"> @* Show this when we support transitions *@
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check01" type="checkbox">
-							<label for="check01">Fade_in</label>
-						</div>
-					</li>
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check02" checked="checked" type="checkbox">
-							<label for="check02">Left to right</label>
-						</div>
-					</li>
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check03" type="checkbox">
-							<label for="check03">Right to left</label>
-						</div>
-					</li>
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check04" type="checkbox">
-							<label for="check04">Dissolve</label>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</li>
-        <!-- /ko -->
-        <!-- ko with: TextSection -->
-		<li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
-			@* opener *@
-			<a class="opener" href="#">
-				<div class="holder">
-					<span class="num"><em data-bind="text: StepNumber"></em></span>
-					<span class="title">
-						<strong>@Strings.BuildStep__Lower_Third</strong>
-						<span>@Strings.BuildStep__This_image_is_at_the_bottom_of_your_video</span>
-					</span>
-				</div>
-			</a>
-			@* slide *@
-			<div class="slide">
-				@* contact-info *@
-				<div class="contact-info" data-bind="foreach: TextTemplateItems">
-					<div class="row">
-						<label data-bind="text: Name, attr: { 'for': 'text_' + SortOrder() }">Add your phone number</label>
-						<input data-bind="value: TextValue, valueUpdate: 'afterkeydown', attr: { 'id': 'text_' + SortOrder(), 'type': InputType }">
-					</div>
-				</div>
-				@* options *@
-				<ul class="options" style="display: none"> @* Show this when we support lower third placement options *@
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check05" type="checkbox">
-							<label for="check05">No lower third</label>
-						</div>
-					</li>
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check06" checked="checked" type="checkbox">
-							<label for="check06">logo on left - website on right</label>
-						</div>
-					</li>
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check07" type="checkbox">
-							<label for="check07">logo on right - website on left</label>
-						</div>
-					</li>
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check08" type="checkbox">
-							<label for="check08">Website &amp; phone number only</label>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</li>
-        <!-- /ko -->
-        <!-- ko with: CtaSection -->
-		<li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
-			@*@ opener *@
-			<a class="opener" href="#">
-				<div class="holder">
-					<span class="num"><em data-bind="text: StepNumber"></em></span>
-					<span class="title">
-						<strong>@Strings.BuildStep__Call_to_Action</strong>
-						<span>@Strings.BuildStep__Help_your_viewers_engage_with_your_video</span>
-					</span>
-				</div>
-			</a>
-			@* slide *@
-			<div class="slide">
-				@* action-block *@
-				<div class="action-block">
-					<div class="box">
-						<input id="none" checked="checked" type="checkbox" />
-						<label for="none">None</label>
-					</div>
-					<div class="box">
-						<div class="check-wrap">
-							<input id="website3" type="checkbox" />
-							<label for="website3">Add your website</label>
-						</div>
-						<div class="block">
-							<div class="text-holder">
-								<div class="row">
-									<label for="text">Text</label>
-									<input id="text" type="text" placeholder="ex. Vist us now!">
-								</div>
-								<div class="row">
-									<label for="website2">Url</label>
-									<input id="website2" type="text" placeholder="www.YourWebsiteHere.com ">
-								</div>
-							</div>
-							<div class="image-holder">
-								<div class="image">
-									<img src="images/img04.jpg" width="228" height="130" alt="image description">
-									<span>Section 1 - appx. 0:12 into video</span>
-								</div>
-								<a href="#">Preview</a>
-							</div>
-						</div>
-					</div>
-					<div class="box">
-						<div class="check-wrap">
-							<input id="contact-form" type="checkbox" />
-							<label for="contact-form">Add your contact form</label>
-						</div>
-						<div class="block">
-							<div class="text-holder">
-								<div class="row">
-									<label for="text2">Text</label>
-									<input id="text2" type="text" placeholder="ex. Fill out this form for more information!">
-								</div>
-								<span class="title">Optional Form Fields</span>
-								<ul class="check-list">
-									<li>
-										<input id="check-1" type="checkbox" />
-										<label for="check-1">Full name*</label>
-									</li>
-									<li>
-										<input id="check-2" type="checkbox" />
-										<label for="check-2">Email address*</label>
-									</li>
-									<li>
-										<input id="check-3" type="checkbox" />
-										<label for="check-3">Phone*</label>
-									</li>
-									<li>
-										<input id="check-4" type="checkbox" />
-										<label for="check-4">Comments*</label>
-									</li>
-								</ul>
-							</div>
-							<div class="image-holder">
-								<div class="image">
-									<img src="images/img04.jpg" width="228" height="130" alt="image description">
-									<span>Section 1 - appx. 0:12 into video</span>
-								</div>
-								<a href="#">Preview</a>
-							</div>
-						</div>
-					</div>
-					<div class="box">
-						<div class="check-wrap popup-wrap">
-							<input id="notiifications" type="checkbox" />
-							<label for="notiifications">Notiifications </label>
-							<div class="popup-box">
-								<a class="open" href="#">?</a>
-								<div class="popup">
-									Recieve SMS Text Messages or Email Notifcations when a viewer engages with your call to action.
-								</div>
-							</div>
-						</div>
-						<div class="block2">
-							<div class="col-1">
-								<div class="row">
-									<input id="sms" type="checkbox">
-									<label for="sms">SMS Text Message</label>
-								</div>
-								<div class="row">
-									<input id="email" type="checkbox">
-									<label for="email">Email</label>
-								</div>
-							</div>
-							<div class="col-2">
-								<div class="row">
-									<label for="phone">Phone</label>
-									<input id="phone" type="tel" placeholder="555.555.5555">
-								</div>
-								<div class="row">
-									<label for="address">Address</label>
-									<input id="address" type="email" placeholder="email@youraddress.com">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="box">
-						<input id="share" checked="checked" type="checkbox" />
-						<label for="share">Let your viewers share your video</label>
-					</div>
-				</div>
-			</div>
-		</li>
-        <!-- /ko -->
-        <!-- ko with: EndingSection -->
-		<li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
-			@* opener *@
-			<a class="opener" href="#">
-				<div class="holder">
-					<span class="num"><em data-bind="text: StepNumber"></em></span>
-					<span class="title">
-						<strong>@Strings.BuildStep__Ending</strong>
-						<span>@Strings.BuildStep__This_is_the_last_frame_your_viewers_will_see</span>
-					</span>
-				</div>
-			</a>
-			@* slide *@
-			<div class="slide">
-				<!-- options -->
-				<ul class="options">
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check09" type="checkbox">
-							<label for="check09">Animated logo with text</label>
-						</div>
-					</li>
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check10" checked="checked" type="checkbox">
-							<label for="check10">Animated logo with text below</label>
-						</div>
-					</li>
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check11" type="checkbox">
-							<label for="check11">Animated logo with text above</label>
-						</div>
-					</li>
-					<li>
-						<div class="wrap"></div>
-						<div class="check-holder">
-							<input id="check12" type="checkbox">
-							<label for="check12">Animated logo with text on right</label>
-						</div>
-					</li>
-				</ul>
-				@* large-image *@
-				<div class="large-image">
-					<img src="images/img05.jpg" alt="image description">
-					@* tools *@
-					<div class="tools">
-						@* style *@
-						<ul class="style">
-							<li><a class="bold" href="#">B</a></li>
-							<li class="active"><a class="italic" href="#">I</a></li>
-							<li><a class="underline" href="#">T</a></li>
-						</ul>
-						@* font *@
-						<select>
-							<option>Segoe Script</option>
-							<option>Segoe Script</option>
-							<option>Segoe Script</option>
-							<option>Segoe Script</option>
-						</select>
-						@* align *@
-						<ul class="align">
-							<li><a class="left" href="#">left</a></li>
-							<li class="active"><a class="center" href="#">center</a></li>
-							<li><a class="right" href="#">right</a></li>
-						</ul>
-					</div>
-				</div>
-				<textarea class="text-area" cols="30" rows="10" placeholder="Insert your text here"></textarea>
-				<span class="signs">-300</span>
-				<div class="btn-holder">
-					<input type="submit" value="Add to selected frame">
-				</div>
-			</div>
-		</li>
-        <!-- /ko -->
-	</ul>
+            @* options *@
+            <ul class="options" style="display:none">
+                @* Show this when we support transitions *@
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check01" type="checkbox">
+                        <label for="check01">Fade_in</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check02" checked="checked" type="checkbox">
+                        <label for="check02">Left to right</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check03" type="checkbox">
+                        <label for="check03">Right to left</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check04" type="checkbox">
+                        <label for="check04">Dissolve</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!-- /ko -->
+    <!-- ko with: TextSection -->
+    <li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
+        @* opener *@
+        <a class="opener" href="#">
+            <div class="holder">
+                <span class="num"><em data-bind="text: StepNumber"></em></span>
+                <span class="title">
+                    <strong>@Strings.BuildStep__Lower_Third</strong>
+                    <span>@Strings.BuildStep__This_image_is_at_the_bottom_of_your_video</span>
+                </span>
+            </div>
+        </a>
+        @* slide *@
+        <div class="slide">
+            @* contact-info *@
+            <div class="contact-info" data-bind="foreach: TextTemplateItems">
+                <div class="row">
+                    <label data-bind="text: Name, attr: { 'for': 'text_' + SortOrder() }">Add your phone number</label>
+                    <input data-bind="value: TextValue, valueUpdate: 'afterkeydown', attr: { 'id': 'text_' + SortOrder(), 'type': InputType }">
+                </div>
+            </div>
+            @* options *@
+            <ul class="options" style="display: none">
+                @* Show this when we support lower third placement options *@
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check05" type="checkbox">
+                        <label for="check05">No lower third</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check06" checked="checked" type="checkbox">
+                        <label for="check06">logo on left - website on right</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check07" type="checkbox">
+                        <label for="check07">logo on right - website on left</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check08" type="checkbox">
+                        <label for="check08">Website &amp; phone number only</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!-- /ko -->
+    <!-- ko with: CtaSection -->
+    <li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
+        @*@ opener *@
+        <a class="opener" href="#">
+            <div class="holder">
+                <span class="num"><em data-bind="text: StepNumber"></em></span>
+                <span class="title">
+                    <strong>@Strings.BuildStep__Call_to_Action</strong>
+                    <span>@Strings.BuildStep__Help_your_viewers_engage_with_your_video</span>
+                </span>
+            </div>
+        </a>
+        @* slide *@
+        <div class="slide">
+            @* action-block *@
+            <div class="action-block">
+                <div class="box">
+                    <input id="none" checked="checked" type="checkbox" />
+                    <label for="none">None</label>
+                </div>
+                <div class="box">
+                    <div class="check-wrap">
+                        <input id="website3" type="checkbox" />
+                        <label for="website3">Add your website</label>
+                    </div>
+                    <div class="block">
+                        <div class="text-holder">
+                            <div class="row">
+                                <label for="text">Text</label>
+                                <input id="text" type="text" placeholder="ex. Vist us now!">
+                            </div>
+                            <div class="row">
+                                <label for="website2">Url</label>
+                                <input id="website2" type="text" placeholder="www.YourWebsiteHere.com ">
+                            </div>
+                        </div>
+                        <div class="image-holder">
+                            <div class="image">
+                                <img src="images/img04.jpg" width="228" height="130" alt="image description">
+                                <span>Section 1 - appx. 0:12 into video</span>
+                            </div>
+                            <a href="#">Preview</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="check-wrap">
+                        <input id="contact-form" type="checkbox" />
+                        <label for="contact-form">Add your contact form</label>
+                    </div>
+                    <div class="block">
+                        <div class="text-holder">
+                            <div class="row">
+                                <label for="text2">Text</label>
+                                <input id="text2" type="text" placeholder="ex. Fill out this form for more information!">
+                            </div>
+                            <span class="title">Optional Form Fields</span>
+                            <ul class="check-list">
+                                <li>
+                                    <input id="check-1" type="checkbox" />
+                                    <label for="check-1">Full name*</label>
+                                </li>
+                                <li>
+                                    <input id="check-2" type="checkbox" />
+                                    <label for="check-2">Email address*</label>
+                                </li>
+                                <li>
+                                    <input id="check-3" type="checkbox" />
+                                    <label for="check-3">Phone*</label>
+                                </li>
+                                <li>
+                                    <input id="check-4" type="checkbox" />
+                                    <label for="check-4">Comments*</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="image-holder">
+                            <div class="image">
+                                <img src="images/img04.jpg" width="228" height="130" alt="image description">
+                                <span>Section 1 - appx. 0:12 into video</span>
+                            </div>
+                            <a href="#">Preview</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="check-wrap popup-wrap">
+                        <input id="notiifications" type="checkbox" />
+                        <label for="notiifications">Notiifications </label>
+                        <div class="popup-box">
+                            <a class="open" href="#">?</a>
+                            <div class="popup">
+                                Recieve SMS Text Messages or Email Notifcations when a viewer engages with your call to action.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block2">
+                        <div class="col-1">
+                            <div class="row">
+                                <input id="sms" type="checkbox">
+                                <label for="sms">SMS Text Message</label>
+                            </div>
+                            <div class="row">
+                                <input id="email" type="checkbox">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="row">
+                                <label for="phone">Phone</label>
+                                <input id="phone" type="tel" placeholder="555.555.5555">
+                            </div>
+                            <div class="row">
+                                <label for="address">Address</label>
+                                <input id="address" type="email" placeholder="email@youraddress.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box">
+                    <input id="share" checked="checked" type="checkbox" />
+                    <label for="share">Let your viewers share your video</label>
+                </div>
+            </div>
+        </div>
+    </li>
+    <!-- /ko -->
+    <!-- ko with: EndingSection -->
+    <li data-bind="visible: IsVisible, css: { 'active': StartOpen, 'done': IsCompleted }">
+        @* opener *@
+        <a class="opener" href="#">
+            <div class="holder">
+                <span class="num"><em data-bind="text: StepNumber"></em></span>
+                <span class="title">
+                    <strong>@Strings.BuildStep__Ending</strong>
+                    <span>@Strings.BuildStep__This_is_the_last_frame_your_viewers_will_see</span>
+                </span>
+            </div>
+        </a>
+        @* slide *@
+        <div class="slide">
+            <!-- options -->
+            <ul class="options">
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check09" type="checkbox">
+                        <label for="check09">Animated logo with text</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check10" checked="checked" type="checkbox">
+                        <label for="check10">Animated logo with text below</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check11" type="checkbox">
+                        <label for="check11">Animated logo with text above</label>
+                    </div>
+                </li>
+                <li>
+                    <div class="wrap"></div>
+                    <div class="check-holder">
+                        <input id="check12" type="checkbox">
+                        <label for="check12">Animated logo with text on right</label>
+                    </div>
+                </li>
+            </ul>
+            @* large-image *@
+            <div class="large-image">
+                <img src="images/img05.jpg" alt="image description">
+                @* tools *@
+                <div class="tools">
+                    @* style *@
+                    <ul class="style">
+                        <li><a class="bold" href="#">B</a></li>
+                        <li class="active"><a class="italic" href="#">I</a></li>
+                        <li><a class="underline" href="#">T</a></li>
+                    </ul>
+                    @* font *@
+                    <select>
+                        <option>Segoe Script</option>
+                        <option>Segoe Script</option>
+                        <option>Segoe Script</option>
+                        <option>Segoe Script</option>
+                    </select>
+                    @* align *@
+                    <ul class="align">
+                        <li><a class="left" href="#">left</a></li>
+                        <li class="active"><a class="center" href="#">center</a></li>
+                        <li><a class="right" href="#">right</a></li>
+                    </ul>
+                </div>
+            </div>
+            <textarea class="text-area" cols="30" rows="10" placeholder="Insert your text here"></textarea>
+            <span class="signs">-300</span>
+            <div class="btn-holder">
+                <input type="submit" value="Add to selected frame">
+            </div>
+        </div>
+    </li>
+    <!-- /ko -->
+</ul>
 </form>
 
 @section modals {
@@ -481,7 +486,8 @@
                         <div class="file-area no-file" style="position: relative;">
                             <div class="jcf-input-wrapper">
                                 <div class="jcf-wrap" style="width: 899px;">
-                                    <input type="file" data-bind="event: { change: OnUploadFileSelected }" class="file-input-opacity" style="position: absolute; z-index: -100; opacity: 0;">
+                                    <input type="file" data-bind="event: { change: OnUploadFileSelected }" class="file-input-opacity"
+                                           style="position: absolute; z-index: -100; opacity: 0;" accept="image/*" capture>
                                 </div>
                                 <label class="jcf-fake-input" data-bind="click: ChangeUploadFile">
                                     <span>

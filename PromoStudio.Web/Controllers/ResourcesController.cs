@@ -74,6 +74,7 @@ namespace PromoStudio.Web.Controllers
             }
             long customerId = CurrentUser.CustomerId;
 
+            // Support both XHR and Forms uploads
             string filePath = null;
             Stream inputStream = null;
             if (file == null && Request.Files.Count > 0)
@@ -90,12 +91,12 @@ namespace PromoStudio.Web.Controllers
                 filePath = Path.GetFileName(file.FileName);
                 inputStream = file.InputStream;
             }
-
             if (inputStream == null || filePath == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            // Setup resource options
             int orgId = 0;
             if (isOrgResource == true && CurrentUser.OrganizationId.HasValue)
             {
@@ -107,7 +108,10 @@ namespace PromoStudio.Web.Controllers
                 filePath = Path.Combine(Settings.Default.UploadPath, string.Format("{0}\\{1}", customerId, filePath));
                 isOrgResource = false;
             }
-
+            
+            // Write file local
+            // TODO: Should go to storage provider
+            // TODO: Create thumbnail
             using (inputStream)
             using (var fs = System.IO.File.Open(filePath, FileMode.Create))
             {
@@ -119,7 +123,6 @@ namespace PromoStudio.Web.Controllers
                     read = await inputStream.ReadAsync(buffer, 0, buffer.Length);
                 }
             }
-
 
             // TODO: Check for allowed file extensions and infer type
             var type = TemplateScriptItemType.Image;

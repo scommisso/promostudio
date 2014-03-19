@@ -383,7 +383,7 @@ define([], function(undefined) {
             var self = this;
 
             this._attach(window, 'beforeunload', function(e) {
-                if (!self._filesInProgress) {
+                if (self._filesInProgress <= 0) {
                     return;
                 }
 
