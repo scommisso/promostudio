@@ -64,9 +64,9 @@ namespace PromoStudio.Web.Controllers
         }
 
         //
-        // POST: /Resources/Upload?category={category}&isOrgResource={isOrgResource}
+        // POST: /Resources/Upload?category={category}&isOrgResource={isOrgResource}&fileName={fileName}
         [HttpPost]
-        public async Task<ActionResult> Upload(HttpPostedFileBase file, int category, bool? isOrgResource)
+        public async Task<ActionResult> Upload(HttpPostedFileBase file, int category, bool? isOrgResource, string fileName)
         {
             if (CurrentUser == null)
             {
@@ -74,46 +74,77 @@ namespace PromoStudio.Web.Controllers
             }
             long customerId = CurrentUser.CustomerId;
 
+            string filePath = null;
+            Stream inputStream = null;
             if (file == null && Request.Files.Count > 0)
             {
                 file = Request.Files[0];
             }
-            if (file != null && file.ContentLength > 0)
+            if (file == null && Request.ContentLength > 0)
             {
-                // TODO: Check for allowed file extensions and infer type
-                var type = TemplateScriptItemType.Image;
-
-                string fileName = Path.GetFileName(file.FileName);
-                var res = new CustomerResource
-                {
-                    fk_CustomerId = customerId,
-                    fk_CustomerResourceStatusId = (sbyte) CustomerResourceStatus.Active,
-                    fk_TemplateScriptItemCategoryId = (sbyte) category,
-                    fk_TemplateScriptItemTypeId = (sbyte) type,
-                    Value = Path.Combine(Settings.Default.UploadPath, string.Format("{0}\\{1}", customerId, fileName))
-                };
-
-                if (isOrgResource == true && CurrentUser.OrganizationId.HasValue)
-                {
-                    int orgId = CurrentUser.OrganizationId.Value;
-                    res.Value = Path.Combine(Settings.Default.UploadPath, string.Format("org_{0}\\{1}", orgId, fileName));
-                    res.fk_CustomerId = null;
-                    res.fk_OrganizationId = orgId;
-                }
-
-                file.SaveAs(res.Value);
-                res = await _dataService.CustomerResource_InsertAsync(res);
-
-                // TODO: Log upload
-
-                return new JsonResult()
-                {
-                    Data = res,
-                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
-                };
+                filePath = fileName;
+                inputStream = Request.InputStream;
+            }
+            else if (file != null && file.ContentLength > 0)
+            {
+                filePath = Path.GetFileName(file.FileName);
+                inputStream = file.InputStream;
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (inputStream == null || filePath == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            int orgId = 0;
+            if (isOrgResource == true && CurrentUser.OrganizationId.HasValue)
+            {
+                orgId = CurrentUser.OrganizationId.Value;
+                filePath = Path.Combine(Settings.Default.UploadPath, string.Format("org_{0}\\{1}", orgId, filePath));
+            }
+            else
+            {
+                filePath = Path.Combine(Settings.Default.UploadPath, string.Format("{0}\\{1}", customerId, filePath));
+                isOrgResource = false;
+            }
+
+            using (inputStream)
+            using (var fs = System.IO.File.Open(filePath, FileMode.Create))
+            {
+                byte[] buffer = new byte[4096];
+                int read = await inputStream.ReadAsync(buffer, 0, buffer.Length);
+                while (read > 0)
+                {
+                    await fs.WriteAsync(buffer, 0, read);
+                    read = await inputStream.ReadAsync(buffer, 0, buffer.Length);
+                }
+            }
+
+
+            // TODO: Check for allowed file extensions and infer type
+            var type = TemplateScriptItemType.Image;
+            var res = new CustomerResource
+            {
+                fk_CustomerId = customerId,
+                fk_CustomerResourceStatusId = (sbyte)CustomerResourceStatus.Active,
+                fk_TemplateScriptItemCategoryId = (sbyte)category,
+                fk_TemplateScriptItemTypeId = (sbyte)type,
+                Value = filePath
+            };
+            if (isOrgResource == true)
+            {
+                res.fk_CustomerId = null;
+                res.fk_OrganizationId = orgId;
+            }
+
+            res = await _dataService.CustomerResource_InsertAsync(res);
+
+            // TODO: Log upload
+
+            return new JsonResult()
+            {
+                Data = res
+            };
         }
 
         //

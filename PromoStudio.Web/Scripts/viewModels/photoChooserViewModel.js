@@ -1,4 +1,4 @@
-﻿/// <reference path="../vsdoc/require.js" />
+/// <reference path="../vsdoc/require.js" />
 /// <reference path="../vsdoc/knockout-2.3.0.debug.js" />
 /// <reference path="../lib/bootstrap.js" />
 /// <reference path="../models/enums.js" />
@@ -17,6 +17,7 @@ define(["models/customerResource",
         "models/enums",
         "ps/logger",
         "ps/common",
+        "lib/fileuploader",
         "ps/extensions"
 ],
     function (
@@ -27,7 +28,8 @@ define(["models/customerResource",
         strings,
         enums,
         logger,
-        common) {
+        common,
+        fileuploader) {
         function ctor(data) {
 
             function loadPhotos(photoResources) {
@@ -131,6 +133,7 @@ define(["models/customerResource",
 
             self.UploadFileChosen = ko.observable(false);
             self.FileToUpload = ko.observable(null);
+            self.UploadFileId = ko.observable(null);
             self.UploadFileName = ko.observable(null);
             self.UploadFileContentType = ko.observable(null);
             self.UploadFileSize = ko.observable(null);
@@ -148,72 +151,73 @@ define(["models/customerResource",
                 $(srcElement).closest("div").find("input[type='file']").click();
             }
 
+            var _fileUploader = null;
+            function initUpload(callback) {
+                var file = self.FileToUpload(),
+                    state = {},
+                    url = "/Resources/Upload?category={0}&isOrgResource={1}".format(categoryId, false);
+
+                _fileUploader = new fileuploader.UploadHandlerXhr({
+                    action: url,
+                    inputName: "fileName",
+                    params: {},
+                    sizeLimit: 0, // add client side limit here, also enforce server side
+                    onSubmit: function() {
+                        self.IsUploading(true);
+                        self.BytesUploaded(0);
+                    },
+                    onProgress: function(id, name, loaded, total) {
+                        self.BytesUploaded(loaded);
+                        self.UploadFileSize(total);
+                    },
+                    onError: function(fId, fName, xHr) {
+                        state.errored = true;
+                        self.IsUploading(false);
+                        self.BytesUploaded(0);
+                        callback(xHr.responseText);
+                    },
+                    onComplete: function(fId, fName, uploadData) {
+                        if (state.errored) {
+                            return;
+                        }
+                        if (typeof uploadData === "string") {
+                            try {
+                                uploadData = JSON.parse(uploadData);
+                            } catch (e) {
+                                uploadData = "unable to parse server response";
+                            }
+                        }
+                        self.IsUploading(false);
+                        self.BytesUploaded(0);
+                        callback(null, uploadData);
+                    }
+                });
+                var fileId = _fileUploader.add(file),
+                    fileName = _fileUploader.getName(fileId),
+                    fileSize = _fileUploader.getSize(fileId);
+
+                self.UploadFileId(fileId);
+                self.UploadFileName(fileName);
+                self.UploadFileSize(fileSize);
+                self.UploadFileError(null);
+                self.BytesUploaded(0);
+                self.IsUploading(false);
+                self.UploadFileChosen(true);
+            }
+
             function performUpload(originalEvent, callback) {
-                if (!("FormData" in window)) {
+                if (!fileuploader.UploadHandlerXhr.isSupported) {
                     callback("Your browser does not support AJAX file uploads.");
                     return;
                 }
-
-                var file = self.FileToUpload(),
-                    fd = new FormData();
-                fd.append("upload_photo", file);
-                self.IsUploading(true);
-                $.ajax({
-                    type: "POST",
-                    url: "/Resources/Upload?category={0}&isOrgResource={1}".format(categoryId, false),
-                    enctype: 'multipart/form-data',
-                    xhr: function () {
-                        var myXhr = $.ajaxSettings.xhr();
-                        if (myXhr.upload) {
-                            myXhr.upload.addEventListener(
-                                "progress",
-                                function (e) {
-                                    if (e.lengthComputable) {
-                                        self.BytesUploaded(e.loaded);
-                                        self.UploadFileSize(e.total);
-                                    }
-                                }, false); // For handling the progress of the upload
-                        }
-                        return myXhr;
-                    },
-                    data: fd,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    success: function (data, textStatus, jqXhr) {
-                        self.IsUploading(false);
-                        self.BytesUploaded(0);
-                        var retData = data;
-                        if (typeof data === "string") {
-                            try {
-                                retData = JSON.parse(data);
-                            } catch (e) {
-                                retData = "unable to parse server response";
-                            }
-                        }
-                        callback(retData);
-                    },
-                    error: function (jqXhr, textStatus, error) {
-                        self.IsUploading(false);
-                        self.BytesUploaded(0);
-                        callback(error);
-                    }
-                });
+                _fileUploader.upload(self.UploadFileId());
             }
 
             self.UploadFile = function (d, e) {
                 if (!self.UploadFileChosen()) {
                     launchUploader(e);
                 } else {
-                    performUpload(e, function (uploaded) {
-                        if (typeof uploaded === "string") {
-                            self.UploadFileError(uploaded);
-                        } else {
-                            // reload
-                            console.log(uploaded);
-                            self.Show(uploaded.pk_CustomerResourceId, true);
-                        }
-                    });
+                    performUpload();
                 }
                 e.preventDefault();
                 return true;
@@ -230,18 +234,21 @@ define(["models/customerResource",
                 if (!srcElement || !srcElement.files || !srcElement.files.length) { return; }
                 var file = srcElement.files[0];
                 self.FileToUpload(file);
-                self.UploadFileChosen(true);
-                self.UploadFileName(file.name);
-                self.UploadFileContentType(file.type);
-                self.UploadFileSize(file.size);
-                self.UploadFileError(null);
-                self.BytesUploaded(0);
-                self.IsUploading(false);
+                initUpload(function (err, uploaded) {
+                    if (err) {
+                        self.UploadFileError(err);
+                    } else {
+                        // reload
+                        console.log(uploaded);
+                        self.Show(uploaded.pk_CustomerResourceId, true);
+                    }
+                });
             };
 
             function reset() {
                 self.FileToUpload(null);
                 self.UploadFileChosen(false);
+                self.UploadFileId(null);
                 self.UploadFileName(null);
                 self.UploadFileContentType(null);
                 self.UploadFileSize(0);
