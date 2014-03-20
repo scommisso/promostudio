@@ -47,6 +47,7 @@ define(["models/enums", "knockout"], function (enums, ko) {
                 ix;
             if (!type) { return null; }
             if (type === "Text") { return "Text"; }
+            if (!displayPath) { return null; }
             ix = displayPath.lastIndexOf("\\");
             if (ix === -1) { ix = displayPath.lastIndexOf("/"); }
             if (ix === -1) { return displayPath; }
