@@ -18,8 +18,7 @@ define([
         "strings",
         "models/enums",
         "ps/logger",
-        "lib/ko.custom",
-        "lib/ko.jplayer"
+        "lib/ko.custom"
 ], function (
         customerVideoItem,
         customerVideoVoiceOver,

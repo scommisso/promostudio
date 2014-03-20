@@ -14,7 +14,8 @@ define([
         "models/enums",
         "ps/logger",
         "ps/common",
-        "ps/extensions"
+        "ps/extensions",
+        "lib/ko.jplayer"
 ],
     function (
         $,
@@ -44,6 +45,7 @@ define([
             self.pk_VoiceActorId = voiceActor.pk_VoiceActorId;
             self.FullName = voiceActor.FullName;
             self.Description = voiceActor.Description;
+            self.SampleFilePath = voiceActor.SampleFilePath;
             self.PhotoUrl = ko.computed(function () {
                 var id = voiceActor.pk_VoiceActorId();
                 return "/Resources/ActorPhoto?voiceActorId={0}".format(id);
@@ -52,6 +54,14 @@ define([
                 var url = self.PhotoUrl();
                 if (url === null) { return "none"; }
                 return "url({0})".format(url);
+            });
+
+            self.MediaSource = ko.computed(function () {
+                var filePath = self.SampleFilePath(),
+                    extension = filePath.split('.').pop(),
+                    source = {};
+                source[extension] = filePath;
+                return source;
             });
 
             self.IsSelected = ko.observable(false);

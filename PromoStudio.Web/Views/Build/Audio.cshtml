@@ -60,8 +60,8 @@
 									</span>
 				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
-                                <div class="audio-player" style="display:none"
-                                    data-bind="jplayer: { 'media': { 'mp3': '/Resources/StockAudio?stockAudioId=' + pk_StockAudioId() }, 'title': Name, 'isPlaying': IsPlaying, 'options': { 'solution': 'html5,flash' } }"> 
+                                <div class="audio-player"
+                                    data-bind="jplayer: { 'media': MediaSource, 'title': Name, 'isPlaying': IsPlaying, 'options': { 'solution': 'html5,flash' }, hidePlayer: true }"> 
                                 </div>
 							</li>
 						</ul>
@@ -105,8 +105,8 @@
 									</span>
 				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
-                                <div class="audio-player" style="display:none"
-                                    data-bind="jplayer: { 'media': { 'mp3': '/Resources/ActorSample?voiceActorId=' + pk_VoiceActorId() }, 'title': FullName, 'isPlaying': IsPlaying, 'options': { 'solution': 'html5,flash' } }">
+                                <div class="audio-player"
+                                    data-bind="jplayer: { 'media': MediaSource, 'title': FullName, 'isPlaying': IsPlaying, 'options': { 'solution': 'html,flash' }, hidePlayer: true }">
                                 </div>
 							</li>
 						</ul>

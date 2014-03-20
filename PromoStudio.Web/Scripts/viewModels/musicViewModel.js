@@ -14,7 +14,8 @@ define([
         "models/enums",
         "ps/logger",
         "ps/common",
-        "ps/extensions"
+        "ps/extensions",
+        "lib/ko.jplayer"
 ],
     function (
         $,
@@ -44,6 +45,7 @@ define([
             self.pk_StockAudioId = stockAudio.pk_StockAudioId;
             self.Name = stockAudio.Name;
             self.Description = stockAudio.Description;
+            self.FilePath = stockAudio.FilePath;
 
             self.IsSelected = ko.observable(false);
             self.IsPlaying = ko.observable(false);
@@ -59,6 +61,14 @@ define([
                     attr.checked = "checked";
                 }
                 return attr;
+            });
+
+            self.MediaSource = ko.computed(function () {
+                var filePath = self.FilePath(),
+                    extension = filePath.split('.').pop(),
+                    source = {};
+                source[extension] = filePath;
+                return source;
             });
 
             self.Play = function (data, event) {
