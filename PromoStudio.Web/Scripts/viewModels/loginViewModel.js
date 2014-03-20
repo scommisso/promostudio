@@ -6,8 +6,8 @@
 "use strict";
 
 define(["jqueryui",
-        "googleOAuth",
-        "facebookOAuth",
+        "ps/googleOauth",
+        "ps/facebookOauth",
         "strings",
         "ps/logger",
         "ps/extensions"],
@@ -16,8 +16,8 @@ define(["jqueryui",
         facebookOAuth,
         strings,
         logger) {
-        function ctor() {
-
+        function ctor(data) {
+            
             function performLogin(platformId, loginKey, userName, userEmail) {
                 $.ajax({
                     type: "POST",
@@ -42,33 +42,52 @@ define(["jqueryui",
             }
 
             var self = this,
-                welcomeText = strings.getResource("Login__Welcome");
+                welcomeText = strings.getResource("Login__Welcome"),
+                googleClientId = data.googleClientId,
+                facebookClientId = data.facebookClientId,
+                oauthRedirectUrl = data.redirectUrl;
+
+            function performLoginCallback(platformId, error, user) {
+                if (error) {
+                    logger.log("Error logging in ");
+                    logger.log(error);
+                    alert("error logging in");
+                    return;
+                }
+
+                $("#loginButtons").hide();
+                $('#userName').text(welcomeText.format(user.name, user.email));
+                $('#loginResult').show();
+                $('.navbar').show();
+                performLogin(platformId, user.id, user.name, user.email);
+            }
 
             self.pageLoaded = function () {
                 if ($("#loginButtons").size() > 0) {
-                    var goa = new googleOauth("#gLogin", function (user) {
-                        $("#loginButtons").hide();
-                        $('#userName').text(welcomeText.format(user.name, user.email));
-                        $('#loginResult').show();
-                        $('.navbar').show();
-                        performLogin(1, user.id, user.name, user.email);
-                    });
-                    $("#gLogin").click(function () {
-                        $("#fbLogin").hide();
+                    var $gLogin = $("#gLogin"),
+                        $fbLogin = $("#fbLogin"),
+                        goa = new googleOauth(googleClientId, oauthRedirectUrl, performLoginCallback.bind(null, 1));
+                    $gLogin.click(function () {
+                        if ($gLogin.hasClass("wait")) {
+                            return;
+                        }
+                        $fbLogin.hide();
+                        $gLogin.addClass("wait");
                         goa.login();
                     });
 
-                    var foa = new facebookOAuth("#fbLogin", function (user) {
-                        $("#loginButtons").hide();
-                        $('#userName').text(welcomeText.format(user.name, user.email));
-                        $('#loginResult').show();
-                        $('.navbar').show();
-                        performLogin(2, user.id, user.name, user.email);
-                    });
-                    $("#fbLogin").click(function () {
-                        $("#gLogin").hide();
+                    var foa = new facebookOAuth(facebookClientId, oauthRedirectUrl, performLoginCallback.bind(null, 2));
+                    $fbLogin.click(function () {
+                        if ($fbLogin.hasClass("wait")) {
+                            return;
+                        }
+                        $gLogin.hide();
+                        $fbLogin.addClass("wait");
                         foa.login();
                     });
+
+                    goa.init();
+                    foa.init();
                 }
             };
         }

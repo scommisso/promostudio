@@ -263,14 +263,19 @@
     <Content Include="Scripts\lib\jquery.fancybox.js" />
     <Content Include="Scripts\lib\jquery.main.js" />
     <Content Include="Scripts\lib\jquery.mousewheel.js" />
+    <Content Include="Scripts\lib\jso2.js" />
     <Content Include="Scripts\lib\knockout-3.0.0.js" />
     <Content Include="Scripts\lib\knockout-3.1.0.js" />
+    <Content Include="Scripts\lib\jso.store.js" />
+    <Content Include="Scripts\lib\jso.utils.js" />
     <Content Include="Scripts\optimizedRequireConfig.js" />
     <Content Include="Scripts\lib\ko.jplayer.js" />
     <Content Include="Scripts\lib\Jplayer.swf" />
     <Content Include="Scripts\lib\jquery.jplayer.js" />
     <Content Include="Scripts\ps\common.js" />
     <Content Include="Scripts\ps\fileupload.js" />
+    <Content Include="Scripts\ps\facebookOauth.js" />
+    <Content Include="Scripts\ps\googleOauth.js" />
     <Content Include="Scripts\viewModels\callToActionSectionViewModel.js" />
     <Content Include="Scripts\viewModels\accountDashboardViewModel.js" />
     <Content Include="Scripts\viewModels\customerResourceViewModel.js" />
@@ -424,22 +429,10 @@
     <Content Include="Views\Resources\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Scripts\GoogleOAuth.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\OAuth2Callback.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Scripts\FacebookOAuth.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Scripts\TwitterOAuth.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="log4net.config">

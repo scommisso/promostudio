@@ -1,4 +1,5 @@
 ﻿@using PromoStudio.Resources
+@using PromoStudio.Web.Properties
 @model PromoStudio.Web.ViewModels.HomeViewModel
 @{
     ViewBag.Title = Strings.Sign_In;
@@ -10,7 +11,11 @@
         require(["viewModels/scaffold"], function () {
             require(["viewModels/loginViewModel"],
                 function(loginViewModel) {
-                    var vm = new loginViewModel();
+                    var vm = new loginViewModel({
+                        googleClientId: "@Settings.Default.GoogleClientId",
+                        facebookClientId: "@Settings.Default.FacebookClientId",
+                        redirectUrl: "@Url.Action("Index", "Home", null, Request.Url.Scheme)"
+                    });
                     vm.pageLoaded();
                 });
         });

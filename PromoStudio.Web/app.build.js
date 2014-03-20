@@ -68,10 +68,7 @@
         //pjax: 'lib/jquery.pjax',
         //history: 'lib/history',
         knockout: 'lib/knockout-3.0.0',
-        strings: 'empty:',
-        facebookOAuth: 'empty:',
-        googleOAuth: 'empty:',
-        twitterOAuth: 'empty:'
+        strings: 'empty:'
     },
 
     //The directory path to save the output. If not specified, then
