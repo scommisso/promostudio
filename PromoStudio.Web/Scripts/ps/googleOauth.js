@@ -1,18 +1,21 @@
 ﻿define(["ps/logger", "jquery", "lib/jso2"], function (logger, $, OAuth) {
-    function GoogleOauth(clientId, redirectUrl, loginCallback) {
+    function GoogleOauth(clientId, redirectUrl, loginCallback, oauthCallback) {
         var self = this;
-        self.callback = loginCallback;
-        self.oauth = new OAuth("google", {
+
+        self.providerId = "google";
+        self.loginCallback = loginCallback;
+        self.oauthCallback = oauthCallback;
+        self.oauth = new OAuth(self.providerId, {
             client_id: clientId,
             redirect_uri: redirectUrl,
             authorization: "https://accounts.google.com/o/oauth2/auth"
         });
     };
 
-    GoogleOauth.prototype.init = function ()
+    GoogleOauth.prototype.initOauthCallback = function ()
     {
         var self = this;
-        self.oauth.callback();
+        self.oauth.callback(null, self.oauthCallback, self.providerId);
     };
 
     GoogleOauth.prototype.login = function () {
@@ -27,10 +30,10 @@
             },
             dataType: 'json',
             success: function(data) {
-                self.callback(null, data);
+                self.loginCallback(null, data);
             },
             error: function (xHr, status, error) {
-                self.callback(status + ": " + error);
+                self.loginCallback(status + ": " + error);
             }
         });
     };

@@ -172,7 +172,7 @@ define(["jquery", "lib/jso.store", "lib/jso.utils"], function (jQuery, store, ut
 
 
         if (typeof callback === 'function') {
-            callback();
+            callback(instance, state.providerID);
         }
 
         // utils.log(atoken);

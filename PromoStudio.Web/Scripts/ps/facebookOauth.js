@@ -1,8 +1,11 @@
 ﻿define(["ps/logger", "jquery", "lib/jso2"], function (logger, $, OAuth) {
-    function FacebookOauth(clientId, redirectUrl, loginCallback) {
+    function FacebookOauth(clientId, redirectUrl, loginCallback, oauthCallback) {
         var self = this;
-        self.callback = loginCallback;
-        self.oauth = new OAuth("facebook", {
+
+        self.providerId = "facebook";
+        self.loginCallback = loginCallback;
+        self.oauthCallback = oauthCallback;
+        self.oauth = new OAuth(self.providerId, {
             client_id: clientId,
             redirect_uri: redirectUrl,
             authorization: "https://www.facebook.com/dialog/oauth",
@@ -10,10 +13,9 @@
         });
     };
 
-    FacebookOauth.prototype.init = function ()
-    {
+    FacebookOauth.prototype.initOauthCallback = function () {
         var self = this;
-        self.oauth.callback();
+        self.oauth.callback(null, self.oauthCallback, self.providerId);
     };
 
     FacebookOauth.prototype.login = function () {
@@ -28,10 +30,10 @@
             },
             dataType: 'json',
             success: function(data) {
-                self.callback(null, data);
+                self.loginCallback(null, data);
             },
             error: function (xHr, status, error) {
-                self.callback(status + ": " + error);
+                self.loginCallback(status + ": " + error);
             }
         });
     };

@@ -62,11 +62,22 @@ define(["jqueryui",
                 performLogin(platformId, user.id, user.name, user.email);
             }
 
+            function oauthCallback(oauth, providerId) {
+                if (providerId === goa.providerId) {
+                    goa.login();
+                }
+                else if (providerId === foa.providerId) {
+                    foa.login();
+                }
+            }
+
+            var goa, foa;
             self.pageLoaded = function () {
                 if ($("#loginButtons").size() > 0) {
                     var $gLogin = $("#gLogin"),
-                        $fbLogin = $("#fbLogin"),
-                        goa = new googleOauth(googleClientId, oauthRedirectUrl, performLoginCallback.bind(null, 1));
+                        $fbLogin = $("#fbLogin");
+
+                    goa = new googleOauth(googleClientId, oauthRedirectUrl, performLoginCallback.bind(null, 1), oauthCallback);
                     $gLogin.click(function () {
                         if ($gLogin.hasClass("wait")) {
                             return;
@@ -76,7 +87,7 @@ define(["jqueryui",
                         goa.login();
                     });
 
-                    var foa = new facebookOAuth(facebookClientId, oauthRedirectUrl, performLoginCallback.bind(null, 2));
+                    foa = new facebookOAuth(facebookClientId, oauthRedirectUrl, performLoginCallback.bind(null, 2), oauthCallback);
                     $fbLogin.click(function () {
                         if ($fbLogin.hasClass("wait")) {
                             return;
@@ -86,8 +97,8 @@ define(["jqueryui",
                         foa.login();
                     });
 
-                    goa.init();
-                    foa.init();
+                    goa.initOauthCallback();
+                    foa.initOauthCallback();
                 }
             };
         }
