@@ -36,7 +36,7 @@
                 <!-- tabset -->
                 <nav class="tabset" data-bind="foreach: ScriptSections">
                     <ul data-bind="foreach: Scripts">
-                        <li><a href="#" data-bind="attr: { href: ClientAnchor }, text: Name, click: function (s) { $parent.SelectScript(s); }"></a></li>
+                        <li><a href="#" data-bind="attr: { href: ClientAnchor }, text: Name, click: function (s) { $root.SelectScript(s); }"></a></li>
                     </ul>
                 </nav>
                 <!-- tab-content -->

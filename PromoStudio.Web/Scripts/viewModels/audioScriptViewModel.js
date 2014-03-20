@@ -131,11 +131,17 @@ define([
         };
 
         self.IsCompleted = ko.computed(function () {
-            // TODO: Mark completed when all audio placeholders are filled in
-            if (ko.isObservable(isStepCompleted)) {
-                isStepCompleted(true);
+            var isCompleted = true,//false,
+                script = self.SelectedScript();
+            
+            if (script) {
+                // TODO: Mark completed when all placeholders are filled in
             }
-            return true;
+
+            if (ko.isObservable(isStepCompleted)) {
+                isStepCompleted(isCompleted);
+            }
+            return isCompleted;
         });
 
         loadData();
