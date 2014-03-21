@@ -18,7 +18,8 @@
     </script>
 }
 
-<form action="#">    <!-- accordion -->
+<form action="#">
+    @* accordion *@
     <ul class="accordion">
         <li class="active">
             <!-- opener -->
@@ -31,32 +32,21 @@
                     </span>
                 </div>
             </a>
-            <!-- slide -->
+            @* slide *@
             <div class="slide">
                 <!-- tabset -->
                 <nav class="tabset" data-bind="foreach: ScriptSections">
                     <ul data-bind="foreach: Scripts">
-                        <li><a href="#" data-bind="attr: { href: ClientAnchor }, text: Name, click: function (s) { $root.SelectScript(s); }"></a></li>
+                        <li><a href="#" data-bind="attr: { 'href': ClientAnchor }, text: Name, click: function (s) { $root.SelectScript(s); }"></a></li>
                     </ul>
                 </nav>
-                <!-- tab-content -->
+                @* tab-content *@
                 <div class="tab-content" data-bind="foreach: Scripts">
-                    <!-- tab1 -->
-                    <section data-bind="attr: { id: ClientId }">
+                    <section data-bind="attr: { 'id': ClientId }">
                         <div class="box">
                             <article class="post">
                                 <h1 data-bind="text: Name">Script 1</h1>
                                 <div data-bind="html: ScriptHtml"></div>
-                                @*<p>Here at the <input class="text" type="text" placeholder="insert data"> we understand your home purchase is one of the biggest and most important decisions you’ll ever make.   We value each one of you and know you have unique goals; we understand it’s our job to help you find the perfect house you can call a home.</p>
-                                <p>
-                                    For the past <input class="text" type="text" placeholder="insert data"> years we have served the <input class="text" type="text" placeholder="insert data"> real estate market and have developed an outstanding reputation build on integrity and true professionalism.  During that period of time the team of real estate professionals has assisted over
-                                    <input class="text" type="text" placeholder="insert data"> clients totaling over <input class="text" type="text" placeholder="insert data"> dollars in successful transactions.
-                                </p>
-                                <p>
-                                    Our promise is to listen and understand each of your needs and find a property that fits exactly what you’re looking for.  The <input class="text" type="text" placeholder="insert data">
-                                    team will tirelessly navigate the market to provide you the best possible options so you can confidently make the right decision for you.
-                                </p>
-                                <p>Give us a call today and we’ll begin the search for your next dream home. </p>*@
                             </article>
                         </div>
                     </section>

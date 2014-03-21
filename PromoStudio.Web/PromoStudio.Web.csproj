@@ -257,6 +257,7 @@
     <Content Include="Content\images\signin-twitter-sprite.png" />
     <Content Include="Content\images\sprite.png" />
     <Content Include="Scripts\lib\fileuploader.js" />
+    <Content Include="Scripts\lib\FlashAudioPlugin.swf" />
     <Content Include="Scripts\lib\ie.js" />
     <Content Include="Scripts\lib\jquery-1.11.0.js" />
     <Content Include="Scripts\lib\jquery.crop.js" />

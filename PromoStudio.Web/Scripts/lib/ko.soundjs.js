@@ -113,6 +113,7 @@
             var vals = valueAccessor(),
                 media = ko.toJS(vals.media || opts.media),
                 isPlayingObservable = vals.isPlaying || opts.isPlaying,
+                swfPath = vals.swfPath || opts.swfPath,
                 id = (++_lastId).toString(),
                 state;
 
@@ -123,7 +124,14 @@
 
             if (!_playerInitialized && _playerCanPlay) {
                 _playerInitialized = true;
-                _playerCanPlay = createJs.Sound.initializeDefaultPlugins();
+                if (swfPath) {
+                    createjs.FlashPlugin.swfPath = swfPath;
+                }
+                _playerCanPlay = createjs.Sound.registerPlugins([
+                    createjs.WebAudioPlugin,
+                    createjs.HTMLAudioPlugin,
+                    createjs.FlashPlugin
+                ]);
             }
             if (!_playerCanPlay) { return; }
 

@@ -486,7 +486,7 @@
                         <div class="file-area no-file" style="position: relative;">
                             <div class="jcf-input-wrapper">
                                 <div class="jcf-wrap" style="width: 899px;">
-                                    <input type="file" data-bind="event: { change: OnUploadFileSelected }" class="file-input-opacity"
+                                    <input type="file" data-bind="event: { 'change': OnUploadFileSelected }" class="file-input-opacity"
                                            style="position: absolute; z-index: -100; opacity: 0;" accept="image/*" capture>
                                 </div>
                                 <label class="jcf-fake-input" data-bind="click: ChangeUploadFile">
@@ -505,7 +505,7 @@
                                     <span>@Strings.BuildStep__Upload_a_file</span>
                                     <!-- /ko -->
                                 </a>
-                                <progress data-bind="visible: IsUploading() && BytesUploaded(), attr: { value: BytesUploaded, max: UploadFileSize }"></progress>
+                                <progress data-bind="visible: IsUploading() && BytesUploaded(), attr: { 'value': BytesUploaded, 'max': UploadFileSize }"></progress>
                             </div>
                         </div>
                     </div>

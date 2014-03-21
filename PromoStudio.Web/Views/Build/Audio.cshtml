@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = string.Format("{0} - {1}", Strings.BuildStep__Build, Strings.BuildStep__Audio);
     Layout = "~/Views/Build/_BuildLayout.cshtml";
+    string swfPath = Url.Content("~/Scripts/lib/");
 }
 @section scripts {
     <script>
@@ -61,7 +62,7 @@
 				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
                                 <div class="audio-player"
-                                     data-bind="soundjs: { 'media': MediaSource, 'isPlaying': IsPlaying }">
+                                     data-bind="soundjs: { 'media': MediaSource, 'isPlaying': IsPlaying, 'swfPath': '@swfPath' }">
                                 </div>
 							</li>
 						</ul>
@@ -106,7 +107,7 @@
 				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
                                 <div class="audio-player"
-                                     data-bind="soundjs: { 'media': MediaSource, 'isPlaying': IsPlaying }">
+                                     data-bind="soundjs: { 'media': MediaSource, 'isPlaying': IsPlaying, 'swfPath': '@swfPath' }">
                                 </div>
 							</li>
 						</ul>
