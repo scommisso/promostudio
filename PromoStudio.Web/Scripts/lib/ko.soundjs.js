@@ -41,9 +41,11 @@
         for (id in _playerState)
         {
             state = _playerState[id];
-            stopHandler(state);
+            if (state.isPlayingObservable && state.playerInstance) {
+                stopHandler(state);
+                state.playerInstance.stop();
+            }
         }
-        createJs.Sound.stop();
     }
 
     function playSound(id) {
@@ -59,10 +61,10 @@
             state.isPlayingObservable(false);
             return;
         }
+        state.playerInstance = playerInstance;
         state.isPlaying = true;
         playerInstance.addEventListener("complete", stopHandler.bind(null, state));
-        playerInstance.addEventListener("interrupted", stopHandler.bind(null, state));
-        playerInstance.addEventListener("failed", stopHandler.bind(null, state));
+        playerInstance.addEventListener("error", stopHandler.bind(null, state));
     }
 
     function registerMedia(id, media) {
