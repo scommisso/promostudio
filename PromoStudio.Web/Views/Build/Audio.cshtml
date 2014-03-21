@@ -61,7 +61,7 @@
 				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
                                 <div class="audio-player"
-                                    data-bind="jplayer: { 'media': MediaSource, 'title': Name, 'isPlaying': IsPlaying, 'options': { 'solution': 'html5,flash' } }"> 
+                                     data-bind="soundjs: { 'media': MediaSource, 'isPlaying': IsPlaying }">
                                 </div>
 							</li>
 						</ul>
@@ -106,7 +106,7 @@
 				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
                                 <div class="audio-player"
-                                    data-bind="jplayer: { 'media': MediaSource, 'title': FullName, 'isPlaying': IsPlaying, 'options': { 'solution': 'html,flash' } }">
+                                     data-bind="soundjs: { 'media': MediaSource, 'isPlaying': IsPlaying }">
                                 </div>
 							</li>
 						</ul>

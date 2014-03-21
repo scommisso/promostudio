@@ -15,7 +15,7 @@ define([
         "ps/logger",
         "ps/common",
         "ps/extensions",
-        "lib/ko.jplayer"
+        "lib/ko.soundjs"
 ],
     function (
         $,
@@ -56,12 +56,15 @@ define([
                 return "url({0})".format(url);
             });
 
-            self.MediaSource = ko.computed(function () {
-                var filePath = self.SampleFilePath(),
-                    extension = filePath.split('.').pop(),
-                    source = {};
-                source[extension] = filePath;
-                return source;
+            self.MediaSource = ko.computed({
+                read: function () {
+                    var filePath = self.SampleFilePath(),
+                        extension = filePath.split('.').pop(),
+                        source = {};
+                    source[extension] = filePath;
+                    return source;
+                },
+                deferEvaluation: true
             });
 
             self.IsSelected = ko.observable(false);
@@ -81,16 +84,7 @@ define([
             });
 
             self.Play = function (data, event) {
-                var playing = self.IsPlaying(),
-                    srcElement = common.getSourceElement(event);
-                getPlayers(srcElement).each(function () {
-                    var $this = $(this);
-                    $this.jPlayer("pause", 0);
-                });
-                if (!playing) {
-                    $(srcElement).closest("li").find("div.jp-jplayer").jPlayer("play");
-                    self.IsPlaying(true);
-                }
+                self.IsPlaying(!self.IsPlaying());
             };
 
             self.ToggleSelection = function (data, event) {
