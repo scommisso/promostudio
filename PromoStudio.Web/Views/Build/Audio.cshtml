@@ -55,7 +55,7 @@
 									<img width="79" height="72" src="@Url.Content("~/Content/images/img03.jpg")" data-bind="attr: { 'alt': Description }">
 								</span>
 								<label data-bind="attr: { 'for': AttrBinding().id }">
-									<span class="info">
+									<span class="info" data-bind="attr: { 'title': Description }">
 										<strong data-bind="text: Name"></strong>
                                         <!-- ko text: Description --><!-- /ko -->
 									</span>
@@ -101,9 +101,10 @@
 									<img src="#" width="79" height="72" data-bind="attr: { 'alt': FullName, 'src': PhotoUrl }" />
 								</div>
 								<label data-bind="attr: { 'for': AttrBinding().id }">
-									<span class="info">
-										<strong data-bind="text: FullName"></strong>
-									</span>
+                                    <span class="info" data-bind="attr: { 'title': Description }">
+                                        <strong data-bind="text: FullName"></strong>
+                                        <!-- ko text: Description --><!-- /ko -->
+                                    </span>
 				                    <input type="checkbox" data-bind="attr: AttrBinding, event: { 'change': ToggleSelection }">
 								</label>
                                 <div class="audio-player"
