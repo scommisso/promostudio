@@ -38,10 +38,6 @@ define([
                 return checkboxes || getSlider(srcElement).find("input[type^='checkbox']");
             }
 
-            function getPlayers(srcElement) {
-                return players || getSlider(srcElement).find("div.jp-jplayer");
-            }
-
             self.pk_VoiceActorId = voiceActor.pk_VoiceActorId;
             self.FullName = voiceActor.FullName;
             self.Description = voiceActor.Description;

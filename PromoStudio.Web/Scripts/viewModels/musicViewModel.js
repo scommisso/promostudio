@@ -38,10 +38,6 @@ define([
                 return checkboxes || getSlider(srcElement).find("input[type^='checkbox']");
             }
 
-            function getPlayers(srcElement) {
-                return players || getSlider(srcElement).find("div.jp-jplayer");
-            }
-
             self.pk_StockAudioId = stockAudio.pk_StockAudioId;
             self.Name = stockAudio.Name;
             self.Description = stockAudio.Description;

@@ -50,7 +50,7 @@ define([
                 for (i = 0; i < scripts.length; i++) {
                     item = scripts[i];
                     if (item.pk_AudioScriptTemplateId() === templateId) {
-                        self.SelectedScript(item);
+                        self.SelectScript(item);
                         break;
                     }
                 }
