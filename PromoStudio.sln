@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoStudio.Common", "PromoStudio.Common\PromoStudio.Common.csproj", "{6E9AAFA0-E570-46A1-A5A1-6E4484E3555B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoStudio.Data", "PromoStudio.Data\PromoStudio.Data.csproj", "{92944C4F-9E73-4352-8E68-917413ACDCBE}"
@@ -37,13 +35,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoStudio.Storage.Tests", "PromoStudio.Storage.Tests\PromoStudio.Storage.Tests.csproj", "{16585C88-FB51-4B68-B20C-F1B601256813}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoStudio.CloudStatusService", "PromoStudio.CloudStatusService\PromoStudio.CloudStatusService.csproj", "{D68582E1-12E1-41F9-B402-DD035621D4F5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6C914D99-5193-4E86-A181-1B014B594D6E}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

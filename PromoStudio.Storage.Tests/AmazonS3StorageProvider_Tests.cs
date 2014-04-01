@@ -10,8 +10,8 @@ namespace PromoStudio.Storage.Tests
         public void TestUpload()
         {
             var provider = new AmazonS3StorageProvider();
-            string playerId =  provider.StoreFile("1", "test.mov",
-                File.OpenRead(@"C:\PromoStudio\Output\1\3\5_test_RotatingPhotos_preview.mov")).Result;
+            string playerId = provider.StoreFile("1", "test.mov",
+                @"C:\PromoStudio\Output\1\3\5_test_RotatingPhotos_preview.mov");
             Stream url = provider.GetFile("1", "test.mov");
         }
     }
