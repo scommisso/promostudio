@@ -1,10 +1,10 @@
 ﻿var project = "{{PROJECTPATH}}",
-    swapItems = { {SWAPS };},
-outputPath = "{{OUTPUTPATH}}",
+    swapItems = {{SWAPS}},
+    outputPath = "{{OUTPUTPATH}}",
     renderComp = "{{RENDERCOMP}}",
-    renderStart = { {RENDERSTART };},
-renderDuration = { {RENDERDURATION };},
-renderItemTemplate = "{{RENDERTEMPLATE}}",
+    renderStart = {{RENDERSTART}},
+    renderDuration = {{RENDERDURATION}},
+    renderItemTemplate = "{{RENDERTEMPLATE}}",
     renderItem, swapItem, item, layer, i, j, k;
 
 // Open the project
