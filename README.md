@@ -3,53 +3,6 @@ promostudio
 
 This repository houses all PromoStudio source files and resources.
 
-
-Server Resources
-----------------
-
-#### Web/DB Server ###
-**GoDaddy Account Name**: `PSTUDIODEV001`  
-**Server IP Address**: `72.167.176.230`
-
-#### Render Server ###
-**GoDaddy Account Name**: `PSRENDER01`  
-**Server IP Address**: `208.109.88.40`
-
-
-Logins
-------
-
-#### Admin Account ####
-**Username**: `psserver`  
-**Password**: `pr0m0!g0ldMine`
-
-#### Service Account ####
-**Username**: `psservice`  
-**Password**: `pr0m053rv!c3`
-
-#### FTP Account ####
-**Username**: `psftp`  
-**Password**: `pr0m057ud!o`
-
-#### MySQL Admin ####
-**Username**: `sa`  
-**Password**: `pr0m053rv!c3`
-
-#### MySQL User ####
-**Username**: `PromoStudioUser`  
-**Password**: `pr0m057ud10`  
-**Sample Connection String**: `Server=127.0.0.1;Database=promostudio;Uid=PromoStudioUser;Pwd=pr0m057ud10;`
-
-#### Vimeo User ####
-**Username**: `tim@clothingcycle.com`  
-**Password**: `clutch333`
-
-#### Vimeo API OAuth2 ####
-**Client Id**: `d46e4b11bc1d52a70a3c86ce4014667c6f8a7816`  
-**Client Secret**: `9386add8a2a2919c24c7a341ca673dbb1930d2c4`  
-**Access Token**: `8e8d0b8e480058e82daeba5b2f72b58f`  
-
-
 Required Setup
 --------------
 
